@@ -2,7 +2,7 @@ name: Deploy static site to GitHub Pages
 
 on:
   push:
-    branches: ["claude/skill-installation-qg8a2n"]
+    branches: ["claude/skill-installation-qg8a2n", "claude/mcp-list-command-84vih9"]
   workflow_dispatch:
 
 permissions:
