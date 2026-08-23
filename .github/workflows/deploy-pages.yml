@@ -35,6 +35,8 @@ jobs:
           cp -r js _site/
           cp -r assets _site/
           cp CNAME _site/
+          cp robots.txt _site/
+          cp sitemap.xml _site/
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
