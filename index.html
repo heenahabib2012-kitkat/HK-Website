@@ -2,316 +2,367 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Habib Koya — Executive Director &amp; Founder, HK Consultancy</title>
-<meta name="description" content="Thirty years building brands across the Middle East and India — from a kitchen in Karnataka to boardrooms in 43 countries. Book an introductory call with Habib Koya.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Habib Koya — Entrepreneur, Strategist, Brand Builder</title>
+<meta name="description" content="Thirty years building businesses, brands and people across 43 countries. From a small town in Karnataka to global boardrooms — Habib Koya, Founder of HK Consultancy.">
 <link rel="icon" href="data:,">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,400;1,9..144,600&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
 <a class="skip-link" href="#main">Skip to content</a>
 
-<!-- ============ TOP BAR ============ -->
-<header class="topbar">
-  <a class="wordmark" href="#top">Habib&nbsp;Koya</a>
-  <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navOverlay">
-    <span class="nav-toggle__label">Index</span>
-    <span class="nav-toggle__num" aria-hidden="true">00</span>
+<!-- ============ LOADER ============ -->
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="loader__mark">HK</div>
+  <div class="loader__bar"><span id="loaderFill"></span></div>
+</div>
+
+<!-- ============ GRAIN OVERLAY ============ -->
+<canvas class="grain" id="grainCanvas" aria-hidden="true"></canvas>
+
+<!-- ============ NAVIGATION ============ -->
+<header class="nav" id="siteNav">
+  <a class="nav__mark" href="#top">HABIB KOYA</a>
+  <nav class="nav__links" aria-label="Primary">
+    <a href="#story"><span class="nav__idx">01</span>Story</a>
+    <a href="#journey"><span class="nav__idx">02</span>Journey</a>
+    <a href="#expertise"><span class="nav__idx">03</span>Expertise</a>
+    <a href="#consultancy"><span class="nav__idx">04</span>HK Consultancy</a>
+    <a href="#mentorship"><span class="nav__idx">05</span>Mentorship</a>
+    <a href="#contact"><span class="nav__idx">06</span>Contact</a>
+  </nav>
+  <button class="nav__toggle" id="navToggle" aria-expanded="false" aria-controls="navMobile">
+    <span></span><span></span>
   </button>
 </header>
 
-<!-- ============ FULLSCREEN INDEX OVERLAY ============ -->
-<nav class="nav-overlay" id="navOverlay" aria-label="Section index" hidden>
-  <ul class="nav-overlay__list">
-    <li><a href="#origin" data-num="01"><span class="n">01</span> Origin</a></li>
-    <li><a href="#arc" data-num="02"><span class="n">02</span> The Arc</a></li>
-    <li><a href="#case-01" data-num="03"><span class="n">03</span> Auntie&nbsp;Anne&rsquo;s</a></li>
-    <li><a href="#case-02" data-num="04"><span class="n">04</span> Van&nbsp;Cleef&nbsp;&amp;&nbsp;Arpels</a></li>
-    <li><a href="#case-03" data-num="05"><span class="n">05</span> HK&nbsp;Consultancy</a></li>
-    <li><a href="#contact" data-num="06"><span class="n">06</span> Contact</a></li>
-  </ul>
-  <button class="nav-overlay__close" id="navClose" aria-label="Close index">Close</button>
-</nav>
-
-<!-- ============ SIDE RAIL (progress index, desktop) ============ -->
-<nav class="rail" aria-label="Page progress">
-  <ol class="rail__list">
-    <li><a href="#origin" data-section="origin">Origin</a></li>
-    <li><a href="#arc" data-section="arc">The Arc</a></li>
-    <li><a href="#case-01" data-section="case-01">Case&nbsp;01</a></li>
-    <li><a href="#case-02" data-section="case-02">Case&nbsp;02</a></li>
-    <li><a href="#case-03" data-section="case-03">Case&nbsp;03</a></li>
-    <li><a href="#contact" data-section="contact">Contact</a></li>
-  </ol>
+<nav class="nav-mobile" id="navMobile" aria-label="Mobile" hidden>
+  <a href="#story"><span>01</span>Story</a>
+  <a href="#journey"><span>02</span>Journey</a>
+  <a href="#expertise"><span>03</span>Expertise</a>
+  <a href="#consultancy"><span>04</span>HK Consultancy</a>
+  <a href="#mentorship"><span>05</span>Mentorship</a>
+  <a href="#contact"><span>06</span>Contact</a>
 </nav>
 
 <main id="main">
 
   <!-- ============ HERO ============ -->
   <section class="hero" id="top">
-    <p class="hero__kicker">Executive Director, Universal Engineering Co. — Founder, HK Consultancy</p>
-    <h1 class="hero__headline">
-      From a kitchen in Karnataka<br>
-      to boardrooms across <em>43 countries.</em>
-    </h1>
-    <p class="hero__sub">
-      Thirty years building and running brands — Starbucks, Costa Coffee, Auntie Anne&rsquo;s,
-      Van Cleef &amp; Arpels — across the Middle East and India. Habib Koya now advises founders
-      and companies through HK Consultancy.
-    </p>
-    <div class="hero__actions">
-      <a class="btn btn--primary" href="https://wa.me/971585815229?text=Hi%20Habib%2C%20I%27d%20like%20to%20book%20an%20introductory%20call." target="_blank" rel="noopener">
-        Book an introductory call
-      </a>
-      <a class="btn btn--ghost" href="#case-01">Read the case studies ↓</a>
+    <div class="hero__image-wrap" id="heroImageWrap">
+      <img class="hero__image" id="heroImage" src="assets/img/habib-portrait.jpg" alt="Habib Koya, seated, in conversation" width="560" height="705" fetchpriority="high">
+      <div class="hero__vignette" aria-hidden="true"></div>
     </div>
+
+    <div class="hero__content">
+      <p class="hero__eyebrow" data-reveal>ENTREPRENEUR · STRATEGIST · BRAND BUILDER</p>
+      <h1 class="hero__name" data-reveal>
+        <span class="hero__name-line">HABIB</span>
+        <span class="hero__name-line">KOYA</span>
+      </h1>
+      <p class="hero__tagline" data-reveal>30+ YEARS OF BUILDING BUSINESSES, BRANDS &amp; PEOPLE.</p>
+    </div>
+
+    <dl class="hero__stats" data-reveal>
+      <div><dt>43</dt><dd>Countries</dd></div>
+      <div><dt>18+</dt><dd>Nationalities</dd></div>
+      <div><dt>30+</dt><dd>Years</dd></div>
+    </dl>
+
+    <a class="hero__scroll" href="#story" aria-label="Scroll to story">
+      <span class="hero__scroll-line"></span>
+      <span>Scroll</span>
+    </a>
   </section>
 
-  <!-- ============ ORIGIN ============ -->
-  <section class="origin" id="origin">
-    <span class="section-eyebrow">01 — Origin</span>
-    <div class="origin__grid">
-      <p class="origin__lede">
-        <span class="dropcap">B</span>ehind every leader is a story that starts somewhere small.
-        Habib Koya&rsquo;s starts in a small town in Karnataka, in a house run by his mother —
-        a housewife who kept cattle, cooked in large batches to support their family and local
-        factory workers, and turned her home into a hub of quiet entrepreneurial energy.
-      </p>
-      <div class="origin__body">
-        <p>
+  <!-- ============ 01 STORY / ORIGIN ============ -->
+  <section class="story" id="story">
+    <div class="story__intro">
+      <h2 class="story__headline" data-split>
+        From a small town in Karnataka<br>to <em>global boardrooms.</em>
+      </h2>
+    </div>
+
+    <div class="story__body">
+      <figure class="story__photo" data-reveal>
+        <img src="assets/img/habib-young.jpg" alt="A young Habib Koya, in his early years in Karnataka" loading="lazy" width="590" height="868">
+        <figcaption>Karnataka, before the boardrooms.</figcaption>
+      </figure>
+
+      <div class="story__text">
+        <p class="story__lede" data-reveal>
+          His mother ran the household like a founder runs a company — keeping cattle, cooking
+          in large batches to support their family and local factory workers, turning a home
+          into a hub of quiet entrepreneurial energy.
+        </p>
+        <p data-reveal>
           From the age of seven, Habib helped her — sticking posters, watching her manage work
           with grace, absorbing the grit and resourcefulness of someone building something out
           of very little. His love of food, people, and hustle was born in those smoke-filled
           kitchens, long before he had a name for any of it.
         </p>
-        <p>
-          In the early 1990s his curiosity moved beyond home. Fascinated by his brother&rsquo;s
+        <p data-reveal>
+          In the early 1990s, his curiosity moved beyond home. Fascinated by his brother's
           engineering work on the Konkan Railway tunnel through the Western Ghats, he joined
-          <strong>Universal Engineering Company</strong> as a trainee. Years of on-ground learning
-          and problem-solving followed — the same qualities that, decades later, would make him
-          the company&rsquo;s Executive Director.
+          <strong>Universal Engineering Company</strong> as a trainee — the first step in a
+          career that would eventually cross 43 countries.
         </p>
       </div>
     </div>
   </section>
 
-  <!-- ============ THE ARC (timeline) ============ -->
-  <section class="arc" id="arc">
-    <span class="section-eyebrow">02 — The Arc</span>
-    <h2 class="arc__heading">Thirty years, four industries, one instinct for building.</h2>
-    <ol class="arc__list">
-      <li>
-        <span class="arc__year">1995</span>
-        <span class="arc__text">Joins Domino&rsquo;s Pizza Saudi Arabia as a delivery boy — rises to Senior Operations Manager, and brings Malaysian brand Marrybrown to India.</span>
-      </li>
-      <li>
-        <span class="arc__year">2005</span>
-        <span class="arc__text">Joins Starbucks Coffee, Kuwait as District Manager — where a regular customer changes the course of his career.</span>
-      </li>
-      <li>
-        <span class="arc__year">2006</span>
-        <span class="arc__text">Trains in the United States and brings Auntie Anne&rsquo;s to the Middle East, opening seven stores across Kuwait and Iraq.</span>
-      </li>
-      <li>
-        <span class="arc__year">2009</span>
-        <span class="arc__text">Joins Costa Coffee as General Manager, then becomes Commercial Director of the entire Hussein Morad Bebehani Group.</span>
-      </li>
-      <li>
-        <span class="arc__year">2016</span>
-        <span class="arc__text">Founds Relax Business Solutions, turning years of informal mentoring into a first venture of his own.</span>
-      </li>
-      <li>
-        <span class="arc__year">2021</span>
-        <span class="arc__text">Launches HK Consultancy — a boutique business and brand consultancy for modern entrepreneurs.</span>
-      </li>
-    </ol>
-    <p class="arc__footnote">30+ years of experience &middot; work across 43 countries &middot; teams from 18+ nationalities.</p>
-  </section>
+  <!-- ============ 02 JOURNEY ============ -->
+  <section class="journey" id="journey">
+    <div class="journey__head">
+      <span class="section-eyebrow">02 — Journey</span>
+      <h2 class="journey__headline" data-split>30+ years.<br>One continuous journey.</h2>
+    </div>
 
-  <!-- ============ CASE STUDY 01 — Auntie Anne's ============ -->
-  <section class="case" id="case-01" aria-labelledby="case-01-title">
-    <div class="case__sticky">
-      <span class="case__num">01</span>
-      <h2 class="case__title" id="case-01-title">Auntie Anne&rsquo;s<br>in the Middle East</h2>
-      <p class="case__meta">Starbucks Kuwait → Auntie Anne&rsquo;s, 2005&ndash;2009</p>
-      <ol class="case__phases" data-case="case-01">
-        <li data-phase="problem"><span class="case__phase-label">Problem</span></li>
-        <li data-phase="decision"><span class="case__phase-label">Decision</span></li>
-        <li data-phase="evidence"><span class="case__phase-label">Evidence</span></li>
-        <li data-phase="result"><span class="case__phase-label">Result</span></li>
-      </ol>
-    </div>
-    <div class="case__scroll">
-      <article class="case__block" data-phase="problem">
-        <h3>The problem</h3>
-        <p>
-          As District Manager at Starbucks Coffee, Kuwait, Koya&rsquo;s dedication caught the
-          attention of a regular customer — an encounter that could easily have stayed a pleasant
-          conversation. Instead it became a proposition: bring an entirely new American brand into
-          a region that had never seen it, with no local playbook, no local team, and no local
-          precedent to follow.
-        </p>
-      </article>
-      <article class="case__block" data-phase="decision">
-        <h3>The decision</h3>
-        <blockquote class="case__quote">
-          &ldquo;If you join me, I&rsquo;ll bring a brand from America for you to build.&rdquo;
-        </blockquote>
-        <p>
-          Koya said yes. Rather than run the venture from Kuwait, he travelled to the United
-          States himself to train directly with the brand — choosing to learn the operation
-          first-hand before trying to build it somewhere it had never existed.
-        </p>
-      </article>
-      <article class="case__block" data-phase="evidence">
-        <h3>The evidence</h3>
-        <p>
-          He returned from the U.S. having trained on the brand&rsquo;s own operating model, then
-          built the Middle East presence from the ground up — sourcing, training, and opening
-          store by store rather than franchising the problem away.
-        </p>
-      </article>
-      <article class="case__block" data-phase="result">
-        <h3>The result</h3>
-        <p>
-          <strong>Auntie Anne&rsquo;s opened seven successful stores across Kuwait and Iraq</strong> —
-          a new-to-region brand launch executed personally, with no existing template to lean on.
-        </p>
-      </article>
-    </div>
-  </section>
+    <div class="journey__timeline" id="journeyTimeline">
+      <div class="journey__line" aria-hidden="true"><span class="journey__line-fill" id="journeyFill"></span></div>
 
-  <!-- ============ CASE STUDY 02 — Van Cleef & Arpels ============ -->
-  <section class="case case--alt" id="case-02" aria-labelledby="case-02-title">
-    <div class="case__sticky">
-      <span class="case__num">02</span>
-      <h2 class="case__title" id="case-02-title">Van Cleef &amp; Arpels<br>arrives in Kuwait</h2>
-      <p class="case__meta">Hussein Morad Bebehani Group, Commercial Director</p>
-      <ol class="case__phases" data-case="case-02">
-        <li data-phase="problem"><span class="case__phase-label">Problem</span></li>
-        <li data-phase="decision"><span class="case__phase-label">Decision</span></li>
-        <li data-phase="evidence"><span class="case__phase-label">Evidence</span></li>
-        <li data-phase="result"><span class="case__phase-label">Result</span></li>
+      <ol class="journey__list">
+        <li class="journey__item" data-reveal>
+          <div class="journey__marker"></div>
+          <div class="journey__card">
+            <span class="journey__year">Early&nbsp;1990s</span>
+            <h3>Universal Engineering Company</h3>
+            <p>Joined as a trainee, drawn in by his brother's engineering work on the Konkan
+              Railway tunnel through the Western Ghats — years of on-ground learning that would
+              later make him the company's Executive Director.</p>
+          </div>
+        </li>
+
+        <li class="journey__item" data-reveal>
+          <div class="journey__marker"></div>
+          <div class="journey__card">
+            <span class="journey__year">1995</span>
+            <h3>Domino's Pizza, Saudi Arabia</h3>
+            <p>Started as a delivery boy, rose to Deputy District Manager and then Senior
+              Operations Manager. Helped bring the Malaysian brand Marrybrown to India along the way.</p>
+            <ul class="journey__facts">
+              <li>Fastest Pizza Maker, Domino's Pizza KSA (1998)</li>
+              <li>Best Manager of the Month — May 1998 &amp; February 1999</li>
+              <li>5 International Sales Achievement Awards from Domino's USA</li>
+              <li>Best Deputy District Manager, South India (May 2003)</li>
+            </ul>
+          </div>
+        </li>
+
+        <li class="journey__item" data-reveal>
+          <div class="journey__marker"></div>
+          <div class="journey__card">
+            <span class="journey__year">2005</span>
+            <h3>Starbucks Coffee, Kuwait</h3>
+            <p>Joined as District Manager. A regular customer, impressed by his dedication, made
+              an offer that would change the course of his career.</p>
+            <ul class="journey__facts">
+              <li>Starbucks Bravo Award for exceeding budgeted sales targets</li>
+            </ul>
+          </div>
+        </li>
+
+        <li class="journey__item" data-reveal>
+          <div class="journey__marker"></div>
+          <div class="journey__card">
+            <span class="journey__year">United States → Middle East</span>
+            <h3>Auntie Anne's</h3>
+            <p>Trained in the U.S. on the brand's own operating model, then built its Middle
+              East presence from the ground up — including expansion into Kuwait's Avenue Mall
+              and the brand's first outlet in Basra, Iraq.</p>
+            <blockquote>&ldquo;If you join me, I'll bring a brand from America for you to build.&rdquo;</blockquote>
+            <p><strong>Seven successful stores opened across Kuwait and Iraq.</strong></p>
+          </div>
+        </li>
+
+        <li class="journey__item" data-reveal>
+          <div class="journey__marker"></div>
+          <div class="journey__card">
+            <span class="journey__year">2009</span>
+            <h3>Costa Coffee → Hussein Morad Bebehani Group</h3>
+            <p>Joined Costa Coffee as General Manager, then became Commercial Director of the
+              entire Hussein Morad Bebehani Group — bringing Costa Coffee, Van Cleef &amp; Arpels
+              and Bvlgari into Kuwait, the Van Cleef &amp; Arpels rights secured through a
+              personal pitch to the brand's President in Paris.</p>
+            <ul class="journey__facts">
+              <li>International Leadership Award, Costa Coffee (2010)</li>
+              <li>55% consistent sales increase, Costa Coffee Kuwait (2010)</li>
+              <li>Hosted the Kuwait Coffee Ambassador Event</li>
+              <li>Opened 17 Costa Coffee stores across Kuwait</li>
+            </ul>
+          </div>
+        </li>
+
+        <li class="journey__item" data-reveal>
+          <div class="journey__marker"></div>
+          <div class="journey__card">
+            <span class="journey__year">2016</span>
+            <h3>Relax Business Solutions</h3>
+            <p>Years of informal mentoring — coffee, conversation, advice for founders — became
+              his first venture of his own.</p>
+          </div>
+        </li>
+
+        <li class="journey__item" data-reveal>
+          <div class="journey__marker"></div>
+          <div class="journey__card">
+            <span class="journey__year">2021</span>
+            <h3>HK Consultancy</h3>
+            <p>A boutique business and brand consultancy, built to turn three decades of global
+              operating experience into structured support for retail, F&amp;B, and lifestyle
+              brands across the Middle East and India.</p>
+          </div>
+        </li>
       </ol>
-    </div>
-    <div class="case__scroll">
-      <article class="case__block" data-phase="problem">
-        <h3>The problem</h3>
-        <p>
-          By 2009, Koya&rsquo;s performance as General Manager of Costa Coffee had caught the
-          attention of Hussein Morad Bebehani, a Kuwaiti business tycoon, who appointed him
-          Commercial Director of the entire Hussein Morad Bebehani Group. The mandate: bring
-          globally exclusive luxury houses into a market with no existing relationship to them.
-        </p>
-      </article>
-      <article class="case__block" data-phase="decision">
-        <h3>The decision</h3>
-        <p>
-          Rather than negotiate at a distance, Koya flew to Paris to pitch directly to the
-          President of Van Cleef &amp; Arpels — making the case for Kuwait himself, in person,
-          for a house that answers to very few outside markets.
-        </p>
-      </article>
-      <article class="case__block" data-phase="evidence">
-        <h3>The evidence</h3>
-        <p>
-          The pitch secured exclusive rights to Van Cleef &amp; Arpels for Kuwait — a feat few
-          could achieve — alongside bringing Costa Coffee and Bvlgari into the same market
-          under his leadership.
-        </p>
-      </article>
-      <article class="case__block" data-phase="result">
-        <h3>The result</h3>
-        <p>
-          <strong>The Group&rsquo;s portfolio extended into fashion, luxury watches, and jewellery</strong>,
-          leaving a lasting mark on the region&rsquo;s luxury retail landscape — built on a single
-          in-person pitch rather than an intermediary deal.
-        </p>
-      </article>
     </div>
   </section>
 
-  <!-- ============ CASE STUDY 03 — HK Consultancy ============ -->
-  <section class="case" id="case-03" aria-labelledby="case-03-title">
-    <div class="case__sticky">
-      <span class="case__num">03</span>
-      <h2 class="case__title" id="case-03-title">Building HK<br>Consultancy</h2>
-      <p class="case__meta">Founded 2016 (Relax Business Solutions) — relaunched 2021</p>
-      <ol class="case__phases" data-case="case-03">
-        <li data-phase="problem"><span class="case__phase-label">Problem</span></li>
-        <li data-phase="decision"><span class="case__phase-label">Decision</span></li>
-        <li data-phase="evidence"><span class="case__phase-label">Evidence</span></li>
-        <li data-phase="result"><span class="case__phase-label">Result</span></li>
-      </ol>
+  <!-- ============ 03 GLOBAL EXPERIENCE ============ -->
+  <section class="global" id="expertise">
+    <div class="global__overlay">
+      <span class="section-eyebrow">03 — Expertise</span>
+      <h2 class="global__headline" data-split>Global experience.</h2>
+      <dl class="global__stats">
+        <div><dt id="statCountries">43</dt><dd>Countries</dd></div>
+        <div><dt id="statNat">18+</dt><dd>Nationalities</dd></div>
+        <div><dt id="statYears">30+</dt><dd>Years</dd></div>
+      </dl>
+      <p class="global__note">
+        Three decades of operating experience spanning 43 countries and teams built from 18+
+        nationalities — a working knowledge of global markets, culture, and business psychology.
+      </p>
     </div>
-    <div class="case__scroll">
-      <article class="case__block" data-phase="problem">
-        <h3>The problem</h3>
-        <p>
-          Long before it was a business, this was a habit: friends and founders sitting down
-          with Koya over coffee, mapping out their businesses on napkins and phone notes. Many
-          of those casual sessions quietly turned into multi-million-dollar successes — but the
-          advice itself had nowhere formal to live.
-        </p>
-      </article>
-      <article class="case__block" data-phase="decision">
-        <h3>The decision</h3>
-        <p>
-          In 2016, reflecting on a career that traced back to his mother&rsquo;s own entrepreneurial
-          spirit, Koya founded <strong>Relax Business Solutions</strong>. In 2021 he formalized the
-          practice further, launching <strong>HK Consultancy</strong> — built to turn three decades
-          of global operating experience into structured, personal support for entrepreneurs.
-        </p>
-      </article>
-      <article class="case__block" data-phase="evidence">
-        <h3>The evidence</h3>
-        <p>
-          The consultancy draws directly on experience across 43 countries and teams from 18+
-          nationalities — a working knowledge of global cultures, business psychology, and
-          operations that most advisors only theorize about.
-        </p>
-      </article>
-      <article class="case__block" data-phase="result">
-        <h3>The result</h3>
-        <p>
-          <strong>HK Consultancy now stands as a boutique incubator for retail, F&amp;B, and lifestyle
-          brands across the Middle East and India</strong> — the same instinct his mother modeled in
-          her kitchen, formalized into a practice.
-        </p>
-      </article>
+    <div class="global__stage">
+      <canvas id="globeCanvas" aria-hidden="true"></canvas>
+      <div class="global__fallback" id="globeFallback" hidden></div>
     </div>
+  </section>
+
+  <!-- ============ BRAND JOURNEY (horizontal) ============ -->
+  <section class="brands" id="brandsSection">
+    <div class="brands__head">
+      <h2 class="brands__headline" data-split>Brands are built.<br>But great brands are <em>brought to life.</em></h2>
+      <p class="brands__note">Brand and business leadership experience across food, beverage, and luxury retail.</p>
+    </div>
+    <div class="brands__track-wrap">
+      <ul class="brands__track" id="brandsTrack">
+        <li><span class="brands__name">Domino's</span><span class="brands__role">Delivery boy → Senior Operations Manager</span></li>
+        <li><span class="brands__name">Marrybrown</span><span class="brands__role">Helped bring the brand to India</span></li>
+        <li><span class="brands__name">Starbucks</span><span class="brands__role">District Manager, Kuwait</span></li>
+        <li><span class="brands__name">Auntie Anne's</span><span class="brands__role">Built the Middle East presence, 7 stores</span></li>
+        <li><span class="brands__name">Costa Coffee</span><span class="brands__role">General Manager → brought to Kuwait</span></li>
+        <li><span class="brands__name">Van Cleef &amp; Arpels</span><span class="brands__role">Secured exclusive rights for Kuwait</span></li>
+        <li><span class="brands__name">Bvlgari</span><span class="brands__role">Helped introduce to the Kuwait market</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ HUMAN SIDE ============ -->
+  <section class="human">
+    <div class="human__visual" data-reveal aria-hidden="true">
+      <div class="human__glow"></div>
+    </div>
+    <div class="human__text">
+      <h2 class="human__headline" data-split>The business was never just the business.</h2>
+      <p data-reveal>
+        Koya's favorite pastime was sipping coffee with close friends and helping them grow
+        their businesses. Many of those casual sessions quietly turned into
+        multi-million-dollar successes — the advice itself had nowhere formal to live, until it did.
+      </p>
+      <p data-reveal>
+        Over thirty years and 43 countries, the constant was never the category — food, coffee,
+        or luxury retail — it was people: teams built from 18+ nationalities, and a reputation
+        built on human-centered leadership rather than brilliance alone.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ ENTREPRENEURSHIP TRANSITION ============ -->
+  <section class="pivot">
+    <span class="section-eyebrow">The next chapter</span>
+    <div class="pivot__words" id="pivotWords" data-split>
+      <span>Learning</span><span class="pivot__arrow">→</span>
+      <span>Leading</span><span class="pivot__arrow">→</span>
+      <span>Building</span><span class="pivot__arrow">→</span>
+      <span>Mentoring</span>
+    </div>
+  </section>
+
+  <!-- ============ 04 HK CONSULTANCY ============ -->
+  <section class="consultancy" id="consultancy">
+    <span class="section-eyebrow">04 — HK Consultancy</span>
+    <h2 class="consultancy__headline" data-split>Experience, reimagined for the next generation of business.</h2>
+    <p class="consultancy__lede" data-reveal>
+      Founded in 2021, HK Consultancy is a boutique business and brand consultancy — three
+      decades of global operating experience turned into personalized, strategic support for
+      modern entrepreneurs and companies.
+    </p>
+    <ul class="consultancy__focus" data-reveal>
+      <li>Retail</li>
+      <li>F&amp;B</li>
+      <li>Lifestyle brands</li>
+      <li>Business strategy</li>
+      <li>Brand building</li>
+      <li>Entrepreneurship</li>
+    </ul>
+    <p class="consultancy__region" data-reveal>Operating across the Middle East and India.</p>
+    <a class="btn btn--primary" href="#contact">Explore HK Consultancy →</a>
+  </section>
+
+  <!-- ============ 05 MENTORSHIP ============ -->
+  <section class="mentorship" id="mentorship">
+    <span class="section-eyebrow">05 — Mentorship</span>
+    <p class="mentorship__intro" data-reveal>
+      A motivational speaker and career mentor, Habib now devotes time to training young
+      minds — teaching them how to turn passion into profession, and dreams into sustainable careers.
+    </p>
+    <div class="mentorship__cycle" id="mentorshipCycle" aria-hidden="true">
+      <span class="is-active">Passion</span>
+      <span>Purpose</span>
+      <span>Profession</span>
+      <span>Legacy</span>
+    </div>
+  </section>
+
+  <!-- ============ LEGACY ============ -->
+  <section class="legacy">
+    <h2 class="legacy__headline" data-split>
+      Every empire has an origin.<br><em>His started at home.</em>
+    </h2>
+    <p class="legacy__body" data-reveal>
+      What began with his mother's entrepreneurial spirit — cooking in large batches, running
+      a household like a business, turning very little into something — became his own
+      legacy: thirty years, 43 countries, and a consultancy built to pass it on.
+    </p>
   </section>
 
   <!-- ============ CONTACT ============ -->
   <section class="contact" id="contact">
-    <span class="section-eyebrow">06 — Contact</span>
-    <h2 class="contact__heading">Let&rsquo;s talk.</h2>
-    <p class="contact__lede">
-      The fastest way to reach Habib is a short introductory call — no forms, no gatekeeping.
-    </p>
-    <a class="btn btn--primary btn--large" href="https://wa.me/971585815229?text=Hi%20Habib%2C%20I%27d%20like%20to%20book%20an%20introductory%20call." target="_blank" rel="noopener">
-      Book an introductory call
-    </a>
-    <dl class="contact__details">
+    <h2 class="contact__headline" data-split>Let's build what's next.</h2>
+    <div class="contact__grid">
       <div>
-        <dt>Phone / WhatsApp</dt>
-        <dd><a href="tel:+971585815229">+971 58 581 5229</a></dd>
-        <dd><a href="tel:+917829500009">+91 78295 00009</a></dd>
+        <p class="contact__name">Habib Koya</p>
+        <a class="btn btn--primary btn--large" href="https://wa.me/971585815229?text=Hi%20Habib%2C%20I%27d%20like%20to%20book%20an%20introductory%20call." target="_blank" rel="noopener">
+          Book an introductory call
+        </a>
       </div>
-      <div>
-        <dt>Instagram</dt>
-        <dd><a href="https://instagram.com/habibkoya" target="_blank" rel="noopener">@habibkoya</a></dd>
-        <dd><a href="https://instagram.com/habibhasi" target="_blank" rel="noopener">@habibhasi</a></dd>
-      </div>
-      <div>
-        <dt>Based between</dt>
-        <dd>Kuwait &middot; India</dd>
-      </div>
-    </dl>
+      <dl class="contact__details">
+        <div>
+          <dt>Phone / WhatsApp</dt>
+          <dd><a href="tel:+971585815229">+971 58 581 5229</a></dd>
+          <dd><a href="tel:+917829500009">+91 78295 00009</a></dd>
+        </div>
+        <div>
+          <dt>Instagram</dt>
+          <dd><a href="https://instagram.com/habibkoya" target="_blank" rel="noopener">@habibkoya</a></dd>
+          <dd><a href="https://instagram.com/habibhasi" target="_blank" rel="noopener">@habibhasi</a></dd>
+        </div>
+      </dl>
+    </div>
   </section>
 
 </main>
@@ -321,6 +372,18 @@
   <a href="#top">Back to top ↑</a>
 </footer>
 
-<script src="js/main.js"></script>
+<div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js" defer></script>
+<script src="js/loader.js" defer></script>
+<script src="js/main.js" defer></script>
+<script src="js/hero.js" defer></script>
+<script src="js/timeline.js" defer></script>
+<script src="js/globe.js" defer></script>
+<script src="js/brands.js" defer></script>
+<script src="js/mentorship.js" defer></script>
 </body>
 </html>

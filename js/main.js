@@ -2,151 +2,190 @@
   "use strict";
 
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const hasGSAP = typeof window.gsap !== "undefined";
+  const hasScrollTrigger = hasGSAP && typeof window.ScrollTrigger !== "undefined";
+  if (hasScrollTrigger) gsap.registerPlugin(ScrollTrigger);
 
   /* ---------------------------------------------------------
-     Fullscreen index overlay — open/close, focus trap, Escape
+     Lenis smooth scroll (progressive enhancement)
      --------------------------------------------------------- */
-  const toggle = document.getElementById("navToggle");
-  const overlay = document.getElementById("navOverlay");
-  const closeBtn = document.getElementById("navClose");
+  let lenis = null;
+  if (!reduceMotion && typeof window.Lenis !== "undefined") {
+    lenis = new Lenis({ duration: 1.05, smoothWheel: true });
+    const raf = (time) => {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    };
+    requestAnimationFrame(raf);
+    if (hasScrollTrigger) {
+      lenis.on("scroll", ScrollTrigger.update);
+      gsap.ticker.add((time) => lenis.raf(time * 1000));
+      gsap.ticker.lagSmoothing(0);
+    }
+  }
+  window.__hkLenis = lenis;
 
-  if (toggle && overlay && closeBtn) {
-    let lastFocused = null;
+  /* ---------------------------------------------------------
+     Nav: scrolled state + mobile fullscreen menu
+     --------------------------------------------------------- */
+  const nav = document.getElementById("siteNav");
+  const onScroll = () => {
+    if (window.scrollY > 40) nav.classList.add("is-scrolled");
+    else nav.classList.remove("is-scrolled");
+  };
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
 
-    const focusableSelector = 'a[href], button:not([disabled])';
-
-    const openOverlay = () => {
-      lastFocused = document.activeElement;
-      overlay.hidden = false;
+  const navToggle = document.getElementById("navToggle");
+  const navMobile = document.getElementById("navMobile");
+  if (navToggle && navMobile) {
+    const open = () => {
+      navMobile.hidden = false;
+      requestAnimationFrame(() => navMobile.classList.add("is-open"));
+      navToggle.setAttribute("aria-expanded", "true");
       document.body.style.overflow = "hidden";
-      toggle.setAttribute("aria-expanded", "true");
-      requestAnimationFrame(() => overlay.classList.add("is-open"));
-      const firstLink = overlay.querySelector(focusableSelector);
-      if (firstLink) firstLink.focus();
+      navMobile.querySelector("a")?.focus();
     };
-
-    const closeOverlay = () => {
-      overlay.classList.remove("is-open");
-      toggle.setAttribute("aria-expanded", "false");
+    const close = () => {
+      navMobile.classList.remove("is-open");
+      navToggle.setAttribute("aria-expanded", "false");
       document.body.style.overflow = "";
-      const finish = () => { overlay.hidden = true; };
-      if (reduceMotion) finish();
-      else setTimeout(finish, 350);
-      if (lastFocused) lastFocused.focus();
+      setTimeout(() => { navMobile.hidden = true; }, reduceMotion ? 0 : 500);
     };
-
-    toggle.addEventListener("click", () => {
-      const isOpen = overlay.classList.contains("is-open");
-      isOpen ? closeOverlay() : openOverlay();
+    navToggle.addEventListener("click", () => {
+      navMobile.classList.contains("is-open") ? close() : open();
     });
-    closeBtn.addEventListener("click", closeOverlay);
-
-    overlay.addEventListener("click", (e) => {
-      if (e.target.tagName === "A") closeOverlay();
-    });
-
+    navMobile.querySelectorAll("a").forEach((a) => a.addEventListener("click", close));
     document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && overlay.classList.contains("is-open")) {
-        closeOverlay();
-        return;
-      }
-      if (e.key === "Tab" && overlay.classList.contains("is-open")) {
-        const focusables = Array.from(overlay.querySelectorAll(focusableSelector));
-        if (!focusables.length) return;
-        const first = focusables[0];
-        const last = focusables[focusables.length - 1];
-        if (e.shiftKey && document.activeElement === first) {
-          e.preventDefault();
-          last.focus();
-        } else if (!e.shiftKey && document.activeElement === last) {
-          e.preventDefault();
-          first.focus();
-        }
+      if (e.key === "Escape" && navMobile.classList.contains("is-open")) {
+        close();
+        navToggle.focus();
       }
     });
   }
 
   /* ---------------------------------------------------------
-     Side rail — highlight the section currently in view
+     Split-text: wrap headline text into masked lines
      --------------------------------------------------------- */
-  const railLinks = document.querySelectorAll(".rail__list a");
-  if (railLinks.length) {
-    const map = new Map();
-    railLinks.forEach((a) => {
-      const id = a.getAttribute("data-section");
-      const el = document.getElementById(id);
-      if (el) map.set(el, a);
-    });
-
-    const railObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const link = map.get(entry.target);
-          if (!link) return;
-          if (entry.isIntersecting) {
-            railLinks.forEach((l) => l.classList.remove("is-active"));
-            link.classList.add("is-active");
-          }
-        });
-      },
-      { rootMargin: "-45% 0px -45% 0px", threshold: 0 }
-    );
-    map.forEach((_, el) => railObserver.observe(el));
-  }
-
-  /* ---------------------------------------------------------
-     Case-study scrollytelling — highlight the active phase
-     (Problem / Decision / Evidence / Result) as the reader
-     scrolls the narrative column. Purely additive: every
-     phase is a real, readable <article> in document order,
-     this only decorates the sticky index alongside it.
-     --------------------------------------------------------- */
-  document.querySelectorAll(".case").forEach((caseSection) => {
-    const phaseItems = caseSection.querySelectorAll(".case__phases li");
-    const blocks = caseSection.querySelectorAll(".case__block");
-    if (!phaseItems.length || !blocks.length) return;
-
-    const byPhase = new Map();
-    phaseItems.forEach((li) => byPhase.set(li.getAttribute("data-phase"), li));
-
-    const blockObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          const phase = entry.target.getAttribute("data-phase");
-          const li = byPhase.get(phase);
-          if (!li) return;
-          phaseItems.forEach((item) => item.classList.remove("is-active"));
-          li.classList.add("is-active");
-        });
-      },
-      { rootMargin: "-40% 0px -50% 0px", threshold: 0 }
-    );
-    blocks.forEach((b) => blockObserver.observe(b));
+  document.querySelectorAll("[data-split]").forEach((el) => {
+    const html = el.innerHTML;
+    const parts = html.split(/<br\s*\/?>/i);
+    el.innerHTML = parts
+      .map(
+        (part) =>
+          `<span class="split-line-mask"><span class="split-line">${part}</span></span>`
+      )
+      .join("");
   });
 
   /* ---------------------------------------------------------
-     Quiet reveal-on-scroll for major content blocks
+     Reveal on scroll: [data-reveal] elements reveal themselves.
+     .split-line elements are clipped by their own overflow:hidden
+     mask, so observing them directly never registers as
+     intersecting (an ancestor clip zeroes the visible area per
+     the IntersectionObserver spec) — observe the unclipped
+     .split-line-mask wrapper instead and reveal its child.
      --------------------------------------------------------- */
-  const revealTargets = document.querySelectorAll(
-    ".origin__grid, .arc__heading, .arc__list, .case__block, .contact__heading, .contact__details"
-  );
-  revealTargets.forEach((el) => el.classList.add("reveal"));
-
-  if (!reduceMotion && "IntersectionObserver" in window) {
-    const revealObserver = new IntersectionObserver(
+  const revealEls = document.querySelectorAll("[data-reveal]");
+  const maskEls = document.querySelectorAll(".split-line-mask");
+  const revealTarget = (el) => {
+    const line = el.classList.contains("split-line-mask") ? el.querySelector(".split-line") : el;
+    line.classList.add("is-visible");
+  };
+  if ("IntersectionObserver" in window) {
+    const io = new IntersectionObserver(
       (entries, obs) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
+            revealTarget(entry.target);
             obs.unobserve(entry.target);
           }
         });
       },
-      { threshold: 0.15 }
+      { threshold: 0.15, rootMargin: "0px 0px -8% 0px" }
     );
-    revealTargets.forEach((el) => revealObserver.observe(el));
+    revealEls.forEach((el) => io.observe(el));
+    maskEls.forEach((el) => io.observe(el));
   } else {
-    revealTargets.forEach((el) => el.classList.add("is-visible"));
+    revealEls.forEach((el) => el.classList.add("is-visible"));
+    maskEls.forEach((el) => revealTarget(el));
+  }
+
+  /* ---------------------------------------------------------
+     Magnetic buttons (desktop, fine pointer only)
+     --------------------------------------------------------- */
+  const canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  if (canHover && !reduceMotion) {
+    document.querySelectorAll(".btn").forEach((btn) => {
+      btn.addEventListener("mousemove", (e) => {
+        const r = btn.getBoundingClientRect();
+        const x = e.clientX - r.left - r.width / 2;
+        const y = e.clientY - r.top - r.height / 2;
+        btn.style.transform = `translate(${x * 0.25}px, ${y * 0.35}px)`;
+      });
+      btn.addEventListener("mouseleave", () => {
+        btn.style.transform = "";
+      });
+    });
+  }
+
+  /* ---------------------------------------------------------
+     Cursor dot
+     --------------------------------------------------------- */
+  const dot = document.getElementById("cursorDot");
+  if (dot && canHover) {
+    let x = 0, y = 0, dx = 0, dy = 0;
+    window.addEventListener("mousemove", (e) => {
+      x = e.clientX; y = e.clientY;
+      dot.style.opacity = "1";
+    });
+    const animateDot = () => {
+      dx += (x - dx) * 0.18;
+      dy += (y - dy) * 0.18;
+      dot.style.transform = `translate(${dx}px, ${dy}px) translate(-50%,-50%)`;
+      requestAnimationFrame(animateDot);
+    };
+    if (!reduceMotion) requestAnimationFrame(animateDot);
+    document.querySelectorAll("a, button").forEach((el) => {
+      el.addEventListener("mouseenter", () => {
+        dot.style.width = "22px"; dot.style.height = "22px";
+      });
+      el.addEventListener("mouseleave", () => {
+        dot.style.width = "8px"; dot.style.height = "8px";
+      });
+    });
+  }
+
+  /* ---------------------------------------------------------
+     Grain canvas (subtle, static-ish film grain)
+     --------------------------------------------------------- */
+  const grainCanvas = document.getElementById("grainCanvas");
+  if (grainCanvas && !reduceMotion) {
+    const ctx = grainCanvas.getContext("2d");
+    const resize = () => {
+      grainCanvas.width = window.innerWidth;
+      grainCanvas.height = window.innerHeight;
+    };
+    resize();
+    window.addEventListener("resize", resize);
+
+    const draw = () => {
+      const w = grainCanvas.width, h = grainCanvas.height;
+      const imgData = ctx.createImageData(w, h);
+      const buffer = new Uint32Array(imgData.data.buffer);
+      for (let i = 0; i < buffer.length; i++) {
+        const v = (Math.random() * 255) | 0;
+        buffer[i] = (255 << 24) | (v << 16) | (v << 8) | v;
+      }
+      ctx.putImageData(imgData, 0, 0);
+    };
+    let last = 0;
+    const loop = (t) => {
+      if (t - last > 90) { draw(); last = t; }
+      requestAnimationFrame(loop);
+    };
+    requestAnimationFrame(loop);
+  } else if (grainCanvas) {
+    grainCanvas.remove();
   }
 })();
