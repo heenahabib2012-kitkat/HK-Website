@@ -428,13 +428,11 @@ section:not(.hero) {
 }
 .human__visual {
   aspect-ratio: 4/5; position: relative; overflow: hidden; border: 1px solid var(--line);
+  margin: 0; background: var(--black-soft);
 }
-.human__glow {
-  position: absolute; inset: 0;
-  background:
-    radial-gradient(circle at 30% 20%, color-mix(in srgb, var(--champagne) 22%, transparent), transparent 55%),
-    radial-gradient(circle at 75% 80%, color-mix(in srgb, var(--ink) 8%, transparent), transparent 60%),
-    var(--black-soft);
+.human__visual img {
+  width: 100%; height: 100%; object-fit: cover; object-position: top center;
+  filter: grayscale(0.25) contrast(1.03);
 }
 .human__headline { font-size: clamp(1.9rem, 4vw, 3rem); margin-bottom: 1.5rem; max-width: 16ch; }
 
