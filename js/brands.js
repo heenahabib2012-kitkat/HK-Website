@@ -33,7 +33,12 @@
     }
     const scrolledIntoPin = stickyTop() - scroller.getBoundingClientRect().top;
     const progress = Math.min(1, Math.max(0, scrolledIntoPin / total));
-    track.style.transform = `translate3d(${-progress * total}px, 0, 0)`;
+    // In RTL the first card sits flush at the right edge and the rest
+    // overflow to the left, so revealing them means sliding the track
+    // right instead of left — the opposite of the LTR case.
+    const isRTL = document.documentElement.dir === "rtl";
+    const x = isRTL ? progress * total : -progress * total;
+    track.style.transform = `translate3d(${x}px, 0, 0)`;
   };
   const requestUpdate = () => {
     if (!ticking) {
