@@ -129,6 +129,18 @@ strong { color: var(--ink); font-weight: 600; }
 @media (prefers-reduced-motion: reduce) { .grain { display: none; } }
 
 /* =========================================================
+   SCROLL PROGRESS
+   ========================================================= */
+.scroll-progress {
+  position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 400;
+  background: color-mix(in srgb, var(--line) 60%, transparent);
+}
+.scroll-progress span {
+  display: block; height: 100%; width: 0%; background: var(--champagne);
+  transform-origin: left; transition: width 80ms linear;
+}
+
+/* =========================================================
    CURSOR DOT (desktop only)
    ========================================================= */
 .cursor-dot {
@@ -164,11 +176,18 @@ strong { color: var(--ink); font-weight: 600; }
 .nav__links { display: none; gap: 2.25rem; }
 @media (min-width: 900px) { .nav__links { display: flex; } }
 .nav__links a {
+  position: relative;
   font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase;
   color: var(--ink-dim); display: inline-flex; align-items: baseline; gap: 0.5rem;
   transition: color 200ms var(--ease);
 }
+.nav__links a::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -0.3rem; height: 1px;
+  background: var(--champagne); transform: scaleX(0); transform-origin: left;
+  transition: transform 320ms var(--ease-out-expo);
+}
 .nav__links a:hover, .nav__links a:focus-visible { color: var(--ink); }
+.nav__links a:hover::after, .nav__links a:focus-visible::after { transform: scaleX(1); }
 .nav__idx { color: var(--champagne); font-size: 0.7rem; }
 
 .nav__toggle {
@@ -346,6 +365,11 @@ section:not(.hero) {
   color: var(--champagne); margin-bottom: 0.6rem;
 }
 .journey__card h3 { font-size: clamp(1.3rem, 2.4vw, 1.7rem); margin-bottom: 0.75rem; }
+.journey__brands { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+.journey__brands img {
+  width: 2rem; height: 2rem; object-fit: contain;
+  background: var(--ink); border-radius: 6px; padding: 0.3rem;
+}
 .journey__card blockquote {
   margin: 1rem 0; padding-left: 1.1rem; border-left: 2px solid var(--champagne);
   font-family: var(--font-display); font-style: italic; font-size: 1.15rem; color: var(--ink);
@@ -429,6 +453,8 @@ section:not(.hero) {
 .human__visual {
   aspect-ratio: 4/5; position: relative; overflow: hidden; border: 1px solid var(--line);
   margin: 0; background: var(--black-soft);
+  transition: opacity 800ms var(--ease-out-expo), transform 350ms var(--ease-out-expo);
+  will-change: transform;
 }
 .human__visual img {
   width: 100%; height: 100%; object-fit: cover; object-position: top center;

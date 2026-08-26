@@ -26,6 +26,23 @@
   window.__hkLenis = lenis;
 
   /* ---------------------------------------------------------
+     Scroll progress bar
+     --------------------------------------------------------- */
+  const progressFill = document.getElementById("scrollProgressFill");
+  if (progressFill) {
+    if (reduceMotion) progressFill.style.transition = "none";
+    const updateProgress = () => {
+      const doc = document.documentElement;
+      const scrollable = doc.scrollHeight - doc.clientHeight;
+      const pct = scrollable > 0 ? (doc.scrollTop / scrollable) * 100 : 0;
+      progressFill.style.width = pct + "%";
+    };
+    window.addEventListener("scroll", updateProgress, { passive: true });
+    window.addEventListener("resize", updateProgress);
+    updateProgress();
+  }
+
+  /* ---------------------------------------------------------
      Nav: scrolled state + mobile fullscreen menu
      --------------------------------------------------------- */
   const nav = document.getElementById("siteNav");
@@ -126,6 +143,24 @@
       btn.addEventListener("mouseleave", () => {
         btn.style.transform = "";
       });
+    });
+  }
+
+  /* ---------------------------------------------------------
+     Human Side photo: cursor-reactive tilt (desktop only)
+     --------------------------------------------------------- */
+  const humanVisual = document.getElementById("humanVisual");
+  if (humanVisual && canHover && !reduceMotion) {
+    const maxTilt = 7;
+    humanVisual.addEventListener("mousemove", (e) => {
+      const r = humanVisual.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width - 0.5;
+      const py = (e.clientY - r.top) / r.height - 0.5;
+      humanVisual.style.transform =
+        `perspective(900px) rotateY(${px * maxTilt}deg) rotateX(${-py * maxTilt}deg) scale3d(1.02, 1.02, 1.02)`;
+    });
+    humanVisual.addEventListener("mouseleave", () => {
+      humanVisual.style.transform = "";
     });
   }
 

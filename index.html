@@ -6,7 +6,9 @@
 <title>Habib Koya — Entrepreneur, Strategist, Brand Builder</title>
 <meta name="description" content="Thirty years building businesses, brands and people across 43 countries. From a small town in Karnataka to global boardrooms — Habib Koya, Founder of HK Consultancy.">
 <link rel="canonical" href="https://habibkoya.com/">
-<link rel="icon" href="data:,">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,400;1,9..144,600&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -57,6 +59,9 @@
 
 <!-- ============ GRAIN OVERLAY ============ -->
 <canvas class="grain" id="grainCanvas" aria-hidden="true"></canvas>
+
+<!-- ============ SCROLL PROGRESS ============ -->
+<div class="scroll-progress" aria-hidden="true"><span id="scrollProgressFill"></span></div>
 
 <!-- ============ NAVIGATION ============ -->
 <header class="nav" id="siteNav">
@@ -186,6 +191,11 @@
           <div class="journey__card">
             <span class="journey__year">2009</span>
             <h3>Costa Coffee → Hussein Morad Bebehani Group</h3>
+            <div class="journey__brands" aria-hidden="true">
+              <img src="assets/img/costa.jpeg" alt="">
+              <img src="assets/img/vancleef.jpeg" alt="">
+              <img src="assets/img/bulgari.jpeg" alt="">
+            </div>
             <p>Joined Costa Coffee as General Manager, then became Commercial Director of the
               entire Hussein Morad Bebehani Group — bringing Costa Coffee, Van Cleef &amp; Arpels
               and Bvlgari into Kuwait, the Van Cleef &amp; Arpels rights secured through a
@@ -204,6 +214,9 @@
           <div class="journey__card">
             <span class="journey__year">United States → Middle East</span>
             <h3>Auntie Anne's</h3>
+            <div class="journey__brands" aria-hidden="true">
+              <img src="assets/img/auntieanne's.jpeg" alt="">
+            </div>
             <p>Trained in the U.S. on the brand's own operating model, then built its Middle
               East presence from the ground up — including expansion into Kuwait's Avenue Mall
               and the brand's first outlet in Basra, Iraq.</p>
@@ -217,6 +230,9 @@
           <div class="journey__card">
             <span class="journey__year">2005</span>
             <h3>Starbucks Coffee, Kuwait</h3>
+            <div class="journey__brands" aria-hidden="true">
+              <img src="assets/img/starbucks.jpeg" alt="">
+            </div>
             <p>Joined as District Manager. A regular customer, impressed by his dedication, made
               an offer that would change the course of his career.</p>
             <ul class="journey__facts">
@@ -230,6 +246,10 @@
           <div class="journey__card">
             <span class="journey__year">1995</span>
             <h3>Domino's Pizza, Saudi Arabia</h3>
+            <div class="journey__brands" aria-hidden="true">
+              <img src="assets/img/dominos.jpeg" alt="">
+              <img src="assets/img/marrybrown.jpeg" alt="">
+            </div>
             <p>Started as a delivery boy, rose to Deputy District Manager and then Senior
               Operations Manager. Helped bring the Malaysian brand Marrybrown to India along the way.</p>
             <ul class="journey__facts">
@@ -297,7 +317,7 @@
 
   <!-- ============ HUMAN SIDE ============ -->
   <section class="human">
-    <figure class="human__visual" data-reveal>
+    <figure class="human__visual" id="humanVisual" data-reveal>
       <img src="assets/img/HabibKoya.jpeg" alt="Habib Koya speaking at the Asian Arab Awards, 2019" loading="lazy">
     </figure>
     <div class="human__text">
