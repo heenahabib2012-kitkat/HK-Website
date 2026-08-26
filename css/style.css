@@ -371,6 +371,27 @@ section:not(.hero) {
 .global__stats dt { font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3rem); color: var(--champagne-soft); }
 .global__stats dd { margin: 0.2rem 0 0; font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-faint); }
 .global__note { max-width: 34ch; }
+.global__logos {
+  list-style: none; margin: 2.25rem 0 0; padding: 0;
+  display: flex; flex-wrap: wrap; gap: 0.75rem; max-width: 26rem;
+}
+.global__logos li {
+  width: 3.75rem; height: 3.75rem; border-radius: 10px;
+  background: var(--ink); padding: 0.6rem;
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 250ms var(--ease);
+}
+.global__logos img {
+  max-width: 100%; max-height: 100%; object-fit: contain;
+  filter: grayscale(1) opacity(0.85);
+  transition: filter 250ms var(--ease);
+}
+.global__logos li:hover, .global__logos li:focus-within { transform: translateY(-3px); }
+.global__logos li:hover img, .global__logos li:focus-within img { filter: none; }
+@media (prefers-reduced-motion: reduce) {
+  .global__logos li { transition: none; }
+  .global__logos img { transition: none; }
+}
 .global__stage {
   position: absolute; top: 0; right: 0; bottom: 0; left: 0; z-index: 1;
   display: flex; align-items: center; justify-content: flex-end;
