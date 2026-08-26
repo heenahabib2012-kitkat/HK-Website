@@ -16,6 +16,11 @@
   track.style.overflow = "visible";
 
   const setDistance = () => Math.max(0, track.scrollWidth - window.innerWidth + 2 * 24);
+  // Pin a little below the fixed nav bar, not flush against it — otherwise
+  // on a shorter viewport the nav sits on top of (and hides) the section
+  // headline while it's pinned.
+  const navEl = document.getElementById("siteNav");
+  const pinOffset = () => (navEl ? navEl.getBoundingClientRect().height : 0) + 24;
 
   let st;
   const build = () => {
@@ -25,7 +30,7 @@
       ease: "none",
       scrollTrigger: {
         trigger: section,
-        start: "top top",
+        start: () => "top " + pinOffset(),
         end: () => "+=" + setDistance(),
         scrub: true,
         pin: true,
