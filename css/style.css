@@ -38,6 +38,9 @@ html { background: var(--black); }
 body {
   margin: 0;
   background: var(--black);
+  background:
+    radial-gradient(ellipse 90% 65% at 50% 15%, var(--black-soft) 0%, var(--black) 70%)
+    fixed;
   color: var(--ink);
   font-family: var(--font-ui);
   font-size: 1rem;

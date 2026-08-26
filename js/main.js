@@ -192,7 +192,12 @@
       const buffer = new Uint32Array(imgData.data.buffer);
       for (let i = 0; i < buffer.length; i++) {
         const v = (Math.random() * 255) | 0;
-        buffer[i] = (255 << 24) | (v << 16) | (v << 8) | v;
+        // Tint the noise toward champagne (r > g > b) instead of neutral
+        // gray, so the grain reads as warm rather than flat static.
+        const r = v;
+        const g = (v * 0.88) | 0;
+        const b = (v * 0.62) | 0;
+        buffer[i] = (255 << 24) | (b << 16) | (g << 8) | r;
       }
       ctx.putImageData(imgData, 0, 0);
     };
