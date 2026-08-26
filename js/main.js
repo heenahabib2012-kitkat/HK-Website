@@ -127,6 +127,7 @@
     revealEls.forEach((el) => el.classList.add("is-visible"));
     maskEls.forEach((el) => revealTarget(el));
   }
+  window.__hkMainInitialized = true;
 
   /* ---------------------------------------------------------
      Magnetic buttons (desktop, fine pointer only)

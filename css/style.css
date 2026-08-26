@@ -26,6 +26,28 @@
 * { box-sizing: border-box; }
 html { background: var(--black); }
 
+/* =========================================================
+   ARABIC / RTL
+   ========================================================= */
+[dir="rtl"] {
+  --font-display: "Cairo", var(--font-ui);
+  --font-ui: "Cairo", "Instrument Sans", -apple-system, sans-serif;
+}
+/* Tracked-out letter-spacing breaks Arabic letter joining — always off in RTL. */
+[dir="rtl"] * { letter-spacing: normal !important; }
+
+/* The journey rail/marker center themselves on inset-inline-start with
+   translateX(-50%). Under RTL that inset anchors the element's right
+   edge instead of its left, so the same negative offset overshoots —
+   it needs the opposite sign to land centered on the rail. */
+[dir="rtl"] .journey__line,
+[dir="rtl"] .journey__marker {
+  transform: translateX(50%);
+}
+
+/* Nav underline should sweep in from the reading-start side. */
+[dir="rtl"] .nav__links a::after { transform-origin: right; }
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after {
@@ -193,6 +215,18 @@ strong { color: var(--ink); font-weight: 600; }
 .nav__links a:hover::after, .nav__links a:focus-visible::after { transform: scaleX(1); }
 .nav__idx { color: var(--champagne); font-size: 0.7rem; }
 
+.lang-toggle {
+  font-family: var(--font-ui); font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--champagne); background: none; border: 1px solid var(--line); border-radius: 999px;
+  padding: 0.4rem 0.9rem; cursor: pointer; min-height: 32px;
+  transition: border-color 200ms var(--ease), color 200ms var(--ease);
+}
+[dir="rtl"] .lang-toggle { font-family: "Instrument Sans", sans-serif; }
+.lang-toggle:hover, .lang-toggle:focus-visible { border-color: var(--champagne); color: var(--ink); }
+.lang-toggle--mobile {
+  margin-top: 1.5rem; align-self: flex-start;
+}
+
 .nav__toggle {
   display: flex; flex-direction: column; gap: 5px; justify-content: center;
   width: 44px; height: 44px; background: none; border: none; cursor: pointer;
@@ -226,7 +260,13 @@ strong { color: var(--ink); font-weight: 600; }
   position: relative; min-height: 100svh; min-height: 100vh;
   display: flex; align-items: flex-end; overflow: hidden;
   padding: 0 var(--gutter) clamp(3rem, 8vh, 6rem);
+  gap: 2rem;
+  /* Keep the photo/text composition physically fixed regardless of
+     page language (the directional vignette/mask below are tuned to
+     this exact arrangement) — only the text itself flips to RTL. */
+  direction: ltr;
 }
+[dir="rtl"] .hero__content { direction: rtl; text-align: right; }
 .hero__image-wrap {
   position: absolute; inset: 0; z-index: 0;
   display: flex; justify-content: flex-end; align-items: center;
@@ -348,7 +388,7 @@ section:not(.hero) {
 .journey__headline { font-size: clamp(2rem, 4.5vw, 3.4rem); }
 .journey__timeline { position: relative; --journey-rail: 11.5px; }
 .journey__line {
-  position: absolute; left: var(--journey-rail); top: 0.6rem; bottom: 0.6rem; width: 1px;
+  position: absolute; inset-inline-start: var(--journey-rail); top: 0.6rem; bottom: 0.6rem; width: 1px;
   background: var(--line); transform: translateX(-50%);
 }
 @media (min-width: 760px) { .journey__timeline { --journey-rail: 5.5rem; } }
@@ -356,10 +396,10 @@ section:not(.hero) {
   display: block; width: 100%; height: 0%; background: var(--champagne); transform-origin: top;
 }
 .journey__list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 3rem; }
-.journey__item { position: relative; padding-left: 2.75rem; }
-@media (min-width: 760px) { .journey__item { padding-left: 8rem; } }
+.journey__item { position: relative; padding-inline-start: 2.75rem; }
+@media (min-width: 760px) { .journey__item { padding-inline-start: 8rem; } }
 .journey__marker {
-  position: absolute; left: var(--journey-rail); top: 0.5rem; width: 15px; height: 15px; border-radius: 50%;
+  position: absolute; inset-inline-start: var(--journey-rail); top: 0.5rem; width: 15px; height: 15px; border-radius: 50%;
   background: var(--black); border: 1px solid var(--champagne); transform: translateX(-50%);
 }
 .journey__card { max-width: 42rem; }
@@ -369,15 +409,15 @@ section:not(.hero) {
 }
 .journey__card h3 { font-size: clamp(1.3rem, 2.4vw, 1.7rem); margin-bottom: 0.75rem; }
 .journey__card blockquote {
-  margin: 1rem 0; padding-left: 1.1rem; border-left: 2px solid var(--champagne);
+  margin: 1rem 0; padding-inline-start: 1.1rem; border-inline-start: 2px solid var(--champagne);
   font-family: var(--font-display); font-style: italic; font-size: 1.15rem; color: var(--ink);
 }
 .journey__facts { list-style: none; margin: 1rem 0 0; padding: 0; display: grid; gap: 0.45rem; }
 .journey__facts li {
-  font-size: 0.85rem; color: var(--ink-faint); padding-left: 1.1rem; position: relative;
+  font-size: 0.85rem; color: var(--ink-faint); padding-inline-start: 1.1rem; position: relative;
 }
 .journey__facts li::before {
-  content: ""; position: absolute; left: 0; top: 0.55em; width: 5px; height: 1px; background: var(--champagne);
+  content: ""; position: absolute; inset-inline-start: 0; top: 0.55em; width: 5px; height: 1px; background: var(--champagne);
 }
 
 /* =========================================================
