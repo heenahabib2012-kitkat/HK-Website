@@ -1,43 +1,9 @@
 (() => {
   "use strict";
-  const section = document.getElementById("brandsSection");
-  const track = document.getElementById("brandsTrack");
-  if (!section || !track) return;
-
-  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const hasGSAP = typeof window.gsap !== "undefined";
-  const hasScrollTrigger = hasGSAP && typeof window.ScrollTrigger !== "undefined";
-  const isNarrow = window.matchMedia("(max-width: 760px)").matches;
-
-  // On touch/narrow screens, or without GSAP, keep the native
-  // overflow-x scroll-snap track (already works via CSS alone).
-  if (!hasScrollTrigger || reduceMotion || isNarrow) return;
-
-  track.style.overflow = "visible";
-
-  const setDistance = () => Math.max(0, track.scrollWidth - window.innerWidth + 2 * 24);
-  // Pin a little below the fixed nav bar, not flush against it — otherwise
-  // on a shorter viewport the nav sits on top of (and hides) the section
-  // headline while it's pinned.
-  const navEl = document.getElementById("siteNav");
-  const pinOffset = () => (navEl ? navEl.getBoundingClientRect().height : 0) + 24;
-
-  let st;
-  const build = () => {
-    if (st) st.kill();
-    st = gsap.to(track, {
-      x: () => -setDistance(),
-      ease: "none",
-      scrollTrigger: {
-        trigger: section,
-        start: () => "top " + pinOffset(),
-        end: () => "+=" + setDistance(),
-        scrub: true,
-        pin: true,
-        invalidateOnRefresh: true,
-      },
-    });
-  };
-  build();
-  window.addEventListener("resize", () => ScrollTrigger.refresh());
+  // The brand track is a plain horizontally-scrollable list
+  // (overflow-x + scroll-snap in CSS) on every device — no JS needed.
+  // A GSAP ScrollTrigger pin-and-scrub version was tried here, but
+  // pinning the page scroll to drive it proved unreliable (it could
+  // leave scrolling stuck partway through the track), so it's been
+  // removed in favor of the simple, native scroll that can't jam.
 })();
