@@ -147,24 +147,6 @@
   }
 
   /* ---------------------------------------------------------
-     Human Side photo: cursor-reactive tilt (desktop only)
-     --------------------------------------------------------- */
-  const humanVisual = document.getElementById("humanVisual");
-  if (humanVisual && canHover && !reduceMotion) {
-    const maxTilt = 7;
-    humanVisual.addEventListener("mousemove", (e) => {
-      const r = humanVisual.getBoundingClientRect();
-      const px = (e.clientX - r.left) / r.width - 0.5;
-      const py = (e.clientY - r.top) / r.height - 0.5;
-      humanVisual.style.transform =
-        `perspective(900px) rotateY(${px * maxTilt}deg) rotateX(${-py * maxTilt}deg) scale3d(1.02, 1.02, 1.02)`;
-    });
-    humanVisual.addEventListener("mouseleave", () => {
-      humanVisual.style.transform = "";
-    });
-  }
-
-  /* ---------------------------------------------------------
      Cursor dot
      --------------------------------------------------------- */
   const dot = document.getElementById("cursorDot");
