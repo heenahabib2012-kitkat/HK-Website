@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>HK Business Consultancy — Strategy Beyond Limits</title>
+<meta name="description" content="HK Business Consultancy helps ambitious companies scale, transform, and win — with strategy, finance, and growth expertise that's out of this world." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='%230b0e23'/%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='url(%23g)' stroke-width='4'/%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237c3aed'/%3E%3Cstop offset='1' stop-color='%2322d3ee'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ctext x='50' y='63' font-size='42' font-family='Arial' font-weight='700' fill='white' text-anchor='middle'%3EHK%3C/text%3E%3C/svg%3E" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<!-- ===== Preloader ===== -->
+<div class="preloader" id="preloader">
+  <div class="preloader__orbit">
+    <div class="preloader__planet"></div>
+    <div class="preloader__ring"></div>
+  </div>
+  <div class="preloader__label">HK<span>.</span></div>
+  <div class="preloader__percent" id="preloaderPercent">0%</div>
+</div>
+
+<!-- ===== Custom cursor ===== -->
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- ===== Starfield background ===== -->
+<canvas id="starfield"></canvas>
+<div class="nebula nebula--one" aria-hidden="true"></div>
+<div class="nebula nebula--two" aria-hidden="true"></div>
+
+<!-- ===== Progress bar ===== -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- ===== Navbar ===== -->
+<header class="nav" id="nav">
+  <div class="nav__inner">
+    <a href="#home" class="nav__logo">
+      <span class="nav__logo-mark">HK</span>
+      <span class="nav__logo-text">Consultancy</span>
+    </a>
+
+    <nav class="nav__links" id="navLinks">
+      <a href="#home" class="nav__link active" data-nav>Home</a>
+      <a href="#about" class="nav__link" data-nav>About</a>
+      <a href="#services" class="nav__link" data-nav>Services</a>
+      <a href="#process" class="nav__link" data-nav>Process</a>
+      <a href="#testimonials" class="nav__link" data-nav>Testimonials</a>
+      <a href="#contact" class="nav__link" data-nav>Contact</a>
+    </nav>
+
+    <a href="#contact" class="btn btn--sm btn--primary nav__cta">
+      <span>Book a Call</span>
+    </a>
+
+    <button class="nav__burger" id="navBurger" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- ===== Mobile menu ===== -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#home" data-nav-mobile>Home</a>
+  <a href="#about" data-nav-mobile>About</a>
+  <a href="#services" data-nav-mobile>Services</a>
+  <a href="#process" data-nav-mobile>Process</a>
+  <a href="#testimonials" data-nav-mobile>Testimonials</a>
+  <a href="#contact" data-nav-mobile>Contact</a>
+  <a href="#contact" class="btn btn--primary" data-nav-mobile>Book a Call</a>
+</div>
+
+<main>
+
+  <!-- ===== Hero ===== -->
+  <section class="hero" id="home">
+    <div class="hero__grid"></div>
+    <div class="container hero__inner">
+      <div class="hero__content" data-reveal>
+        <span class="eyebrow"><span class="eyebrow__dot"></span>Business Consultancy · Est. 2013</span>
+        <h1 class="hero__title">
+          Launch Your Business
+          <span class="text-gradient">Into Orbit</span>
+        </h1>
+        <p class="hero__subtitle">
+          HK Business Consultancy blends bold strategy, sharp financial thinking, and hands-on execution
+          to help ambitious companies break through gravity and scale beyond limits.
+        </p>
+        <div class="hero__actions">
+          <a href="#contact" class="btn btn--primary btn--lg">
+            <span>Start Your Ascent</span>
+            <svg viewBox="0 0 24 24" width="18" height="18"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="#services" class="btn btn--ghost btn--lg">
+            <span>Explore Services</span>
+          </a>
+        </div>
+
+        <div class="hero__stats">
+          <div class="hero__stat">
+            <span class="counter" data-count="12">0</span><span class="hero__stat-suffix">+</span>
+            <p>Years Experience</p>
+          </div>
+          <div class="hero__stat">
+            <span class="counter" data-count="480">0</span><span class="hero__stat-suffix">+</span>
+            <p>Clients Served</p>
+          </div>
+          <div class="hero__stat">
+            <span class="counter" data-count="37">0</span>
+            <p>Countries Reached</p>
+          </div>
+          <div class="hero__stat">
+            <span class="counter" data-count="98">0</span><span class="hero__stat-suffix">%</span>
+            <p>Client Retention</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero__orbit" aria-hidden="true" data-reveal>
+        <div class="orbit orbit--1"><div class="orbit__dot orbit__dot--a"></div></div>
+        <div class="orbit orbit--2"><div class="orbit__dot orbit__dot--b"></div></div>
+        <div class="orbit orbit--3"><div class="orbit__dot orbit__dot--c"></div></div>
+        <div class="orbit-core">
+          <span>HK</span>
+        </div>
+      </div>
+    </div>
+
+    <a href="#about" class="scroll-cue" aria-label="Scroll down">
+      <span class="scroll-cue__mouse"><span></span></span>
+      <small>Scroll</small>
+    </a>
+  </section>
+
+  <!-- ===== Marquee ===== -->
+  <section class="marquee-section" aria-label="Trusted by">
+    <p class="marquee-label">Trusted by teams building the future</p>
+    <div class="marquee">
+      <div class="marquee__track">
+        <span>NORTHSTAR&nbsp;GROUP</span><span>◆</span>
+        <span>VERTEX&nbsp;CAPITAL</span><span>◆</span>
+        <span>LUMEN&nbsp;LOGISTICS</span><span>◆</span>
+        <span>ORBITAL&nbsp;RETAIL</span><span>◆</span>
+        <span>ATLAS&nbsp;MANUFACTURING</span><span>◆</span>
+        <span>NOVA&nbsp;HEALTH</span><span>◆</span>
+        <span>QUANTUM&nbsp;FINTECH</span><span>◆</span>
+        <span>PIONEER&nbsp;ENERGY</span><span>◆</span>
+        <!-- duplicate for seamless loop -->
+        <span>NORTHSTAR&nbsp;GROUP</span><span>◆</span>
+        <span>VERTEX&nbsp;CAPITAL</span><span>◆</span>
+        <span>LUMEN&nbsp;LOGISTICS</span><span>◆</span>
+        <span>ORBITAL&nbsp;RETAIL</span><span>◆</span>
+        <span>ATLAS&nbsp;MANUFACTURING</span><span>◆</span>
+        <span>NOVA&nbsp;HEALTH</span><span>◆</span>
+        <span>QUANTUM&nbsp;FINTECH</span><span>◆</span>
+        <span>PIONEER&nbsp;ENERGY</span><span>◆</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== About ===== -->
+  <section class="about" id="about">
+    <div class="container about__inner">
+      <div class="about__visual" data-reveal>
+        <div class="about__card about__card--main">
+          <div class="orbit-mini">
+            <div class="orbit-mini__ring"></div>
+            <div class="orbit-mini__ring orbit-mini__ring--2"></div>
+            <div class="orbit-mini__core"></div>
+          </div>
+          <h3>Mission Control</h3>
+          <p>Real strategists, real accountability — embedded with your team until results are locked in.</p>
+        </div>
+        <div class="about__card about__card--float about__card--one">
+          <strong>4.9<span>/5</span></strong>
+          <p>Average client rating</p>
+        </div>
+        <div class="about__card about__card--float about__card--two">
+          <strong>$2.4B<span>+</span></strong>
+          <p>Client value unlocked</p>
+        </div>
+      </div>
+
+      <div class="about__content" data-reveal>
+        <span class="eyebrow"><span class="eyebrow__dot"></span>About HK Consultancy</span>
+        <h2 class="section-title">We turn ambitious plans into <span class="text-gradient">gravity-defying</span> growth</h2>
+        <p class="section-text">
+          For over a decade, HK Business Consultancy has partnered with founders, executives, and boards
+          who refuse to settle for incremental progress. We combine deep industry research, financial rigor,
+          and hands-on execution to help businesses launch new products, enter new markets, and scale
+          operations without losing control.
+        </p>
+
+        <ul class="check-list">
+          <li><span class="check-list__icon">✓</span>Data-driven strategy tailored to your market</li>
+          <li><span class="check-list__icon">✓</span>Cross-functional experts across finance, ops & growth</li>
+          <li><span class="check-list__icon">✓</span>Transparent reporting with measurable milestones</li>
+          <li><span class="check-list__icon">✓</span>Global network across 37+ countries</li>
+        </ul>
+
+        <a href="#contact" class="btn btn--primary">
+          <span>Schedule a Consultation</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Services ===== -->
+  <section class="services" id="services">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow eyebrow--center"><span class="eyebrow__dot"></span>What We Do</span>
+        <h2 class="section-title section-title--center">Services engineered for <span class="text-gradient">liftoff</span></h2>
+        <p class="section-text section-text--center">
+          Full-spectrum consultancy across strategy, finance, and transformation — built to move fast
+          and hold up under pressure.
+        </p>
+      </div>
+
+      <div class="services__grid">
+
+        <article class="service-card" data-tilt data-reveal>
+          <div class="service-card__glow"></div>
+          <div class="service-card__icon">
+            <svg viewBox="0 0 24 24" width="28" height="28"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="3.2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </div>
+          <h3>Strategic Planning</h3>
+          <p>Clear, actionable roadmaps aligned to market opportunity, competitive edge, and long-term vision.</p>
+          <a href="#contact" class="service-card__link">Learn more
+            <svg viewBox="0 0 24 24" width="16" height="16"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </article>
+
+        <article class="service-card" data-tilt data-reveal>
+          <div class="service-card__glow"></div>
+          <div class="service-card__icon">
+            <svg viewBox="0 0 24 24" width="28" height="28"><path d="M4 19V5M4 19h16M8 19v-6M12 19V9M16 19v-9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+          </div>
+          <h3>Financial Advisory</h3>
+          <p>Modeling, fundraising support, and capital strategy that keep growth funded and controlled.</p>
+          <a href="#contact" class="service-card__link">Learn more
+            <svg viewBox="0 0 24 24" width="16" height="16"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </article>
+
+        <article class="service-card" data-tilt data-reveal>
+          <div class="service-card__glow"></div>
+          <div class="service-card__icon">
+            <svg viewBox="0 0 24 24" width="28" height="28"><ellipse cx="12" cy="12" rx="9" ry="9" fill="none" stroke="currentColor" stroke-width="1.6"/><ellipse cx="12" cy="12" rx="9" ry="3.6" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 3v18" stroke="currentColor" stroke-width="1.6"/></svg>
+          </div>
+          <h3>Market Expansion</h3>
+          <p>Entry strategy, localization, and partnership building to help you win in new territories.</p>
+          <a href="#contact" class="service-card__link">Learn more
+            <svg viewBox="0 0 24 24" width="16" height="16"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </article>
+
+        <article class="service-card" data-tilt data-reveal>
+          <div class="service-card__glow"></div>
+          <div class="service-card__icon">
+            <svg viewBox="0 0 24 24" width="28" height="28"><rect x="7" y="7" width="10" height="10" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M9 3v2M15 3v2M9 19v2M15 19v2M3 9h2M3 15h2M19 9h2M19 15h2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </div>
+          <h3>Digital Transformation</h3>
+          <p>Modern systems, automation, and analytics that replace guesswork with real-time insight.</p>
+          <a href="#contact" class="service-card__link">Learn more
+            <svg viewBox="0 0 24 24" width="16" height="16"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </article>
+
+        <article class="service-card" data-tilt data-reveal>
+          <div class="service-card__glow"></div>
+          <div class="service-card__icon">
+            <svg viewBox="0 0 24 24" width="28" height="28"><path d="M12 3l7 3.5v5.2c0 4.6-3 8.3-7 9.3-4-1-7-4.7-7-9.3V6.5L12 3z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          </div>
+          <h3>Risk Management</h3>
+          <p>Operational, financial, and compliance risk frameworks that protect what you've built.</p>
+          <a href="#contact" class="service-card__link">Learn more
+            <svg viewBox="0 0 24 24" width="16" height="16"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </article>
+
+        <article class="service-card" data-tilt data-reveal>
+          <div class="service-card__glow"></div>
+          <div class="service-card__icon">
+            <svg viewBox="0 0 24 24" width="28" height="28"><circle cx="9" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="17" cy="9" r="2.4" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3 20c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5M15.5 14.5c2.6.3 4.5 2.2 4.5 5.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </div>
+          <h3>HR &amp; Talent</h3>
+          <p>Org design, leadership coaching, and talent strategy to build teams that scale with you.</p>
+          <a href="#contact" class="service-card__link">Learn more
+            <svg viewBox="0 0 24 24" width="16" height="16"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Process ===== -->
+  <section class="process" id="process">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow eyebrow--center"><span class="eyebrow__dot"></span>How We Work</span>
+        <h2 class="section-title section-title--center">A flight plan for <span class="text-gradient">predictable growth</span></h2>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline__line"><div class="timeline__line-fill" id="timelineFill"></div></div>
+
+        <div class="timeline__step" data-reveal>
+          <div class="timeline__node">01</div>
+          <h3>Discover</h3>
+          <p>We audit your business, market, and data to uncover the real constraints on growth.</p>
+        </div>
+        <div class="timeline__step" data-reveal>
+          <div class="timeline__node">02</div>
+          <h3>Strategize</h3>
+          <p>We co-design a focused roadmap with clear priorities, owners, and success metrics.</p>
+        </div>
+        <div class="timeline__step" data-reveal>
+          <div class="timeline__node">03</div>
+          <h3>Execute</h3>
+          <p>Our consultants embed with your team to implement — not just present a slide deck.</p>
+        </div>
+        <div class="timeline__step" data-reveal>
+          <div class="timeline__node">04</div>
+          <h3>Elevate</h3>
+          <p>We track results, iterate fast, and hand off systems that keep compounding after we leave.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Why choose us ===== -->
+  <section class="features">
+    <div class="container features__inner">
+      <div class="feature-card" data-reveal>
+        <div class="feature-card__icon">🛰️</div>
+        <h3>Data-Driven</h3>
+        <p>Every recommendation is backed by research, benchmarking, and hard numbers.</p>
+      </div>
+      <div class="feature-card" data-reveal>
+        <div class="feature-card__icon">🌍</div>
+        <h3>Global Network</h3>
+        <p>Partners, talent, and market access spanning 37+ countries.</p>
+      </div>
+      <div class="feature-card" data-reveal>
+        <div class="feature-card__icon">🎯</div>
+        <h3>Tailored Strategy</h3>
+        <p>No templates — every engagement is built around your specific goals.</p>
+      </div>
+      <div class="feature-card" data-reveal>
+        <div class="feature-card__icon">🚀</div>
+        <h3>Proven Results</h3>
+        <p>$2.4B+ in measurable client value unlocked since 2013.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Testimonials ===== -->
+  <section class="testimonials" id="testimonials">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow eyebrow--center"><span class="eyebrow__dot"></span>Client Orbit</span>
+        <h2 class="section-title section-title--center">Trusted by leaders who <span class="text-gradient">think big</span></h2>
+      </div>
+
+      <div class="testimonial-slider" data-reveal>
+        <div class="testimonial-track" id="testimonialTrack">
+
+          <figure class="testimonial-card">
+            <p>"HK Consultancy rebuilt our go-to-market strategy in eight weeks. Revenue grew 34% the following quarter — the clearest ROI we've had from any advisor."</p>
+            <figcaption>
+              <span class="avatar">AR</span>
+              <div><strong>Aisha Rahman</strong><small>CEO, Northstar Group</small></div>
+            </figcaption>
+          </figure>
+
+          <figure class="testimonial-card">
+            <p>"They didn't just hand us a deck — they embedded with our team and shipped the plan. Our operating margin improved within one quarter."</p>
+            <figcaption>
+              <span class="avatar">DK</span>
+              <div><strong>Daniel Kim</strong><small>COO, Vertex Capital</small></div>
+            </figcaption>
+          </figure>
+
+          <figure class="testimonial-card">
+            <p>"Expansion into three new markets in under a year — something we'd stalled on for three years before working with HK."</p>
+            <figcaption>
+              <span class="avatar">ML</span>
+              <div><strong>Maria Lopez</strong><small>Founder, Orbital Retail</small></div>
+            </figcaption>
+          </figure>
+
+          <figure class="testimonial-card">
+            <p>"The financial modeling alone was worth the engagement. We closed our Series B two months faster than projected."</p>
+            <figcaption>
+              <span class="avatar">JT</span>
+              <div><strong>James Turner</strong><small>CFO, Quantum Fintech</small></div>
+            </figcaption>
+          </figure>
+
+        </div>
+
+        <div class="testimonial-controls">
+          <button class="testimonial-arrow" id="testimonialPrev" aria-label="Previous testimonial">
+            <svg viewBox="0 0 24 24" width="18" height="18"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="testimonial-dots" id="testimonialDots"></div>
+          <button class="testimonial-arrow" id="testimonialNext" aria-label="Next testimonial">
+            <svg viewBox="0 0 24 24" width="18" height="18"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA banner ===== -->
+  <section class="cta-banner">
+    <div class="container cta-banner__inner" data-reveal>
+      <h2>Ready to reach <span class="text-gradient">escape velocity?</span></h2>
+      <p>Book a free strategy call and see exactly where HK Consultancy can move the needle for your business.</p>
+      <a href="#contact" class="btn btn--primary btn--lg">
+        <span>Book Your Free Call</span>
+        <svg viewBox="0 0 24 24" width="18" height="18"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- ===== Contact ===== -->
+  <section class="contact" id="contact">
+    <div class="container contact__inner">
+      <div class="contact__info" data-reveal>
+        <span class="eyebrow"><span class="eyebrow__dot"></span>Get In Touch</span>
+        <h2 class="section-title">Let's plan your <span class="text-gradient">next move</span></h2>
+        <p class="section-text">
+          Tell us where you want to go. A senior consultant will respond within one business day.
+        </p>
+
+        <ul class="contact-list">
+          <li>
+            <span class="contact-list__icon">✉</span>
+            <div><strong>Email</strong><a href="mailto:hello@hkconsultancy.com">hello@hkconsultancy.com</a></div>
+          </li>
+          <li>
+            <span class="contact-list__icon">☎</span>
+            <div><strong>Phone</strong><a href="tel:+15551234567">+1 (555) 123-4567</a></div>
+          </li>
+          <li>
+            <span class="contact-list__icon">◎</span>
+            <div><strong>Headquarters</strong><span>500 Meridian Tower, Suite 1200, New York, NY</span></div>
+          </li>
+        </ul>
+
+        <div class="social-row">
+          <a href="#" aria-label="LinkedIn" class="social-icon">in</a>
+          <a href="#" aria-label="Twitter / X" class="social-icon">𝕏</a>
+          <a href="#" aria-label="Instagram" class="social-icon">◎</a>
+        </div>
+      </div>
+
+      <form class="contact-form" id="contactForm" data-reveal novalidate>
+        <div class="form-row">
+          <div class="form-field">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" placeholder="Jane Doe" required />
+            <span class="form-error">Please enter your name</span>
+          </div>
+          <div class="form-field">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="jane@company.com" required />
+            <span class="form-error">Please enter a valid email</span>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-field">
+            <label for="company">Company</label>
+            <input type="text" id="company" name="company" placeholder="Company name" />
+          </div>
+          <div class="form-field">
+            <label for="budget">Project Budget</label>
+            <select id="budget" name="budget">
+              <option value="">Select a range</option>
+              <option>Under $10k</option>
+              <option>$10k - $50k</option>
+              <option>$50k - $150k</option>
+              <option>$150k+</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="message">How can we help?</label>
+          <textarea id="message" name="message" rows="4" placeholder="Tell us about your goals..." required></textarea>
+          <span class="form-error">Please add a short message</span>
+        </div>
+
+        <button type="submit" class="btn btn--primary btn--lg btn--block" id="formSubmit">
+          <span class="btn-label">Send Message</span>
+          <span class="btn-spinner" aria-hidden="true"></span>
+        </button>
+
+        <p class="form-success" id="formSuccess">🚀 Message sent! We'll be in touch within one business day.</p>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<!-- ===== Footer ===== -->
+<footer class="footer">
+  <div class="container footer__inner">
+    <div class="footer__brand">
+      <a href="#home" class="nav__logo">
+        <span class="nav__logo-mark">HK</span>
+        <span class="nav__logo-text">Consultancy</span>
+      </a>
+      <p>Strategy, finance, and transformation consulting for businesses ready to scale beyond limits.</p>
+      <div class="social-row">
+        <a href="#" aria-label="LinkedIn" class="social-icon">in</a>
+        <a href="#" aria-label="Twitter / X" class="social-icon">𝕏</a>
+        <a href="#" aria-label="Instagram" class="social-icon">◎</a>
+      </div>
+    </div>
+
+    <div class="footer__col">
+      <h4>Company</h4>
+      <a href="#about">About Us</a>
+      <a href="#process">Our Process</a>
+      <a href="#testimonials">Testimonials</a>
+      <a href="#contact">Careers</a>
+    </div>
+
+    <div class="footer__col">
+      <h4>Services</h4>
+      <a href="#services">Strategic Planning</a>
+      <a href="#services">Financial Advisory</a>
+      <a href="#services">Market Expansion</a>
+      <a href="#services">Digital Transformation</a>
+    </div>
+
+    <div class="footer__col footer__col--newsletter">
+      <h4>Stay in orbit</h4>
+      <p>Insights on growth &amp; strategy, once a month.</p>
+      <form class="newsletter-form" id="newsletterForm">
+        <input type="email" placeholder="you@company.com" required aria-label="Email address" />
+        <button type="submit" aria-label="Subscribe">
+          <svg viewBox="0 0 24 24" width="16" height="16"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </form>
+      <p class="newsletter-success" id="newsletterSuccess">You're subscribed! 🌌</p>
+    </div>
+  </div>
+
+  <div class="footer__bottom">
+    <p>© <span id="year"></span> HK Business Consultancy. All rights reserved.</p>
+    <div class="footer__legal">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+    </div>
+  </div>
+</footer>
+
+<button class="back-to-top" id="backToTop" aria-label="Back to top">
+  <svg viewBox="0 0 24 24" width="18" height="18"><path d="M12 19V5M6 11l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
