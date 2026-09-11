@@ -742,7 +742,7 @@ section[id] { scroll-margin-top: var(--nav-h); }
    ========================================================================== */
 .modal-overlay {
   position: fixed; inset: 0; z-index: 2000;
-  background: rgba(21, 22, 26, 0.72); backdrop-filter: blur(6px);
+  background: rgba(21, 22, 26, 0.72); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
   display: flex; align-items: center; justify-content: center; padding: 1.5rem;
   opacity: 0; visibility: hidden; transition: opacity var(--dur-s), visibility var(--dur-s);
 }

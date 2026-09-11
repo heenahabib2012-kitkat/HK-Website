@@ -75,6 +75,23 @@ function initReveal() {
     targets.forEach((t) => t.classList.add('is-visible'));
     return;
   }
+
+  // Anything already in (or near) the viewport at load — the hero, chiefly —
+  // is revealed immediately rather than waiting on the observer's first
+  // tick, so first-paint content is never left in its hidden starting state.
+  const inViewport = (el) => {
+    const r = el.getBoundingClientRect();
+    return r.top < window.innerHeight && r.bottom > 0;
+  };
+  targets.forEach((t) => { if (inViewport(t)) t.classList.add('is-visible'); });
+
+  // Safety net: whatever the reason (host quirks, a missed observer tick,
+  // an element resized to zero), nothing is allowed to stay permanently
+  // hidden — force reveal everything after a short delay regardless.
+  window.setTimeout(() => {
+    qsa('.reveal:not(.is-visible), .reveal-line:not(.is-visible)').forEach((t) => t.classList.add('is-visible'));
+  }, 2500);
+
   const io = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
@@ -83,7 +100,7 @@ function initReveal() {
       }
     });
   }, { threshold: 0.18 });
-  targets.forEach((t) => io.observe(t));
+  targets.forEach((t) => { if (!t.classList.contains('is-visible')) io.observe(t); });
 
   // Section headers / cards get .reveal added dynamically after render,
   // so also watch the document body for newly added reveal targets.
