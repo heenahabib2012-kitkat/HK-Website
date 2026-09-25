@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<!-- Source for assets/img/og-image.jpg. Render at 1200x630 (see README). -->
+<html lang="en"><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;500&display=swap">
+<style>
+  html,body{margin:0;width:1200px;height:630px;overflow:hidden;background:#050b24;font-family:Outfit,'Helvetica Neue',Arial,sans-serif}
+  canvas{position:absolute;inset:0;width:1200px;height:630px}
+  .veil{position:absolute;inset:0;background:linear-gradient(90deg,rgba(3,8,25,.95) 0%,rgba(5,11,36,.65) 45%,rgba(5,11,36,0) 75%)}
+  .c{position:absolute;left:72px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:center;color:#fff}
+  .e{color:#e8c882;font-size:14px;letter-spacing:.34em;text-transform:uppercase;display:flex;gap:14px;align-items:center;margin-bottom:28px}
+  .e i{width:40px;height:1px;background:#e8c882}
+  h1{margin:0;font-weight:200;font-size:76px;line-height:.98;letter-spacing:-.03em;text-transform:uppercase}
+  em{font-style:normal;font-weight:300;background:linear-gradient(120deg,#a8823a,#e8c882 40%,#f4dfa8 50%,#c9a14a);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .b{margin-top:34px;display:flex;align-items:center;gap:14px;font-size:14px;letter-spacing:.3em;text-transform:uppercase;color:rgba(222,229,255,.75)}
+  .b svg{width:40px;height:40px}
+</style></head><body>
+<canvas id="s"></canvas><div class="veil"></div>
+<div class="c">
+  <div class="e"><i></i>Dubai · United Arab Emirates</div>
+  <h1>From Kuwait<br>to <em>Dubai.</em><br>From Dubai<br>to <em>the world.</em></h1>
+  <div class="b"><svg viewBox="0 0 48 48"><rect x="1" y="1" width="46" height="46" rx="3" fill="none" stroke="#c9a14a"/><path d="M14 13v22M14 24h11M25 13v22M34 13l-7 11 8 11" fill="none" stroke="#fff" stroke-width="2.2"/></svg>HK Business Consultancy</div>
+</div>
+<script>window.HK={reducedMotion:function(){return true}};</script>
+<script src="../assets/js/skyline.js"></script>
+<script>HK.Skyline(document.getElementById('s'),{focus:.74,scroll:false});</script>
+</body></html>

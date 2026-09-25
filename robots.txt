@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# EDITABLE: replace with your live domain
+Sitemap: https://YOUR-DOMAIN/sitemap.xml
