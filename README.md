@@ -81,8 +81,12 @@ Search `index.html` for text in square brackets.
 
 ## Design
 
-- **Colour:** deep petrol ink (`#0E1B22`), warm paper (`#F6F2EB`), and brass used only as an accent. All tokens are at the top of `site.css`.
-- **Type:** Newsreader for display and Hanken Grotesk for body text, loaded from Google Fonts with Georgia and Helvetica/Arial fallbacks.
-- **Motion:** a light fade-in as sections scroll into view. It is switched off when `prefers-reduced-motion` is set, and a safety net makes sure content is never left hidden.
+The rules below are written at the top of `assets/css/site.css`.
+
+- **Colour:** navy ink (`#0B1B30`) and one primary blue (`#2356A8` on light backgrounds, `#3B6FC4` for buttons on navy, `#9DBBEA` for accents on navy). Blue is used for CTAs, links, navigation states, focus rings, emphasis and key rules. Backgrounds stay neutral apart from three navy bands: the hero, About and Contact. Every text and button pairing meets WCAG AA.
+- **Type:** Newsreader for display and Hanken Grotesk for body text, loaded from Google Fonts with Georgia and Helvetica/Arial fallbacks. There is one small-caps label style for the whole page.
+- **Shape:** one radius (2px). There are no pill shapes, circle badges, shadows, blur or translucent panels.
+- **Layout:** editorial lists and asymmetric two-column compositions rather than rows of equal cards. The one featured tile is the Dubai HQ cell in Presence.
+- **Motion:** only state feedback: hover, focus, the accordion icon, the menu and the mobile CTA bar. There are no scroll-reveal animations. Everything is switched off when `prefers-reduced-motion` is set.
 - **Accessibility:** skip link, semantic landmarks, visible focus styles, keyboard-operable tabs and accordions, labelled form fields with inline errors, and touch targets of at least 44px.
 - **Imagery:** the only photograph is the Chairman's portrait. The hero uses a fine geometric (khatam) line pattern instead of stock photography.

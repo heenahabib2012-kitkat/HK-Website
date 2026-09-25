@@ -208,22 +208,4 @@
       status.innerHTML = 'Your email app should open with your request ready to send. If it does not, email <a href="mailto:' + cfg.email + '">' + cfg.email + '</a> or <a href="https://wa.me/' + cfg.whatsapp + '?text=' + encodeURIComponent(summary(fd)) + '" target="_blank" rel="noopener">send it on WhatsApp</a>.';
     });
   }
-
-  /* ---------- Reveal on scroll (content is never left hidden) ---------- */
-  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var revealEls = $$('.section-head, .pillar, .practice, .aud, .steps li, .sector-row, .timeline li, .founder-grid > *, .market, .pull, .proof > *');
-  if (!reduce && 'IntersectionObserver' in window) {
-    revealEls.forEach(function (el) {
-      var r = el.getBoundingClientRect();
-      if (r.top > window.innerHeight) el.classList.add('reveal');
-    });
-    var rio = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) {
-        if (en.isIntersecting) { en.target.classList.add('is-in'); rio.unobserve(en.target); }
-      });
-    }, { rootMargin: '0px 0px -8% 0px' });
-    $$('.reveal').forEach(function (el) { rio.observe(el); });
-    // Safety net: never leave content hidden.
-    setTimeout(function () { $$('.reveal').forEach(function (el) { el.classList.add('is-in'); }); }, 6000);
-  }
 })();
