@@ -1,16 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" class="no-js">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>HK Business Consultancy | Business Consultancy in Dubai, UAE</title>
   <meta name="description" content="HK Business Consultancy is a Dubai-based business consultancy offering business setup, corporate advisory, market entry and strategic advisory in the UAE and international markets. From Kuwait to Dubai. From Dubai to the world.">
-  <meta name="theme-color" content="#050b24">
-  <meta name="color-scheme" content="dark light">
+  <meta name="theme-color" content="#f7f8fb">
   <!-- EDITABLE: set your live domain once known -->
   <!-- <link rel="canonical" href="https://YOUR-DOMAIN/"> -->
 
-  <!-- Open Graph / social -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="HK Business Consultancy">
   <meta property="og:title" content="HK Business Consultancy | From Kuwait to Dubai. From Dubai to the World.">
@@ -18,7 +16,7 @@
   <meta property="og:image" content="assets/img/og-image.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="HK Business Consultancy — night skyline of Dubai with the words From Kuwait to Dubai, from Dubai to the world">
+  <meta property="og:image:alt" content="HK Business Consultancy: a blueprint tower rising from Kuwait to Dubai to the world">
   <meta property="og:locale" content="en_AE">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="HK Business Consultancy — Business Consultancy in Dubai">
@@ -31,11 +29,10 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Outfit:wght@200;300;400;500;600&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@200;300;500;700&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="assets/css/main.css">
 
   <script>
-    document.documentElement.classList.remove('no-js');
     document.documentElement.classList.add('js');
     try { if (localStorage.getItem('hk-reduce-motion') === '1') document.documentElement.classList.add('reduce-motion'); } catch (e) {}
   </script>
@@ -50,11 +47,7 @@
     "slogan": "From Kuwait to Dubai. From Dubai to the world.",
     "image": "assets/img/og-image.jpg",
     "logo": "assets/img/favicon.svg",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Dubai",
-      "addressCountry": "AE"
-    },
+    "address": { "@type": "PostalAddress", "addressLocality": "Dubai", "addressCountry": "AE" },
     "areaServed": ["United Arab Emirates", "Middle East", "Worldwide"],
     "knowsAbout": ["Business consultancy", "Business setup in the UAE", "Corporate advisory", "Market entry", "Strategic advisory", "Cross-border business"],
     "hasOfferCatalog": {
@@ -75,580 +68,408 @@
   </script>
 </head>
 <body>
-  <a class="skip-link" href="#main">Skip to content</a>
+  <a class="skip" href="#main">Skip to content</a>
 
-  <!-- Intro curtain -->
-  <div class="loader" aria-hidden="true">
-    <div class="loader__mark">
-      <svg viewBox="0 0 120 120" class="loader__svg">
-        <circle cx="60" cy="60" r="54" class="loader__ring"/>
-        <path d="M38 36v48M38 60h26M64 36v48M82 36L66 60l18 24" class="loader__hk"/>
+  <!-- ============ HEADER ============ -->
+  <header class="top">
+    <a class="brand" href="#ground" aria-label="HK Business Consultancy — ground floor">
+      <svg class="brand__mark" viewBox="0 0 40 48" aria-hidden="true">
+        <path d="M4 46V10M4 26h13M17 46V10M26 46V2M26 26l10-10M26 26l10 20" />
       </svg>
-      <span class="loader__word">Kuwait <i></i> Dubai <i></i> World</span>
-    </div>
-  </div>
-
-  <!-- Custom cursor -->
-  <div class="cursor" aria-hidden="true"><span class="cursor__dot"></span><span class="cursor__ring"></span></div>
-
-  <!-- ================= NAVIGATION ================= -->
-  <header class="nav" id="top">
-    <div class="nav__inner container">
-      <a class="brand" href="#home" aria-label="HK Business Consultancy — home">
-        <svg class="brand__mark" viewBox="0 0 48 48" aria-hidden="true">
-          <rect x="1" y="1" width="46" height="46" rx="3" class="brand__frame"/>
-          <path d="M14 13v22M14 24h11M25 13v22M34 13l-7 11 8 11" class="brand__hk"/>
-        </svg>
-        <span class="brand__text"><strong>HK</strong> Business Consultancy</span>
-      </a>
-      <nav class="nav__links" aria-label="Primary">
-        <a href="#about">About</a>
-        <a href="#services">Services</a>
-        <a href="#chairman">Chairman</a>
-        <a href="#journey">Journey</a>
-        <a href="#insights">Insights</a>
-        <a href="#contact">Contact</a>
-      </nav>
-      <a class="btn btn--sm btn--gold magnetic nav__cta" href="#contact"><span>Speak With Our Team</span></a>
-      <button class="nav__toggle" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu"><span></span><span></span></button>
+      <span class="brand__name">HK<span>Business Consultancy</span></span>
+    </a>
+    <div class="top__right">
+      <span class="top__level" aria-hidden="true">LVL <b data-level-mini>000</b></span>
+      <button class="top__dir" type="button" data-open="directory" aria-haspopup="dialog">Directory</button>
+      <a class="btn btn--ink top__cta" href="#contact">Speak with our team</a>
     </div>
   </header>
 
-  <div class="mobile-menu" id="mobile-menu" hidden>
-    <nav aria-label="Mobile">
-      <a href="#home">Home</a>
-      <a href="#about">About</a>
-      <a href="#services">Services</a>
-      <a href="#chairman">Chairman's Message</a>
-      <a href="#journey">Our Journey</a>
-      <a href="#insights">Insights</a>
-      <a href="#contact">Contact</a>
-    </nav>
-    <p class="mobile-menu__tag">From Kuwait to Dubai.<br>From Dubai to the world.</p>
-  </div>
+  <!-- ============ LIFT RAIL (scroll = ascent) ============ -->
+  <nav class="lift" aria-label="Levels">
+    <div class="lift__readout" aria-hidden="true">
+      <span class="lift__dir" data-dir>▲</span>
+      <span class="lift__lvl">LVL</span>
+      <b class="lift__num" data-lvl-num>000</b>
+      <span class="lift__elev" data-lvl-elev>+0.0 m</span>
+    </div>
+    <div class="lift__shaft">
+      <span class="lift__car" aria-hidden="true"></span>
+      <ol class="lift__stops" data-stops></ol>
+    </div>
+    <span class="lift__foot" aria-hidden="true">G</span>
+  </nav>
 
   <main id="main">
 
-    <!-- ================= 3. HERO ================= -->
-    <section class="hero" id="home" aria-labelledby="hero-title">
-      <div class="hero__media" data-photo="hero" data-alt="Downtown Dubai at night with the Burj Khalifa and Sheikh Zayed Road">
-        <canvas class="hero__skyline" role="img" aria-label="Animated night skyline of Dubai with the Burj Khalifa and light trails along Sheikh Zayed Road"></canvas>
-      </div>
-      <canvas class="particles" data-count="46" aria-hidden="true"></canvas>
-      <div class="hero__veil" aria-hidden="true"></div>
-
-      <div class="hero__content container">
-        <p class="eyebrow reveal"><span class="eyebrow__line"></span>Dubai, United Arab Emirates</p>
-        <h1 class="hero__title" id="hero-title">
-          <span class="line"><span>From Kuwait</span></span>
-          <span class="line"><span>to <em>Dubai.</em></span></span>
-          <span class="line"><span>From Dubai</span></span>
-          <span class="line"><span>to <em>the world.</em></span></span>
-        </h1>
-        <p class="hero__lead reveal">Strategic business solutions for companies, entrepreneurs and investors navigating an increasingly connected global economy.</p>
-        <div class="hero__ctas reveal">
-          <a class="btn btn--gold magnetic" href="#services"><span>Explore Our Services</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-          <a class="btn btn--ghost magnetic" href="#contact"><span>Speak With Our Team</span></a>
-        </div>
-      </div>
-
-      <div class="hero__coords" aria-hidden="true">
-        <span>29.37° N · 47.98° E</span><span class="hero__coords-line"></span><span>25.20° N · 55.27° E</span>
-      </div>
-      <a class="scroll-cue" href="#globe" aria-label="Scroll to explore">
-        <span>Scroll to explore</span><span class="scroll-cue__track"><span></span></span><span aria-hidden="true">↓</span>
-      </a>
-    </section>
-
-    <!-- ================= 4. GLOBE ================= -->
-    <section class="globe-sec" id="globe" aria-labelledby="globe-title">
-      <canvas class="particles particles--soft" data-count="26" aria-hidden="true"></canvas>
-      <div class="container globe-sec__grid">
-        <div class="globe-sec__copy">
-          <p class="eyebrow reveal"><span class="eyebrow__line"></span>Our reach</p>
-          <h2 class="title split" id="globe-title">A journey that began in Kuwait. <span class="gold">A vision that reaches the world.</span></h2>
-          <p class="lead reveal">HK is no longer defined by a single geography. Drag the globe, hover over a region, and follow the lines that connect our origins to the markets our clients are exploring.</p>
-          <ol class="route reveal" aria-label="Kuwait to Dubai to Global">
-            <li><button type="button" class="route__step is-active" data-focus="47.98" data-step="kuwait"><span class="route__num">01</span><span class="route__name">Kuwait</span><span class="route__cap">Origins</span></button></li>
-            <li aria-hidden="true" class="route__arrow"><span></span></li>
-            <li><button type="button" class="route__step" data-focus="55.27" data-step="dubai"><span class="route__num">02</span><span class="route__name">Dubai</span><span class="route__cap">Headquarters</span></button></li>
-            <li aria-hidden="true" class="route__arrow"><span></span></li>
-            <li><button type="button" class="route__step" data-focus="spin" data-step="global"><span class="route__num">03</span><span class="route__name">Global</span><span class="route__cap">Outlook</span></button></li>
-          </ol>
-        </div>
-        <div class="globe-sec__stage reveal">
-          <canvas class="globe" aria-label="Interactive 3D globe showing gold connection lines from Kuwait and Dubai to Europe, India, Asia, Africa and the Americas" role="img"></canvas>
-          <div class="globe-sec__orbit" aria-hidden="true"></div>
-          <p class="globe-sec__hint" aria-hidden="true">Drag to rotate · Hover a region</p>
-        </div>
-      </div>
-      <div class="hover-card" role="status" aria-live="polite" hidden>
-        <span class="hover-card__region"></span>
-        <strong class="hover-card__focus"></strong>
-        <span class="hover-card__note"></span>
-      </div>
-    </section>
-
-    <!-- ================= 5. ABOUT ================= -->
-    <section class="about section section--light" id="about" aria-labelledby="about-title">
-      <div class="container about__grid">
-        <figure class="about__media" data-photo="about" data-alt="Dubai business district at dusk" data-speed="-0.06">
-          <div class="about__art" role="img" aria-label="Illustration of Dubai's skyline at dusk, framed in gold">
-            <svg viewBox="0 0 600 760" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-              <defs>
-                <linearGradient id="dusk" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0" stop-color="#0b1a52"/><stop offset=".55" stop-color="#27409e"/><stop offset=".8" stop-color="#c79a5a"/><stop offset="1" stop-color="#f1d7a2"/>
-                </linearGradient>
-                <linearGradient id="bldg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#101d4e"/><stop offset="1" stop-color="#050b24"/></linearGradient>
-                <linearGradient id="glass" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#e8c882" stop-opacity=".0"/><stop offset=".5" stop-color="#e8c882" stop-opacity=".5"/><stop offset="1" stop-color="#e8c882" stop-opacity="0"/></linearGradient>
-              </defs>
-              <rect width="600" height="760" fill="url(#dusk)"/>
-              <circle cx="410" cy="520" r="70" fill="#f6dfa8" opacity=".55"/>
-              <g fill="url(#bldg)">
-                <path d="M300 760V250l6-40 6 40v510z"/>
-                <path d="M286 760V330h40v430z"/><path d="M276 760V420h60v340z"/><path d="M266 760V520h80v240z"/>
-                <path d="M180 760V470h46v290zM190 470l13-40 13 40z"/>
-                <path d="M234 760V520h28v240z"/>
-                <path d="M360 760V440h38v320z"/><path d="M404 760V560h52v200z"/>
-                <path d="M460 760V380l28-20 28 20v380z"/>
-                <path d="M100 760V560h60v200z"/><path d="M40 760V610h52v150z"/>
-                <path d="M520 760V520h70v240z"/>
-              </g>
-              <rect x="300" y="215" width="1.5" height="545" fill="url(#glass)"/>
-              <g fill="#f4dfa8" opacity=".55">
-                <rect x="188" y="500" width="30" height="2"/><rect x="188" y="530" width="30" height="2"/><rect x="188" y="560" width="30" height="2"/>
-                <rect x="468" y="410" width="40" height="2"/><rect x="468" y="450" width="40" height="2"/><rect x="468" y="490" width="40" height="2"/>
-                <rect x="366" y="470" width="26" height="2"/><rect x="366" y="510" width="26" height="2"/>
-              </g>
-              <rect x="0" y="700" width="600" height="60" fill="#050b24" opacity=".85"/>
-            </svg>
+    <!-- ============ LVL 000 · GROUND ============ -->
+    <section class="floor hero" id="ground" data-level="0" data-name="Ground · Kuwait" aria-labelledby="hero-title">
+      <div class="hero__grid">
+        <div class="hero__copy">
+          <p class="kicker">HK Business Consultancy · Dubai, United Arab Emirates</p>
+          <h1 class="hero__title" id="hero-title">
+            <span>From Kuwait</span>
+            <span>to <em>Dubai.</em></span>
+            <span>From Dubai</span>
+            <span>to <em>the world.</em></span>
+          </h1>
+          <p class="hero__lead">Strategic business solutions for companies, entrepreneurs and investors navigating an increasingly connected global economy.</p>
+          <div class="hero__ctas">
+            <a class="btn btn--royal" href="#services">Explore our services <span aria-hidden="true">↓</span></a>
+            <a class="btn btn--line" href="#contact">Speak with our team</a>
           </div>
-          <figcaption class="about__cap"><span>Dubai</span> Headquarters</figcaption>
-          <span class="about__frame" aria-hidden="true"></span>
-        </figure>
-
-        <div class="about__copy">
-          <p class="eyebrow reveal"><span class="eyebrow__line"></span>About HK</p>
-          <h2 class="title split" id="about-title">Built on experience. <span class="gold">Driven by opportunity.</span></h2>
-          <!-- EDITABLE: company story -->
-          <p class="lead reveal">HK Business Consultancy began its journey in Kuwait. Over time, that foundation grew into a Dubai-based consultancy serving businesses, entrepreneurs and investors internationally.</p>
-          <p class="reveal">Today, from our headquarters in one of the world's most connected business hubs, we help clients think clearly about where they are going and how to get there — whether that means establishing a company, entering a new market, restructuring, or evaluating a strategic opportunity across borders.</p>
-          <p class="reveal">Our perspective is shaped by the region we come from and the markets our clients look toward: commercially grounded, personally delivered and globally minded.</p>
-
-          <dl class="stats">
-            <div class="stat reveal"><dt class="stat__num" data-count="01">01</dt><dd><strong>Kuwait</strong> Origins</dd></div>
-            <div class="stat reveal"><dt class="stat__num" data-count="02">02</dt><dd><strong>Dubai</strong> Headquarters</dd></div>
-            <div class="stat reveal"><dt class="stat__num" data-count="03">03</dt><dd><strong>Global</strong> Outlook</dd></div>
-            <div class="stat reveal"><dt class="stat__num stat__num--inf">∞</dt><dd><strong>Possibilities</strong></dd></div>
-          </dl>
-        </div>
-      </div>
-    </section>
-
-    <!-- ================= 6. SERVICES ================= -->
-    <section class="services section" id="services" aria-labelledby="services-title">
-      <div class="services__bg" aria-hidden="true"></div>
-      <div class="container">
-        <header class="section-head">
-          <p class="eyebrow reveal"><span class="eyebrow__line"></span>What we do</p>
-          <h2 class="title split" id="services-title">Advisory built for <span class="gold">ambitious businesses.</span></h2>
-          <p class="lead reveal">Eight connected disciplines, delivered with one objective: helping you move from intention to a clear, commercially practical next step.</p>
-        </header>
-
-        <!-- EDITABLE: services. Each .svc holds its summary and the detail shown in the overlay. -->
-        <div class="svc-grid">
-          <article class="svc" data-tilt tabindex="0">
-            <span class="svc__idx">01</span>
-            <svg class="svc__icon" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="17"/><path d="M24 7v34M7 24h34"/><circle cx="24" cy="24" r="6"/></svg>
-            <h3 class="svc__title">Business Consulting</h3>
-            <p class="svc__desc">Strategic guidance for businesses seeking to establish, restructure, expand or improve their operations.</p>
-            <div class="svc__more">
-              <ul><li>Business reviews &amp; diagnostics</li><li>Operational improvement</li><li>Restructuring support</li><li>Growth planning</li></ul>
-            </div>
-            <button class="svc__link" type="button" data-dialog="service">Explore Service <span aria-hidden="true">→</span></button>
-            <span class="svc__line" aria-hidden="true"></span>
-          </article>
-
-          <article class="svc" data-tilt tabindex="0">
-            <span class="svc__idx">02</span>
-            <svg class="svc__icon" viewBox="0 0 48 48" aria-hidden="true"><path d="M8 41h32M12 41V19l12-9 12 9v22"/><path d="M20 41V29h8v12"/></svg>
-            <h3 class="svc__title">Company Formation</h3>
-            <p class="svc__desc">Support with establishing businesses and navigating the requirements of the relevant jurisdiction.</p>
-            <div class="svc__more">
-              <ul><li>Structure &amp; jurisdiction considerations</li><li>Guidance through the setup process</li><li>Documentation coordination</li><li>Post-formation next steps</li></ul>
-            </div>
-            <button class="svc__link" type="button" data-dialog="service">Explore Service <span aria-hidden="true">→</span></button>
-            <span class="svc__line" aria-hidden="true"></span>
-          </article>
-
-          <article class="svc" data-tilt tabindex="0">
-            <span class="svc__idx">03</span>
-            <svg class="svc__icon" viewBox="0 0 48 48" aria-hidden="true"><rect x="9" y="15" width="30" height="24" rx="2"/><path d="M18 15v-4h12v4M9 25h30"/></svg>
-            <h3 class="svc__title">Corporate Advisory</h3>
-            <p class="svc__desc">Strategic corporate solutions designed around the client's commercial objectives.</p>
-            <div class="svc__more">
-              <ul><li>Corporate structuring considerations</li><li>Commercial strategy</li><li>Stakeholder &amp; decision support</li><li>Transformation planning</li></ul>
-            </div>
-            <button class="svc__link" type="button" data-dialog="service">Explore Service <span aria-hidden="true">→</span></button>
-            <span class="svc__line" aria-hidden="true"></span>
-          </article>
-
-          <article class="svc" data-tilt tabindex="0">
-            <span class="svc__idx">04</span>
-            <svg class="svc__icon" viewBox="0 0 48 48" aria-hidden="true"><path d="M8 38l10-10 7 7 15-17"/><path d="M31 18h9v9"/></svg>
-            <h3 class="svc__title">Market Entry</h3>
-            <p class="svc__desc">Helping businesses assess and navigate opportunities when entering new markets.</p>
-            <div class="svc__more">
-              <ul><li>Market assessment</li><li>Entry route options</li><li>Local landscape insight</li><li>Launch roadmap</li></ul>
-            </div>
-            <button class="svc__link" type="button" data-dialog="service">Explore Service <span aria-hidden="true">→</span></button>
-            <span class="svc__line" aria-hidden="true"></span>
-          </article>
-
-          <article class="svc" data-tilt tabindex="0">
-            <span class="svc__idx">05</span>
-            <svg class="svc__icon" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 7l14 8v18l-14 8-14-8V15z"/><path d="M24 7v34M10 15l14 8 14-8"/></svg>
-            <h3 class="svc__title">Investment &amp; Strategic Advisory</h3>
-            <p class="svc__desc">Commercial and strategic support for investors and businesses evaluating opportunities.</p>
-            <div class="svc__more">
-              <ul><li>Opportunity evaluation</li><li>Commercial review support</li><li>Strategic options analysis</li><li>Investor–business alignment</li></ul>
-            </div>
-            <button class="svc__link" type="button" data-dialog="service">Explore Service <span aria-hidden="true">→</span></button>
-            <span class="svc__line" aria-hidden="true"></span>
-          </article>
-
-          <article class="svc" data-tilt tabindex="0">
-            <span class="svc__idx">06</span>
-            <svg class="svc__icon" viewBox="0 0 48 48" aria-hidden="true"><circle cx="14" cy="24" r="6"/><circle cx="34" cy="14" r="6"/><circle cx="34" cy="34" r="6"/><path d="M19.5 21.5l9-5M19.5 26.5l9 5"/></svg>
-            <h3 class="svc__title">Business Development</h3>
-            <p class="svc__desc">Identifying opportunities, partnerships and pathways for sustainable growth.</p>
-            <div class="svc__more">
-              <ul><li>Opportunity identification</li><li>Partnership pathways</li><li>Go-to-market support</li><li>Growth planning</li></ul>
-            </div>
-            <button class="svc__link" type="button" data-dialog="service">Explore Service <span aria-hidden="true">→</span></button>
-            <span class="svc__line" aria-hidden="true"></span>
-          </article>
-
-          <article class="svc" data-tilt tabindex="0">
-            <span class="svc__idx">07</span>
-            <svg class="svc__icon" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="17"/><path d="M7 24h34M24 7c6 5 6 29 0 34M24 7c-6 5-6 29 0 34"/></svg>
-            <h3 class="svc__title">Cross-Border Business Solutions</h3>
-            <p class="svc__desc">Supporting businesses operating across multiple jurisdictions.</p>
-            <div class="svc__more">
-              <ul><li>Multi-jurisdiction coordination</li><li>International expansion planning</li><li>Cross-border structuring considerations</li><li>Coordination with specialist advisors</li></ul>
-            </div>
-            <button class="svc__link" type="button" data-dialog="service">Explore Service <span aria-hidden="true">→</span></button>
-            <span class="svc__line" aria-hidden="true"></span>
-          </article>
-
-          <article class="svc" data-tilt tabindex="0">
-            <span class="svc__idx">08</span>
-            <svg class="svc__icon" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 4l2 8v29h-4V12z"/><path d="M16 41V22h4M32 41V22h-4M10 41h28"/></svg>
-            <h3 class="svc__title">UAE Business Advisory</h3>
-            <p class="svc__desc">Dubai and UAE-focused support for businesses seeking to establish or expand their presence in the region.</p>
-            <div class="svc__more">
-              <ul><li>Mainland &amp; free zone considerations</li><li>Establishing a presence in Dubai</li><li>Regional expansion from the UAE</li><li>Ongoing local guidance</li></ul>
-            </div>
-            <button class="svc__link" type="button" data-dialog="service">Explore Service <span aria-hidden="true">→</span></button>
-            <span class="svc__line" aria-hidden="true"></span>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- ================= 7. WHY DUBAI ================= -->
-    <section class="why" id="why-dubai" aria-labelledby="why-title">
-      <div class="why__pano" data-photo="whyDubai" data-alt="Panoramic view of the Dubai skyline across the water at dusk">
-        <canvas class="why__skyline" aria-hidden="true"></canvas>
-      </div>
-      <div class="why__veil" aria-hidden="true"></div>
-      <div class="container why__inner">
-        <header class="section-head section-head--center">
-          <p class="eyebrow eyebrow--center reveal"><span class="eyebrow__line"></span>Why Dubai?<span class="eyebrow__line"></span></p>
-          <h2 class="title title--xl split" id="why-title">Where the world <span class="gold">does business.</span></h2>
-          <p class="lead reveal">Positioned between continents and time zones, Dubai has become one of the world's great meeting points for trade, capital and ideas — a natural base from which to reach the Gulf, Asia, Africa and Europe.</p>
-        </header>
-
-        <ul class="pairs" aria-label="What Dubai connects">
-          <li class="pair reveal"><span>East</span><i aria-hidden="true"><b></b></i><span>West</span></li>
-          <li class="pair reveal"><span>Capital</span><i aria-hidden="true"><b></b></i><span>Opportunity</span></li>
-          <li class="pair reveal"><span>Innovation</span><i aria-hidden="true"><b></b></i><span>Enterprise</span></li>
-        </ul>
-
-        <div class="why__map reveal">
-          <svg class="worldmap" id="why-map" role="img" aria-label="Stylised map with gold lines connecting Dubai to Kuwait, India, Europe, Asia and Africa"></svg>
-        </div>
-      </div>
-    </section>
-
-    <!-- ================= 8. APPROACH ================= -->
-    <section class="approach section" id="approach" aria-labelledby="approach-title">
-      <div class="container">
-        <header class="section-head">
-          <p class="eyebrow reveal"><span class="eyebrow__line"></span>The HK approach</p>
-          <h2 class="title split" id="approach-title">Business is global. <span class="gold">Our approach is personal.</span></h2>
-        </header>
-        <div class="pillars">
-          <article class="pillar" data-tilt>
-            <span class="pillar__num">01</span>
-            <div class="pillar__shape" aria-hidden="true"><span></span><span></span><span></span></div>
-            <h3>Understand</h3>
-            <p>We begin by understanding the business, its objectives and its market.</p>
-            <span class="pillar__bar" aria-hidden="true"></span>
-          </article>
-          <article class="pillar" data-tilt>
-            <span class="pillar__num">02</span>
-            <div class="pillar__shape pillar__shape--2" aria-hidden="true"><span></span><span></span><span></span></div>
-            <h3>Strategise</h3>
-            <p>We develop commercially practical strategies aligned with those objectives.</p>
-            <span class="pillar__bar" aria-hidden="true"></span>
-          </article>
-          <article class="pillar" data-tilt>
-            <span class="pillar__num">03</span>
-            <div class="pillar__shape pillar__shape--3" aria-hidden="true"><span></span><span></span><span></span></div>
-            <h3>Execute</h3>
-            <p>We help turn strategy into actionable business solutions.</p>
-            <span class="pillar__bar" aria-hidden="true"></span>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- ================= 9. CHAIRMAN ================= -->
-    <section class="chairman section" id="chairman" aria-labelledby="chairman-title">
-      <div class="container chairman__grid">
-        <figure class="chairman__portrait" data-photo="chairman" data-alt="Portrait of the Chairman of HK Business Consultancy">
-          <!-- EDITABLE: replace with the Chairman's professional portrait (see assets/js/config.js) -->
-          <div class="portrait-ph" role="img" aria-label="Chairman portrait placeholder">
-            <svg viewBox="0 0 400 500" aria-hidden="true">
-              <defs><linearGradient id="pph" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1a2d78"/><stop offset="1" stop-color="#070f30"/></linearGradient></defs>
-              <rect width="400" height="500" fill="url(#pph)"/>
-              <circle cx="200" cy="190" r="72" fill="#0a1542" stroke="#c9a14a" stroke-opacity=".35"/>
-              <path d="M70 500c10-110 70-170 130-170s120 60 130 170" fill="#0a1542" stroke="#c9a14a" stroke-opacity=".35"/>
-            </svg>
-            <span class="portrait-ph__label">Portrait placeholder</span>
-          </div>
-          <span class="chairman__frame" aria-hidden="true"></span>
-        </figure>
-
-        <div class="chairman__copy">
-          <p class="eyebrow reveal"><span class="eyebrow__line"></span>Chairman's message</p>
-          <h2 class="title split" id="chairman-title">A message from <span class="gold">the Chairman.</span></h2>
-          <blockquote class="chairman__quote reveal">
-            <span class="chairman__qm" aria-hidden="true">“</span>
-            <!-- EDITABLE: opening quote to be approved by the Chairman -->
-            <p>Our journey began with a simple belief: meaningful business relationships can create opportunities that transcend borders.</p>
-          </blockquote>
-          <div class="chairman__sig reveal">
-            <svg class="signature" viewBox="0 0 320 90" role="img" aria-label="Signature placeholder">
-              <path d="M10 62c18-30 34-48 44-44s-8 50-2 52 26-44 36-40-4 34 6 36 20-26 30-24 2 20 12 20 24-30 36-28-6 26 6 26 34-20 50-24 30 6 46-4 30-10 36-8"/>
-            </svg>
-            <p class="chairman__name"><span class="ph">[CHAIRMAN'S NAME]</span><span class="chairman__role">Chairman, HK Business Consultancy</span></p>
-          </div>
-          <button class="btn btn--ghost magnetic reveal" type="button" data-dialog="chairman"><span>Read the Chairman's Full Message</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
-        </div>
-      </div>
-    </section>
-
-    <!-- ================= 10. JOURNEY ================= -->
-    <section class="journey" id="journey" aria-labelledby="journey-title">
-      <div class="journey__pin">
-        <div class="journey__scenes" aria-hidden="true">
-          <div class="scene scene--kuwait is-active" data-photo="kuwait" data-alt="">
-            <svg viewBox="0 0 1600 600" preserveAspectRatio="xMidYMax slice">
-              <defs><linearGradient id="kw" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#081338"/><stop offset=".7" stop-color="#1b2c70"/><stop offset="1" stop-color="#3a3f6e"/></linearGradient></defs>
-              <rect width="1600" height="600" fill="url(#kw)"/>
-              <circle cx="1180" cy="330" r="46" fill="#f4dfa8" opacity=".25"/>
-              <g fill="#050b24">
-                <!-- Kuwait Towers -->
-                <rect x="596" y="160" width="6" height="440"/><circle cx="599" cy="250" r="36"/><circle cx="599" cy="180" r="18"/>
-                <rect x="668" y="250" width="5" height="350"/><circle cx="670" cy="330" r="28"/>
-                <rect x="540" y="330" width="3" height="270"/>
-                <!-- Liberation Tower -->
-                <path d="M880 600V290h30v-40h6v-60h4v60h6v40h30v310z"/><ellipse cx="918" cy="310" rx="30" ry="12"/>
-                <path d="M0 600V520h80v-30h60v110zM160 600V470h70v130zM250 600V500h90v100zM360 600V440h50v160zM420 600V520h110v80zM740 600V480h60v120zM820 600V430h40v170zM980 600V460h70v140zM1070 600V380h46v220zM1130 600V500h90v100zM1240 600V420h60v180zM1320 600V490h120v110zM1460 600V450h60v150zM1530 600V520h70v80z"/>
-              </g>
-              <rect y="585" width="1600" height="15" fill="#030819"/>
-            </svg>
-          </div>
-          <div class="scene scene--dubai">
-            <canvas class="journey__skyline"></canvas>
-          </div>
-          <div class="scene scene--global">
-            <svg class="worldmap" id="journey-map"></svg>
-          </div>
-          <div class="journey__veil"></div>
         </div>
 
-        <div class="container journey__head">
-          <p class="eyebrow reveal"><span class="eyebrow__line"></span>Kuwait → Dubai → Global</p>
-          <h2 class="title" id="journey-title">Our journey</h2>
-        </div>
-
-        <div class="journey__track" role="list">
-          <article class="jstep is-active" role="listitem" data-scene="kuwait">
-            <span class="jstep__num">01</span>
-            <h3>Kuwait</h3>
-            <p>Our beginnings.</p>
-            <!-- EDITABLE: add founding story details for Kuwait -->
-          </article>
-          <article class="jstep" role="listitem" data-scene="dubai">
-            <span class="jstep__num">02</span>
-            <h3>Dubai</h3>
-            <p>Establishing our presence in one of the world's leading business hubs.</p>
-          </article>
-          <article class="jstep" role="listitem" data-scene="global">
-            <span class="jstep__num">03</span>
-            <h3>Global</h3>
-            <p>Expanding our outlook and serving businesses across borders.</p>
-          </article>
-        </div>
-
-        <div class="journey__progress container" aria-hidden="true">
-          <span class="journey__bar"><i></i></span>
-          <span class="journey__labels"><b>Kuwait</b><b>Dubai</b><b>Global</b></span>
-        </div>
-      </div>
-    </section>
-
-    <!-- ================= 11. GLOBAL PRESENCE ================= -->
-    <section class="presence section" id="presence" aria-labelledby="presence-title">
-      <div class="container">
-        <header class="section-head section-head--split">
-          <div>
-            <p class="eyebrow reveal"><span class="eyebrow__line"></span>Global presence</p>
-            <h2 class="title split" id="presence-title">Connected to opportunity. <span class="gold">Wherever it exists.</span></h2>
-          </div>
-          <p class="lead reveal">Headquartered in Dubai, with roots in Kuwait, we serve clients across international markets. Hover over a region to explore.</p>
-        </header>
-      </div>
-      <div class="presence__map reveal">
-        <svg class="worldmap worldmap--full" id="presence-map" role="img" aria-label="World map with Dubai at the centre and gold lines extending to Europe, Africa, India, Asia, Oceania and the Americas"></svg>
-      </div>
-      <div class="container presence__legend reveal">
-        <span><i class="lg lg--hub"></i>Dubai — Headquarters</span>
-        <span><i class="lg lg--origin"></i>Kuwait — Where it began</span>
-        <span><i class="lg lg--arc"></i>Serving clients across international markets</span>
-      </div>
-    </section>
-
-    <!-- ================= 12. SECTORS ================= -->
-    <section class="sectors section section--light" id="sectors" aria-labelledby="sectors-title">
-      <div class="container sectors__grid">
-        <header class="sectors__head">
-          <p class="eyebrow reveal"><span class="eyebrow__line"></span>Industries</p>
-          <h2 class="title split" id="sectors-title">Sectors we <span class="gold">understand.</span></h2>
-          <p class="reveal">Every sector has its own rhythm, regulation and opportunities. Select a sector to see how we approach it.</p>
-        </header>
-        <!-- EDITABLE: confirm this list with HK before launch; add/remove <li> items freely. -->
-        <ul class="sector-list">
-          <li class="sector"><button type="button" aria-expanded="false"><span class="sector__n">01</span><span class="sector__name">Real Estate</span><span class="sector__plus" aria-hidden="true"></span></button><div class="sector__body"><p>Strategic and commercial support for developers, investors and operators assessing projects, structures and market opportunities.</p></div></li>
-          <li class="sector"><button type="button" aria-expanded="false"><span class="sector__n">02</span><span class="sector__name">Hospitality</span><span class="sector__plus" aria-hidden="true"></span></button><div class="sector__body"><p>Guidance for hospitality concepts establishing or growing in the UAE and wider region.</p></div></li>
-          <li class="sector"><button type="button" aria-expanded="false"><span class="sector__n">03</span><span class="sector__name">Retail</span><span class="sector__plus" aria-hidden="true"></span></button><div class="sector__body"><p>Market entry and expansion planning for retail brands entering new markets.</p></div></li>
-          <li class="sector"><button type="button" aria-expanded="false"><span class="sector__n">04</span><span class="sector__name">Food &amp; Beverage</span><span class="sector__plus" aria-hidden="true"></span></button><div class="sector__body"><p>Support for F&amp;B businesses navigating setup, growth and new-market considerations.</p></div></li>
-          <li class="sector"><button type="button" aria-expanded="false"><span class="sector__n">05</span><span class="sector__name">Technology</span><span class="sector__plus" aria-hidden="true"></span></button><div class="sector__body"><p>Helping technology companies establish a regional base and scale across borders.</p></div></li>
-          <li class="sector"><button type="button" aria-expanded="false"><span class="sector__n">06</span><span class="sector__name">Professional Services</span><span class="sector__plus" aria-hidden="true"></span></button><div class="sector__body"><p>Structuring and growth support for advisory, consulting and service-led firms.</p></div></li>
-          <li class="sector"><button type="button" aria-expanded="false"><span class="sector__n">07</span><span class="sector__name">Trading</span><span class="sector__plus" aria-hidden="true"></span></button><div class="sector__body"><p>Support for trading businesses operating across jurisdictions and supply routes.</p></div></li>
-          <li class="sector"><button type="button" aria-expanded="false"><span class="sector__n">08</span><span class="sector__name">Startups &amp; Entrepreneurship</span><span class="sector__plus" aria-hidden="true"></span></button><div class="sector__body"><p>Practical guidance for founders turning an idea into an established business.</p></div></li>
-          <li class="sector"><button type="button" aria-expanded="false"><span class="sector__n">09</span><span class="sector__name">Investment &amp; Finance</span><span class="sector__plus" aria-hidden="true"></span></button><div class="sector__body"><p>Commercial and strategic support for investors and finance-led businesses evaluating opportunities.</p></div></li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- ================= 13. INSIGHTS ================= -->
-    <section class="insights section section--light section--light-2" id="insights" aria-labelledby="insights-title">
-      <div class="container">
-        <header class="section-head section-head--split">
-          <div>
-            <p class="eyebrow reveal"><span class="eyebrow__line"></span>Knowledge centre</p>
-            <h2 class="title split" id="insights-title">HK <span class="gold">Insights.</span></h2>
-          </div>
-          <a class="btn btn--dark magnetic reveal" href="#insights" data-dialog="insight" data-topic="All insights"><span>Explore Insights</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-        </header>
-
-        <!-- EDITABLE: insight cards. Link each to a real article when published. -->
-        <div class="ins-grid">
-          <article class="ins" data-tilt>
-            <div class="ins__art ins__art--1" data-photo="insight1" data-alt="Dubai business district" aria-hidden="true"><span class="ins__glyph">AE</span></div>
-            <div class="ins__body"><span class="ins__tag">UAE</span><h3>Business in the UAE</h3><p>Perspectives on establishing and operating a business in the Emirates.</p><button type="button" class="ins__link" data-dialog="insight">Read more <span aria-hidden="true">→</span></button></div>
-          </article>
-          <article class="ins" data-tilt>
-            <div class="ins__art ins__art--2" data-photo="insight2" data-alt="Aerial view of a global port" aria-hidden="true"><span class="ins__glyph">↗</span></div>
-            <div class="ins__body"><span class="ins__tag">Expansion</span><h3>Market Entry</h3><p>Questions to answer before entering a new market.</p><button type="button" class="ins__link" data-dialog="insight">Read more <span aria-hidden="true">→</span></button></div>
-          </article>
-          <article class="ins" data-tilt>
-            <div class="ins__art ins__art--3" data-photo="insight3" data-alt="Modern boardroom" aria-hidden="true"><span class="ins__glyph">◇</span></div>
-            <div class="ins__body"><span class="ins__tag">Strategy</span><h3>Corporate Strategy</h3><p>Thinking clearly about structure, priorities and growth.</p><button type="button" class="ins__link" data-dialog="insight">Read more <span aria-hidden="true">→</span></button></div>
-          </article>
-          <article class="ins" data-tilt>
-            <div class="ins__art ins__art--4" data-photo="insight4" data-alt="Global city skylines" aria-hidden="true"><span class="ins__glyph">◎</span></div>
-            <div class="ins__body"><span class="ins__tag">Global</span><h3>Global Business</h3><p>Operating across borders in a connected economy.</p><button type="button" class="ins__link" data-dialog="insight">Read more <span aria-hidden="true">→</span></button></div>
-          </article>
-          <article class="ins" data-tilt>
-            <div class="ins__art ins__art--5" data-photo="insight5" data-alt="Entrepreneur in a modern workspace" aria-hidden="true"><span class="ins__glyph">✦</span></div>
-            <div class="ins__body"><span class="ins__tag">Founders</span><h3>Entrepreneurship</h3><p>From idea to established business.</p><button type="button" class="ins__link" data-dialog="insight">Read more <span aria-hidden="true">→</span></button></div>
-          </article>
-          <article class="ins" data-tilt>
-            <div class="ins__art ins__art--6" data-photo="insight6" data-alt="Financial district at night" aria-hidden="true"><span class="ins__glyph">△</span></div>
-            <div class="ins__body"><span class="ins__tag">Capital</span><h3>Investment &amp; Growth</h3><p>Evaluating opportunities with a commercial lens.</p><button type="button" class="ins__link" data-dialog="insight">Read more <span aria-hidden="true">→</span></button></div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- ================= 14. CTA ================= -->
-    <section class="cta" id="cta" aria-labelledby="cta-title">
-      <div class="cta__media" data-photo="cta" data-alt="Dubai skyline at night">
-        <canvas class="cta__skyline" aria-hidden="true"></canvas>
-      </div>
-      <canvas class="particles" data-count="60" aria-hidden="true"></canvas>
-      <div class="cta__veil" aria-hidden="true"></div>
-      <div class="container cta__inner">
-        <h2 class="title title--xl split" id="cta-title">Your next opportunity could be <span class="gold">closer than you think.</span></h2>
-        <p class="lead reveal">Let's discuss your business objectives and explore how HK Business Consultancy can support your next step.</p>
-        <div class="hero__ctas reveal">
-          <a class="btn btn--gold magnetic" href="#contact"><span>Start a Conversation</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-          <a class="btn btn--ghost magnetic" href="#contact"><span>Contact HK</span></a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ================= 15. CONTACT ================= -->
-    <section class="contact section" id="contact" aria-labelledby="contact-title">
-      <div class="container contact__grid">
-        <div class="contact__info">
-          <p class="eyebrow reveal"><span class="eyebrow__line"></span>Contact</p>
-          <h2 class="title split" id="contact-title">Let's talk <span class="gold">business.</span></h2>
-          <!-- EDITABLE: replace bracketed placeholders with confirmed contact details -->
-          <dl class="contact__list">
-            <div class="reveal"><dt>Headquarters</dt><dd>Dubai, United Arab Emirates</dd></div>
-            <div class="reveal"><dt>Email</dt><dd><a href="#contact" class="ph" data-placeholder="email">[EMAIL]</a></dd></div>
-            <div class="reveal"><dt>Phone</dt><dd><a href="#contact" class="ph" data-placeholder="phone">[PHONE]</a></dd></div>
-            <div class="reveal"><dt>Website</dt><dd><span class="ph">[WEBSITE]</span></dd></div>
-          </dl>
-          <ul class="socials reveal" aria-label="Social media">
-            <li><a href="#contact" class="magnetic" aria-label="LinkedIn (link to be added)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 9.5v8M6.5 6.5v.01M10.5 17.5v-5a2.5 2.5 0 015 0v5M10.5 9.5v8"/><rect x="2.5" y="2.5" width="19" height="19" rx="3"/></svg></a></li>
-            <li><a href="#contact" class="magnetic" aria-label="Instagram (link to be added)"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".6"/></svg></a></li>
-            <li><a href="#contact" class="magnetic" aria-label="X / Twitter (link to be added)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4l16 16M20 4L4 20"/></svg></a></li>
-            <li><a href="#contact" class="magnetic" aria-label="WhatsApp (link to be added)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1.3-4A8 8 0 1112 20a8 8 0 01-4-1z"/><path d="M9 9.5c.5 2 2 3.5 4.5 4.5l1-1.2 2 .8"/></svg></a></li>
+        <figure class="hero__tower" aria-label="Elevation drawing of a tower. Kuwait is the foundation, Dubai the body, the world the view from the top.">
+          <svg class="tower" viewBox="0 0 400 1000" preserveAspectRatio="xMaxYMax meet" data-tower aria-hidden="true"></svg>
+          <ul class="tower__datums" aria-hidden="true">
+            <li style="--y: 0"><b>▽ 000</b> Kuwait<i></i></li>
+            <li style="--y: .3"><b>▽ 048</b> Dubai<i></i></li>
+            <li style="--y: .925"><b>▽ 148</b> The world<i></i></li>
           </ul>
+        </figure>
+      </div>
+      <div class="ground" aria-hidden="true">
+        <span>Ground · Kuwait</span><span>29°22′N 47°58′E</span><span class="ground__cue">Scroll to ascend ↓</span>
+      </div>
+    </section>
+
+    <!-- ============ LVL 012 · ABOUT ============ -->
+    <section class="floor" id="about" data-level="12" data-name="About" aria-labelledby="about-title">
+      <header class="slab"><span class="slab__lvl">LVL 012</span><span class="slab__name">About HK</span></header>
+      <div class="about">
+        <div class="about__text">
+          <h2 class="h2" id="about-title">Built on experience. <em>Driven by opportunity.</em></h2>
+          <!-- EDITABLE: company story -->
+          <p class="lede">HK Business Consultancy began its journey in Kuwait. That foundation grew into a Dubai-based consultancy serving businesses, entrepreneurs and investors internationally.</p>
+          <p>From our headquarters in one of the world's most connected business hubs, we help clients think clearly about where they are going and how to get there, whether that means establishing a company, entering a new market, restructuring, or evaluating an opportunity across borders.</p>
+          <p>Our perspective is shaped by the region we come from and the markets our clients look toward: commercially grounded, personally delivered and globally minded.</p>
+        </div>
+        <ol class="datums" aria-label="Where HK stands">
+          <li><span class="datums__mark">∞</span><span class="datums__label">Possibilities</span><span class="datums__note">What comes next</span></li>
+          <li><span class="datums__mark">03</span><span class="datums__label">Global outlook</span><span class="datums__note">Serving clients across international markets</span></li>
+          <li><span class="datums__mark">02</span><span class="datums__label">Dubai headquarters</span><span class="datums__note">United Arab Emirates</span></li>
+          <li><span class="datums__mark">01</span><span class="datums__label">Kuwait origins</span><span class="datums__note">Where the journey began</span></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============ LVL 024 · SERVICES ============ -->
+    <section class="floor" id="services" data-level="24" data-name="Services" aria-labelledby="services-title">
+      <header class="slab"><span class="slab__lvl">LVL 024</span><span class="slab__name">Services</span></header>
+      <div class="split-head">
+        <h2 class="h2" id="services-title">Eight floors of <em>advisory.</em></h2>
+        <p class="lede">Choose a floor. Each one is a discipline we bring to your business, and they connect to one another the way floors of a building do.</p>
+      </div>
+
+      <!-- EDITABLE: services. Floors run top-down like a building section. -->
+      <ol class="stack" data-stack>
+        <li class="fl">
+          <button class="fl__row" type="button" aria-expanded="false"><span class="fl__no">FL 32</span><span class="fl__name">UAE Business Advisory</span><span class="fl__win" aria-hidden="true"></span><span class="fl__plus" aria-hidden="true"></span></button>
+          <div class="fl__panel"><div class="fl__inner">
+            <p>Dubai and UAE-focused support for businesses seeking to establish or expand their presence in the region.</p>
+            <ul><li>Mainland and free zone considerations</li><li>Establishing a presence in Dubai</li><li>Regional expansion from the UAE</li><li>Ongoing local guidance</li></ul>
+            <a class="link" href="#contact" data-service="UAE Business Advisory">Discuss this service →</a>
+          </div></div>
+        </li>
+        <li class="fl">
+          <button class="fl__row" type="button" aria-expanded="false"><span class="fl__no">FL 31</span><span class="fl__name">Cross-Border Business Solutions</span><span class="fl__win" aria-hidden="true"></span><span class="fl__plus" aria-hidden="true"></span></button>
+          <div class="fl__panel"><div class="fl__inner">
+            <p>Supporting businesses operating across multiple jurisdictions.</p>
+            <ul><li>Multi-jurisdiction coordination</li><li>International expansion planning</li><li>Cross-border structuring considerations</li><li>Coordination with specialist advisors</li></ul>
+            <a class="link" href="#contact" data-service="Cross-Border Business Solutions">Discuss this service →</a>
+          </div></div>
+        </li>
+        <li class="fl">
+          <button class="fl__row" type="button" aria-expanded="false"><span class="fl__no">FL 30</span><span class="fl__name">Business Development</span><span class="fl__win" aria-hidden="true"></span><span class="fl__plus" aria-hidden="true"></span></button>
+          <div class="fl__panel"><div class="fl__inner">
+            <p>Identifying opportunities, partnerships and pathways for sustainable growth.</p>
+            <ul><li>Opportunity identification</li><li>Partnership pathways</li><li>Go-to-market support</li><li>Growth planning</li></ul>
+            <a class="link" href="#contact" data-service="Business Development">Discuss this service →</a>
+          </div></div>
+        </li>
+        <li class="fl">
+          <button class="fl__row" type="button" aria-expanded="false"><span class="fl__no">FL 29</span><span class="fl__name">Investment &amp; Strategic Advisory</span><span class="fl__win" aria-hidden="true"></span><span class="fl__plus" aria-hidden="true"></span></button>
+          <div class="fl__panel"><div class="fl__inner">
+            <p>Commercial and strategic support for investors and businesses evaluating opportunities.</p>
+            <ul><li>Opportunity evaluation</li><li>Commercial review support</li><li>Strategic options analysis</li><li>Investor and business alignment</li></ul>
+            <a class="link" href="#contact" data-service="Investment &amp; Strategic Advisory">Discuss this service →</a>
+          </div></div>
+        </li>
+        <li class="fl">
+          <button class="fl__row" type="button" aria-expanded="false"><span class="fl__no">FL 28</span><span class="fl__name">Market Entry</span><span class="fl__win" aria-hidden="true"></span><span class="fl__plus" aria-hidden="true"></span></button>
+          <div class="fl__panel"><div class="fl__inner">
+            <p>Helping businesses assess and navigate opportunities when entering new markets.</p>
+            <ul><li>Market assessment</li><li>Entry route options</li><li>Local landscape insight</li><li>Launch roadmap</li></ul>
+            <a class="link" href="#contact" data-service="Market Entry">Discuss this service →</a>
+          </div></div>
+        </li>
+        <li class="fl">
+          <button class="fl__row" type="button" aria-expanded="false"><span class="fl__no">FL 27</span><span class="fl__name">Corporate Advisory</span><span class="fl__win" aria-hidden="true"></span><span class="fl__plus" aria-hidden="true"></span></button>
+          <div class="fl__panel"><div class="fl__inner">
+            <p>Strategic corporate solutions designed around the client's commercial objectives.</p>
+            <ul><li>Corporate structuring considerations</li><li>Commercial strategy</li><li>Stakeholder and decision support</li><li>Transformation planning</li></ul>
+            <a class="link" href="#contact" data-service="Corporate Advisory">Discuss this service →</a>
+          </div></div>
+        </li>
+        <li class="fl">
+          <button class="fl__row" type="button" aria-expanded="false"><span class="fl__no">FL 26</span><span class="fl__name">Company Formation</span><span class="fl__win" aria-hidden="true"></span><span class="fl__plus" aria-hidden="true"></span></button>
+          <div class="fl__panel"><div class="fl__inner">
+            <p>Support with establishing businesses and navigating the requirements of the relevant jurisdiction.</p>
+            <ul><li>Structure and jurisdiction considerations</li><li>Guidance through the setup process</li><li>Documentation coordination</li><li>Post-formation next steps</li></ul>
+            <a class="link" href="#contact" data-service="Company Formation">Discuss this service →</a>
+          </div></div>
+        </li>
+        <li class="fl">
+          <button class="fl__row" type="button" aria-expanded="false"><span class="fl__no">FL 25</span><span class="fl__name">Business Consulting</span><span class="fl__win" aria-hidden="true"></span><span class="fl__plus" aria-hidden="true"></span></button>
+          <div class="fl__panel"><div class="fl__inner">
+            <p>Strategic guidance for businesses seeking to establish, restructure, expand or improve their operations.</p>
+            <ul><li>Business reviews and diagnostics</li><li>Operational improvement</li><li>Restructuring support</li><li>Growth planning</li></ul>
+            <a class="link" href="#contact" data-service="Business Consulting">Discuss this service →</a>
+          </div></div>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ============ LVL 048 · SKY LOBBY / WHY DUBAI ============ -->
+    <section class="floor" id="why-dubai" data-level="48" data-name="Sky lobby · Why Dubai" aria-labelledby="why-title">
+      <header class="slab"><span class="slab__lvl">LVL 048</span><span class="slab__name">Sky lobby · Why Dubai</span></header>
+      <h2 class="display" id="why-title">Where the world <em>does business.</em></h2>
+      <div class="why">
+        <p class="lede">Dubai sits between continents and time zones. Its working day reaches Asia in the morning and Europe in the afternoon, which makes it a natural base for the Gulf and beyond.</p>
+        <ul class="sight" aria-label="What Dubai connects">
+          <li><span>East</span><i></i><span>West</span></li>
+          <li><span>Capital</span><i></i><span>Opportunity</span></li>
+          <li><span>Innovation</span><i></i><span>Enterprise</span></li>
+        </ul>
+      </div>
+
+      <figure class="day" aria-labelledby="day-cap">
+        <figcaption id="day-cap"><b>The working day, seen from Dubai.</b> Office hours (09:00 to 18:00 local) plotted in Dubai time. Live, including daylight saving.</figcaption>
+        <div class="day__chart" data-day></div>
+        <div class="day__axis" aria-hidden="true"><span style="--f:0">00</span><span style="--f:.25">06</span><span style="--f:.5">12</span><span style="--f:.75">18</span><span style="--f:1">24</span><em>Dubai time (GST, UTC+4)</em></div>
+      </figure>
+    </section>
+
+    <!-- ============ LVL 060 · APPROACH ============ -->
+    <section class="floor" id="approach" data-level="60" data-name="Approach" aria-labelledby="approach-title">
+      <header class="slab"><span class="slab__lvl">LVL 060</span><span class="slab__name">The HK approach</span></header>
+      <div class="split-head">
+        <h2 class="h2" id="approach-title">Business is global. <em>Our approach is personal.</em></h2>
+        <p class="lede">Every building starts the same way: a survey, then a plan, then the build. So does every engagement.</p>
+      </div>
+      <ol class="sheets">
+        <li class="sheet">
+          <svg viewBox="0 0 200 150" aria-hidden="true" class="sheet__draw">
+            <g class="d-grid"><path d="M20 20h160M20 50h160M20 80h160M20 110h160M20 20v110M60 20v110M100 20v110M140 20v110M180 20v110"/></g>
+            <path class="d-ink" d="M52 104l18-46 34 12 30-26 22 40-44 30z"/>
+            <circle class="d-ink" cx="100" cy="80" r="4"/><path class="d-ink" d="M92 80h-16M108 80h16M100 72v-16M100 88v16"/>
+          </svg>
+          <p class="sheet__ref">Drawing 01 · Survey</p>
+          <h3>Understand</h3>
+          <p>We begin by understanding the business, its objectives and its market.</p>
+        </li>
+        <li class="sheet">
+          <svg viewBox="0 0 200 150" aria-hidden="true" class="sheet__draw">
+            <g class="d-grid"><path d="M20 20h160M20 130h160"/></g>
+            <path class="d-ink" d="M40 130V40h120v90M40 62h120M40 84h120M40 106h120M80 40v90M120 40v90"/>
+            <path class="d-dim" d="M30 40v90M26 40h8M26 130h8M40 142h120M40 138v8M160 138v8"/>
+          </svg>
+          <p class="sheet__ref">Drawing 02 · Plan</p>
+          <h3>Strategise</h3>
+          <p>We develop commercially practical strategies aligned with those objectives.</p>
+        </li>
+        <li class="sheet">
+          <svg viewBox="0 0 200 150" aria-hidden="true" class="sheet__draw">
+            <g class="d-grid"><path d="M10 130h180"/></g>
+            <path class="d-ink" d="M76 130V78h48v52M84 78V50h32v28M92 50V26h16v24M100 26V6"/>
+            <rect class="d-lit" x="84" y="60" width="32" height="5"/>
+          </svg>
+          <p class="sheet__ref">Drawing 03 · Build</p>
+          <h3>Execute</h3>
+          <p>We help turn strategy into actionable business solutions.</p>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ============ LVL 072 · SECTORS ============ -->
+    <section class="floor" id="sectors" data-level="72" data-name="Sectors" aria-labelledby="sectors-title">
+      <header class="slab"><span class="slab__lvl">LVL 072</span><span class="slab__name">Sectors</span></header>
+      <div class="split-head">
+        <h2 class="h2" id="sectors-title">Sectors we <em>understand.</em></h2>
+        <p class="lede">Every sector has its own rhythm, regulation and opportunities. Select one to see how we approach it.</p>
+      </div>
+      <!-- EDITABLE: confirm this list with HK before launch. Kept alphabetical, like a lobby directory. -->
+      <div class="board">
+        <p class="board__head"><span>Directory</span><span>Sector</span></p>
+        <ul class="board__list">
+          <li><button type="button" aria-expanded="false">Food &amp; Beverage</button><p>Support for F&amp;B businesses navigating setup, growth and new-market considerations.</p></li>
+          <li><button type="button" aria-expanded="false">Hospitality</button><p>Guidance for hospitality concepts establishing or growing in the UAE and wider region.</p></li>
+          <li><button type="button" aria-expanded="false">Investment &amp; Finance</button><p>Commercial and strategic support for investors and finance-led businesses evaluating opportunities.</p></li>
+          <li><button type="button" aria-expanded="false">Professional Services</button><p>Structuring and growth support for advisory, consulting and service-led firms.</p></li>
+          <li><button type="button" aria-expanded="false">Real Estate</button><p>Strategic and commercial support for developers, investors and operators assessing projects, structures and market opportunities.</p></li>
+          <li><button type="button" aria-expanded="false">Retail</button><p>Market entry and expansion planning for retail brands entering new markets.</p></li>
+          <li><button type="button" aria-expanded="false">Startups &amp; Entrepreneurship</button><p>Practical guidance for founders turning an idea into an established business.</p></li>
+          <li><button type="button" aria-expanded="false">Technology</button><p>Helping technology companies establish a regional base and scale across borders.</p></li>
+          <li><button type="button" aria-expanded="false">Trading</button><p>Support for trading businesses operating across jurisdictions and supply routes.</p></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ LVL 088 · INSIGHTS ============ -->
+    <section class="floor" id="insights" data-level="88" data-name="Insights" aria-labelledby="insights-title">
+      <header class="slab"><span class="slab__lvl">LVL 088</span><span class="slab__name">Reading room · HK Insights</span></header>
+      <div class="split-head">
+        <h2 class="h2" id="insights-title">HK <em>Insights.</em></h2>
+        <p class="lede">Perspectives on doing business in the UAE and across international markets. The first papers are in preparation.</p>
+      </div>
+      <!-- EDITABLE: link each row to its article once published and change the status. -->
+      <div class="register" role="table" aria-label="Insights register">
+        <div class="register__row register__row--head" role="row"><span role="columnheader">Ref.</span><span role="columnheader">Title</span><span role="columnheader">Subject</span><span role="columnheader">Status</span></div>
+        <button class="register__row" type="button" role="row" data-insight><span role="cell">HK-IN-01</span><span role="cell">Business in the UAE</span><span role="cell">Establishing and operating in the Emirates</span><span role="cell" class="status">Forthcoming</span></button>
+        <button class="register__row" type="button" role="row" data-insight><span role="cell">HK-IN-02</span><span role="cell">Market Entry</span><span role="cell">Questions to answer before entering a new market</span><span role="cell" class="status">Forthcoming</span></button>
+        <button class="register__row" type="button" role="row" data-insight><span role="cell">HK-IN-03</span><span role="cell">Corporate Strategy</span><span role="cell">Structure, priorities and growth</span><span role="cell" class="status">Forthcoming</span></button>
+        <button class="register__row" type="button" role="row" data-insight><span role="cell">HK-IN-04</span><span role="cell">Global Business</span><span role="cell">Operating across borders</span><span role="cell" class="status">Forthcoming</span></button>
+        <button class="register__row" type="button" role="row" data-insight><span role="cell">HK-IN-05</span><span role="cell">Entrepreneurship</span><span role="cell">From idea to established business</span><span role="cell" class="status">Forthcoming</span></button>
+        <button class="register__row" type="button" role="row" data-insight><span role="cell">HK-IN-06</span><span role="cell">Investment &amp; Growth</span><span role="cell">Evaluating opportunities with a commercial lens</span><span role="cell" class="status">Forthcoming</span></button>
+      </div>
+    </section>
+
+    <!-- ============ LVL 101 · CHAIRMAN ============ -->
+    <section class="floor" id="chairman" data-level="101" data-name="Chairman" aria-labelledby="chairman-title">
+      <header class="slab"><span class="slab__lvl">LVL 101</span><span class="slab__name">Chairman's message</span></header>
+      <div class="drawing">
+        <figure class="drawing__portrait" data-photo="chairman" data-alt="Portrait of the Chairman of HK Business Consultancy">
+          <!-- EDITABLE: Chairman's portrait (set the path in assets/js/config.js) -->
+          <span class="drawing__ph">Portrait to follow</span>
+        </figure>
+        <div class="drawing__body">
+          <h2 class="h2" id="chairman-title">A message from <em>the Chairman.</em></h2>
+          <blockquote class="quote">
+            <!-- EDITABLE: opening quote to be approved by the Chairman -->
+            <p>“Our journey began with a simple belief: meaningful business relationships can create opportunities that transcend borders.”</p>
+          </blockquote>
+          <div class="sig">
+            <svg viewBox="0 0 320 90" class="sig__line" role="img" aria-label="Signature placeholder"><path d="M10 62c18-30 34-48 44-44s-8 50-2 52 26-44 36-40-4 34 6 36 20-26 30-24 2 20 12 20 24-30 36-28-6 26 6 26 34-20 50-24 30 6 46-4 30-10 36-8"/></svg>
+            <p><span class="ph">[CHAIRMAN'S NAME]</span><br>Chairman, HK Business Consultancy</p>
+          </div>
+          <button class="btn btn--line" type="button" data-open="chairman">Read the Chairman's full message →</button>
+        </div>
+        <dl class="titleblock" aria-label="Drawing details">
+          <div><dt>Project</dt><dd>HK Business Consultancy</dd></div>
+          <div><dt>Sheet</dt><dd>Chairman's message</dd></div>
+          <div><dt>Level</dt><dd>101</dd></div>
+          <div><dt>Status</dt><dd>Draft for approval</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ============ LVL 124 · JOURNEY ============ -->
+    <section class="floor" id="journey" data-level="124" data-name="Journey" aria-labelledby="journey-title">
+      <header class="slab"><span class="slab__lvl">LVL 124</span><span class="slab__name">Our journey</span></header>
+      <h2 class="display" id="journey-title">Our <em>journey.</em></h2>
+      <ol class="route">
+        <li class="route__stop">
+          <svg viewBox="0 0 200 220" aria-hidden="true" class="route__draw">
+            <path class="d-ink" d="M20 210h160"/>
+            <path class="d-ink" d="M80 210V40M76 210V60M84 210V60"/><circle class="d-ink" cx="80" cy="96" r="22"/><circle class="d-ink" cx="80" cy="52" r="10"/>
+            <path class="d-ink" d="M128 210V92"/><circle class="d-ink" cx="128" cy="128" r="16"/>
+            <path class="d-ink" d="M44 210V160"/>
+          </svg>
+          <p class="route__at">29°22′N 47°58′E</p>
+          <h3>Kuwait</h3>
+          <p>Our beginnings.</p>
+          <!-- EDITABLE: add founding story details for Kuwait -->
+        </li>
+        <li class="route__leg" aria-hidden="true"><span>856 km · bearing 121°</span></li>
+        <li class="route__stop">
+          <svg viewBox="0 0 200 220" aria-hidden="true" class="route__draw">
+            <path class="d-ink" d="M20 210h160"/>
+            <path class="d-ink" d="M78 210V120h44v90M84 120V78h32v42M90 78V44h20v34M96 44V20h8v24M100 20V2"/>
+            <path class="d-ink" d="M40 210v-50h24v50M136 210v-66h26v66"/>
+            <rect class="d-lit" x="84" y="96" width="32" height="5"/>
+          </svg>
+          <p class="route__at">25°12′N 55°16′E</p>
+          <h3>Dubai</h3>
+          <p>Establishing our presence in one of the world's leading business hubs.</p>
+        </li>
+        <li class="route__leg" aria-hidden="true"><span>Every bearing</span></li>
+        <li class="route__stop">
+          <svg viewBox="0 0 200 220" aria-hidden="true" class="route__draw">
+            <path class="d-ink" d="M10 170h180"/>
+            <path class="d-ink" d="M20 170a80 80 0 0 1 160 0"/>
+            <path class="d-grid" d="M100 170L30 110M100 170L60 94M100 170V90M100 170l40-76M100 170l70-60"/>
+            <circle class="d-lit-dot" cx="100" cy="170" r="5"/>
+          </svg>
+          <p class="route__at">0° to 360°</p>
+          <h3>Global</h3>
+          <p>Expanding our outlook and serving businesses across borders.</p>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ============ LVL 148 · OBSERVATION DECK ============ -->
+    <section class="floor deck" id="observation" data-level="148" data-name="Observation deck · The world" aria-labelledby="deck-title">
+      <header class="slab slab--night"><span class="slab__lvl">LVL 148</span><span class="slab__name">Observation deck · The world</span></header>
+      <div class="split-head">
+        <h2 class="h2" id="deck-title">Connected to opportunity. <em>Wherever it exists.</em></h2>
+        <p class="lede">From the top of the tower, the world is a set of bearings. Drag the view to turn around; select a city to see how we support that region. We serve clients across international markets.</p>
+      </div>
+
+      <div class="pano" data-pano>
+        <div class="pano__view" tabindex="0" aria-label="360-degree view from Dubai. Use left and right arrow keys to turn.">
+          <div class="pano__strip" data-strip></div>
+        </div>
+        <div class="pano__controls">
+          <button type="button" class="pano__btn" data-turn="-45" aria-label="Turn left 45 degrees">←</button>
+          <span class="pano__heading" aria-live="polite">Facing <b data-heading>300°</b></span>
+          <button type="button" class="pano__btn" data-turn="45" aria-label="Turn right 45 degrees">→</button>
+        </div>
+        <div class="pano__card" data-card role="status" aria-live="polite">
+          <p class="pano__region" data-card-region>Middle East</p>
+          <p class="pano__focus" data-card-focus>Business Advisory</p>
+          <p class="pano__note" data-card-note>Where our journey began, Kuwait, and where we are headquartered, Dubai.</p>
+        </div>
+        <p class="pano__foot">Viewed from Dubai, 25.20°N 55.27°E. Bearings and great-circle distances are calculated live.</p>
+      </div>
+
+      <div class="summit">
+        <h2 class="display display--light" id="cta-title">Your next opportunity could be <em>closer than you think.</em></h2>
+        <p class="lede">Let's discuss your business objectives and explore how HK Business Consultancy can support your next step.</p>
+        <div class="hero__ctas">
+          <a class="btn btn--lamp" href="#contact">Start a conversation</a>
+          <a class="btn btn--line-light" href="#contact">Contact HK</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ LVL 154 · CONTACT ============ -->
+    <section class="floor" id="contact" data-level="154" data-name="Top floor · Contact" aria-labelledby="contact-title">
+      <header class="slab"><span class="slab__lvl">LVL 154</span><span class="slab__name">Top floor · Contact</span></header>
+      <div class="contact">
+        <div class="contact__info">
+          <h2 class="h2" id="contact-title">Let's talk <em>business.</em></h2>
+          <!-- EDITABLE: replace bracketed placeholders with confirmed contact details -->
+          <dl class="facts">
+            <div><dt>Headquarters</dt><dd>Dubai, United Arab Emirates</dd></div>
+            <div><dt>Email</dt><dd><span class="ph">[EMAIL]</span></dd></div>
+            <div><dt>Phone</dt><dd><span class="ph">[PHONE]</span></dd></div>
+            <div><dt>Website</dt><dd><span class="ph">[WEBSITE]</span></dd></div>
+            <div><dt>Social</dt><dd class="facts__social"><a href="#contact">LinkedIn</a><a href="#contact">Instagram</a><a href="#contact">X</a><a href="#contact">WhatsApp</a></dd></div>
+          </dl>
         </div>
 
-        <div class="contact__form-wrap reveal">
+        <div class="contact__form">
           <form class="form" id="enquiry" novalidate>
-            <div class="form__row">
-              <label class="field"><input name="name" type="text" autocomplete="name" required placeholder=" "><span>Name *</span></label>
-              <label class="field"><input name="company" type="text" autocomplete="organization" placeholder=" "><span>Company</span></label>
-            </div>
-            <div class="form__row">
-              <label class="field"><input name="email" type="email" autocomplete="email" required placeholder=" "><span>Email *</span></label>
-              <label class="field"><input name="phone" type="tel" autocomplete="tel" placeholder=" "><span>Phone</span></label>
-            </div>
-            <div class="form__row">
-              <label class="field"><input name="country" type="text" autocomplete="country-name" list="countries" placeholder=" "><span>Country</span></label>
-              <label class="field field--select">
-                <select name="service" required>
-                  <option value="" disabled selected hidden></option>
+            <div class="form__grid">
+              <label class="field" for="f-name"><span>Name *</span><input id="f-name" name="name" type="text" autocomplete="name" required></label>
+              <label class="field" for="f-company"><span>Company</span><input id="f-company" name="company" type="text" autocomplete="organization"></label>
+              <label class="field" for="f-email"><span>Email *</span><input id="f-email" name="email" type="email" autocomplete="email" required></label>
+              <label class="field" for="f-phone"><span>Phone</span><input id="f-phone" name="phone" type="tel" autocomplete="tel"></label>
+              <label class="field" for="f-country"><span>Country</span><input id="f-country" name="country" type="text" autocomplete="country-name" list="countries"></label>
+              <label class="field" for="f-service"><span>Service required *</span>
+                <select id="f-service" name="service" required>
+                  <option value="">Select a service</option>
                   <option>Business Consulting</option>
                   <option>Company Formation</option>
                   <option>Corporate Advisory</option>
@@ -659,18 +480,18 @@
                   <option>UAE Business Advisory</option>
                   <option>Other / Not sure yet</option>
                 </select>
-                <span>Service Required *</span>
               </label>
+              <label class="field field--wide" for="f-message"><span>Message *</span><textarea id="f-message" name="message" rows="5" required></textarea></label>
             </div>
-            <label class="field field--area"><textarea name="message" rows="4" required placeholder=" "></textarea><span>Message *</span></label>
-            <!-- honeypot -->
             <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
             <p class="form__error" role="alert" hidden></p>
-            <button class="btn btn--gold btn--block magnetic" type="submit"><span>Send Enquiry</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
-            <p class="form__note">By submitting, you agree to our <a href="privacy.html">Privacy Policy</a>.</p>
+            <div class="form__foot">
+              <button class="btn btn--royal" type="submit">Send enquiry →</button>
+              <p class="form__note">By submitting, you agree to our <a href="privacy.html">Privacy Policy</a>.</p>
+            </div>
           </form>
-          <div class="form__success" hidden tabindex="-1">
-            <svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="29"/><path d="M20 33l8 8 16-18"/></svg>
+          <div class="form__done" hidden tabindex="-1">
+            <p class="form__done-lvl">▽ Received</p>
             <p>Thank you. Your enquiry has been received. Our team will be in touch.</p>
           </div>
           <datalist id="countries">
@@ -681,18 +502,15 @@
     </section>
   </main>
 
-  <!-- ================= 16. FOOTER ================= -->
-  <footer class="footer">
-    <div class="container footer__top">
-      <div class="footer__brand">
-        <a class="brand" href="#home" aria-label="HK Business Consultancy — back to top">
-          <svg class="brand__mark" viewBox="0 0 48 48" aria-hidden="true"><rect x="1" y="1" width="46" height="46" rx="3" class="brand__frame"/><path d="M14 13v22M14 24h11M25 13v22M34 13l-7 11 8 11" class="brand__hk"/></svg>
-          <span class="brand__text"><strong>HK</strong> Business Consultancy</span>
-        </a>
-        <p class="footer__tag">“From Kuwait to Dubai.<br>From Dubai to the world.”</p>
+  <!-- ============ SPIRE / FOOTER ============ -->
+  <footer class="spire">
+    <div class="spire__inner">
+      <div class="spire__brand">
+        <p class="spire__name">HK Business Consultancy</p>
+        <p class="spire__tag">From Kuwait to Dubai.<br>From Dubai to the world.</p>
       </div>
-      <nav class="footer__nav" aria-label="Footer">
-        <a href="#home">Home</a>
+      <nav class="spire__nav" aria-label="Footer">
+        <a href="#ground">Home</a>
         <a href="#about">About</a>
         <a href="#services">Services</a>
         <a href="#chairman">Chairman's Message</a>
@@ -700,88 +518,57 @@
         <a href="#insights">Insights</a>
         <a href="#contact">Contact</a>
       </nav>
-      <div class="footer__meta">
+      <div class="spire__meta">
         <p>Dubai, United Arab Emirates</p>
-        <button type="button" class="motion-toggle" aria-pressed="false"><span class="motion-toggle__sw" aria-hidden="true"></span>Reduce motion</button>
+        <button type="button" class="motion" aria-pressed="false">Reduce motion</button>
       </div>
     </div>
-    <div class="container footer__bottom">
+    <div class="spire__base">
       <p>© <span data-year>2026</span> HK Business Consultancy. All Rights Reserved.</p>
-      <p><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms &amp; Conditions</a></p>
+      <p><a href="privacy.html">Privacy Policy</a> <a href="terms.html">Terms &amp; Conditions</a></p>
     </div>
-    <p class="footer__giant" aria-hidden="true">HK</p>
   </footer>
 
-  <!-- ================= OVERLAYS ================= -->
-  <dialog class="overlay" id="dlg-chairman" aria-labelledby="dlg-chairman-title">
-    <div class="overlay__panel">
-      <button class="overlay__close" type="button" aria-label="Close" data-close>×</button>
-      <div class="overlay__grid">
-        <aside class="overlay__side">
-          <p class="eyebrow"><span class="eyebrow__line"></span>Chairman's message</p>
-          <p class="overlay__name"><span class="ph">[CHAIRMAN'S NAME]</span><span>Chairman, HK Business Consultancy</span></p>
-        </aside>
-        <article class="overlay__body prose">
-          <h2 id="dlg-chairman-title">A message from the Chairman</h2>
-          <p class="prose__lead">“Our journey began with a simple belief: meaningful business relationships can create opportunities that transcend borders.”</p>
-          <!-- EDITABLE: full Chairman's message. Replace each bracketed paragraph with the approved text. -->
-          <p class="ph-block">[Paragraph 1 — The beginning: reflections on how HK Business Consultancy started in Kuwait and the values it was founded on.]</p>
-          <p class="ph-block">[Paragraph 2 — The move to Dubai: why Dubai became the company's headquarters and what it represents for clients.]</p>
-          <p class="ph-block">[Paragraph 3 — Looking outward: the company's global outlook and the kinds of businesses, entrepreneurs and investors it serves.]</p>
-          <p class="ph-block">[Paragraph 4 — Commitment: the Chairman's personal commitment to clients, partners and the team.]</p>
-          <div class="overlay__sig">
-            <svg class="signature" viewBox="0 0 320 90" aria-hidden="true"><path d="M10 62c18-30 34-48 44-44s-8 50-2 52 26-44 36-40-4 34 6 36 20-26 30-24 2 20 12 20 24-30 36-28-6 26 6 26 34-20 50-24 30 6 46-4 30-10 36-8"/></svg>
-            <p><span class="ph">[CHAIRMAN'S NAME]</span><br>Chairman, HK Business Consultancy</p>
-          </div>
-        </article>
+  <!-- ============ OVERLAYS ============ -->
+  <dialog class="sheetdlg dir" id="dlg-directory" aria-label="Building directory">
+    <div class="sheetdlg__inner">
+      <button class="sheetdlg__close" type="button" data-close aria-label="Close">×</button>
+      <p class="dir__title">Directory</p>
+      <ul class="dir__list" data-directory></ul>
+    </div>
+  </dialog>
+
+  <dialog class="sheetdlg" id="dlg-chairman" aria-labelledby="dlg-chairman-title">
+    <div class="sheetdlg__inner">
+      <button class="sheetdlg__close" type="button" data-close aria-label="Close">×</button>
+      <p class="kicker">LVL 101 · Chairman's message</p>
+      <h2 class="h2" id="dlg-chairman-title">A message from the Chairman</h2>
+      <p class="lede">“Our journey began with a simple belief: meaningful business relationships can create opportunities that transcend borders.”</p>
+      <!-- EDITABLE: full Chairman's message. Replace each bracketed paragraph with the approved text. -->
+      <p class="ph-block">[Paragraph 1: the beginning. How HK Business Consultancy started in Kuwait and the values it was founded on.]</p>
+      <p class="ph-block">[Paragraph 2: the move to Dubai. Why Dubai became the headquarters and what it means for clients.]</p>
+      <p class="ph-block">[Paragraph 3: looking outward. The company's global outlook and the businesses, entrepreneurs and investors it serves.]</p>
+      <p class="ph-block">[Paragraph 4: commitment. The Chairman's personal commitment to clients, partners and the team.]</p>
+      <div class="sig">
+        <svg viewBox="0 0 320 90" class="sig__line" aria-hidden="true"><path d="M10 62c18-30 34-48 44-44s-8 50-2 52 26-44 36-40-4 34 6 36 20-26 30-24 2 20 12 20 24-30 36-28-6 26 6 26 34-20 50-24 30 6 46-4 30-10 36-8"/></svg>
+        <p><span class="ph">[CHAIRMAN'S NAME]</span><br>Chairman, HK Business Consultancy</p>
       </div>
     </div>
   </dialog>
 
-  <dialog class="overlay" id="dlg-service" aria-labelledby="dlg-service-title">
-    <div class="overlay__panel">
-      <button class="overlay__close" type="button" aria-label="Close" data-close>×</button>
-      <div class="overlay__grid">
-        <aside class="overlay__side">
-          <p class="eyebrow"><span class="eyebrow__line"></span>Service <span data-svc-idx></span></p>
-          <div class="overlay__icon" data-svc-icon></div>
-        </aside>
-        <article class="overlay__body prose">
-          <h2 id="dlg-service-title" data-svc-title></h2>
-          <p class="prose__lead" data-svc-desc></p>
-          <h3>How we can help</h3>
-          <ul class="checks" data-svc-list></ul>
-          <p>Every engagement starts with a conversation about your objectives. From there we shape an approach around your business, your market and your timeline.</p>
-          <a class="btn btn--gold magnetic" href="#contact" data-close data-svc-cta><span>Discuss this service</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-        </article>
-      </div>
-    </div>
-  </dialog>
-
-  <dialog class="overlay" id="dlg-insight" aria-labelledby="dlg-insight-title">
-    <div class="overlay__panel">
-      <button class="overlay__close" type="button" aria-label="Close" data-close>×</button>
-      <div class="overlay__grid">
-        <aside class="overlay__side">
-          <p class="eyebrow"><span class="eyebrow__line"></span>HK Insights</p>
-          <p class="overlay__meta" data-ins-tag></p>
-        </aside>
-        <article class="overlay__body prose">
-          <h2 id="dlg-insight-title" data-ins-title></h2>
-          <p class="prose__lead" data-ins-desc></p>
-          <!-- EDITABLE: insight articles. Replace with published content or link to a dedicated article page. -->
-          <p class="ph-block">[Article content coming soon. HK Insights will share practical perspectives on doing business in the UAE and across international markets.]</p>
-          <a class="btn btn--ghost magnetic" href="#contact" data-close><span>Ask our team about this topic</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-        </article>
-      </div>
+  <dialog class="sheetdlg" id="dlg-insight" aria-labelledby="dlg-insight-title">
+    <div class="sheetdlg__inner">
+      <button class="sheetdlg__close" type="button" data-close aria-label="Close">×</button>
+      <p class="kicker" data-ins-ref>HK Insights</p>
+      <h2 class="h2" id="dlg-insight-title" data-ins-title></h2>
+      <p class="lede" data-ins-desc></p>
+      <!-- EDITABLE: insight articles. Replace with published content or link to a dedicated article page. -->
+      <p class="ph-block">[Article in preparation. HK Insights will share practical perspectives on doing business in the UAE and across international markets.]</p>
+      <a class="btn btn--line" href="#contact" data-close>Ask our team about this topic →</a>
     </div>
   </dialog>
 
   <script src="assets/js/config.js" defer></script>
-  <script src="assets/js/geo.js" defer></script>
-  <script src="assets/js/skyline.js" defer></script>
-  <script src="assets/js/globe.js" defer></script>
-  <script src="assets/js/worldmap.js" defer></script>
   <script src="assets/js/main.js" defer></script>
 </body>
 </html>

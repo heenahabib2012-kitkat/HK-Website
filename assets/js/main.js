@@ -1,557 +1,407 @@
 /* ==========================================================================
-   HK Business Consultancy — interaction layer
-   Vanilla JS, no dependencies. Everything degrades gracefully:
-   touch devices skip cursor/magnetic/tilt; reduced motion disables motion.
+   HK Business Consultancy — "The Ascent"
+   Scroll position is read as a floor level: the lift rail, the lit floor on
+   the hero tower and the header readout all follow it.
+   Vanilla JS, no dependencies.
    ========================================================================== */
-(function (HK) {
+(function () {
   'use strict';
 
   var root = document.documentElement;
-  var mqReduce = window.matchMedia('(prefers-reduced-motion: reduce)');
-  var finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-  var mobile = window.matchMedia('(max-width: 760px)').matches;
-
-  HK.reducedMotion = function () { return mqReduce.matches || root.classList.contains('reduce-motion'); };
-
+  var TOP = 160;          // level at the top of the spire
+  var M_PER_LEVEL = 4.2;  // storey height used for the elevation readout
+  var reduced = function () {
+    return root.classList.contains('reduce-motion') || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  };
   function $(s, c) { return (c || document).querySelector(s); }
   function $$(s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); }
-  function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+  function pad3(n) { return String(Math.round(n)).padStart(3, '0'); }
+  var NS = 'http://www.w3.org/2000/svg';
+  function svgEl(name, attrs, parent) {
+    var e = document.createElementNS(NS, name);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    parent && parent.appendChild(e);
+    return e;
+  }
 
-  /* ---------------------------------------------------------------- Photos */
-  function initPhotos() {
-    var photos = (HK.config && HK.config.photos) || {};
-    $$('[data-photo]').forEach(function (holder) {
-      var src = photos[holder.getAttribute('data-photo')];
-      if (!src) return;
-      var img = new Image();
-      img.alt = holder.getAttribute('data-alt') || '';
-      img.decoding = 'async';
-      img.loading = 'lazy';
-      img.className = 'photo';
-      img.onload = function () { holder.classList.add('has-photo'); };
-      img.src = src;
-      holder.appendChild(img);
+  /* ------------------------------------------------------------ Floors */
+  var floors = $$('.floor[data-level]').map(function (el) {
+    return { el: el, id: el.id, level: +el.getAttribute('data-level'), name: el.getAttribute('data-name') };
+  });
+
+  // Slab elevation labels
+  floors.forEach(function (f) {
+    var lvl = $('.slab__lvl', f.el);
+    if (lvl) lvl.setAttribute('data-elev', '+' + (f.level * M_PER_LEVEL).toFixed(1) + ' m');
+  });
+
+  /* ------------------------------------------------------------ Lift rail + directory */
+  var stops = $('[data-stops]'), dirList = $('[data-directory]');
+  floors.forEach(function (f) {
+    var li = document.createElement('li');
+    li.style.setProperty('--at', f.level / TOP);
+    li.innerHTML = '<a href="#' + f.id + '" aria-label="Level ' + pad3(f.level) + ': ' + f.name + '">' + pad3(f.level) + '<span>' + f.name + '</span></a>';
+    stops.appendChild(li);
+  });
+  floors.slice().reverse().forEach(function (f) {
+    var li = document.createElement('li');
+    li.innerHTML = '<a href="#' + f.id + '" data-close>' + f.name + '<small>LVL ' + pad3(f.level) + '</small></a>';
+    dirList.appendChild(li);
+  });
+
+  /* ------------------------------------------------------------ Hero tower (elevation drawing) */
+  var tower = $('[data-tower]'), lit = null;
+  var tiers = [ // [from level, to level, half-width]
+    [0, 6, 176], [6, 30, 150], [30, 58, 122], [58, 84, 96], [84, 106, 72],
+    [106, 126, 52], [126, 142, 34], [142, 152, 20]
+  ];
+  function yOf(level) { return 1000 - level / TOP * 1000; }
+  function halfAt(level) {
+    for (var i = tiers.length - 1; i >= 0; i--) if (level >= tiers[i][0]) return level < tiers[i][1] ? tiers[i][2] : 3;
+    return tiers[0][2];
+  }
+  if (tower) {
+    var cx = 200;
+    tiers.forEach(function (t, i) {
+      var y0 = yOf(t[0]), y1 = yOf(t[1]), w = t[2], d = (i * 0.13) + 's';
+      // floor lines every 4 levels
+      var fine = '';
+      for (var l = t[0] + 4; l < t[1]; l += 4) fine += 'M' + (cx - w) + ' ' + yOf(l) + 'H' + (cx + w);
+      // mullions
+      [-0.5, 0, 0.5].forEach(function (m) { fine += 'M' + (cx + w * m) + ' ' + y0 + 'V' + y1; });
+      svgEl('path', { d: fine, class: 't-fine t-draw', pathLength: 1, style: '--d:' + (i * 0.13 + 0.35) + 's' }, tower);
+      svgEl('path', { d: 'M' + (cx - w) + ' ' + y0 + 'V' + y1 + 'H' + (cx + w) + 'V' + y0, class: 't-ink t-draw', pathLength: 1, style: '--d:' + d }, tower);
     });
+    svgEl('path', { d: 'M' + cx + ' ' + yOf(152) + 'V0', class: 't-ink t-draw', pathLength: 1, style: '--d:1.1s' }, tower);
+    svgEl('path', { d: 'M0 1000H400', class: 't-ink t-draw', pathLength: 1, style: '--d:0s' }, tower);
+    lit = svgEl('rect', { class: 't-lit', x: cx - 150, y: yOf(2), width: 300, height: 6 }, tower);
   }
 
-  /* ---------------------------------------------------------------- Loader */
-  function initLoader() {
-    var loader = $('.loader');
-    var done = function () { root.classList.add('is-loaded'); setTimeout(function () { loader && loader.remove(); }, 1200); };
-    if (HK.reducedMotion()) return done();
-    var t = setTimeout(done, 2200);
-    window.addEventListener('load', function () { clearTimeout(t); setTimeout(done, 700); });
+  /* ------------------------------------------------------------ Fit the hero headline to its column
+     (keeps the stacked lines intact whichever font actually loads) */
+  var title = $('.hero__title');
+  function fitTitle() {
+    if (!title) return;
+    title.style.fontSize = '';
+    var lines = $$('span', title), avail = title.clientWidth, widest = 0;
+    lines.forEach(function (l) { widest = Math.max(widest, l.scrollWidth); });
+    if (widest > avail) title.style.fontSize = (parseFloat(getComputedStyle(title).fontSize) * avail / widest * 0.98) + 'px';
   }
+  fitTitle();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { fitTitle(); measure(); update(); });
 
-  /* ---------------------------------------------------------------- Nav */
-  function initNav() {
-    var nav = $('.nav'), toggle = $('.nav__toggle'), menu = $('#mobile-menu');
-    var last = 0;
-    function onScroll() {
-      var y = window.scrollY;
-      nav.classList.toggle('is-scrolled', y > 40);
-      nav.classList.toggle('is-hidden', y > 400 && y > last && !root.classList.contains('menu-open'));
-      last = y;
-    }
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-
-    function setMenu(open) {
-      toggle.setAttribute('aria-expanded', String(open));
-      toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-      root.classList.toggle('menu-open', open);
-      if (open) { menu.hidden = false; requestAnimationFrame(function () { menu.classList.add('is-open'); }); }
-      else { menu.classList.remove('is-open'); setTimeout(function () { if (!menu.classList.contains('is-open')) menu.hidden = true; }, 500); }
-    }
-    toggle.addEventListener('click', function () { setMenu(toggle.getAttribute('aria-expanded') !== 'true'); });
-    $$('a', menu).forEach(function (a) { a.addEventListener('click', function () { setMenu(false); }); });
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && root.classList.contains('menu-open')) setMenu(false); });
-
-    // active section highlight
-    var links = $$('.nav__links a');
-    var map = {};
-    links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) {
-        if (en.isIntersecting && map[en.target.id]) {
-          links.forEach(function (l) { l.classList.remove('is-active'); });
-          map[en.target.id].classList.add('is-active');
-        }
-      });
-    }, { rootMargin: '-45% 0px -50% 0px' });
-    Object.keys(map).forEach(function (id) { var s = document.getElementById(id); s && io.observe(s); });
+  /* ------------------------------------------------------------ Scroll → level */
+  var num = $('[data-lvl-num]'), mini = $('[data-level-mini]'), elev = $('[data-lvl-elev]'), dirEl = $('[data-dir]');
+  var car = $('.lift__car'), stopLinks = $$('.lift__stops a');
+  var marks = [];
+  function measure() {
+    marks = floors.map(function (f) { return { top: f.el.getBoundingClientRect().top + window.scrollY, level: f.level }; });
+    marks.push({ top: document.documentElement.scrollHeight - window.innerHeight * 0.6, level: TOP });
   }
-
-  /* ---------------------------------------------------------------- Cursor */
-  function initCursor() {
-    if (!finePointer || HK.reducedMotion()) return;
-    var c = $('.cursor'), dot = $('.cursor__dot'), ring = $('.cursor__ring');
-    var x = -100, y = -100, rx = -100, ry = -100;
-    root.classList.add('has-cursor');
-    window.addEventListener('pointermove', function (e) { x = e.clientX; y = e.clientY; c.classList.add('is-visible'); }, { passive: true });
-    document.addEventListener('pointerleave', function () { c.classList.remove('is-visible'); });
-    (function loop() {
-      rx += (x - rx) * 0.18; ry += (y - ry) * 0.18;
-      dot.style.transform = 'translate3d(' + x + 'px,' + y + 'px,0)';
-      ring.style.transform = 'translate3d(' + rx + 'px,' + ry + 'px,0)';
-      requestAnimationFrame(loop);
-    })();
-    document.addEventListener('pointerover', function (e) {
-      var t = e.target.closest('a, button, [data-tilt], input, select, textarea, canvas.globe, .worldmap');
-      c.classList.toggle('is-hover', !!t && !t.matches('input, select, textarea'));
-      c.classList.toggle('is-text', !!t && t.matches('input, textarea'));
-      c.classList.toggle('is-drag', !!t && t.matches('canvas.globe'));
-    });
-    document.addEventListener('pointerdown', function () { c.classList.add('is-down'); });
-    document.addEventListener('pointerup', function () { c.classList.remove('is-down'); });
-  }
-
-  /* ---------------------------------------------------------------- Magnetic */
-  function initMagnetic() {
-    if (!finePointer || HK.reducedMotion()) return;
-    $$('.magnetic').forEach(function (el) {
-      var strength = el.classList.contains('btn--block') ? 0.08 : 0.28;
-      el.addEventListener('pointermove', function (e) {
-        var r = el.getBoundingClientRect();
-        var dx = e.clientX - (r.left + r.width / 2), dy = e.clientY - (r.top + r.height / 2);
-        el.style.transform = 'translate(' + dx * strength + 'px,' + dy * strength * 1.2 + 'px)';
-      });
-      el.addEventListener('pointerleave', function () { el.style.transform = ''; });
-    });
-  }
-
-  /* ---------------------------------------------------------------- 3D tilt */
-  function initTilt() {
-    if (!finePointer || HK.reducedMotion()) return;
-    $$('[data-tilt]').forEach(function (el) {
-      var raf = 0;
-      el.addEventListener('pointermove', function (e) {
-        cancelAnimationFrame(raf);
-        raf = requestAnimationFrame(function () {
-          var r = el.getBoundingClientRect();
-          var px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
-          el.style.setProperty('--rx', ((0.5 - py) * 10).toFixed(2) + 'deg');
-          el.style.setProperty('--ry', ((px - 0.5) * 12).toFixed(2) + 'deg');
-          el.style.setProperty('--mx', (px * 100).toFixed(1) + '%');
-          el.style.setProperty('--my', (py * 100).toFixed(1) + '%');
-        });
-      });
-      el.addEventListener('pointerleave', function () {
-        cancelAnimationFrame(raf);
-        el.style.setProperty('--rx', '0deg'); el.style.setProperty('--ry', '0deg');
-      });
-    });
-  }
-
-  /* ---------------------------------------------------------------- Split headings */
-  function initSplit() {
-    $$('.split').forEach(function (h) {
-      var idx = 0;
-      function walk(node, parent) {
-        Array.prototype.slice.call(node.childNodes).forEach(function (n) {
-          if (n.nodeType === 3) {
-            var frag = document.createDocumentFragment();
-            n.textContent.split(/(\s+)/).forEach(function (w) {
-              if (!w) return;
-              if (/^\s+$/.test(w)) { frag.appendChild(document.createTextNode(' ')); return; }
-              var outer = document.createElement('span'); outer.className = 'w';
-              var inner = document.createElement('span'); inner.textContent = w;
-              inner.style.transitionDelay = (idx++ * 0.045) + 's';
-              outer.appendChild(inner); frag.appendChild(outer);
-            });
-            node.replaceChild(frag, n);
-          } else if (n.nodeType === 1) walk(n);
-        });
-      }
-      h.setAttribute('aria-label', h.textContent.replace(/\s+/g, ' ').trim());
-      walk(h);
-      $$('.w', h).forEach(function (w) { w.setAttribute('aria-hidden', 'true'); });
-    });
-  }
-
-  /* ---------------------------------------------------------------- Reveal */
-  function initReveal() {
-    var targets = $$('.reveal, .split, .pillar, .svc, .ins, .sector, .jstep, .stat, .hero__title');
-    if (!('IntersectionObserver' in window)) { targets.forEach(function (t) { t.classList.add('in'); }); return; }
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) {
-        if (!en.isIntersecting) return;
-        var el = en.target;
-        // stagger siblings of the same kind
-        var sibs = el.parentElement ? Array.prototype.filter.call(el.parentElement.children, function (c) { return c.classList.contains(el.classList[0]); }) : [];
-        var i = sibs.indexOf(el);
-        if (i > 0) el.style.setProperty('--stagger', (i * 0.08) + 's');
-        el.classList.add('in');
-        io.unobserve(el);
-        if (el.classList.contains('stat')) countUp(el);
-      });
-    }, { threshold: 0.14, rootMargin: '0px 0px -6% 0px' });
-    targets.forEach(function (t) { io.observe(t); });
-  }
-
-  function countUp(stat) {
-    var n = $('[data-count]', stat);
-    if (!n || HK.reducedMotion()) return;
-    var target = parseInt(n.getAttribute('data-count'), 10), start = performance.now();
-    (function tick(now) {
-      var p = clamp((now - start) / 900, 0, 1);
-      var v = Math.round(target * (1 - Math.pow(1 - p, 3)));
-      n.textContent = (v < 10 ? '0' : '') + v;
-      if (p < 1) requestAnimationFrame(tick);
-    })(start);
-  }
-
-  /* ---------------------------------------------------------------- Parallax */
-  function initParallax() {
-    if (HK.reducedMotion()) return;
-    var els = $$('[data-speed]');
-    var heroContent = $('.hero__content'), heroVeil = $('.hero__veil');
-    var ticking = false;
-    function update() {
-      var vh = window.innerHeight;
-      els.forEach(function (el) {
-        var r = el.getBoundingClientRect();
-        var center = r.top + r.height / 2 - vh / 2;
-        el.style.transform = 'translate3d(0,' + (center * parseFloat(el.getAttribute('data-speed'))).toFixed(1) + 'px,0)';
-      });
-      var y = window.scrollY;
-      if (y < vh * 1.2 && heroContent) {
-        heroContent.style.transform = 'translate3d(0,' + (y * 0.35).toFixed(1) + 'px,0)';
-        heroContent.style.opacity = String(clamp(1 - y / (vh * 0.75), 0, 1));
-        heroVeil.style.opacity = String(clamp(0.55 + y / vh, 0, 1));
-      }
-      ticking = false;
-    }
-    window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
-    update();
-  }
-
-  /* ---------------------------------------------------------------- Gold particles */
-  function initParticles() {
-    $$('canvas.particles').forEach(function (cv) {
-      var ctx = cv.getContext('2d');
-      var count = parseInt(cv.getAttribute('data-count') || '40', 10);
-      if (mobile) count = Math.round(count * 0.45);
-      var W, H, dpr, parts = [], running = false, raf = 0;
-      function size() {
-        var r = cv.getBoundingClientRect();
-        W = r.width; H = r.height; dpr = Math.min(window.devicePixelRatio || 1, 1.5);
-        cv.width = W * dpr; cv.height = H * dpr;
-        parts = [];
-        for (var i = 0; i < count; i++) parts.push({ x: Math.random() * W, y: Math.random() * H, r: Math.random() * 1.6 + 0.3, vx: (Math.random() - 0.5) * 0.12, vy: -Math.random() * 0.25 - 0.05, a: Math.random(), p: Math.random() * 6.28 });
-      }
-      function draw() {
-        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-        ctx.clearRect(0, 0, W, H);
-        for (var i = 0; i < parts.length; i++) {
-          var p = parts[i];
-          p.x += p.vx; p.y += p.vy; p.p += 0.02;
-          if (p.y < -10) { p.y = H + 10; p.x = Math.random() * W; }
-          var a = (0.25 + Math.sin(p.p) * 0.25 + 0.25) * p.a;
-          var g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 4);
-          g.addColorStop(0, 'rgba(244,223,168,' + a + ')');
-          g.addColorStop(1, 'rgba(201,161,74,0)');
-          ctx.fillStyle = g;
-          ctx.fillRect(p.x - p.r * 4, p.y - p.r * 4, p.r * 8, p.r * 8);
-        }
-        if (running) raf = requestAnimationFrame(draw);
-      }
-      size(); draw();
-      if (HK.reducedMotion()) return;
-      new IntersectionObserver(function (e) {
-        if (e[0].isIntersecting) { if (!running) { running = true; raf = requestAnimationFrame(draw); } }
-        else { running = false; cancelAnimationFrame(raf); }
-      }).observe(cv);
-      window.addEventListener('resize', size);
-    });
-  }
-
-  /* ---------------------------------------------------------------- Hover card */
-  var card = $('.hover-card');
-  function showCard(reg, x, y) {
-    if (!card) return;
-    if (!reg || !HK.geo.REGIONS[reg]) { card.classList.remove('is-on'); return; }
-    var info = HK.geo.REGIONS[reg];
-    if (card.getAttribute('data-reg') !== reg) {
-      card.setAttribute('data-reg', reg);
-      $('.hover-card__region', card).textContent = info.name;
-      $('.hover-card__focus', card).textContent = info.focus;
-      $('.hover-card__note', card).textContent = info.note;
-    }
-    card.hidden = false;
-    card.classList.add('is-on');
-    if (x != null) {
-      var w = card.offsetWidth, h = card.offsetHeight;
-      var left = x + 22, top = y + 18;
-      if (left + w > window.innerWidth - 12) left = x - w - 22;
-      if (top + h > window.innerHeight - 12) top = y - h - 18;
-      card.style.transform = 'translate3d(' + left + 'px,' + top + 'px,0)';
-    }
-  }
-
-  /* ---------------------------------------------------------------- Globe */
-  function initGlobe() {
-    var cv = $('canvas.globe');
-    if (!cv || !HK.Globe) return;
-    var globe = HK.Globe(cv, { onHover: showCard });
-    $$('.route__step').forEach(function (b) {
-      b.addEventListener('click', function () {
-        $$('.route__step').forEach(function (x) { x.classList.remove('is-active'); });
-        b.classList.add('is-active');
-        var f = b.getAttribute('data-focus');
-        if (f === 'spin') globe.spin(); else globe.focus(parseFloat(f));
-      });
-    });
-  }
-
-  /* ---------------------------------------------------------------- Maps */
-  function initMaps() {
-    if (!HK.WorldMap) return;
-    var why = $('#why-map');
-    if (why) HK.WorldMap(why, {
-      bounds: [-22, 150, -38, 62], step: 2.2, hub: 'dubai',
-      links: ['kuwait', 'mumbai', 'london', 'singapore', 'nairobi', 'hongkong', 'lagos', 'delhi'],
-      labelMap: { kuwait: 'Kuwait', mumbai: 'India', london: 'Europe', singapore: 'Asia', nairobi: 'Africa', hongkong: 'East Asia', lagos: 'West Africa', delhi: '' },
-      onHover: showCard
-    });
-    var pres = $('#presence-map');
-    if (pres) HK.WorldMap(pres, {
-      bounds: [-128, 178, -48, 72], step: mobile ? 3 : 2, hub: 'dubai', origin: 'kuwait', hubLabel: 'DUBAI · HQ', originLabel: 'KUWAIT',
-      links: ['london', 'frankfurt', 'newyork', 'saopaulo', 'lagos', 'nairobi', 'johannesburg', 'mumbai', 'almaty', 'singapore', 'hongkong', 'tokyo', 'sydney'],
-      labelMap: { london: 'Europe', frankfurt: '', newyork: 'North America', saopaulo: 'South America', lagos: '', nairobi: 'Africa', johannesburg: '', mumbai: 'India', almaty: 'Central Asia', singapore: 'South-East Asia', hongkong: '', tokyo: 'East Asia', sydney: 'Oceania' },
-      labels: !mobile, onHover: showCard
-    });
-    var jm = $('#journey-map');
-    if (jm) HK.WorldMap(jm, {
-      bounds: [-128, 178, -48, 72], step: 3, hub: 'dubai', aspect: 'xMidYMid slice', labels: false, interactive: false,
-      links: ['kuwait', 'london', 'newyork', 'mumbai', 'singapore', 'tokyo', 'nairobi', 'sydney', 'saopaulo']
-    });
-  }
-
-  /* ---------------------------------------------------------------- Skylines */
-  function initSkylines() {
-    if (!HK.Skyline) return;
-    var hero = $('.hero__skyline');
-    if (hero) HK.Skyline(hero, { focus: mobile ? 0.7 : 0.66 });
-    var why = $('.why__skyline');
-    if (why) HK.Skyline(why, { focus: 0.5, scroll: false });
-    var cta = $('.cta__skyline');
-    if (cta) HK.Skyline(cta, { focus: 0.5, scroll: false });
-    var js = $('.journey__skyline');
-    if (js) HK.Skyline(js, { focus: 0.55, scroll: false });
-  }
-
-  /* ---------------------------------------------------------------- Journey (pinned horizontal timeline) */
-  function initJourney() {
-    var sec = $('.journey');
-    if (!sec) return;
-    var track = $('.journey__track', sec), bar = $('.journey__bar i', sec);
-    var steps = $$('.jstep', sec), scenes = $$('.scene', sec), labels = $$('.journey__labels b', sec);
-    var names = ['kuwait', 'dubai', 'global'];
-    var current = -1, ticking = false;
-    function horizontal() { return window.innerWidth > 900; }
-    function update() {
-      ticking = false;
-      var r = sec.getBoundingClientRect();
-      var total = sec.offsetHeight - window.innerHeight;
-      var p = total > 0 ? clamp(-r.top / total, 0, 1) : 0;
-      bar.style.transform = 'scaleX(' + p.toFixed(3) + ')';
-      if (horizontal()) {
-        var max = track.scrollWidth - track.clientWidth;
-        track.style.transform = 'translate3d(' + (-p * max).toFixed(1) + 'px,0,0)';
-      } else track.style.transform = '';
-      var idx = Math.min(2, Math.floor(p * 3 * 0.999));
-      if (idx !== current) {
-        current = idx;
-        steps.forEach(function (s, i) { s.classList.toggle('is-active', i === idx); });
-        labels.forEach(function (s, i) { s.classList.toggle('is-active', i <= idx); });
-        scenes.forEach(function (s) { s.classList.toggle('is-active', s.classList.contains('scene--' + names[idx])); });
+  var lastY = window.scrollY, ticking = false;
+  function update() {
+    ticking = false;
+    var y = window.scrollY, p = y + window.innerHeight * 0.4, level = 0;
+    for (var i = 0; i < marks.length - 1; i++) {
+      if (p >= marks[i].top) {
+        var a = marks[i], b = marks[i + 1];
+        level = a.level + Math.min(1, (p - a.top) / Math.max(1, b.top - a.top)) * (b.level - a.level);
       }
     }
-    window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
-    window.addEventListener('resize', update);
-    update();
-  }
-
-  /* ---------------------------------------------------------------- Services (tap to expand on touch) */
-  function initServices() {
-    $$('.svc').forEach(function (s) {
-      s.addEventListener('click', function (e) {
-        if (e.target.closest('.svc__link')) return;
-        if (!finePointer) {
-          var open = s.classList.contains('is-open');
-          $$('.svc.is-open').forEach(function (o) { o.classList.remove('is-open'); });
-          if (!open) s.classList.add('is-open');
-        }
-      });
-      s.addEventListener('keydown', function (e) {
-        if (e.key === 'Enter' && e.target === s) { $('.svc__link', s).click(); }
-      });
-    });
-  }
-
-  /* ---------------------------------------------------------------- Sectors accordion */
-  function initSectors() {
-    $$('.sector > button').forEach(function (b) {
-      b.addEventListener('click', function () {
-        var li = b.parentElement, open = b.getAttribute('aria-expanded') === 'true';
-        $$('.sector > button[aria-expanded="true"]').forEach(function (o) { o.setAttribute('aria-expanded', 'false'); o.parentElement.classList.remove('is-open'); });
-        if (!open) { b.setAttribute('aria-expanded', 'true'); li.classList.add('is-open'); }
-      });
-    });
-  }
-
-  /* ---------------------------------------------------------------- Overlays */
-  function initDialogs() {
-    var lastTrigger = null;
-    function open(dlg) {
-      if (typeof dlg.showModal !== 'function') { dlg.setAttribute('open', ''); return; }
-      dlg.showModal();
-      root.classList.add('dialog-open');
-      requestAnimationFrame(function () { dlg.classList.add('is-open'); });
+    if (y <= 2) level = 0;
+    level = Math.max(0, Math.min(TOP, level));
+    num.textContent = pad3(level);
+    if (mini) mini.textContent = pad3(level);
+    elev.textContent = '+' + (level * M_PER_LEVEL).toFixed(1) + ' m';
+    if (y !== lastY) dirEl.classList.toggle('is-down', y < lastY);
+    lastY = y;
+    car.style.setProperty('--p', (level / TOP).toFixed(4));
+    var here = 0;
+    floors.forEach(function (f, i) { if (level >= f.level - 0.5) here = i; });
+    stopLinks.forEach(function (a, i) { a.classList.toggle('is-here', i === here); });
+    $$('a', dirList).forEach(function (a, i) { a.classList.toggle('is-here', floors.length - 1 - i === here); });
+    if (lit) {
+      var L = Math.max(1, Math.min(151, level));
+      var w = halfAt(L);
+      lit.setAttribute('x', 200 - w); lit.setAttribute('width', w * 2);
+      lit.setAttribute('y', yOf(L) - 3);
     }
-    function close(dlg, cb) {
-      dlg.classList.remove('is-open');
-      setTimeout(function () {
-        dlg.close(); root.classList.remove('dialog-open');
-        if (cb) cb(); else if (lastTrigger) lastTrigger.focus({ preventScroll: true });
-      }, HK.reducedMotion() ? 0 : 380);
-    }
-    $$('dialog.overlay').forEach(function (dlg) {
-      dlg.addEventListener('cancel', function (e) { e.preventDefault(); close(dlg); });
-      dlg.addEventListener('click', function (e) {
-        if (e.target === dlg) return close(dlg);
-        var c = e.target.closest('[data-close]');
-        if (!c) return;
-        var href = c.getAttribute('href');
-        if (href && href.charAt(0) === '#') {
-          e.preventDefault();
-          close(dlg, function () { var t = $(href); t && t.scrollIntoView({ behavior: HK.reducedMotion() ? 'auto' : 'smooth' }); });
-        } else close(dlg);
+  }
+  function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', function () { fitTitle(); measure(); update(); });
+  window.addEventListener('load', function () { measure(); update(); });
+  measure(); update();
+
+  /* ------------------------------------------------------------ Services floors */
+  $$('.fl__row').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var open = b.getAttribute('aria-expanded') === 'true';
+      b.setAttribute('aria-expanded', String(!open));
+      b.parentElement.classList.toggle('is-open', !open);
+      setTimeout(measure, 500);
+    });
+  });
+  $$('[data-service]').forEach(function (a) {
+    a.addEventListener('click', function () { $('#f-service').value = a.getAttribute('data-service'); });
+  });
+
+  /* ------------------------------------------------------------ Sectors board */
+  $$('.board__list button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var open = b.getAttribute('aria-expanded') === 'true';
+      $$('.board__list button[aria-expanded="true"]').forEach(function (o) { o.setAttribute('aria-expanded', 'false'); });
+      b.setAttribute('aria-expanded', String(!open));
+    });
+  });
+
+  /* ------------------------------------------------------------ The working day, seen from Dubai */
+  var CITIES = [
+    { name: 'Singapore', tz: 'Asia/Singapore' },
+    { name: 'Mumbai', tz: 'Asia/Kolkata' },
+    { name: 'Dubai', tz: 'Asia/Dubai', home: true },
+    { name: 'Kuwait', tz: 'Asia/Kuwait' },
+    { name: 'London', tz: 'Europe/London' },
+    { name: 'New York', tz: 'America/New_York' }
+  ];
+  function tzOffset(tz, date) {
+    var parts = new Intl.DateTimeFormat('en-US', { timeZone: tz, hourCycle: 'h23', year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' }).formatToParts(date);
+    var v = {}; parts.forEach(function (p) { v[p.type] = +p.value; });
+    var asUTC = Date.UTC(v.year, v.month - 1, v.day, v.hour % 24, v.minute);
+    return Math.round((asUTC - Math.floor(date.getTime() / 60000) * 60000) / 60000);
+  }
+  function hhmm(mins) { mins = ((mins % 1440) + 1440) % 1440; return String(Math.floor(mins / 60)).padStart(2, '0') + ':' + String(mins % 60).padStart(2, '0'); }
+  var day = $('[data-day]');
+  function drawDay() {
+    if (!day) return;
+    var now = new Date(), utcMin = now.getUTCHours() * 60 + now.getUTCMinutes();
+    var dxb = tzOffset('Asia/Dubai', now);
+    day.innerHTML = '';
+    CITIES.forEach(function (c) {
+      var off = tzOffset(c.tz, now);
+      var row = document.createElement('div');
+      row.className = 'day__row' + (c.home ? ' is-home' : '');
+      row.innerHTML = '<div class="day__city"><b>' + c.name + '</b><span>' + hhmm(utcMin + off) + '</span></div><div class="day__track"></div>';
+      var track = row.lastChild;
+      var start = ((9 * 60 - off + dxb) % 1440 + 1440) % 1440, len = 9 * 60;
+      [[start, Math.min(len, 1440 - start)], [0, Math.max(0, start + len - 1440)]].forEach(function (seg) {
+        if (seg[1] <= 0) return;
+        var band = document.createElement('span');
+        band.className = 'day__band';
+        band.style.left = (seg[0] / 1440 * 100) + '%';
+        band.style.width = (seg[1] / 1440 * 100) + '%';
+        track.appendChild(band);
       });
+      row.setAttribute('aria-label', c.name + ': office hours 09:00 to 18:00 local are ' + hhmm(9 * 60 - off + dxb) + ' to ' + hhmm(18 * 60 - off + dxb) + ' Dubai time');
+      day.appendChild(row);
     });
+    var f = (((utcMin + dxb) % 1440) + 1440) % 1440 / 1440;
+    var line = document.createElement('div');
+    line.className = 'day__nowline' + (f > 0.8 ? ' is-late' : '');
+    line.style.left = 'calc(var(--lab) + (100% - var(--lab)) * ' + f.toFixed(4) + ')';
+    line.innerHTML = '<span>Now in Dubai ' + hhmm(utcMin + dxb) + '</span>';
+    day.appendChild(line);
+  }
+  drawDay();
+  setInterval(drawDay, 30000);
 
-    document.addEventListener('click', function (e) {
-      var t = e.target.closest('[data-dialog]');
-      if (!t) return;
-      e.preventDefault();
-      lastTrigger = t;
-      var type = t.getAttribute('data-dialog');
-      if (type === 'chairman') return open($('#dlg-chairman'));
-      if (type === 'service') {
-        var svc = t.closest('.svc'), dlg = $('#dlg-service');
-        $('[data-svc-idx]', dlg).textContent = $('.svc__idx', svc).textContent;
-        $('[data-svc-title]', dlg).textContent = $('.svc__title', svc).textContent;
-        $('[data-svc-desc]', dlg).textContent = $('.svc__desc', svc).textContent;
-        $('[data-svc-icon]', dlg).innerHTML = $('.svc__icon', svc).outerHTML;
-        $('[data-svc-list]', dlg).innerHTML = $('.svc__more ul', svc).innerHTML;
-        $('[data-svc-cta]', dlg).setAttribute('data-service', $('.svc__title', svc).textContent);
-        return open(dlg);
+  /* ------------------------------------------------------------ Observation deck panorama */
+  var REGIONS = {
+    middleeast: ['Middle East', 'Business Advisory', 'Where our journey began, Kuwait, and where we are headquartered, Dubai.'],
+    india: ['India & South Asia', 'Market Entry & Corporate Solutions', 'Supporting businesses moving between South Asia and the Gulf.'],
+    europe: ['Europe', 'International Business Support', 'Serving clients across international markets.'],
+    asia: ['Asia', 'Strategic Expansion', 'Helping businesses evaluate growth across Asian markets.'],
+    africa: ['Africa', 'Cross-Border Business Solutions', 'Exploring opportunities across emerging African markets.'],
+    namerica: ['North America', 'Global Business Connections', 'Serving clients across international markets.'],
+    samerica: ['South America', 'International Opportunity', 'Serving clients across international markets.'],
+    oceania: ['Oceania', 'International Opportunity', 'Serving clients across international markets.'],
+    centralasia: ['Central Asia', 'Strategic Expansion', 'Serving clients across international markets.']
+  };
+  var PLACES = [
+    ['Kuwait City', 29.37, 47.98, 'middleeast', 'origin'], ['Riyadh', 24.71, 46.68, 'middleeast'], ['Cairo', 30.04, 31.24, 'africa'],
+    ['Istanbul', 41.01, 28.98, 'europe'], ['London', 51.51, -0.13, 'europe'], ['Moscow', 55.76, 37.62, 'europe'],
+    ['New York', 40.71, -74.0, 'namerica'], ['São Paulo', -23.55, -46.63, 'samerica', 'flip'], ['Lagos', 6.52, 3.38, 'africa'],
+    ['Nairobi', -1.29, 36.82, 'africa'], ['Johannesburg', -26.2, 28.05, 'africa', 'flip'], ['Karachi', 24.86, 67.0, 'india'],
+    ['Mumbai', 19.08, 72.88, 'india'], ['Delhi', 28.61, 77.21, 'india'], ['Almaty', 43.24, 76.95, 'centralasia'],
+    ['Singapore', 1.35, 103.82, 'asia'], ['Hong Kong', 22.32, 114.17, 'asia'], ['Tokyo', 35.68, 139.69, 'asia'],
+    ['Sydney', -33.87, 151.21, 'oceania']
+  ];
+  var DXB = [25.2, 55.27], R = Math.PI / 180;
+  function gc(lat1, lon1, lat2, lon2) {
+    var p1 = lat1 * R, p2 = lat2 * R, dl = (lon2 - lon1) * R;
+    var h = Math.pow(Math.sin((p2 - p1) / 2), 2) + Math.cos(p1) * Math.cos(p2) * Math.pow(Math.sin(dl / 2), 2);
+    var dist = 2 * 6371 * Math.asin(Math.sqrt(h));
+    var brg = (Math.atan2(Math.sin(dl) * Math.cos(p2), Math.cos(p1) * Math.sin(p2) - Math.sin(p1) * Math.cos(p2) * Math.cos(dl)) / R + 360) % 360;
+    return [dist, brg];
+  }
+  var pano = $('[data-pano]');
+  if (pano) {
+    var view = $('.pano__view', pano), strip = $('[data-strip]', pano), headingEl = $('[data-heading]', pano);
+    var PX = window.matchMedia('(max-width: 640px)').matches ? 11 : 14, W = 360 * PX;
+    var heading = 300, anim = 0;
+    var cardR = $('[data-card-region]'), cardF = $('[data-card-focus]'), cardN = $('[data-card-note]');
+    var CARD = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
+    var html = '<div class="pano__horizon" style="left:' + (-W) + 'px;width:' + (3 * W) + 'px"></div>';
+    for (var k = -1; k <= 1; k++) {
+      for (var d = 0; d < 360; d += 5) {
+        var x = (d + 360 * k) * PX;
+        html += '<span class="pano__tick' + (d % 30 === 0 ? ' is-major' : '') + '" style="left:' + x + 'px"></span>';
+        if (d % 45 === 0) html += '<span class="pano__deg is-card" style="left:' + x + 'px">' + CARD[d / 45] + '</span>';
+        else if (d % 15 === 0) html += '<span class="pano__deg" style="left:' + x + 'px">' + d + '°</span>';
       }
-      if (type === 'insight') {
-        var ins = t.closest('.ins'), d2 = $('#dlg-insight');
-        $('[data-ins-tag]', d2).textContent = ins ? $('.ins__tag', ins).textContent : 'Knowledge centre';
-        $('[data-ins-title]', d2).textContent = ins ? $('h3', ins).textContent : 'HK Insights';
-        $('[data-ins-desc]', d2).textContent = ins ? $('p', ins).textContent : 'Perspectives on business in the UAE, market entry, corporate strategy, global business, entrepreneurship, and investment & growth.';
-        return open(d2);
+    }
+    strip.innerHTML = html;
+    var markers = [];
+    PLACES.forEach(function (pl) {
+      var g = gc(DXB[0], DXB[1], pl[1], pl[2]), dist = g[0], brg = g[1];
+      var h = Math.round(36 + 200 * Math.max(0, 1 - dist / 12500));
+      for (var k2 = -1; k2 <= 1; k2++) {
+        var mk = document.createElement('div');
+        mk.className = 'pano__mk' + (pl[4] === 'origin' ? ' is-origin' : '') + (pl[4] === 'flip' ? ' is-flip' : '');
+        mk.style.left = ((brg + 360 * k2) * PX) + 'px';
+        mk.style.height = h + 'px';
+        mk.setAttribute('data-region', pl[3]);
+        mk.innerHTML = '<button type="button" tabindex="' + (k2 === 0 ? 0 : -1) + '"><b>' + pl[0] + '</b><small>' +
+          Math.round(dist).toLocaleString('en-US') + ' km · ' + Math.round(brg) + '°</small></button>';
+        strip.appendChild(mk);
+        markers.push(mk);
       }
     });
-
-    // Pre-select the service in the enquiry form when coming from a service overlay
-    var cta = $('[data-svc-cta]');
-    if (cta) cta.addEventListener('click', function () {
-      var sel = $('#enquiry select[name="service"]'), name = cta.getAttribute('data-service');
-      $$('option', sel).forEach(function (o) { if (o.textContent === name) sel.value = o.value || o.textContent; });
-      sel.classList.add('has-value');
+    function select(mk) {
+      markers.forEach(function (m) { m.classList.remove('is-active'); });
+      var name = $('b', mk).textContent;
+      markers.forEach(function (m) { if ($('b', m).textContent === name) m.classList.add('is-active'); });
+      var r = REGIONS[mk.getAttribute('data-region')];
+      cardR.textContent = r[0] + ' · ' + name;
+      cardF.textContent = r[1];
+      cardN.textContent = r[2];
+    }
+    markers.forEach(function (mk) {
+      var b = $('button', mk);
+      b.addEventListener('mouseenter', function () { select(mk); });
+      b.addEventListener('focus', function () { select(mk); turnTo(parseFloat(mk.style.left) / PX); });
+      b.addEventListener('click', function () { select(mk); });
     });
+    function render() {
+      heading = ((heading % 360) + 360) % 360;
+      strip.style.transform = 'translate3d(' + (view.clientWidth / 2 - heading * PX) + 'px,0,0)';
+      headingEl.textContent = Math.round(heading) + '° ' + CARD[Math.round(heading / 45) % 8];
+    }
+    function turnTo(target) {
+      cancelAnimationFrame(anim);
+      var from = heading, delta = ((target - from + 540) % 360) - 180;
+      if (reduced()) { heading = from + delta; return render(); }
+      var t0 = performance.now();
+      (function step(now) {
+        var t = Math.min(1, (now - t0) / 600), e = 1 - Math.pow(1 - t, 3);
+        heading = from + delta * e; render();
+        if (t < 1) anim = requestAnimationFrame(step);
+      })(t0);
+    }
+    $$('[data-turn]', pano).forEach(function (b) {
+      b.addEventListener('click', function () { turnTo(heading + parseFloat(b.getAttribute('data-turn'))); });
+    });
+    view.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowLeft') { e.preventDefault(); heading -= 5; render(); }
+      if (e.key === 'ArrowRight') { e.preventDefault(); heading += 5; render(); }
+    });
+    var dragX = null, moved = 0;
+    view.addEventListener('pointerdown', function (e) {
+      if (e.target.closest('button')) return;
+      cancelAnimationFrame(anim); dragX = e.clientX; moved = 0;
+      view.setPointerCapture(e.pointerId); view.classList.add('is-drag');
+    });
+    view.addEventListener('pointermove', function (e) {
+      if (dragX === null) return;
+      var dx = e.clientX - dragX; dragX = e.clientX; moved += Math.abs(dx);
+      heading -= dx / PX; render();
+    });
+    function endDrag() { dragX = null; view.classList.remove('is-drag'); }
+    view.addEventListener('pointerup', endDrag);
+    view.addEventListener('pointercancel', endDrag);
+    window.addEventListener('resize', render);
+    render();
+    select(markers[1]);
   }
 
-  /* ---------------------------------------------------------------- Enquiry form */
-  function initForm() {
-    var form = $('#enquiry');
-    if (!form) return;
-    var err = $('.form__error', form), success = $('.form__success');
-    var sel = $('select', form);
-    sel.addEventListener('change', function () { sel.classList.add('has-value'); });
+  /* ------------------------------------------------------------ Dialogs */
+  function openDlg(dlg) { if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', ''); }
+  $$('[data-open]').forEach(function (b) {
+    b.addEventListener('click', function () { openDlg($('#dlg-' + b.getAttribute('data-open'))); });
+  });
+  $$('dialog').forEach(function (dlg) {
+    dlg.addEventListener('click', function (e) {
+      if (e.target === dlg || e.target.closest('[data-close]')) dlg.close();
+    });
+  });
+  $$('[data-insight]').forEach(function (row) {
+    row.addEventListener('click', function () {
+      var c = $$('span', row), dlg = $('#dlg-insight');
+      $('[data-ins-ref]', dlg).textContent = c[0].textContent + ' · ' + c[3].textContent;
+      $('[data-ins-title]', dlg).textContent = c[1].textContent;
+      $('[data-ins-desc]', dlg).textContent = c[2].textContent + '.';
+      openDlg(dlg);
+    });
+  });
 
-    function validate() {
+  /* ------------------------------------------------------------ Photos (see config.js) */
+  var photos = (window.HK && window.HK.config && window.HK.config.photos) || {};
+  $$('[data-photo]').forEach(function (holder) {
+    var src = photos[holder.getAttribute('data-photo')];
+    if (!src) return;
+    var img = new Image();
+    img.alt = holder.getAttribute('data-alt') || '';
+    img.loading = 'lazy'; img.decoding = 'async'; img.className = 'photo';
+    img.onload = function () { holder.classList.add('has-photo'); };
+    img.src = src;
+    holder.appendChild(img);
+  });
+
+  /* ------------------------------------------------------------ Enquiry form */
+  var form = $('#enquiry');
+  if (form) {
+    var err = $('.form__error', form), done = $('.form__done');
+    var validate = function () {
       var bad = [];
       $$('[required]', form).forEach(function (f) {
-        var ok = f.value.trim() !== '' && (f.type !== 'email' || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.value.trim()));
+        var v = f.value.trim();
+        var ok = v !== '' && (f.type !== 'email' || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v));
         f.closest('.field').classList.toggle('is-invalid', !ok);
         f.setAttribute('aria-invalid', String(!ok));
         if (!ok) bad.push(f);
       });
       return bad;
-    }
-    $$('input, textarea, select', form).forEach(function (f) {
-      f.addEventListener('blur', function () { if (f.closest('.field').classList.contains('is-invalid')) validate(); });
-    });
-
+    };
     form.addEventListener('submit', function (e) {
       e.preventDefault();
-      if (form.website.value) return; // honeypot
+      if (form.website.value) return;
       var bad = validate();
       if (bad.length) {
-        err.textContent = 'Please complete the highlighted fields' + (bad.some(function (b) { return b.type === 'email'; }) ? ' and check your email address.' : '.');
-        err.hidden = false;
-        bad[0].focus();
-        return;
+        err.textContent = 'Please complete the highlighted fields' + (bad.some(function (b) { return b.type === 'email'; }) ? ' and check the email address.' : '.');
+        err.hidden = false; bad[0].focus(); return;
       }
       err.hidden = true;
-      var btn = $('button[type="submit"]', form);
-      btn.disabled = true; btn.classList.add('is-loading');
-      var endpoint = HK.config && HK.config.formEndpoint;
+      var btn = $('button[type="submit"]', form); btn.disabled = true;
+      var endpoint = window.HK && window.HK.config && window.HK.config.formEndpoint;
       var send = endpoint
         ? fetch(endpoint, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } }).then(function (r) { if (!r.ok) throw new Error(r.status); })
-        : new Promise(function (res) { if (window.console) console.info('[HK] formEndpoint not configured — enquiry not sent.'); setTimeout(res, 700); });
-      send.then(function () {
-        form.hidden = true;
-        success.hidden = false;
-        requestAnimationFrame(function () { success.classList.add('is-on'); success.focus(); });
-      }).catch(function () {
-        err.textContent = 'Sorry — something went wrong sending your enquiry. Please try again shortly.';
-        err.hidden = false;
-      }).then(function () { btn.disabled = false; btn.classList.remove('is-loading'); });
+        : new Promise(function (res) { console.info('[HK] formEndpoint not configured; enquiry not sent.'); setTimeout(res, 500); });
+      send.then(function () { form.hidden = true; done.hidden = false; done.focus(); measure(); })
+        .catch(function () { err.textContent = 'Your enquiry could not be sent. Please try again in a moment.'; err.hidden = false; })
+        .then(function () { btn.disabled = false; });
     });
   }
 
-  /* ---------------------------------------------------------------- Motion toggle */
-  function initMotionToggle() {
-    var b = $('.motion-toggle');
-    if (!b) return;
-    b.setAttribute('aria-pressed', String(HK.reducedMotion()));
-    b.addEventListener('click', function () {
+  /* ------------------------------------------------------------ Motion toggle, year */
+  var mt = $('.motion');
+  if (mt) {
+    mt.setAttribute('aria-pressed', String(reduced()));
+    mt.addEventListener('click', function () {
       var on = !root.classList.contains('reduce-motion');
-      try { localStorage.setItem('hk-reduce-motion', on ? '1' : '0'); } catch (e) {}
-      // Reload so every canvas/animation re-initialises in the chosen mode.
       root.classList.toggle('reduce-motion', on);
-      location.reload();
+      mt.setAttribute('aria-pressed', String(on));
+      try { localStorage.setItem('hk-reduce-motion', on ? '1' : '0'); } catch (e) {}
     });
   }
-
-  /* ---------------------------------------------------------------- Boot */
-  function boot() {
-    var y = $('[data-year]'); if (y) y.textContent = new Date().getFullYear();
-    initPhotos();
-    initLoader();
-    initNav();
-    initSplit();
-    initReveal();
-    initCursor();
-    initMagnetic();
-    initTilt();
-    initParallax();
-    initSkylines();
-    initParticles();
-    initGlobe();
-    initMaps();
-    initJourney();
-    initServices();
-    initSectors();
-    initDialogs();
-    initForm();
-    initMotionToggle();
-  }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
-})(window.HK = window.HK || {});
+  var yr = $('[data-year]'); if (yr) yr.textContent = new Date().getFullYear();
+})();

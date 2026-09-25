@@ -12,18 +12,26 @@ npx http-server -p 8080 .     # or: python3 -m http.server 8080
 # open http://localhost:8080
 ```
 
+## Concept: "The Ascent"
+
+The site is drawn as a tower, and scrolling climbs it. Kuwait is the ground floor, Dubai the body of the building, and the world the view from the observation deck at the top.
+
+- **Lift rail** (desktop): the panel on the right shows your current level and a lit lift car, with one stop per section. On mobile the level readout sits in the header.
+- **Floors**: every section opens on a floor slab (`▽ LVL 048`). The **Directory** button lists all floors, the way a lobby directory does.
+- **Services** are floors 25–32. Choosing one lights its windows and opens the detail.
+- **Sky lobby (Why Dubai)** includes a live chart of office hours in Singapore, Mumbai, Dubai, Kuwait, London and New York, plotted in Dubai time with daylight saving handled.
+- **Observation deck (Global presence)** is a 360° view from Dubai. City bearings and great-circle distances are calculated live, and selecting a city shows how HK supports that region.
+- Colour: white drawing sheet, royal-blue ink, and gold used only as light (the lit floor, the lift car, "now").
+- Type: Big Shoulders Display (display), Instrument Sans (body), IBM Plex Mono (levels, coordinates, labels).
+
 ## Structure
 
 ```
 index.html              All sections, SEO meta, Open Graph and schema.org markup
 privacy.html, terms.html  Legal page templates (need legal review)
-assets/css/main.css     Design system (tokens at the top) and all section styles
-assets/js/config.js     ← EDIT: photo paths and the enquiry-form endpoint
-assets/js/geo.js        Simplified world geometry, region names and hover-card copy
-assets/js/globe.js      Interactive 3D dot globe (canvas; no WebGL needed)
-assets/js/worldmap.js   Dot world map with gold arcs (SVG)
-assets/js/skyline.js    Procedural animated Dubai night skyline (canvas)
-assets/js/main.js       Cursor, magnetic buttons, tilt, reveals, parallax, overlays, form
+assets/css/main.css     Design tokens at the top, then every section
+assets/js/config.js     ← EDIT: Chairman photo path and the enquiry-form endpoint
+assets/js/main.js       Level tracking, tower drawing, services, clocks, panorama, dialogs, form
 assets/img/             Favicon, Apple touch icon, Open Graph image
 tools/og-image.html     Source for assets/img/og-image.jpg
 ```
@@ -47,13 +55,7 @@ Bracketed placeholders show a dashed gold underline so they are easy to spot on 
 
 ## Photography
 
-Every image slot already has illustrated artwork: the procedural skyline, the Kuwait Towers silhouette and gradient art. The site therefore looks finished with no photos. To add real photography:
-
-1. Export optimised **WebP or AVIF** files (around 2400px wide for full-bleed slots, around 1200px for the About and Chairman images).
-2. Put them in `assets/img/`.
-3. Set their paths in `assets/js/config.js` → `photos`.
-
-Photos load lazily and fade in over the artwork. Alt text comes from each slot's `data-alt` attribute in `index.html`.
+The design is drawn rather than photographic, so it needs no stock imagery. The one photo slot is the Chairman's portrait: put an optimised WebP/AVIF file in `assets/img/` and set `photos.chairman` in `assets/js/config.js`.
 
 ## Enquiry form
 
@@ -63,12 +65,11 @@ Set `formEndpoint` in `assets/js/config.js` to any endpoint that accepts a `mult
 
 ## Motion, accessibility and performance
 
-- The operating system's `prefers-reduced-motion` setting is respected. The footer also has a **Reduce motion** toggle, which is remembered per visitor. In that mode every canvas renders one still frame.
-- Canvases pause when they are off-screen. Mobile uses fewer globe points and particles, and a lower pixel ratio.
-- The custom cursor, magnetic buttons and 3D tilt run only on devices with a precise pointer (mouse or trackpad).
-- The Journey section scrolls horizontally on desktop and becomes a vertical story below 900px wide.
-- Overlays use the native `<dialog>` element, so focus handling and closing with Esc work out of the box.
-- The only external request is Google Fonts (Outfit and Manrope).
+- There is one orchestrated animation: the tower drawing itself on load. Everything else is small and responds to what the visitor does, and all content is visible without waiting for animation.
+- The operating system's `prefers-reduced-motion` setting is respected, and the footer has a **Reduce motion** toggle.
+- The page makes no WebGL or canvas render loops; the tower, charts and panorama are plain SVG and HTML.
+- The hero headline is sized to fit its column in JavaScript, so its four lines stay intact whichever font loads.
+- The only external request is Google Fonts.
 
 ## Regenerating the Open Graph image
 

@@ -1,26 +1,38 @@
 <!DOCTYPE html>
-<!-- Source for assets/img/og-image.jpg. Render at 1200x630 (see README). -->
-<html lang="en"><head><meta charset="utf-8">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;500&display=swap">
+<!-- Source for assets/img/og-image.jpg. Render at 1200x630 with web fonts loaded (see README). -->
+<html lang="en" class="reduce-motion"><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="../assets/css/main.css">
 <style>
-  html,body{margin:0;width:1200px;height:630px;overflow:hidden;background:#050b24;font-family:Outfit,'Helvetica Neue',Arial,sans-serif}
-  canvas{position:absolute;inset:0;width:1200px;height:630px}
-  .veil{position:absolute;inset:0;background:linear-gradient(90deg,rgba(3,8,25,.95) 0%,rgba(5,11,36,.65) 45%,rgba(5,11,36,0) 75%)}
-  .c{position:absolute;left:72px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:center;color:#fff}
-  .e{color:#e8c882;font-size:14px;letter-spacing:.34em;text-transform:uppercase;display:flex;gap:14px;align-items:center;margin-bottom:28px}
-  .e i{width:40px;height:1px;background:#e8c882}
-  h1{margin:0;font-weight:200;font-size:76px;line-height:.98;letter-spacing:-.03em;text-transform:uppercase}
-  em{font-style:normal;font-weight:300;background:linear-gradient(120deg,#a8823a,#e8c882 40%,#f4dfa8 50%,#c9a14a);-webkit-background-clip:text;background-clip:text;color:transparent}
-  .b{margin-top:34px;display:flex;align-items:center;gap:14px;font-size:14px;letter-spacing:.3em;text-transform:uppercase;color:rgba(222,229,255,.75)}
-  .b svg{width:40px;height:40px}
+  html, body { width: 1200px; height: 630px; overflow: hidden; }
+  .og { position: relative; height: 630px; padding: 56px 64px 0; display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 24px; }
+  .og .hero__title { font-size: 80px; }
+  .og__copy { display: grid; align-content: space-between; padding-bottom: 88px; }
+  .og__tower { position: relative; height: 524px; }
+  .og__tower svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .og .ground { position: absolute; left: 0; right: 0; bottom: 0; margin: 0; padding: 14px 64px; }
+  .og__brand { display: flex; align-items: center; gap: 12px; }
 </style></head><body>
-<canvas id="s"></canvas><div class="veil"></div>
-<div class="c">
-  <div class="e"><i></i>Dubai · United Arab Emirates</div>
-  <h1>From Kuwait<br>to <em>Dubai.</em><br>From Dubai<br>to <em>the world.</em></h1>
-  <div class="b"><svg viewBox="0 0 48 48"><rect x="1" y="1" width="46" height="46" rx="3" fill="none" stroke="#c9a14a"/><path d="M14 13v22M14 24h11M25 13v22M34 13l-7 11 8 11" fill="none" stroke="#fff" stroke-width="2.2"/></svg>HK Business Consultancy</div>
+<div class="og">
+  <div class="og__copy">
+    <div class="og__brand"><svg class="brand__mark" viewBox="0 0 40 48"><path d="M4 46V10M4 26h13M17 46V10M26 46V2M26 26l10-10M26 26l10 20"/></svg><span class="brand__name">HK<span>Business Consultancy · Dubai</span></span></div>
+    <h1 class="hero__title"><span>From Kuwait</span><span>to <em>Dubai.</em></span><span>From Dubai</span><span>to <em>the world.</em></span></h1>
+  </div>
+  <div class="og__tower"><svg class="tower" viewBox="0 0 400 1000" preserveAspectRatio="xMaxYMax meet" id="t"></svg></div>
+  <div class="ground"><span>Ground · Kuwait</span><span>29°22′N 47°58′E</span><span class="ground__cue">LVL 148 · The world</span></div>
 </div>
-<script>window.HK={reducedMotion:function(){return true}};</script>
-<script src="../assets/js/skyline.js"></script>
-<script>HK.Skyline(document.getElementById('s'),{focus:.74,scroll:false});</script>
+<script>
+  var NS = 'http://www.w3.org/2000/svg', t = document.getElementById('t'), TOP = 160;
+  var tiers = [[0,6,176],[6,30,150],[30,58,122],[58,84,96],[84,106,72],[106,126,52],[126,142,34],[142,152,20]];
+  function y(l) { return 1000 - l / TOP * 1000; }
+  function p(d, c) { var e = document.createElementNS(NS, 'path'); e.setAttribute('d', d); e.setAttribute('class', c); t.appendChild(e); }
+  tiers.forEach(function (r) {
+    var f = ''; for (var l = r[0] + 4; l < r[1]; l += 4) f += 'M' + (200 - r[2]) + ' ' + y(l) + 'H' + (200 + r[2]);
+    [-.5, 0, .5].forEach(function (m) { f += 'M' + (200 + r[2] * m) + ' ' + y(r[0]) + 'V' + y(r[1]); });
+    p(f, 't-fine'); p('M' + (200 - r[2]) + ' ' + y(r[0]) + 'V' + y(r[1]) + 'H' + (200 + r[2]) + 'V' + y(r[0]), 't-ink');
+  });
+  p('M200 ' + y(152) + 'V0', 't-ink');
+  var lit = document.createElementNS(NS, 'rect'); lit.setAttribute('class', 't-lit');
+  lit.setAttribute('x', 148); lit.setAttribute('width', 104); lit.setAttribute('y', y(95) - 3); lit.setAttribute('height', 6); t.appendChild(lit);
+</script>
 </body></html>
