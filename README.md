@@ -24,6 +24,18 @@ The site is drawn as a tower, and scrolling climbs it. Kuwait is the ground floo
 - Colour: white drawing sheet, royal-blue ink, and gold used only as light (the lit floor, the lift car, "now").
 - Type: Big Shoulders Display (display), Instrument Sans (body), IBM Plex Mono (levels, coordinates, labels).
 
+## Alternative direction: "Lattice"
+
+`lattice.html` is a second, complete design of the same site, built around a mashrabiya screen. Its CSS and JS are `assets/css/lattice.css` and `assets/js/lattice.js`, and it shares `assets/js/config.js`.
+
+- The hero window's light follows the real position of the sun over Dubai: sand-gold by day, rose at dusk, lantern-lit at night. The screen opens as you scroll.
+- The eight services sit on the eight points of a khatam star.
+- "Every direction from Dubai" is a rosette of cities placed at their true bearing and distance.
+- Our approach is shown as the survey, construction and carving of a geometric pattern; the journey as an arcade of three arches.
+- The Arabic line under the headline must be confirmed by HK.
+
+To launch Lattice instead of The Ascent, rename `lattice.html` to `index.html`.
+
 ## Structure
 
 ```
