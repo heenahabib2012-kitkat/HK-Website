@@ -49,6 +49,19 @@ To launch Lattice instead of The Ascent, rename `lattice.html` to `index.html`.
 
 To launch it instead of The Ascent, rename `departures.html` to `index.html`.
 
+## Alternative direction: "The Boardroom"
+
+`boardroom.html` presents the site as an executive board briefing, in navy and gold on white (Newsreader and Public Sans). CSS and JS: `assets/css/boardroom.css`, `assets/js/boardroom.js`; it shares `assets/js/config.js`.
+
+- A persistent agenda sidebar (items 01–10) that tracks where you are, with a live Dubai clock. On phones it is a drawer.
+- **Personalisation:** visitors enter their company name, and it appears throughout (sidebar, 3D board-pack cover, the Chairman's memo, the agenda and the enquiry form). It is kept in that browser only.
+- **Agenda builder:** tick services to build a timed first-meeting agenda, then send it with the enquiry.
+- **Meeting-time finder:** choose a city to see shared office hours with Dubai today (daylight saving and Gulf Sunday-to-Thursday weeks included), with a suggested slot that can be added to the enquiry.
+- **Market charts,** calculated live from time zones, working weeks and coordinates: shared working hours per week with Dubai, and great-circle distance. There is a table view, and no market-performance figures are shown.
+- Photos load from Unsplash over drawn fallbacks and move with 3D tilt and parallax. Edit or replace them in `HK.config.boardroomPhotos` (`assets/js/config.js`).
+
+To launch it instead of The Ascent, rename `boardroom.html` to `index.html`.
+
 ## Structure
 
 ```
