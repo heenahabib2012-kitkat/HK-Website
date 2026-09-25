@@ -50,8 +50,16 @@
   --radius: 2px;
   --header-h: 76px;
 
-  --ease: cubic-bezier(.2, .7, .2, 1);
-  --dur: .2s;
+  /* Motion tokens (mirrored in assets/js/site.js → MOTION) */
+  --dur-fast: 150ms;       /* hover, press, exits */
+  --dur-base: 240ms;       /* state changes: menu, tabs, accordion */
+  --dur-slow: 600ms;       /* entrances: load sequence */
+  --stagger: 80ms;
+  --ease-out: cubic-bezier(.2, .7, .2, 1);    /* arriving */
+  --ease-in: cubic-bezier(.4, 0, 1, 1);       /* leaving */
+  --ease-inout: cubic-bezier(.65, 0, .35, 1); /* travelling (story line) */
+  --ease: var(--ease-out);
+  --dur: var(--dur-fast);
 }
 
 /* ---------- Base ---------- */
@@ -136,7 +144,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
   min-height: 52px; padding: 0 28px;
   font-size: .95rem; font-weight: 600; letter-spacing: .01em;
   text-decoration: none; border-radius: var(--radius); border: 1px solid transparent;
-  cursor: pointer; transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease), border-color var(--dur) var(--ease);
+  cursor: pointer; transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease), border-color var(--dur) var(--ease), transform var(--dur) var(--ease);
 }
 .btn-sm { min-height: 44px; padding: 0 20px; font-size: .875rem; }
 .btn-block { width: 100%; }
@@ -161,7 +169,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .site-header {
   position: fixed; top: 0; left: 0; right: 0; z-index: 50;
   color: var(--paper);
-  transition: background-color .3s var(--ease);
+  transition: background-color var(--dur-base) var(--ease);
 }
 .site-header.is-scrolled, .site-header.menu-open {
   background: var(--ink);
@@ -185,7 +193,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 }
 .nav a::after {
   content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px;
-  background: var(--blue-light); transform: scaleX(0); transform-origin: left; transition: transform .3s var(--ease);
+  background: var(--blue-light); transform: scaleX(0); transform-origin: left; transition: transform var(--dur-base) var(--ease);
 }
 .nav a:hover, .nav a.is-active { color: var(--paper); }
 .nav a:hover::after, .nav a.is-active::after { transform: scaleX(1); }
@@ -195,7 +203,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 }
 .menu-toggle .bars, .menu-toggle .bars::before, .menu-toggle .bars::after {
   display: block; width: 22px; height: 1.5px; background: var(--paper); margin: 0 auto; position: relative;
-  transition: transform .3s var(--ease), background-color .3s;
+  transition: transform var(--dur-base) var(--ease), background-color var(--dur-base);
 }
 .menu-toggle .bars::before, .menu-toggle .bars::after { content: ""; position: absolute; left: 0; }
 .menu-toggle .bars::before { top: -7px; }
@@ -277,7 +285,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .svc-icon { position: relative; width: 16px; height: 16px; justify-self: end; }
 .svc-icon::before, .svc-icon::after {
   content: ""; position: absolute; top: 50%; left: 0; width: 16px; height: 1.5px; background: var(--ink);
-  transition: transform .3s var(--ease);
+  transition: transform var(--dur-base) var(--ease), background-color var(--dur-fast);
 }
 .svc-icon::after { transform: rotate(90deg); }
 .svc[open] .svc-icon::after { transform: rotate(0deg); }
@@ -454,13 +462,81 @@ button, input, select, textarea { font: inherit; color: inherit; }
   display: none; position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
   padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
   background: var(--ink); border-top: 1px solid var(--line-light);
-  transform: translateY(110%); transition: transform .3s var(--ease);
+  transform: translateY(110%); transition: transform var(--dur-base) var(--ease);
 }
 .mobile-cta.is-visible { transform: translateY(0); }
 
+/* ==========================================================================
+   Motion
+   ========================================================================== */
+
+/* Touch: remove the grey tap flash (pressed states below replace it) and the 300ms delay */
+a, button, summary, label, select { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+
+/* 1. Page-load sequence: hero only, one pass, staggered by --i.
+   Keyframes define only the start so each element settles on its own resting style. */
+@keyframes rise { from { opacity: 0; transform: translateY(16px); } }
+@keyframes fade { from { opacity: 0; } }
+.motion [data-load] {
+  animation: rise var(--dur-slow) var(--ease-out) both;
+  animation-delay: calc(80ms + var(--i, 0) * var(--stagger));
+}
+.motion [data-load="fade"] { animation-name: fade; }
+.motion .hero-pattern { animation-duration: calc(var(--dur-slow) * 2); }
+
+/* 2. Hover and pressed states */
+.btn:active { transform: translateY(1px); }
+.btn-primary:active { background: #163A73; }
+.dark .btn-primary:active, .site-header .btn-primary:active, .mobile-cta .btn-primary:active { background: #2F5FAE; }
+.btn-ghost-light:active { background: rgba(246, 245, 241, .08); }
+.text-link::after { transition: transform var(--dur) var(--ease); }
+.text-link:active { color: var(--blue-hover); opacity: .75; }
+.svc summary:hover .svc-icon::before, .svc summary:hover .svc-icon::after { background: var(--blue); }
+.svc summary:active .svc-title { color: var(--blue-hover); }
+.tab-list button:active { color: var(--blue); }
+.menu-toggle:active { opacity: .7; }
+.mobile-menu li a { transition: color var(--dur) var(--ease); }
+.mobile-menu li a:active { color: var(--blue-light); }
+.nav a:active { color: var(--blue-light); }
+@media (hover: hover) {
+  .text-link:hover::after { transform: translateX(4px); }
+  .mobile-menu li a:hover { color: var(--blue-light); }
+}
+
+/* 3. Story moment: the approach line draws across the five stages */
+.steps-wrap { position: relative; }
+.steps-progress {
+  position: absolute; left: 0; right: 0; top: -1px; height: 2px; z-index: 1;
+  background: var(--blue); transform-origin: left center; pointer-events: none;
+  --axis: x;
+}
+.story-armed .steps-progress { transform: scaleX(0); }
+.steps .step-no, .steps h3 { transition: color var(--dur-base) var(--ease); }
+.story-armed .steps li:not(.is-reached) .step-no { color: var(--muted); }
+.steps li.is-reached h3 { color: var(--blue); }
+.steps li.is-reached.is-settled h3 { color: var(--ink); }
+
+/* 4. State changes */
+.tab-list { position: relative; }
+.tab-indicator {
+  position: absolute; left: 0; bottom: -1px; width: 1px; height: 2px; background: var(--blue);
+  transform-origin: left center; transition: transform var(--dur-base) var(--ease); pointer-events: none;
+}
+.tab-list.has-indicator button[aria-selected="true"] { border-bottom-color: transparent; }
+.svc.is-closing .svc-icon::after { transform: rotate(90deg); }
+.svc.is-closing .svc-title, .svc.is-closing .svc-no { color: var(--ink); }
+.err:not(:empty), .form-note:not(:empty) { animation: fade var(--dur-base) var(--ease-out); }
+
+/* 5. Reduced motion: nothing moves. Colour and opacity changes remain as feedback. */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+  *, *::before, *::after {
+    animation: none !important;
+    transition-property: color, background-color, border-color, opacity, box-shadow !important;
+  }
+  .btn:active { transform: none; }
+  .mobile-cta { transform: none; opacity: 0; visibility: hidden; transition: opacity var(--dur-fast), visibility 0s var(--dur-fast); }
+  .mobile-cta.is-visible { opacity: 1; visibility: visible; transition: opacity var(--dur-fast); }
 }
 
 /* ==========================================================================
@@ -497,7 +573,9 @@ button, input, select, textarea { font: inherit; color: inherit; }
   .principles > div { grid-template-columns: 1fr; gap: 4px; }
   .aud { grid-template-columns: 32px minmax(0, 1fr); column-gap: 8px; }
   .steps { grid-template-columns: 1fr; row-gap: 0; }
-  .steps li { padding: 20px 0; border-bottom: 1px solid var(--line); }
+  .steps li { padding: 20px 0 20px 24px; border-bottom: 1px solid var(--line); }
+  .steps-progress { right: auto; top: 0; bottom: 0; left: 0; width: 2px; height: auto; transform-origin: center top; --axis: y; }
+  .story-armed .steps-progress { transform: scaleY(0); }
   .svc summary { grid-template-columns: 34px 1fr 24px; }
   .svc-body { padding: 0 0 24px 46px; }
   .svc-body ul { grid-template-columns: 1fr; }

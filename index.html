@@ -21,6 +21,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/site.css">
+  <!-- Opt in to the load sequence before first paint; skipped entirely for reduced motion. -->
+  <script>if (window.matchMedia && !matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('motion');</script>
 
   <script type="application/ld+json">
   {
@@ -40,7 +42,7 @@
 <a class="skip" href="#main">Skip to content</a>
 
 <!-- ============================ HEADER ============================ -->
-<header class="site-header" id="top">
+<header class="site-header" id="top" data-load="fade" style="--i:0">
   <div class="wrap header-inner">
     <a class="brand" href="#top" aria-label="HK Business Consultancy, back to top">
       <span class="brand-mark" aria-hidden="true">HK</span>
@@ -83,7 +85,7 @@
 
 <!-- ============================ HERO ============================ -->
 <section class="hero dark" aria-labelledby="hero-title">
-  <svg class="hero-pattern" aria-hidden="true" viewBox="0 0 600 600" preserveAspectRatio="xMidYMid slice">
+  <svg class="hero-pattern" data-load="fade" style="--i:6" aria-hidden="true" viewBox="0 0 600 600" preserveAspectRatio="xMidYMid slice">
     <defs>
       <pattern id="khatam" width="120" height="120" patternUnits="userSpaceOnUse">
         <g fill="none" stroke="currentColor" stroke-width=".6">
@@ -99,20 +101,20 @@
 
   <div class="wrap hero-grid">
     <div class="hero-copy">
-      <p class="eyebrow eyebrow-light">Business advisory · Dubai, United Arab Emirates</p>
-      <h1 id="hero-title" class="display">
+      <p class="eyebrow eyebrow-light" data-load style="--i:1">Business advisory · Dubai, United Arab Emirates</p>
+      <h1 id="hero-title" class="display" data-load style="--i:2">
         Establish, structure and <em>grow</em> your business in the UAE&nbsp;&amp;&nbsp;GCC.
       </h1>
-      <p class="lead">
+      <p class="lead" data-load style="--i:3">
         HK Business Consultancy is a Dubai-headquartered advisory firm that brings business strategy, legal structuring, brand and franchise development and operational support together for entrepreneurs, investors and established brands moving across the GCC, India and beyond.
       </p>
-      <div class="hero-actions">
+      <div class="hero-actions" data-load style="--i:4">
         <a class="btn btn-primary" href="#contact" data-cta="book">Book a Consultation</a>
         <a class="btn btn-ghost-light" href="#contact" data-cta="discuss">Discuss Your Business</a>
       </div>
     </div>
 
-    <aside class="hero-brief" aria-label="HK at a glance">
+    <aside class="hero-brief" aria-label="HK at a glance" data-load style="--i:5">
       <p class="brief-label">At a glance</p>
       <dl>
         <div><dt>Headquarters</dt><dd>Dubai, UAE</dd></div>
@@ -425,6 +427,8 @@
       <p class="section-intro">Business is global. Our approach is personal. Each stage builds on the one before it, and the same team carries the objective through.</p>
     </header>
 
+    <div class="steps-wrap">
+    <span class="steps-progress" aria-hidden="true"></span>
     <ol class="steps">
       <li>
         <span class="step-no">01</span>
@@ -452,6 +456,7 @@
         <p>Grow through new markets, franchising, partnerships and digital channels.</p>
       </li>
     </ol>
+    </div>
 
     <blockquote class="pull">
       <p>“We don’t just give you a plan. We build your future with you.”</p>

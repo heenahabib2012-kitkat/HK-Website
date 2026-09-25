@@ -8,6 +8,22 @@
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
 
+  /* ---------- Motion ----------
+     Tokens mirror the CSS custom properties in site.css. Sequences use the
+     browser's Web Animations API (no library). Every animation checks
+     reduced motion first and falls back to an instant state change. */
+  var MOTION = {
+    fast: 150, base: 240, slow: 600, stagger: 80,
+    easeOut: 'cubic-bezier(.2, .7, .2, 1)',
+    easeIn: 'cubic-bezier(.4, 0, 1, 1)',
+    easeInOut: 'cubic-bezier(.65, 0, .35, 1)'
+  };
+  var reduceMq = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+  function canAnimate(el) { return !!(el && el.animate) && !(reduceMq && reduceMq.matches); }
+  function stopAnimations(el) { if (el && el.getAnimations) el.getAnimations().forEach(function (a) { a.cancel(); }); }
+  var ENTER = [{ opacity: 0, transform: 'translateY(-6px)' }, { opacity: 1, transform: 'none' }];
+  var EXIT = [{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateY(-6px)' }];
+
   /* ---------- Year ---------- */
   var year = $('#year');
   if (year) year.textContent = new Date().getFullYear();
@@ -41,17 +57,37 @@
   var toggle = $('.menu-toggle');
   var menu = $('#mobile-menu');
   function setMenu(open) {
+    var wasOpen = toggle.getAttribute('aria-expanded') === 'true';
+    if (open === wasOpen) return;
     toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-    menu.hidden = !open;
     header.classList.toggle('menu-open', open);
+    stopAnimations(menu);
+    $$('li', menu).forEach(stopAnimations);
+
+    if (open) {
+      menu.hidden = false;
+      if (!canAnimate(menu)) return;
+      menu.animate(ENTER, { duration: MOTION.base, easing: MOTION.easeOut });
+      $$('li', menu).forEach(function (li, i) {
+        li.animate([{ opacity: 0, transform: 'translateY(-4px)' }, { opacity: 1, transform: 'none' }],
+          { duration: MOTION.base, delay: 40 + i * (MOTION.stagger / 2), easing: MOTION.easeOut, fill: 'backwards' });
+      });
+    } else {
+      if (!canAnimate(menu)) { menu.hidden = true; return; }
+      menu.animate(EXIT, { duration: MOTION.fast, easing: MOTION.easeIn }).onfinish = function () {
+        // Interrupted by a re-open: leave it visible.
+        if (toggle.getAttribute('aria-expanded') === 'false') menu.hidden = true;
+      };
+    }
   }
   if (toggle && menu) {
-    toggle.addEventListener('click', function () { setMenu(menu.hidden); });
+    var isOpen = function () { return toggle.getAttribute('aria-expanded') === 'true'; };
+    toggle.addEventListener('click', function () { setMenu(!isOpen()); });
     $$('a', menu).forEach(function (a) { a.addEventListener('click', function () { setMenu(false); }); });
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && !menu.hidden) { setMenu(false); toggle.focus(); }
+      if (e.key === 'Escape' && isOpen()) { setMenu(false); toggle.focus(); }
     });
-    window.addEventListener('resize', function () { if (window.innerWidth > 1080 && !menu.hidden) setMenu(false); });
+    window.addEventListener('resize', function () { if (window.innerWidth > 1080 && isOpen()) setMenu(false); });
   }
 
   /* ---------- Active nav link ---------- */
@@ -73,9 +109,36 @@
   /* ---------- Services: open one at a time within a practice ---------- */
   $$('.svc-list').forEach(function (list) {
     var items = $$('details', list);
+
+    function closeSvc(d) {
+      var body = $('.svc-body', d);
+      if (!canAnimate(body)) { d.open = false; return; }
+      d.classList.add('is-closing');
+      stopAnimations(body);
+      body.animate(EXIT, { duration: MOTION.fast, easing: MOTION.easeIn }).onfinish = function () {
+        if (!d.classList.contains('is-closing')) return; // re-opened meanwhile
+        d.classList.remove('is-closing');
+        d.open = false;
+      };
+    }
+    function openSvc(d) {
+      var body = $('.svc-body', d);
+      items.forEach(function (o) { if (o !== d && o.open && !o.classList.contains('is-closing')) closeSvc(o); });
+      d.classList.remove('is-closing');
+      stopAnimations(body);
+      d.open = true;
+      if (canAnimate(body)) body.animate(ENTER, { duration: MOTION.base, easing: MOTION.easeOut });
+    }
+
     items.forEach(function (d) {
+      // Click also covers Enter/Space on the focused summary.
+      $('summary', d).addEventListener('click', function (e) {
+        e.preventDefault();
+        if (d.open && !d.classList.contains('is-closing')) closeSvc(d); else openSvc(d);
+      });
+      // Fallback for opens that bypass the click handler (e.g. find-in-page).
       d.addEventListener('toggle', function () {
-        if (d.open) items.forEach(function (o) { if (o !== d) o.open = false; });
+        if (d.open) items.forEach(function (o) { if (o !== d && o.open && !o.classList.contains('is-closing')) o.open = false; });
       });
     });
   });
@@ -86,15 +149,40 @@
   /* ---------- Leadership tabs ---------- */
   $$('[data-tabs]').forEach(function (root) {
     var tabs = $$('[role="tab"]', root);
+    var list = $('[role="tablist"]', root);
+    var indicator = document.createElement('span');
+    indicator.className = 'tab-indicator';
+    indicator.setAttribute('aria-hidden', 'true');
+    list.appendChild(indicator);
+    list.classList.add('has-indicator');
+
+    function moveIndicator(tab, instant) {
+      if (instant) indicator.style.transition = 'none';
+      indicator.style.transform = 'translate(' + tab.offsetLeft + 'px,' + (tab.offsetTop + tab.offsetHeight - list.offsetHeight) + 'px) scaleX(' + tab.offsetWidth + ')';
+      if (instant) { void indicator.offsetWidth; indicator.style.transition = ''; }
+    }
+    function current() { return tabs.filter(function (t) { return t.getAttribute('aria-selected') === 'true'; })[0] || tabs[0]; }
+
     function select(tab, focus) {
+      if (tab.getAttribute('aria-selected') === 'true') { if (focus) tab.focus(); return; }
       tabs.forEach(function (t) {
         var on = t === tab;
+        var panel = document.getElementById(t.getAttribute('aria-controls'));
         t.setAttribute('aria-selected', on ? 'true' : 'false');
         t.tabIndex = on ? 0 : -1;
-        document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+        stopAnimations(panel);
+        panel.hidden = !on;
+        if (on && canAnimate(panel)) {
+          panel.animate([{ opacity: 0, transform: 'translateY(6px)' }, { opacity: 1, transform: 'none' }],
+            { duration: MOTION.base, easing: MOTION.easeOut });
+        }
       });
+      moveIndicator(tab);
       if (focus) tab.focus();
     }
+    moveIndicator(current(), true);
+    window.addEventListener('resize', function () { moveIndicator(current(), true); });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { moveIndicator(current(), true); });
     tabs.forEach(function (t, i) {
       t.addEventListener('click', function () { select(t); });
       t.addEventListener('keydown', function (e) {
@@ -206,6 +294,57 @@
       window.location.href = href;
       status.className = 'form-note ok';
       status.innerHTML = 'Your email app should open with your request ready to send. If it does not, email <a href="mailto:' + cfg.email + '">' + cfg.email + '</a> or <a href="https://wa.me/' + cfg.whatsapp + '?text=' + encodeURIComponent(summary(fd)) + '" target="_blank" rel="noopener">send it on WhatsApp</a>.';
+    });
+  }
+
+  /* ---------- Story moment: approach line ----------
+     When the approach enters view, a blue line draws across the five stages
+     and each stage lights as the line reaches it. It plays once. With
+     reduced motion (or no IntersectionObserver) the line is simply shown. */
+  var story = $('.steps-wrap');
+  var bar = story && $('.steps-progress', story);
+  if (bar && 'IntersectionObserver' in window && canAnimate(bar)) {
+    var stages = $$('.steps li', story);
+    story.classList.add('story-armed');
+
+    var play = function () {
+      var vertical = getComputedStyle(bar).getPropertyValue('--axis').trim() === 'y';
+      var anim = bar.animate(
+        [{ transform: vertical ? 'scaleY(0)' : 'scaleX(0)' }, { transform: vertical ? 'scaleY(1)' : 'scaleX(1)' }],
+        { duration: MOTION.slow * 2, easing: MOTION.easeInOut, fill: 'forwards' }
+      );
+      // Light each stage when the drawn line actually reaches it (reads only, no layout writes).
+      var origin = story.getBoundingClientRect();
+      var marks = stages.map(function (li) {
+        var r = li.getBoundingClientRect();
+        return vertical ? r.top - origin.top : r.left - origin.left;
+      });
+      var tick = function () {
+        var drawn = bar.getBoundingClientRect();
+        var reach = vertical ? drawn.height : drawn.width;
+        stages.forEach(function (li, i) { if (reach + 2 >= marks[i]) li.classList.add('is-reached'); });
+        if (anim.playState === 'running') requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+      anim.onfinish = function () {
+        stages.forEach(function (li) { li.classList.add('is-reached', 'is-settled'); });
+      };
+    };
+
+    var storyIo = new IntersectionObserver(function (entries) {
+      if (!entries[0].isIntersecting) return;
+      storyIo.disconnect();
+      play();
+    }, { threshold: 0.4 });
+    storyIo.observe(story);
+
+    // If the visitor switches on reduced motion mid-visit, finish the moment instantly.
+    if (reduceMq && reduceMq.addEventListener) reduceMq.addEventListener('change', function () {
+      if (!reduceMq.matches) return;
+      storyIo.disconnect();
+      story.classList.remove('story-armed');
+      stopAnimations(bar);
+      stages.forEach(function (li) { li.classList.add('is-reached', 'is-settled'); });
     });
   }
 })();
