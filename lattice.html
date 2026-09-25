@@ -63,10 +63,11 @@
           <a class="btn btn--line" href="#contact">Speak with our team</a>
         </div>
       </div>
-      <figure class="window" aria-label="An arched window with a mashrabiya screen. The light through it follows the sun over Dubai right now.">
+      <figure class="window" data-photo-3d="heroView" aria-label="An arched window with a carved mashrabiya screen. The light through it follows the sun over Dubai right now; move the pointer to look around it.">
         <div class="window__arch">
           <div class="window__sky" data-sky></div>
           <svg class="window__screen" data-screen aria-hidden="true"></svg>
+          <canvas class="window__gl" data-gl aria-hidden="true"></canvas>
         </div>
         <figcaption class="window__cap" data-suncap>Light in Dubai now</figcaption>
       </figure>
@@ -78,6 +79,8 @@
       <div class="about__head">
         <p class="eyebrow">About HK</p>
         <h2 class="h2" id="about-title">Built on experience. <em>Driven by opportunity.</em></h2>
+        <!-- Photo slot: set photos.about in assets/js/config.js. Hidden until a photo loads. -->
+        <figure class="arch-photo" data-photo="about" data-alt="Dubai business district at dusk" data-reveal hidden></figure>
       </div>
       <div class="about__body">
         <!-- EDITABLE: company story -->
@@ -101,8 +104,10 @@
         <p class="lead">The khatam, the eight-pointed star of Gulf geometry, holds our eight disciplines. Choose a point.</p>
       </div>
       <div class="khatam">
-        <div class="khatam__star">
-          <svg viewBox="0 0 400 400" data-khatam role="group" aria-label="Eight services arranged on an eight-pointed star"></svg>
+        <div class="khatam__star" data-tilt-host>
+          <div class="star3d" data-star3d>
+            <svg viewBox="0 0 400 400" data-khatam role="group" aria-label="Eight services arranged on an eight-pointed star"></svg>
+          </div>
         </div>
         <!-- EDITABLE: services -->
         <div class="khatam__detail" aria-live="polite">
@@ -190,30 +195,35 @@
       </div>
     </section>
 
-    <!-- ============ JOURNEY: the arcade ============ -->
-    <section class="sec journey" id="journey" aria-labelledby="journey-title">
-      <p class="eyebrow">Our journey</p>
-      <h2 class="h2" id="journey-title">Our <em>journey.</em></h2>
-      <ol class="arcade">
-        <li class="arcade__bay">
-          <div class="arcade__arch"><svg viewBox="0 0 200 240" aria-hidden="true"><path class="g-line" d="M60 240V90M56 240V104M64 240V104"/><circle class="g-line" cx="60" cy="130" r="18"/><circle class="g-line" cx="60" cy="96" r="8"/><path class="g-line" d="M120 240V140"/><circle class="g-line" cx="120" cy="164" r="13"/><path class="g-faint" d="M0 240h200"/></svg></div>
-          <h3>Kuwait</h3>
-          <p>Our beginnings.</p>
-          <!-- EDITABLE: add founding story details for Kuwait -->
-        </li>
-        <li class="arcade__gap" aria-hidden="true"><span>856 km</span></li>
-        <li class="arcade__bay">
-          <div class="arcade__arch"><svg viewBox="0 0 200 240" aria-hidden="true"><path class="g-line" d="M84 240V150h32v90M89 150v-40h22v40M94 110V76h12v34M98 76V52h4v24M100 52V20"/><path class="g-line" d="M40 240v-50h26v50M134 240v-70h28v70"/><path class="g-faint" d="M0 240h200"/></svg></div>
-          <h3>Dubai</h3>
-          <p>Establishing our presence in one of the world's leading business hubs.</p>
-        </li>
-        <li class="arcade__gap" aria-hidden="true"><span>Every direction</span></li>
-        <li class="arcade__bay">
-          <div class="arcade__arch"><svg viewBox="0 0 200 240" aria-hidden="true"><circle class="g-line" cx="100" cy="150" r="62"/><ellipse class="g-faint" cx="100" cy="150" rx="26" ry="62"/><path class="g-faint" d="M38 150h124M46 120h108M46 180h108"/><circle class="g-dot" cx="120" cy="140" r="4"/></svg></div>
-          <h3>Global</h3>
-          <p>Expanding our outlook and serving businesses across borders.</p>
-        </li>
-      </ol>
+    <!-- ============ JOURNEY: a walk through three arches ============ -->
+    <section class="walk" id="journey" aria-labelledby="journey-title">
+      <div class="walk__sticky">
+        <div class="walk__head">
+          <p class="eyebrow">Our journey</p>
+          <h2 class="h2" id="journey-title">Our <em>journey.</em></h2>
+          <p class="walk__hint" aria-hidden="true">Scroll to walk through</p>
+        </div>
+        <div class="walk__world" data-walk>
+          <div class="walk__floor" aria-hidden="true"></div>
+          <ol class="walk__gates">
+            <li class="gate" style="--i:0" data-photo-bg="kuwait">
+              <div class="gate__arch"><svg viewBox="0 0 200 240" aria-hidden="true"><path class="g-line" d="M60 240V90M56 240V104M64 240V104"/><circle class="g-line" cx="60" cy="130" r="18"/><circle class="g-line" cx="60" cy="96" r="8"/><path class="g-line" d="M120 240V140"/><circle class="g-line" cx="120" cy="164" r="13"/><path class="g-faint" d="M0 240h200"/></svg></div>
+              <div class="gate__text"><p class="gate__at">29°22′N 47°58′E</p><h3>Kuwait</h3><p>Our beginnings.</p></div>
+              <!-- EDITABLE: add founding story details for Kuwait -->
+            </li>
+            <li class="gate__leg" style="--i:.5" aria-hidden="true">856 km · bearing 121°</li>
+            <li class="gate" style="--i:1" data-photo-bg="dubai">
+              <div class="gate__arch"><svg viewBox="0 0 200 240" aria-hidden="true"><path class="g-line" d="M84 240V150h32v90M89 150v-40h22v40M94 110V76h12v34M98 76V52h4v24M100 52V20"/><path class="g-line" d="M40 240v-50h26v50M134 240v-70h28v70"/><path class="g-faint" d="M0 240h200"/></svg></div>
+              <div class="gate__text"><p class="gate__at">25°12′N 55°16′E</p><h3>Dubai</h3><p>Establishing our presence in one of the world's leading business hubs.</p></div>
+            </li>
+            <li class="gate__leg" style="--i:1.5" aria-hidden="true">Every direction</li>
+            <li class="gate" style="--i:2" data-photo-bg="world">
+              <div class="gate__arch"><svg viewBox="0 0 200 240" aria-hidden="true"><circle class="g-line" cx="100" cy="150" r="62"/><ellipse class="g-faint" cx="100" cy="150" rx="26" ry="62"/><path class="g-faint" d="M38 150h124M46 120h108M46 180h108"/><circle class="g-dot" cx="120" cy="140" r="4"/></svg></div>
+              <div class="gate__text"><p class="gate__at">0° to 360°</p><h3>Global</h3><p>Expanding our outlook and serving businesses across borders.</p></div>
+            </li>
+          </ol>
+        </div>
+      </div>
     </section>
 
     <!-- ============ SECTORS ============ -->
@@ -245,18 +255,18 @@
       </div>
       <!-- EDITABLE: link each card to its article once published -->
       <div class="ins-grid">
-        <button class="ins" type="button" data-insight data-tile="0"><span class="ins__tile" aria-hidden="true"></span><span class="ins__tag">Forthcoming</span><b>Business in the UAE</b><span class="ins__sub">Establishing and operating in the Emirates</span></button>
-        <button class="ins" type="button" data-insight data-tile="1"><span class="ins__tile" aria-hidden="true"></span><span class="ins__tag">Forthcoming</span><b>Market Entry</b><span class="ins__sub">Questions to answer before entering a new market</span></button>
-        <button class="ins" type="button" data-insight data-tile="2"><span class="ins__tile" aria-hidden="true"></span><span class="ins__tag">Forthcoming</span><b>Corporate Strategy</b><span class="ins__sub">Structure, priorities and growth</span></button>
-        <button class="ins" type="button" data-insight data-tile="0"><span class="ins__tile" aria-hidden="true"></span><span class="ins__tag">Forthcoming</span><b>Global Business</b><span class="ins__sub">Operating across borders</span></button>
-        <button class="ins" type="button" data-insight data-tile="1"><span class="ins__tile" aria-hidden="true"></span><span class="ins__tag">Forthcoming</span><b>Entrepreneurship</b><span class="ins__sub">From idea to established business</span></button>
-        <button class="ins" type="button" data-insight data-tile="2"><span class="ins__tile" aria-hidden="true"></span><span class="ins__tag">Forthcoming</span><b>Investment &amp; Growth</b><span class="ins__sub">Evaluating opportunities with a commercial lens</span></button>
+        <button class="ins" type="button" data-tilt data-insight data-tile="0"><span class="ins__tile" aria-hidden="true"></span><span class="ins__tag">Forthcoming</span><b>Business in the UAE</b><span class="ins__sub">Establishing and operating in the Emirates</span></button>
+        <button class="ins" type="button" data-tilt data-insight data-tile="1"><span class="ins__tile" aria-hidden="true"></span><span class="ins__tag">Forthcoming</span><b>Market Entry</b><span class="ins__sub">Questions to answer before entering a new market</span></button>
+        <button class="ins" type="button" data-tilt data-insight data-tile="2"><span class="ins__tile" aria-hidden="true"></span><span class="ins__tag">Forthcoming</span><b>Corporate Strategy</b><span class="ins__sub">Structure, priorities and growth</span></button>
+        <button class="ins" type="button" data-tilt data-insight data-tile="0"><span class="ins__tile" aria-hidden="true"></span><span class="ins__tag">Forthcoming</span><b>Global Business</b><span class="ins__sub">Operating across borders</span></button>
+        <button class="ins" type="button" data-tilt data-insight data-tile="1"><span class="ins__tile" aria-hidden="true"></span><span class="ins__tag">Forthcoming</span><b>Entrepreneurship</b><span class="ins__sub">From idea to established business</span></button>
+        <button class="ins" type="button" data-tilt data-insight data-tile="2"><span class="ins__tile" aria-hidden="true"></span><span class="ins__tag">Forthcoming</span><b>Investment &amp; Growth</b><span class="ins__sub">Evaluating opportunities with a commercial lens</span></button>
       </div>
     </section>
 
     <!-- ============ CTA: the lantern ============ -->
     <section class="lantern" aria-labelledby="cta-title">
-      <div class="lantern__glow" data-lantern aria-hidden="true"></div>
+      <div class="lantern__glow" data-lantern aria-hidden="true"><canvas class="lantern__gl" data-gl-lantern></canvas></div>
       <div class="lantern__body">
         <p class="eyebrow eyebrow--light">Connected to opportunity, wherever it exists</p>
         <h2 class="h2 h2--light" id="cta-title">Your next opportunity could be <em>closer than you think.</em></h2>
@@ -371,6 +381,7 @@
   </dialog>
 
   <script src="assets/js/config.js" defer></script>
+  <script src="assets/js/lattice3d.js" defer></script>
   <script src="assets/js/lattice.js" defer></script>
 </body>
 </html>

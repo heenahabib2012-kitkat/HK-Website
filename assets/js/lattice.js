@@ -35,19 +35,21 @@
     return '<svg xmlns="http://www.w3.org/2000/svg" width="' + size + '" height="' + (size * t.h / t.w) + '" viewBox="0 0 ' + t.w + ' ' + t.h + '"><path d="' + t.d + '" fill="none" stroke="' + stroke + '" stroke-width="' + sw + '" stroke-linecap="square"/></svg>';
   }
   // Pointed arch in a 100 x 150 box
-  var ARCH = 'M0 150V62C0 34 22 14 50 0C78 14 100 34 100 62V150Z';
-  var ARCH_IN = 'M6 150V64C6 39 26 21 50 8C74 21 94 39 94 64V150';
+  // Two-centred (equilateral) pointed arch in a 100 x 150 box, and an inset line
+  var ARCH = 'M0 150V86.5A100 100 0 0 1 50 0A100 100 0 0 1 100 86.5V150Z';
+  var ARCH_IN = 'M6 150V86.5A94 94 0 0 1 50 6.9A94 94 0 0 1 94 86.5V150';
 
   root.style.setProperty('--arch', dataUri('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 150" preserveAspectRatio="none"><path d="' + ARCH + '"/></svg>'));
   var lapisDeep = css('--lapis-deep') || '#102079', sand = css('--sand') || '#e7dac2';
   var rule = '<svg xmlns="http://www.w3.org/2000/svg" width="28" height="14" viewBox="0 0 28 14"><path d="M14 1l3 4h4l-1 4 3 3-4 1-1 4-4-3-4 3-1-4-4-1 3-3-1-4h4z" transform="scale(.8) translate(3.5 -.5)" fill="none" stroke="' + lapisDeep + '"/><path d="M0 7h6M22 7h6" stroke="' + lapisDeep + '"/></svg>';
   root.style.setProperty('--rule', dataUri(rule));
   root.style.setProperty('--band', dataUri(tileSvg(TILES[0], 'rgba(243,236,221,.55)', 6, 56)));
+  root.style.setProperty('--floor', dataUri(tileSvg(TILES[0], 'rgba(27,52,176,.35)', 3, 120)));
 
   // Arch outlines drawn on top of arched elements
   function frame(host) {
     var s = el('svg', { class: 'arch-frame', viewBox: '0 0 100 150', preserveAspectRatio: 'none', 'aria-hidden': 'true' }, host);
-    el('path', { d: 'M0 150V62C0 34 22 14 50 0C78 14 100 34 100 62V150' }, s);
+    el('path', { d: ARCH.replace('Z', '') }, s);
     el('path', { d: ARCH_IN }, s);
   }
 
@@ -81,6 +83,14 @@
     bars.setAttribute('clip-path', 'url(#cast-clip)');
   }
 
+  var photos = (window.HK && window.HK.config && window.HK.config.photos) || {};
+  var hero3d = null, glc = $('[data-gl]');
+  if (glc && window.HKLattice3D) {
+    $('.window').classList.add('is-3d');
+    try { hero3d = window.HKLattice3D(glc, { mode: 'sun', photo: photos.heroView, pointerHost: $('.hero') }); } catch (e) { hero3d = null; }
+    if (!hero3d) $('.window').classList.remove('is-3d');
+  }
+
   // Solar position (after the NOAA / suncalc formulation)
   function sun(date, lat, lon) {
     var d = (date.getTime() - 946728000000) / 86400000;
@@ -102,6 +112,7 @@
     var now = new Date(), s = sun(now, DXB.lat, DXB.lon), t = dubaiTime(now);
     var state = s.alt > 8 ? 'day' : s.alt > -6 ? 'dusk' : 'night';
     root.setAttribute('data-light', state);
+    if (hero3d) hero3d.setLight(s);
     if (sky) {
       if (state === 'day') sky.style.background = 'linear-gradient(180deg, #86aee3 0%, #b9d0ea 55%, #f4dcaa 100%)';
       else if (state === 'dusk') sky.style.background = 'linear-gradient(180deg, #2f3f98 0%, #b0628a 55%, #f4a95a 100%)';
@@ -133,11 +144,12 @@
     var p = Math.min(1, window.scrollY / 700);
     var w = (7 - p * 4.5).toFixed(2);
     barEls.forEach(function (b) { b.setAttribute('stroke-width', w); });
+    if (hero3d) hero3d.setOpen(p);
   }
   window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(openScreen); } }, { passive: true });
 
   /* ------------------------------------------------------------ Arched elements */
-  $$('.arcade__arch').forEach(function (a) {
+  $$('.gate__arch, .arch-photo').forEach(function (a) {
     var f = document.createElement('div'); f.className = 'arch-fill'; a.insertBefore(f, a.firstChild); frame(a);
   });
   var portrait = $('.arch-portrait');
@@ -193,6 +205,25 @@
     var ct = el('text', { class: 'khatam__core-text', x: 200, y: 205, 'text-anchor': 'middle' }, star);
     ct.textContent = 'HK';
     selectSvc(0);
+
+    // Give the star real thickness: stacked copies behind it, tilted in 3D
+    var s3 = $('[data-star3d]');
+    for (var ly = 1; ly <= 12; ly++) {
+      var cl = star.cloneNode(true);
+      cl.removeAttribute('data-khatam'); cl.removeAttribute('role'); cl.removeAttribute('aria-label');
+      cl.setAttribute('aria-hidden', 'true');
+      $$('[tabindex]', cl).forEach(function (n) { n.removeAttribute('tabindex'); n.removeAttribute('role'); n.removeAttribute('aria-label'); });
+      cl.setAttribute('class', 'star3d__layer');
+      cl.style.transform = 'translateZ(' + (-ly * 2.4) + 'px)';
+      s3.insertBefore(cl, star);
+    }
+    var host = $('[data-tilt-host]');
+    host.addEventListener('pointermove', function (e) {
+      var r = host.getBoundingClientRect();
+      s3.style.setProperty('--sy', (-10 + ((e.clientX - r.left) / r.width - .5) * 40).toFixed(1) + 'deg');
+      s3.style.setProperty('--sx', (12 + ((e.clientY - r.top) / r.height - .5) * -32).toFixed(1) + 'deg');
+    });
+    host.addEventListener('pointerleave', function () { s3.style.removeProperty('--sx'); s3.style.removeProperty('--sy'); });
   }
   $$('[data-svc-cta]').forEach(function (a) {
     a.addEventListener('click', function () { $('#f-service').value = a.getAttribute('data-service'); });
@@ -297,6 +328,15 @@
     el('stop', { offset: '.45', 'stop-color': '#f2bf5e', 'stop-opacity': '.35' }, rg);
     el('stop', { offset: 1, 'stop-color': '#f2bf5e', 'stop-opacity': '0' }, rg);
     el('circle', { cx: 200, cy: 200, r: 200, fill: 'url(#lan-g)' }, ls);
+    var lanGl = $('[data-gl-lantern]'), lan3d = null;
+    if (lanGl && window.HKLattice3D) {
+      try { lan3d = window.HKLattice3D(lanGl, { mode: 'lantern', bar: '#1a2a8c', frame: '#0c1760', pointerHost: $('.lantern') }); } catch (e) { lan3d = null; }
+    }
+    if (lan3d) { lan.classList.add('is-3d'); lan.insertBefore(ls, lanGl); }
+    else { if (lanGl) lanGl.remove(); buildLanternSvg(); }
+  }
+  function buildLanternSvg() {
+    var ls = $('[data-lantern] svg'), ld = $('defs', ls);
     var lp = el('pattern', { id: 'lan-p', width: 32, height: 32, patternUnits: 'userSpaceOnUse' }, ld);
     el('path', { d: KHATAM_TILE, fill: 'none', stroke: '#0a1450', 'stroke-width': 7, transform: 'scale(.32)' }, lp);
     var lc = el('clipPath', { id: 'lan-c' }, ld);
@@ -304,6 +344,52 @@
     el('rect', { x: 120, y: 80, width: 160, height: 240, fill: 'url(#lan-p)', 'clip-path': 'url(#lan-c)' }, ls);
     el('path', { d: ARCH, transform: 'translate(120 80) scale(1.6)', fill: 'none', stroke: '#f2bf5e', 'stroke-width': 1.2, opacity: '.7' }, ls);
   }
+
+  /* ------------------------------------------------------------ Journey: walk through the arches */
+  var walk = $('.walk'), world = $('[data-walk]');
+  if (walk && world) {
+    var GAP = 1000, gates = $$('.gate, .gate__leg', walk);
+    gates.forEach(function (g) { g._i = parseFloat(g.style.getPropertyValue('--i')) || 0; });
+    var flat = function () { return reduced() || window.innerWidth < 900; };
+    var wtick = false;
+    var stepWalk = function () {
+      wtick = false;
+      walk.classList.toggle('walk--flat', flat());
+      if (flat()) { world.style.transform = ''; gates.forEach(function (g) { g.style.opacity = ''; }); return; }
+      var r = walk.getBoundingClientRect(), total = walk.offsetHeight - window.innerHeight;
+      var p = Math.max(0, Math.min(1, -r.top / Math.max(1, total)));
+      var cam = p * 2.15 * GAP;
+      world.style.transform = 'translateZ(' + cam.toFixed(1) + 'px)';
+      gates.forEach(function (g) {
+        var z = cam - g._i * GAP;
+        var o = z > 120 ? 1 - (z - 120) / 380 : z < -1300 ? 1 + (z + 1300) / 700 : 1;
+        g.style.opacity = Math.max(0, Math.min(1, o)).toFixed(3);
+        g.style.visibility = o <= 0 ? 'hidden' : '';
+      });
+    };
+    window.addEventListener('scroll', function () { if (!wtick) { wtick = true; requestAnimationFrame(stepWalk); } }, { passive: true });
+    window.addEventListener('resize', stepWalk);
+    stepWalk();
+  }
+  $$('[data-photo-bg]').forEach(function (g) {
+    var src = photos[g.getAttribute('data-photo-bg')];
+    if (!src) return;
+    var arch = $('.gate__arch', g), img = new Image();
+    img.alt = ''; img.className = 'photo'; img.decoding = 'async';
+    img.onload = function () { arch.classList.add('has-photo'); };
+    img.src = src; arch.insertBefore(img, arch.querySelector('.arch-frame'));
+  });
+
+  /* ------------------------------------------------------------ Tilt */
+  $$('[data-tilt]').forEach(function (c) {
+    c.addEventListener('pointermove', function (e) {
+      if (reduced() || e.pointerType !== 'mouse') return;
+      var r = c.getBoundingClientRect();
+      c.style.setProperty('--ry', (((e.clientX - r.left) / r.width - .5) * 14).toFixed(1) + 'deg');
+      c.style.setProperty('--rx', (((e.clientY - r.top) / r.height - .5) * -12).toFixed(1) + 'deg');
+    });
+    c.addEventListener('pointerleave', function () { c.style.removeProperty('--rx'); c.style.removeProperty('--ry'); });
+  });
 
   /* ------------------------------------------------------------ Dialogs */
   function openDlg(d) { if (d.showModal) d.showModal(); else d.setAttribute('open', ''); }
@@ -319,13 +405,12 @@
   });
 
   /* ------------------------------------------------------------ Photos */
-  var photos = (window.HK && window.HK.config && window.HK.config.photos) || {};
   $$('[data-photo]').forEach(function (h) {
     var src = photos[h.getAttribute('data-photo')];
     if (!src) return;
     var img = new Image();
     img.alt = h.getAttribute('data-alt') || ''; img.loading = 'lazy'; img.decoding = 'async'; img.className = 'photo';
-    img.onload = function () { h.classList.add('has-photo'); };
+    img.onload = function () { h.classList.add('has-photo'); if (h.hasAttribute('data-reveal')) h.hidden = false; };
     img.src = src; h.insertBefore(img, h.querySelector('.arch-frame'));
   });
 

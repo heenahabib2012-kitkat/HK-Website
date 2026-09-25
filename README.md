@@ -31,7 +31,10 @@ The site is drawn as a tower, and scrolling climbs it. Kuwait is the ground floo
 - The hero window's light follows the real position of the sun over Dubai: sand-gold by day, rose at dusk, lantern-lit at night. The screen opens as you scroll.
 - The eight services sit on the eight points of a khatam star.
 - "Every direction from Dubai" is a rosette of cities placed at their true bearing and distance.
-- Our approach is shown as the survey, construction and carving of a geometric pattern; the journey as an arcade of three arches.
+- The hero and closing lantern are real 3D (raw WebGL in `assets/js/lattice3d.js`, no library): each lattice bar is an extruded, lit bar that turns with the pointer. Without WebGL the drawn SVG screen is used instead.
+- The services star has depth and tilts with the pointer; the journey is a 3D walk through three arches as you scroll (a flat list on phones and with reduced motion).
+- Our approach is shown as the survey, construction and carving of a geometric pattern.
+- Photo slots (`heroView`, `about`, `kuwait`, `dubai`, `world` in `assets/js/config.js`) are optional: the hero photo is seen through the 3D lattice, the others fill the arches. Empty slots fall back to the drawings.
 - The Arabic line under the headline must be confirmed by HK.
 
 To launch Lattice instead of The Ascent, rename `lattice.html` to `index.html`.
