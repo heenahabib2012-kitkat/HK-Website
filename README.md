@@ -39,6 +39,16 @@ The site is drawn as a tower, and scrolling climbs it. Kuwait is the ground floo
 
 To launch Lattice instead of The Ascent, rename `lattice.html` to `index.html`.
 
+## Alternative direction: "Departures"
+
+`departures.html` is a third complete design: Dubai as the world's connecting hub. Its CSS and JS are `assets/css/departures.css` and `assets/js/departures.js`; it also uses `assets/js/geo.js` (world outline for the route map) and shares `assets/js/config.js`.
+
+- Split-flap boards throughout: the hero headline, the services "departures" board (select a service to set it boarding) and the call-to-action gate sign.
+- A live world-clock board: local time and whether offices are open (09:00–18:00 local on working days; Kuwait works Sunday to Thursday).
+- Our journey as a boarding pass (KWI → DXB, 856 km, → the world); global presence as a great-circle route map from DXB; sectors as wayfinding signs; insights as magazine covers; the Chairman's portrait in an aircraft-window frame.
+
+To launch it instead of The Ascent, rename `departures.html` to `index.html`.
+
 ## Structure
 
 ```
