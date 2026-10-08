@@ -1,0 +1,510 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HK Business Consultancy — Building Businesses. Creating Possibilities.</title>
+  <meta name="description" content="HK Business Consultancy — strategic business solutions for companies, entrepreneurs and investors navigating growth across the UAE and international markets.">
+  <meta name="theme-color" content="#0a1533">
+  <meta property="og:title" content="HK Business Consultancy">
+  <meta property="og:description" content="Building Businesses. Creating Possibilities. Strategic advisory across the UAE and international markets.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500&display=swap">
+  <link rel="stylesheet" href="css/styles.css">
+  <script type="module" src="js/main.js"></script>
+</head>
+<body class="is-loading">
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- Opening curtain -->
+<div class="curtain" aria-hidden="true">
+  <svg class="curtain__mark" viewBox="0 0 120 100">
+    <use href="#hk-mark-lines"/>
+  </svg>
+  <span class="curtain__rule"></span>
+</div>
+
+<!-- Reusable monogram -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="hk-mark" viewBox="0 0 120 100">
+      <path d="M8 6h15.5v88H8zM54 6h15.5v88H54z" fill="currentColor"/>
+      <path d="M23.5 45.5H54v9H23.5z" fill="var(--mark-accent, #c9a45c)"/>
+      <path d="M69.5 46 101 6h17L69.5 67.6z" fill="currentColor"/>
+      <path d="M77.3 57.7 87.7 44.5 116 94H98z" fill="currentColor" opacity=".82"/>
+    </symbol>
+    <symbol id="hk-mark-lines" viewBox="0 0 120 100">
+      <g fill="none" stroke="currentColor" stroke-width="1.1">
+        <path d="M8 6h15.5v88H8z M54 6h15.5v88H54z M23.5 45.5H54v9H23.5z M69.5 46 101 6h17L69.5 67.6z M77.3 57.7 87.7 44.5 116 94H98z" pathLength="1"/>
+      </g>
+    </symbol>
+  </defs>
+</svg>
+
+<canvas class="trail" aria-hidden="true"></canvas>
+
+<!-- ============ NAVIGATION ============ -->
+<header class="nav" data-nav>
+  <div class="nav__inner">
+    <a class="brand" href="#top" aria-label="HK Business Consultancy — home">
+      <svg class="brand__mark" viewBox="0 0 120 100" aria-hidden="true"><use href="#hk-mark"/></svg>
+      <span class="brand__text"><span>HK</span><small>Business Consultancy</small></span>
+    </a>
+    <nav class="nav__links" aria-label="Primary">
+      <a href="#about">About</a>
+      <a href="#expertise">Expertise</a>
+      <a href="#industries">Industries</a>
+      <a href="#reach">Global Reach</a>
+      <a href="#insights">Insights</a>
+      <a href="#contact" class="nav__cta">Contact</a>
+    </nav>
+    <button class="nav__toggle" aria-expanded="false" aria-controls="mobile-menu" data-menu-toggle>
+      <span class="sr-only">Menu</span><i></i><i></i>
+    </button>
+  </div>
+  <div class="nav__mobile" id="mobile-menu" hidden>
+    <a href="#about">About</a>
+    <a href="#expertise">Expertise</a>
+    <a href="#industries">Industries</a>
+    <a href="#reach">Global Reach</a>
+    <a href="#insights">Insights</a>
+    <a href="#contact">Contact</a>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="top" data-trail>
+  <canvas class="hero__gl" aria-hidden="true"></canvas>
+  <div class="hero__fallback" aria-hidden="true">
+    <svg viewBox="0 0 120 100"><use href="#hk-mark"/></svg>
+  </div>
+  <div class="hero__veil" aria-hidden="true"></div>
+
+  <div class="hero__content wrap">
+    <p class="eyebrow hero__eyebrow" data-intro><span class="rule"></span>HK Business Consultancy</p>
+    <h1 class="hero__title" data-intro>
+      <span class="line"><span>Building Businesses.</span></span>
+      <span class="line"><em>Creating Possibilities.</em></span>
+    </h1>
+    <p class="hero__lede" data-intro>Strategic business solutions for companies, entrepreneurs and investors navigating growth across the UAE and international markets.</p>
+    <div class="hero__actions" data-intro>
+      <a class="btn btn--gold" href="#expertise"><span>Explore Our Expertise</span></a>
+      <a class="btn btn--line" href="#contact"><span>Start a Conversation</span></a>
+    </div>
+  </div>
+
+  <div class="hero__base wrap" data-intro>
+    <span>United Arab Emirates</span>
+    <span class="hero__scroll" aria-hidden="true"><i></i>Scroll</span>
+    <span>International</span>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section class="about" id="about">
+  <div class="about__arch" aria-hidden="true" data-depth="0.12">
+    <svg viewBox="0 0 600 800" preserveAspectRatio="xMidYMax slice">
+      <g fill="none" stroke="currentColor" stroke-width="1">
+        <path d="M60 800V300a240 240 0 0 1 480 0v500"/>
+        <path d="M110 800V310a190 190 0 0 1 380 0v490"/>
+        <path d="M160 800V320a140 140 0 0 1 280 0v480"/>
+        <path d="M300 60v740" opacity=".6"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="wrap about__grid">
+    <div class="about__head">
+      <p class="eyebrow" data-reveal><span class="rule"></span>About HK</p>
+      <h2 class="display" data-reveal>Experience That Moves Business <em>Forward.</em></h2>
+    </div>
+    <div class="about__intro" data-reveal>
+      <p class="lead">HK Business Consultancy is a UAE-based advisory practice built on decades of combined commercial experience. We work alongside founders, established companies and investors — bringing structure to ambition and clarity to complex decisions.</p>
+      <p>Our perspective is shaped by the UAE's role as a meeting point of markets. We understand how business is done locally, and we understand what international partners expect. That balance informs every engagement.</p>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <ol class="chapters">
+      <li class="chapter" data-reveal>
+        <span class="chapter__num">I</span>
+        <div>
+          <h3>Experience</h3>
+          <p>Over three decades of combined business experience across founding, operating, advising and growing companies.</p>
+        </div>
+      </li>
+      <li class="chapter" data-reveal>
+        <span class="chapter__num">II</span>
+        <div>
+          <h3>A UAE Base</h3>
+          <p>Rooted in the UAE — one of the world's most dynamic commercial environments and a natural bridge between regions.</p>
+        </div>
+      </li>
+      <li class="chapter" data-reveal>
+        <span class="chapter__num">III</span>
+        <div>
+          <h3>International Exposure</h3>
+          <p>Hands-on familiarity with international markets, partners and the expectations of cross-border business.</p>
+        </div>
+      </li>
+      <li class="chapter" data-reveal>
+        <span class="chapter__num">IV</span>
+        <div>
+          <h3>Long-Term Value</h3>
+          <p>Advice measured not by activity, but by durable outcomes for the businesses we support.</p>
+        </div>
+      </li>
+    </ol>
+  </div>
+
+  <div class="wrap">
+    <dl class="facts">
+      <div class="fact" data-reveal tabindex="0">
+        <dt><span class="fact__big">30<sup>+</sup></span><span class="fact__label">Years</span></dt>
+        <dd>of combined business experience</dd>
+      </div>
+      <div class="fact" data-reveal tabindex="0">
+        <dt><span class="fact__big fact__big--words">UAE <i>&amp;</i> International</span></dt>
+        <dd>market exposure</dd>
+      </div>
+      <div class="fact" data-reveal tabindex="0">
+        <dt><span class="fact__big fact__big--words">Multiple Industries</span></dt>
+        <dd>across diverse sectors</dd>
+      </div>
+      <div class="fact" data-reveal tabindex="0">
+        <dt><span class="fact__big fact__big--words">Strategic Approach</span></dt>
+        <dd>built around long-term value</dd>
+      </div>
+    </dl>
+  </div>
+</section>
+
+<!-- ============ EXPERTISE ============ -->
+<section class="expertise" id="expertise">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow" data-reveal><span class="rule"></span>Expertise</p>
+      <h2 class="display" data-reveal>An ecosystem of <em>capabilities,</em> working as one.</h2>
+      <p class="section-head__note" data-reveal>Each discipline stands on its own. Together they form a single, connected view of your business. Select a discipline to explore it.</p>
+    </div>
+  </div>
+
+  <div class="wrap eco">
+    <div class="eco__stage" data-eco-stage aria-hidden="true">
+      <div class="eco__plane" data-eco-plane>
+        <div class="eco__rings"><i></i><i></i><i></i></div>
+        <svg class="eco__links" viewBox="-500 -500 1000 1000" data-eco-links></svg>
+        <div class="eco__core"><svg viewBox="0 0 120 100"><use href="#hk-mark"/></svg></div>
+      </div>
+    </div>
+
+    <div class="eco__panel">
+      <ul class="eco__list" role="tablist" aria-label="Areas of expertise" data-eco-list>
+        <li><button role="tab" aria-selected="true" data-service="0"><span class="n">01</span>Business Strategy</button></li>
+        <li><button role="tab" aria-selected="false" data-service="1"><span class="n">02</span>Market Entry</button></li>
+        <li><button role="tab" aria-selected="false" data-service="2"><span class="n">03</span>Corporate &amp; Commercial Advisory</button></li>
+        <li><button role="tab" aria-selected="false" data-service="3"><span class="n">04</span>Franchising</button></li>
+        <li><button role="tab" aria-selected="false" data-service="4"><span class="n">05</span>F&amp;B &amp; Hospitality</button></li>
+        <li><button role="tab" aria-selected="false" data-service="5"><span class="n">06</span>Trading &amp; Investment</button></li>
+      </ul>
+      <div class="eco__detail" role="tabpanel" aria-live="polite" data-eco-detail>
+        <h3 data-eco-title>Business Strategy</h3>
+        <p class="eco__summary" data-eco-summary>Market positioning, strategic planning and growth.</p>
+        <ul class="eco__points" data-eco-points></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ INDUSTRIES ============ -->
+<section class="industries" id="industries">
+  <div class="wrap">
+    <div class="section-head section-head--light">
+      <p class="eyebrow" data-reveal><span class="rule"></span>Industries</p>
+      <h2 class="display" data-reveal>Sector knowledge, <em>connected.</em></h2>
+      <p class="section-head__note" data-reveal>Our experience spans sectors that rarely sit in isolation. Select an industry to see how we approach it.</p>
+    </div>
+  </div>
+  <div class="orbit" data-orbit>
+    <svg class="orbit__lines" data-orbit-lines aria-hidden="true"></svg>
+    <div class="orbit__center">
+      <svg class="orbit__mark" viewBox="0 0 120 100" aria-hidden="true"><use href="#hk-mark"/></svg>
+      <div class="orbit__info" aria-live="polite">
+        <p class="orbit__kicker" data-orbit-kicker>Nine sectors</p>
+        <h3 data-orbit-title>One integrated perspective</h3>
+        <p data-orbit-text>Hover or select an industry.</p>
+      </div>
+    </div>
+    <ul class="orbit__nodes" data-orbit-nodes aria-label="Industries"></ul>
+  </div>
+</section>
+
+<!-- ============ GLOBAL REACH ============ -->
+<section class="reach" id="reach">
+  <div class="wrap reach__grid">
+    <div class="reach__copy">
+      <p class="eyebrow" data-reveal><span class="rule"></span>Global Reach</p>
+      <h2 class="display" data-reveal>The UAE, a gateway to <em>global opportunity.</em></h2>
+      <p class="lead" data-reveal>Positioned between East and West, the UAE connects businesses to the Gulf, Europe, Asia and Africa. We help clients use that position deliberately — entering the region, or reaching outward from it.</p>
+      <ul class="reach__regions" data-regions>
+        <li><button data-region="-1" aria-pressed="true"><span>The Hub</span><small>United Arab Emirates</small></button></li>
+      </ul>
+      <p class="reach__text" aria-live="polite" data-region-text>A stable, internationally connected base with access to markets across multiple continents.</p>
+    </div>
+    <div class="reach__globe">
+      <canvas class="globe" aria-label="Interactive globe showing connections from the UAE to international markets. Drag to rotate." role="img"></canvas>
+      <div class="globe__labels" data-globe-labels aria-hidden="true"></div>
+      <div class="globe__fallback" aria-hidden="true"></div>
+      <p class="globe__hint" aria-hidden="true">Drag to explore</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ENGAGEMENTS (horizontal) ============ -->
+<!--
+  Case studies: replace the panels below with real, client-approved projects.
+  Each panel follows the same structure: Project, Industry, Challenge, Strategic Approach, Outcome.
+  No client names, figures or outcomes have been invented here.
+-->
+<section class="cases" id="cases" data-cases>
+  <div class="cases__sticky">
+    <div class="cases__head wrap">
+      <p class="eyebrow"><span class="rule"></span>Selected Engagements</p>
+      <p class="cases__count"><span data-cases-current>01</span> / <span data-cases-total>04</span></p>
+    </div>
+    <div class="cases__track" data-cases-track>
+      <article class="case">
+        <div class="case__visual" data-case-visual>
+          <span class="case__num">01</span>
+          <svg viewBox="0 0 400 400" aria-hidden="true"><g fill="none" stroke="currentColor"><circle cx="200" cy="200" r="150"/><circle cx="200" cy="200" r="100"/><path d="M50 200h300M200 50v300"/><path d="M200 200 330 110" stroke-width="2"/></g><circle cx="330" cy="110" r="5" fill="currentColor"/></svg>
+        </div>
+        <div class="case__body">
+          <p class="case__industry">Market Entry · Cross-sector</p>
+          <h3>Establishing in the UAE</h3>
+          <dl>
+            <div><dt>Challenge</dt><dd>An international business assessing how, where and with whom to establish a presence in the UAE.</dd></div>
+            <div><dt>Strategic Approach</dt><dd>Market assessment, structuring options, partner identification and a phased entry roadmap.</dd></div>
+            <div><dt>Outcome</dt><dd class="case__pending">Detailed case study available on request, subject to client confidentiality.</dd></div>
+          </dl>
+        </div>
+      </article>
+      <article class="case">
+        <div class="case__visual" data-case-visual>
+          <span class="case__num">02</span>
+          <svg viewBox="0 0 400 400" aria-hidden="true"><g fill="none" stroke="currentColor"><path d="M80 330V170l120-90 120 90v160z"/><path d="M140 330V210h120v120"/><path d="M80 170h240" opacity=".5"/></g><path d="M200 80v250" stroke="currentColor" stroke-width="2"/></svg>
+        </div>
+        <div class="case__body">
+          <p class="case__industry">Franchising · F&amp;B &amp; Hospitality</p>
+          <h3>Building a franchise model</h3>
+          <dl>
+            <div><dt>Challenge</dt><dd>A hospitality concept with regional ambitions, seeking a repeatable model for expansion.</dd></div>
+            <div><dt>Strategic Approach</dt><dd>Franchise readiness review, commercial model design, operating standards and partner criteria.</dd></div>
+            <div><dt>Outcome</dt><dd class="case__pending">Detailed case study available on request, subject to client confidentiality.</dd></div>
+          </dl>
+        </div>
+      </article>
+      <article class="case">
+        <div class="case__visual" data-case-visual>
+          <span class="case__num">03</span>
+          <svg viewBox="0 0 400 400" aria-hidden="true"><g fill="none" stroke="currentColor"><rect x="70" y="70" width="260" height="260"/><rect x="120" y="120" width="160" height="160" transform="rotate(45 200 200)"/><path d="M70 200h260" opacity=".5"/></g><circle cx="200" cy="200" r="6" fill="currentColor"/></svg>
+        </div>
+        <div class="case__body">
+          <p class="case__industry">Corporate &amp; Commercial Advisory</p>
+          <h3>Restructuring for growth</h3>
+          <dl>
+            <div><dt>Challenge</dt><dd>A growing business whose structure and commercial arrangements had not kept pace with its ambitions.</dd></div>
+            <div><dt>Strategic Approach</dt><dd>Review of structure, governance and commercial terms, with a practical plan for realignment.</dd></div>
+            <div><dt>Outcome</dt><dd class="case__pending">Detailed case study available on request, subject to client confidentiality.</dd></div>
+          </dl>
+        </div>
+      </article>
+      <article class="case">
+        <div class="case__visual" data-case-visual>
+          <span class="case__num">04</span>
+          <svg viewBox="0 0 400 400" aria-hidden="true"><g fill="none" stroke="currentColor"><path d="M60 300 140 220l60 50 140-150"/><path d="M60 340h280M60 60v280" opacity=".5"/></g><circle cx="340" cy="120" r="6" fill="currentColor"/></svg>
+        </div>
+        <div class="case__body">
+          <p class="case__industry">Trading &amp; Investment</p>
+          <h3>Evaluating an opportunity</h3>
+          <dl>
+            <div><dt>Challenge</dt><dd>An investor weighing a commercial opportunity and the partners required to realise it.</dd></div>
+            <div><dt>Strategic Approach</dt><dd>Opportunity assessment, partner evaluation and a structured route to commercial development.</dd></div>
+            <div><dt>Outcome</dt><dd class="case__pending">Detailed case study available on request, subject to client confidentiality.</dd></div>
+          </dl>
+        </div>
+      </article>
+    </div>
+    <div class="cases__progress wrap" aria-hidden="true"><span data-cases-bar></span></div>
+  </div>
+</section>
+
+<!-- ============ WHY HK ============ -->
+<section class="why" id="why">
+  <div class="wrap">
+    <p class="eyebrow" data-reveal><span class="rule"></span>Why HK</p>
+  </div>
+  <div class="why__list wrap" data-why>
+    <article class="principle" data-principle>
+      <span class="principle__n">01</span>
+      <h3 class="principle__word">Experience</h3>
+      <p class="principle__text">Decades of commercial exposure.</p>
+    </article>
+    <article class="principle" data-principle>
+      <span class="principle__n">02</span>
+      <h3 class="principle__word">Perspective</h3>
+      <p class="principle__text">Local understanding with international outlook.</p>
+    </article>
+    <article class="principle" data-principle>
+      <span class="principle__n">03</span>
+      <h3 class="principle__word">Relationships</h3>
+      <p class="principle__text">Connecting businesses, people and opportunities.</p>
+    </article>
+    <article class="principle" data-principle>
+      <span class="principle__n">04</span>
+      <h3 class="principle__word">Execution</h3>
+      <p class="principle__text">Turning strategy into practical action.</p>
+    </article>
+  </div>
+</section>
+
+<!-- ============ INSIGHTS ============ -->
+<!-- Insights: titles below are editorial themes. Link each to a published article when available. -->
+<section class="insights" id="insights">
+  <div class="wrap">
+    <header class="insights__masthead">
+      <div>
+        <p class="eyebrow eyebrow--dark" data-reveal><span class="rule"></span>Insights</p>
+        <h2 class="display display--dark" data-reveal>Perspectives on business in the <em>UAE and beyond.</em></h2>
+      </div>
+      <p class="insights__edition" data-reveal>The HK Review<br><span>Commentary &amp; analysis</span></p>
+    </header>
+
+    <div class="insights__filters" role="group" aria-label="Filter insights by category" data-filters>
+      <button aria-pressed="true" data-filter="all">All</button>
+      <button aria-pressed="false" data-filter="strategy">Business Strategy</button>
+      <button aria-pressed="false" data-filter="uae">UAE Market</button>
+      <button aria-pressed="false" data-filter="entrepreneurship">Entrepreneurship</button>
+      <button aria-pressed="false" data-filter="fnb">F&amp;B &amp; Hospitality</button>
+      <button aria-pressed="false" data-filter="franchising">Franchising</button>
+      <button aria-pressed="false" data-filter="investment">Investment</button>
+      <button aria-pressed="false" data-filter="advisory">Corporate Advisory</button>
+    </div>
+
+    <div class="insights__grid" data-insights>
+      <article class="story story--lead" data-cat="uae">
+        <p class="story__cat">UAE Market</p>
+        <h3><a href="#insights">The gateway advantage: why the UAE remains the region's natural base for international business</a></h3>
+        <p class="story__dek">Connectivity, infrastructure and an open commercial culture have made the Emirates a meeting point of markets. What does that mean for businesses deciding where to build their regional presence?</p>
+        <p class="story__meta">Essay · In preparation</p>
+      </article>
+      <article class="story" data-cat="strategy">
+        <p class="story__cat">Business Strategy</p>
+        <h3><a href="#insights">Strategy that survives contact with the market</a></h3>
+        <p class="story__meta">Perspective · In preparation</p>
+      </article>
+      <article class="story" data-cat="franchising">
+        <p class="story__cat">Franchising</p>
+        <h3><a href="#insights">Is your concept ready to franchise? Questions to ask before expanding</a></h3>
+        <p class="story__meta">Guide · In preparation</p>
+      </article>
+      <article class="story" data-cat="fnb">
+        <p class="story__cat">F&amp;B &amp; Hospitality</p>
+        <h3><a href="#insights">Building hospitality brands with regional staying power</a></h3>
+        <p class="story__meta">Perspective · In preparation</p>
+      </article>
+      <article class="story" data-cat="entrepreneurship">
+        <p class="story__cat">Entrepreneurship</p>
+        <h3><a href="#insights">From founder-led to structured: the transition every growing company faces</a></h3>
+        <p class="story__meta">Essay · In preparation</p>
+      </article>
+      <article class="story" data-cat="investment">
+        <p class="story__cat">Investment</p>
+        <h3><a href="#insights">Partnership before capital: evaluating commercial opportunities</a></h3>
+        <p class="story__meta">Perspective · In preparation</p>
+      </article>
+      <article class="story" data-cat="advisory">
+        <p class="story__cat">Corporate Advisory</p>
+        <h3><a href="#insights">Getting the structure right the first time</a></h3>
+        <p class="story__meta">Guide · In preparation</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="contact" id="contact" data-trail>
+  <div class="contact__mark" aria-hidden="true" data-depth="-0.08">
+    <svg viewBox="0 0 120 100"><use href="#hk-mark-lines"/></svg>
+  </div>
+  <div class="wrap contact__grid">
+    <div class="contact__copy">
+      <p class="eyebrow" data-reveal><span class="rule"></span>Contact</p>
+      <h2 class="contact__title" data-reveal>Let's Build <em>What's Next.</em></h2>
+      <p class="lead" data-reveal>Whether you are entering the UAE, expanding an existing business or exploring a new opportunity, let's start the conversation.</p>
+      <p class="contact__base" data-reveal><span>Based in</span>United Arab Emirates</p>
+    </div>
+
+    <!-- Set data-endpoint to a form handler (e.g. Formspree, a CRM webhook or your own API) to receive submissions. -->
+    <form class="form" data-contact-form data-endpoint="" novalidate>
+      <div class="field">
+        <input id="f-name" name="name" type="text" autocomplete="name" required placeholder=" ">
+        <label for="f-name">Name</label>
+      </div>
+      <div class="field">
+        <input id="f-company" name="company" type="text" autocomplete="organization" placeholder=" ">
+        <label for="f-company">Company</label>
+      </div>
+      <div class="field">
+        <input id="f-email" name="email" type="email" autocomplete="email" required placeholder=" ">
+        <label for="f-email">Email</label>
+      </div>
+      <div class="field">
+        <input id="f-phone" name="phone" type="tel" autocomplete="tel" placeholder=" ">
+        <label for="f-phone">Phone</label>
+      </div>
+      <div class="field field--full field--select">
+        <select id="f-interest" name="interest" required>
+          <option value="" disabled selected></option>
+          <option>Business Strategy</option>
+          <option>Market Entry</option>
+          <option>Corporate &amp; Commercial Advisory</option>
+          <option>Franchising</option>
+          <option>F&amp;B &amp; Hospitality</option>
+          <option>Trading &amp; Investment</option>
+          <option>Something else</option>
+        </select>
+        <label for="f-interest">Area of Interest</label>
+      </div>
+      <div class="field field--full">
+        <textarea id="f-message" name="message" rows="4" required placeholder=" "></textarea>
+        <label for="f-message">Message</label>
+      </div>
+      <div class="form__foot field--full">
+        <button class="btn btn--gold btn--wide" type="submit"><span>Connect With HK</span></button>
+        <p class="form__status" role="status" data-form-status></p>
+      </div>
+    </form>
+  </div>
+
+  <footer class="footer wrap">
+    <a class="brand brand--footer" href="#top" aria-label="Back to top">
+      <svg class="brand__mark" viewBox="0 0 120 100" aria-hidden="true"><use href="#hk-mark"/></svg>
+      <span class="brand__text"><span>HK</span><small>Business Consultancy</small></span>
+    </a>
+    <p class="footer__tag">Building Businesses. Creating Possibilities.</p>
+    <nav class="footer__nav" aria-label="Footer">
+      <a href="#about">About</a><a href="#expertise">Expertise</a><a href="#industries">Industries</a><a href="#reach">Global Reach</a><a href="#insights">Insights</a>
+    </nav>
+    <p class="footer__legal">© <span data-year>2026</span> HK Business Consultancy. United Arab Emirates.</p>
+  </footer>
+</section>
+
+</main>
+</body>
+</html>
