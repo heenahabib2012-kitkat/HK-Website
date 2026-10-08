@@ -1,8 +1,8 @@
-/* Hero: a sculpted HK monogram rendered in WebGL — royal-blue lacquered stems,
-   brushed-gold bevels and crossbar, a dark colonnade behind and a reflective floor. */
+/* Hero: the HK monogram staged like a studio product photograph — royal-blue lacquer,
+   gilded edges and crossbar, a polished plinth, soft spotlights and a seamless backdrop. */
 import { mat4, createGL, createProgram, createMesh, bindMesh, fitCanvas, visibleLoop, damp, clamp, prefersReducedMotion } from './gl.js';
 
-const MAT_BLUE = 0, MAT_GOLD = 1, MAT_ARCH = 2;
+const MAT_BLUE = 0, MAT_GOLD = 1, MAT_STONE = 2;
 
 /* ---------- geometry ---------- */
 
@@ -61,39 +61,26 @@ class Builder {
   }
 }
 
-function buildMonogram() {
+function buildScene() {
   const b = new Builder();
-  const W = 0.62, T = 2, B = -2, bev = 0.085;
-  // H: left stem, shared stem (H right / K stem), gold crossbar set back
-  b.rect(-2.15, B, -2.15 + W, T, 0.45, -0.45, bev, { piece: 0 });
-  b.rect(-0.31, B, 0.31, T, 0.45, -0.45, bev, { piece: 1 });
-  b.rect(-2.15 + W - 0.05, -0.2, -0.26, 0.2, 0.26, -0.3, 0.05, { front: MAT_GOLD, chamfer: MAT_GOLD, side: MAT_GOLD, piece: 2 });
-  // K upper arm: parallelogram rising from the stem
-  const armDir = [1.94, 2.35];
-  const a0 = [0.25, -0.35], a1 = [0.25 + armDir[0] * (2.35 / 2.35), 2.0];
-  const topLeftX = 1.42;
-  const a3y = 2.0 - (topLeftX - 0.25) * (armDir[1] / armDir[0]);
-  b.extrude([a0, [a1[0] + 0.05, a1[1]], [topLeftX, 2.0], [0.25, a3y]], 0.42, -0.42, bev, { piece: 3 });
-  // K lower leg: emerges from beneath the arm, set back one plane
-  const legDir = [-1.05, 2.45];
-  const l0 = [1.5, B], l1 = [2.32, B];
-  const armLine = { p: [a0[0] - 0.12, a0[1] + 0.14], d: armDir };
-  const l2 = intersect(l1, legDir, armLine.p, armLine.d);
-  const l3 = intersect(l0, legDir, armLine.p, armLine.d);
-  b.extrude([l0, l1, l2, l3], 0.3, -0.36, bev, { piece: 4 });
-  // thin gold plinth line beneath the mark
-  b.rect(-2.15, -2.32, 2.32, -2.26, 0.06, -0.06, 0.02, { front: MAT_GOLD, chamfer: MAT_GOLD, side: MAT_GOLD, piece: 5 });
-  return b;
-}
-
-function buildColonnade() {
-  const b = new Builder();
-  for (let i = -6; i <= 6; i++) {
-    const x = i * 3.4, w = 0.55, z = -11 - Math.abs(i) * 0.2;
-    b.rect(x - w / 2, -2.6, x + w / 2, 14, z + 0.6, z - 0.6, 0.04, { front: MAT_ARCH, chamfer: MAT_GOLD, side: MAT_ARCH, piece: 9 });
-  }
-  // lintel
-  b.rect(-24, 7.4, 24, 7.9, -10.0, -11.6, 0.04, { front: MAT_ARCH, chamfer: MAT_GOLD, side: MAT_ARCH, piece: 9 });
+  const T = 2, B = -2, W = 0.56, bev = 0.045;
+  // H — left stem, shared stem (H right / K stem), gilded crossbar set slightly back
+  b.rect(-2.0, B, -2.0 + W, T, 0.5, -0.5, bev, { piece: 0 });
+  b.rect(-0.28, B, 0.28, T, 0.5, -0.5, bev, { piece: 1 });
+  b.rect(-2.0 + W - 0.04, -0.15, -0.24, 0.15, 0.34, -0.34, 0.035, { front: MAT_GOLD, chamfer: MAT_GOLD, side: MAT_GOLD, piece: 2 });
+  // K upper arm — a parallelogram rising from the stem
+  const armDir = [1.86, 2.3];
+  const a0 = [0.22, -0.3];
+  const tr = [a0[0] + armDir[0], 2.0], tlX = 1.46;
+  const a3y = 2.0 - (tlX - 0.22) * (armDir[1] / armDir[0]);
+  b.extrude([a0, tr, [tlX, 2.0], [0.22, a3y]], 0.48, -0.48, bev, { piece: 3 });
+  // K lower leg — emerges from beneath the arm, one plane further back
+  const legDir = [-1.0, 2.4];
+  const l0 = [1.42, B], l1 = [2.12, B];
+  const armLine = { p: [a0[0] - 0.1, a0[1] + 0.12], d: armDir };
+  b.extrude([l0, l1, intersect(l1, legDir, armLine.p, armLine.d), intersect(l0, legDir, armLine.p, armLine.d)], 0.38, -0.42, bev, { piece: 4 });
+  // polished stone plinth with a gilded top edge
+  b.rect(-2.75, -2.72, 2.85, -2.0, 1.15, -1.15, 0.03, { front: MAT_STONE, chamfer: MAT_GOLD, side: MAT_STONE, piece: 9 });
   return b;
 }
 
@@ -115,9 +102,12 @@ uniform mat4 uProj, uView, uModel; uniform float uAssemble;
 varying vec3 vN, vW, vL; varying float vMat;
 void main(){
   vec3 p = aPos;
-  float t = clamp(uAssemble * 1.8 - aPiece * 0.16, 0.0, 1.0);
-  t = 1.0 - pow(1.0 - t, 4.0);
-  if (aPiece < 8.5) { p.z -= (1.0 - t) * 7.0; p.y += (1.0 - t) * (aPiece - 2.5) * 0.4; }
+  if (aPiece < 8.5) {
+    float t = clamp(uAssemble * 1.8 - aPiece * 0.16, 0.0, 1.0);
+    t = 1.0 - pow(1.0 - t, 4.0);
+    p.y += (1.0 - t) * 5.0;
+    p.z -= (1.0 - t) * (2.0 + aPiece);
+  }
   vec4 w = uModel * vec4(p, 1.0);
   vW = w.xyz; vL = aLocal; vMat = aMat;
   vN = mat3(uModel) * aNormal;
@@ -127,73 +117,115 @@ void main(){
 const FS = `
 precision highp float;
 varying vec3 vN, vW, vL; varying float vMat;
-uniform vec3 uEye, uKey, uBg; uniform float uReflect, uFloorY, uTime, uFog;
+uniform vec3 uEye, uKey, uRim; uniform float uReflect, uFloorY, uSweep, uAssemble;
 vec3 env(vec3 d){
-  float h = d.y;
-  vec3 c = mix(vec3(0.010,0.018,0.055), vec3(0.05,0.10,0.30), smoothstep(-0.4, 0.9, h));
-  c += vec3(1.0,0.86,0.62) * 0.55 * smoothstep(0.035, 0.0, abs(h - 0.02)) ;          // warm horizon band
-  float sb = max(dot(d, normalize(uKey)), 0.0);
-  c += vec3(1.0,0.95,0.86) * (pow(sb, 22.0) * 3.2 + pow(sb, 3.0) * 0.25);           // key softbox
-  float rim = max(dot(d, normalize(vec3(0.9,0.35,-0.6))), 0.0);
-  c += vec3(0.55,0.70,1.0) * pow(rim, 18.0) * 1.4;                                   // cool strip light
+  vec3 c = mix(vec3(0.004,0.008,0.03), vec3(0.03,0.07,0.22), smoothstep(-0.3, 1.0, d.y));
+  // large overhead softbox, slightly left
+  vec3 sbDir = normalize(vec3(-0.35, 0.85, 0.4));
+  float sb = dot(d, sbDir);
+  c += vec3(1.0,0.96,0.9) * smoothstep(0.86, 0.95, sb) * 2.4;
+  c += vec3(0.6,0.7,1.0) * smoothstep(0.4, 0.9, sb) * 0.12;
+  // tall strip light camera-right
+  vec3 st = normalize(vec3(0.85, 0.15, 0.5));
+  float sx = dot(d, st);
+  c += vec3(1.0,0.88,0.7) * smoothstep(0.93, 0.98, sx) * smoothstep(0.7, 0.2, abs(d.y)) * 1.6;
   return c;
 }
 float hash(float n){ return fract(sin(n) * 43758.5453); }
 vec3 aces(vec3 x){ return clamp((x*(2.51*x+0.03))/(x*(2.43*x+0.59)+0.14), 0.0, 1.0); }
 void main(){
-  if (uReflect > 0.5 && vW.y > uFloorY) discard;
-  vec3 N = normalize(vN), V = normalize(uEye - vW), R = reflect(-V, N);
+  if (uReflect > 0.5 && vW.y > uFloorY + 0.001) discard;
+  vec3 N = normalize(vN);
   if (!gl_FrontFacing) N = -N;
+  vec3 V = normalize(uEye - vW), R = reflect(-V, N);
   float NV = clamp(dot(N, V), 0.0, 1.0);
-  vec3 L1 = normalize(uKey), L2 = normalize(vec3(0.8,0.15,0.5)), L3 = normalize(vec3(-0.2,0.5,-1.0));
+  vec3 Lk = normalize(uKey - vW), Lr = normalize(uRim - vW);
+  vec3 Hk = normalize(Lk + V), Hr = normalize(Lr + V);
+  float dk = max(dot(N, Lk), 0.0), dr = max(dot(N, Lr), 0.0);
+  vec3 keyC = vec3(1.0, 0.95, 0.88), rimC = vec3(0.65, 0.78, 1.0);
+  float ao = vMat < 1.5 ? mix(0.42, 1.0, smoothstep(-2.0, -1.35, vL.y)) : 1.0;
   vec3 col;
   if (vMat < 0.5) {
-    vec3 alb = vec3(0.016, 0.055, 0.32);
-    float d = max(dot(N,L1),0.0)*0.95 + max(dot(N,L2),0.0)*0.22 + 0.10;
-    float F = 0.045 + 0.955 * pow(1.0 - NV, 5.0);
-    vec3 H = normalize(L1 + V);
-    float sp = pow(max(dot(N,H),0.0), 90.0) * 0.9;
-    col = alb * d + env(R) * F * 0.9 + vec3(1.0,0.93,0.8) * sp * 0.35;
+    // deep royal-blue lacquer with a clear coat
+    vec3 alb = vec3(0.010, 0.040, 0.27);
+    float fall = mix(0.6, 1.15, smoothstep(-2.0, 2.0, vL.y));
+    float F = 0.04 + 0.96 * pow(1.0 - NV, 5.0);
+    col = alb * (0.07 + dk * 1.05 * keyC + dr * 0.35 * rimC) * fall;
+    col += keyC * (pow(max(dot(N,Hk),0.0), 220.0) * 2.2 + pow(max(dot(N,Hk),0.0), 26.0) * 0.06);
+    col += rimC * pow(max(dot(N,Hr),0.0), 160.0) * 1.4;
+    col += env(R) * mix(0.06, 1.0, F) * 0.85;
+    col *= ao;
   } else if (vMat < 1.5) {
-    vec3 F0 = vec3(1.0, 0.76, 0.36);
-    float streak = hash(floor((vL.x * 0.7 + vL.y + vL.z * 0.3) * 260.0)) * 0.22 + 0.89;
+    // brushed gold
+    vec3 F0 = vec3(1.0, 0.74, 0.34);
     vec3 F = F0 + (1.0 - F0) * pow(1.0 - NV, 5.0);
-    vec3 H = normalize(L1 + V);
-    float sp = pow(max(dot(N,H),0.0), 48.0);
-    float rim = pow(max(dot(N, L3), 0.0), 2.0);
-    col = (env(R) * 0.85 + vec3(1.0,0.9,0.7) * sp * 1.6 + vec3(0.25,0.18,0.08)) * F * streak + F0 * rim * 0.2;
+    float streak = hash(floor((vL.x * 0.6 + vL.y + vL.z * 0.4) * 300.0)) * 0.18 + 0.91;
+    float sweep = exp(-pow((vW.x - uSweep) * 1.2, 2.0)) * 0.9;
+    col = env(R) * 0.9 + vec3(0.18, 0.13, 0.06);
+    col += keyC * (pow(max(dot(N,Hk),0.0), 70.0) * 3.0 + dk * 0.25);
+    col += rimC * pow(max(dot(N,Hr),0.0), 50.0) * 1.3;
+    col = col * F * streak + F0 * sweep * 0.35;
+    col *= ao;
   } else {
-    vec3 alb = vec3(0.010, 0.020, 0.060);
-    float d = max(dot(N,L1),0.0)*0.4 + 0.3;
-    float F = 0.02 + 0.5 * pow(1.0 - NV, 5.0);
-    col = alb * d + env(R) * F * 0.12;
+    // polished midnight stone
+    vec3 alb = vec3(0.006, 0.012, 0.038);
+    float F = 0.03 + 0.97 * pow(1.0 - NV, 5.0);
+    col = alb * (0.3 + dk * 0.8);
+    col += keyC * pow(max(dot(N,Hk),0.0), 320.0) * 1.2;
+    col += env(R) * F * 0.5;
+    if (N.y > 0.9) {
+      // contact shadow beneath the letters, fading in as they land
+      float inside = smoothstep(2.35, 1.9, abs(vL.x - 0.05)) * smoothstep(0.9, 0.35, abs(vL.z));
+      col *= 1.0 - 0.7 * inside * smoothstep(0.6, 1.0, uAssemble);
+      col += vec3(0.05, 0.10, 0.30) * 0.25 * (1.0 - inside);
+    }
   }
-  col = aces(col * 1.15);
-  float dist = length(uEye - vW);
-  col = mix(col, uBg, clamp((dist - 9.0) * uFog, 0.0, 0.88));
+  col = aces(col * 1.1);
+  col = pow(col, vec3(1.0/2.2));
   if (uReflect > 0.5) {
-    float fade = smoothstep(2.2, 0.0, uFloorY - vW.y);
-    col = mix(uBg, col, fade * 0.32);
+    float fade = smoothstep(2.6, 0.0, uFloorY - vW.y) * 0.55;
+    gl_FragColor = vec4(col * fade, fade);
+  } else {
+    gl_FragColor = vec4(col, 1.0);
   }
-  gl_FragColor = vec4(pow(col, vec3(1.0/2.2)), 1.0);
+}`;
+
+const BG_VS = `attribute vec2 aPos; void main(){ gl_Position = vec4(aPos, 0.0, 1.0); }`;
+const BG_FS = `
+precision highp float;
+uniform vec2 uRes, uGlow; uniform float uTime;
+float h(vec2 p){ return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453); }
+void main(){
+  vec2 uv = gl_FragCoord.xy / uRes;
+  vec2 p = (gl_FragCoord.xy - uGlow) / uRes.y;
+  vec3 c = mix(vec3(0.008,0.016,0.05), vec3(0.020,0.040,0.115), smoothstep(0.0, 1.0, uv.y));
+  float g = exp(-dot(p * vec2(0.75, 1.0), p * vec2(0.75, 1.0)) * 2.6);
+  c += vec3(0.06, 0.15, 0.46) * g * 0.95;
+  // soft beam from the overhead light
+  float beam = exp(-pow(p.x * 3.2 + p.y * 0.35, 2.0)) * smoothstep(-0.1, 0.7, p.y);
+  c += vec3(0.55, 0.62, 0.85) * beam * 0.045;
+  float v = length((uv - 0.5) * vec2(1.0, 1.25));
+  c *= 1.0 - 0.6 * smoothstep(0.35, 0.95, v);
+  c += (h(gl_FragCoord.xy + fract(uTime)) - 0.5) / 180.0;
+  gl_FragColor = vec4(c, 1.0);
 }`;
 
 const FLOOR_VS = `
 attribute vec3 aPos; uniform mat4 uProj, uView; varying vec3 vW;
 void main(){ vW = aPos; gl_Position = uProj * uView * vec4(aPos, 1.0); }`;
-
 const FLOOR_FS = `
-precision highp float; varying vec3 vW; uniform vec3 uBg, uCenter; uniform float uTime;
+precision highp float; varying vec3 vW; uniform vec3 uCenter;
 void main(){
-  vec2 p = vW.xz;
-  float r = length((p - uCenter.xz) * vec2(0.42, 1.0));
-  float shadow = smoothstep(2.6, 0.0, r) * 0.55;
-  vec2 g = abs(fract(p / 2.6 + 0.5) - 0.5) * 2.6;
-  float line = 1.0 - smoothstep(0.0, 0.018, min(g.x, g.y));
-  float fall = exp(-length(p - vec2(uCenter.x, -1.0)) * 0.11);
-  vec3 col = uBg * (1.0 - shadow);
-  col += vec3(0.80,0.62,0.30) * line * fall * 0.16;
-  float a = 0.62 + shadow * 0.35;
+  vec2 d = vW.xz - uCenter.xz;
+  float dist = length(d * vec2(0.55, 1.0));
+  float pool = exp(-dist * dist * 0.09);
+  // soft contact shadow hugging the plinth footprint
+  vec2 q = abs(d) - vec2(2.8, 1.15);
+  float box = length(max(q, 0.0)) + min(max(q.x, q.y), 0.0);
+  float contact = smoothstep(1.4, 0.0, box);
+  vec3 col = vec3(0.006, 0.013, 0.042) + vec3(0.05, 0.11, 0.34) * pool * 0.35;
+  col *= 1.0 - contact * 0.75;
+  float a = (0.5 + contact * 0.4) * smoothstep(22.0, 6.0, length(d));
   gl_FragColor = vec4(col * a, a);
 }`;
 
@@ -202,24 +234,22 @@ void main(){
 export function initHero(canvas, { onReady } = {}) {
   const gl = createGL(canvas);
   if (!gl) return null;
-  let prog, floorProg;
+  let prog, floorProg, bgProg;
   try {
     prog = createProgram(gl, VS, FS);
     floorProg = createProgram(gl, FLOOR_VS, FLOOR_FS);
+    bgProg = createProgram(gl, BG_VS, BG_FS);
   } catch (e) {
     console.warn(e);
     return null;
   }
-  const mono = toMesh(gl, buildMonogram());
-  const arch = toMesh(gl, buildColonnade());
-  const F = 2.62, S = 40;
+  const scene = toMesh(gl, buildScene());
+  const F = 2.72, S = 60;
   const floor = createMesh(gl, { aPos: { data: [-S, -F, -S, S, -F, -S, S, -F, S, -S, -F, -S, S, -F, S, -S, -F, S], size: 3 } }, 6);
+  const quad = createMesh(gl, { aPos: { data: [-1, -1, 3, -1, -1, 3], size: 2 } }, 3);
 
   const reduced = prefersReducedMotion();
-  const bg = [0.018, 0.035, 0.105];
-  const state = {
-    mx: 0, my: 0, tx: 0, ty: 0, scroll: 0, assemble: reduced ? 1 : 0, started: reduced,
-  };
+  const state = { mx: 0, my: 0, tx: 0, ty: 0, scroll: 0, assemble: reduced ? 1 : 0, started: reduced };
 
   const hero = canvas.closest('section') || canvas.parentElement;
   hero.addEventListener('pointermove', (e) => {
@@ -234,78 +264,88 @@ export function initHero(canvas, { onReady } = {}) {
     state.ty = clamp((e.beta - 45) / 30, -1, 1);
   });
 
-  gl.enable(gl.DEPTH_TEST);
-  gl.clearColor(bg[0], bg[1], bg[2], 1);
+  const mirror = mat4.multiply(mat4.translation(0, -F, 0), mat4.multiply(mat4.scaling(1, -1, 1), mat4.translation(0, F, 0)));
 
-  const drawMesh = (mesh, model, proj, view, eye, reflect, fog) => {
+  const drawScene = (model, proj, view, eye, reflect, sweep) => {
     gl.useProgram(prog.program);
     const u = prog.uniforms;
     gl.uniformMatrix4fv(u.uProj, false, proj);
     gl.uniformMatrix4fv(u.uView, false, view);
     gl.uniformMatrix4fv(u.uModel, false, model);
     gl.uniform3fv(u.uEye, eye);
-    gl.uniform3fv(u.uBg, bg);
     gl.uniform3fv(u.uKey, state.key);
+    gl.uniform3fv(u.uRim, state.rim);
     gl.uniform1f(u.uReflect, reflect ? 1 : 0);
     gl.uniform1f(u.uFloorY, -F);
-    gl.uniform1f(u.uFog, fog);
+    gl.uniform1f(u.uSweep, sweep);
     gl.uniform1f(u.uAssemble, state.assemble);
-    bindMesh(gl, prog, mesh);
-    gl.drawArrays(gl.TRIANGLES, 0, mesh.count);
+    bindMesh(gl, prog, scene);
+    gl.drawArrays(gl.TRIANGLES, 0, scene.count);
   };
 
-  const mirror = mat4.multiply(mat4.translation(0, -F, 0), mat4.multiply(mat4.scaling(1, -1, 1), mat4.translation(0, F, 0)));
-
   const frame = (t, dt) => {
-    fitCanvas(canvas, 1.75);
+    fitCanvas(canvas, 2);
     const w = canvas.width, h = canvas.height, aspect = w / h;
     gl.viewport(0, 0, w, h);
+    gl.clearColor(0, 0, 0, 1);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-    if (state.started && state.assemble < 1) state.assemble = Math.min(1, state.assemble + dt / 2.4);
-    state.mx = damp(state.mx, state.tx, 2.6, dt);
-    state.my = damp(state.my, state.ty, 2.6, dt);
+    if (state.started && state.assemble < 1) state.assemble = Math.min(1, state.assemble + dt / 2.6);
+    state.mx = damp(state.mx, state.tx, 2.4, dt);
+    state.my = damp(state.my, state.ty, 2.4, dt);
     const rect = hero.getBoundingClientRect();
     state.scroll = clamp(-rect.top / Math.max(1, rect.height), 0, 1);
 
     const wide = aspect > 1.15;
-    const markX = wide ? 4.3 : 0, markY = wide ? 0.2 : 3.4;
-    const idle = reduced ? 0 : Math.sin(t * 0.35) * 0.06;
-    state.key = [-0.55 + Math.sin(t * 0.18) * 0.25, 0.75, 0.75];
+    const markX = wide ? 4.2 : 0, markY = wide ? 0 : 4.2;
+    const idle = reduced ? 0 : Math.sin(t * 0.3) * 0.07;
 
-    const dist = (wide ? 15.5 : 19 + (1 - aspect) * 14) - state.scroll * 3.5;
-    const eye = [state.mx * 1.6, 0.9 - state.my * 0.8 + state.scroll * 2.2, dist];
-    const target = [wide ? 1.4 : 0, wide ? 0.0 : -1.2, 0];
+    const dist = (wide ? 20 : 22 + (1 - aspect) * 16) - state.scroll * 4;
+    const eye = [state.mx * 1.4, 0.9 - state.my * 0.6 + state.scroll * 2.4, dist];
+    const target = [wide ? 1.5 : 0, wide ? -0.4 : -1.4, 0];
     const view = mat4.lookAt(eye, target, [0, 1, 0]);
-    const proj = mat4.perspective(wide ? 0.62 : 0.72, aspect, 0.5, 80);
+    const proj = mat4.perspective(wide ? 0.5 : 0.6, aspect, 0.5, 120);
 
-    let model = mat4.rotationY(-0.32 + state.mx * 0.22 + idle + state.scroll * 0.5);
-    model = mat4.multiply(mat4.rotationX(-state.my * 0.06), model);
-    model = mat4.multiply(mat4.translation(markX, markY + Math.sin(t * 0.8) * 0.04 * (reduced ? 0 : 1), 0), model);
-    const ident = mat4.identity();
+    // studio lights, fixed in the world so reflections glide as the mark turns
+    state.key = [markX - 7, markY + 8, 9];
+    state.rim = [markX + 8, markY + 3, -6];
+    const sweep = markX + (reduced ? 0 : Math.sin(t * 0.32) * 3.6);
 
-    drawMesh(arch, ident, proj, view, eye, false, 0.075);
-    gl.frontFace(gl.CW);
-    drawMesh(mono, mat4.multiply(mirror, model), proj, view, eye, true, 0.03);
-    gl.frontFace(gl.CCW);
+    let model = mat4.rotationY(-0.36 + state.mx * 0.2 + idle + state.scroll * 0.45);
+    model = mat4.multiply(mat4.translation(markX, markY, 0), model);
 
+    // backdrop
+    const c = mat4.transformPoint(mat4.multiply(proj, view), [markX, markY + 0.2, 0]);
+    gl.disable(gl.DEPTH_TEST);
+    gl.useProgram(bgProg.program);
+    gl.uniform2f(bgProg.uniforms.uRes, w, h);
+    gl.uniform2f(bgProg.uniforms.uGlow, (c[0] * 0.5 + 0.5) * w, (c[1] * 0.5 + 0.5) * h);
+    gl.uniform1f(bgProg.uniforms.uTime, t);
+    bindMesh(gl, bgProg, quad);
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
+    gl.enable(gl.DEPTH_TEST);
+
+    // reflection in the polished floor
     gl.enable(gl.BLEND);
     gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+    drawScene(mat4.multiply(mirror, model), proj, view, eye, true, sweep);
+    gl.clear(gl.DEPTH_BUFFER_BIT);
+
     gl.depthMask(false);
     gl.useProgram(floorProg.program);
     gl.uniformMatrix4fv(floorProg.uniforms.uProj, false, proj);
     gl.uniformMatrix4fv(floorProg.uniforms.uView, false, view);
-    gl.uniform3fv(floorProg.uniforms.uBg, bg);
     gl.uniform3fv(floorProg.uniforms.uCenter, [markX, 0, 0]);
     bindMesh(gl, floorProg, floor);
     gl.drawArrays(gl.TRIANGLES, 0, 6);
     gl.depthMask(true);
     gl.disable(gl.BLEND);
 
-    drawMesh(mono, model, proj, view, eye, false, 0.03);
+    drawScene(model, proj, view, eye, false, sweep);
   };
 
-  state.key = [-0.55, 0.75, 0.75];
+  state.key = [-3, 8, 9];
+  state.rim = [12, 3, -6];
   const loop = visibleLoop(canvas, frame);
   requestAnimationFrame(() => { canvas.classList.add('is-ready'); onReady && onReady(); });
   return {
