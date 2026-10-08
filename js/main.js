@@ -1,4 +1,3 @@
-import { initHero } from './hero.js';
 import { initGlobe } from './globe.js';
 import { REGIONS } from './world.js';
 import { clamp, damp, prefersReducedMotion } from './gl.js';
@@ -49,13 +48,27 @@ const INDUSTRIES = [
 
 /* ------------------------------------------------------------------ intro + hero */
 
-const hero = initHero($('.hero__gl'));
-if (!hero) document.documentElement.classList.add('no-webgl');
+const heroEl = $('.hero');
+const heroMedia = $('.hero__media');
+const heroVideo = $('.hero__video');
+if (reduced) { heroVideo.removeAttribute('autoplay'); heroVideo.pause(); }
+// pause the video while the hero is off screen
+new IntersectionObserver(([e]) => {
+  if (reduced) return;
+  if (e.isIntersecting) heroVideo.play().catch(() => {}); else heroVideo.pause();
+}).observe(heroEl);
+// subtle depth: the footage drifts against the cursor and eases back as you scroll
+const heroCam = { x: 0, y: 0, tx: 0, ty: 0 };
+heroEl.addEventListener('pointermove', (e) => {
+  const r = heroEl.getBoundingClientRect();
+  heroCam.tx = ((e.clientX - r.left) / r.width - 0.5) * -18;
+  heroCam.ty = ((e.clientY - r.top) / r.height - 0.5) * -12;
+});
+heroEl.addEventListener('pointerleave', () => { heroCam.tx = 0; heroCam.ty = 0; });
 
 function ready() {
   document.body.classList.remove('is-loading');
   document.body.classList.add('is-ready');
-  hero && hero.start();
 }
 const fontsReady = document.fonts ? Promise.race([document.fonts.ready, new Promise((r) => setTimeout(r, 1500))]) : Promise.resolve();
 if (reduced) ready();
@@ -354,6 +367,12 @@ function frame(now) {
   const dt = Math.min(0.05, (now - prev) / 1000);
   prev = now;
   if (orbitOn) layoutOrbit(dt);
+  if (!reduced && window.scrollY < window.innerHeight * 1.2) {
+    heroCam.x = damp(heroCam.x, heroCam.tx, 2.5, dt);
+    heroCam.y = damp(heroCam.y, heroCam.ty, 2.5, dt);
+    const s = window.scrollY / window.innerHeight;
+    heroMedia.style.transform = `translate3d(${heroCam.x.toFixed(2)}px, ${(heroCam.y + s * 120).toFixed(2)}px, 0) scale(${(1.08 + s * 0.06).toFixed(4)})`;
+  }
   eco.rx = damp(eco.rx, eco.trx, 3, dt);
   eco.rz = damp(eco.rz, eco.trz, 3, dt);
   ecoStage.style.setProperty('--rx', `${eco.rx.toFixed(2)}deg`);

@@ -1,6 +1,6 @@
 # HK Business Consultancy — Website
 
-A static, dependency-free site. The 3D hero monogram and the globe are rendered with custom WebGL (`js/hero.js`, `js/globe.js`); there are no build steps or npm packages.
+A static, dependency-free site. The hero uses a looping background video (`assets/hero.mp4`) with a royal-blue tint; the globe is rendered with custom WebGL (`js/globe.js`). There are no build steps or npm packages.
 
 ## Run locally
 ```
@@ -12,7 +12,6 @@ Open http://localhost:8080. It needs a server, not `file://`, because it uses ES
 - `index.html` — all sections and copy
 - `css/styles.css` — design tokens (royal blue / gold / white) and layout
 - `js/main.js` — navigation, reveals, expertise ecosystem, industries orbit, case-study scroller, insights filter, contact form
-- `js/hero.js` — WebGL HK monogram (lacquered royal-blue stems, brushed-gold bevels, reflective floor)
 - `js/globe.js`, `js/world.js` — WebGL globe, simplified coastlines, UAE hub and regional connections
 - `js/gl.js` — small WebGL/maths helpers
 
