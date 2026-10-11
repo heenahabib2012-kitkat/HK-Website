@@ -1,5 +1,4 @@
 import { initGlobe } from './globe.js';
-import { initModel } from './model.js';
 import { REGIONS } from './world.js';
 import { clamp, damp, prefersReducedMotion } from './gl.js';
 
@@ -23,6 +22,16 @@ const SERVICES = [
     points: ['Concept positioning and strategy', 'Commercial and operational planning', 'Growth and multi-site expansion'] },
   { title: 'Trading & Investment', short: 'Trading · Investment', summary: 'Business opportunities, partnerships and commercial development.',
     points: ['Opportunity identification and assessment', 'Partnerships and introductions', 'Commercial development'] },
+];
+
+// Pillar placement on the plan (x, y in px from centre), footprint and height — deliberately unequal.
+const PILLARS = [
+  { x: -6, y: -228, w: 70, h: 150 },
+  { x: 205, y: -110, w: 58, h: 108 },
+  { x: 215, y: 120, w: 66, h: 128 },
+  { x: 10, y: 236, w: 54, h: 84 },
+  { x: -205, y: 125, w: 62, h: 116 },
+  { x: -222, y: -112, w: 56, h: 96 },
 ];
 
 const INDUSTRIES = [
@@ -108,23 +117,44 @@ new IntersectionObserver(([e]) => { if (e.isIntersecting) chapters.style.setProp
 /* ------------------------------------------------------------------ expertise ecosystem */
 
 const ecoStage = $('[data-eco-stage]');
+const ecoPlane = $('[data-eco-plane]');
+const ecoLinks = $('[data-eco-links]');
 const ecoTabs = $$('[data-service]');
 const ecoDetail = $('[data-eco-detail]');
 let ecoIndex = 0, ecoTouched = false;
 
-const model = initModel($('[data-model]'), {
-  labels: SERVICES.map((s) => s.short || s.title),
-  labelEl: $('[data-model-label]'),
-  onPick(i) { ecoTouched = true; setService(i); },
+const pillarEls = PILLARS.map((p, i) => {
+  const el = document.createElement('div');
+  el.className = 'pillar';
+  el.style.cssText = `left:${310 + p.x}px;top:${310 + p.y}px;--w:${p.w}px;--h:${p.h}px`;
+  el.innerHTML = `<div class="pillar__shadow"></div><div class="pillar__body">
+    <div class="pillar__face f-n"></div><div class="pillar__face f-w"></div><div class="pillar__face f-e"></div><div class="pillar__face f-s"></div>
+    <div class="pillar__top"></div></div><div class="pillar__label"><span>${SERVICES[i].short || SERVICES[i].title}</span></div>`;
+  el.addEventListener('pointerenter', () => { ecoTouched = true; setService(i); });
+  el.addEventListener('click', () => { ecoTouched = true; setService(i); });
+  ecoPlane.appendChild(el);
+  const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+  line.setAttribute('x1', 0); line.setAttribute('y1', 0);
+  line.setAttribute('x2', p.x * 500 / 310); line.setAttribute('y2', p.y * 500 / 310);
+  ecoLinks.appendChild(line);
+  return { el, line };
 });
-if (!model) ecoStage.hidden = true;
+// outer ring of faint connections between neighbouring disciplines
+PILLARS.forEach((p, i) => {
+  const q = PILLARS[(i + 1) % PILLARS.length];
+  const l = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+  l.setAttribute('x1', p.x * 500 / 310); l.setAttribute('y1', p.y * 500 / 310);
+  l.setAttribute('x2', q.x * 500 / 310); l.setAttribute('y2', q.y * 500 / 310);
+  l.style.opacity = '.14';
+  ecoLinks.appendChild(l);
+});
 
 function setService(i) {
   if (i === ecoIndex && ecoDetail.dataset.init) return;
   ecoDetail.dataset.init = '1';
   ecoIndex = i;
   ecoTabs.forEach((t, k) => t.setAttribute('aria-selected', String(k === i)));
-  if (model) model.select(i);
+  pillarEls.forEach((p, k) => { p.el.classList.toggle('is-active', k === i); p.line.classList.toggle('is-active', k === i); });
   const s = SERVICES[i];
   ecoDetail.classList.add('is-swapping');
   setTimeout(() => {
@@ -150,6 +180,22 @@ setService(0);
 let ecoVisible = false;
 new IntersectionObserver(([e]) => { ecoVisible = e.isIntersecting; }, { threshold: 0.4 }).observe(ecoStage);
 if (!reduced) setInterval(() => { if (ecoVisible && !ecoTouched) setService((ecoIndex + 1) % SERVICES.length); }, 5200);
+
+// tilt with the cursor
+const eco = { rx: 58, rz: -28, trx: 58, trz: -28 };
+$('.expertise').addEventListener('pointermove', (e) => {
+  if (!finePointer || reduced) return;
+  const r = ecoStage.getBoundingClientRect();
+  const nx = clamp((e.clientX - r.left) / r.width * 2 - 1, -1.5, 1.5);
+  const ny = clamp((e.clientY - r.top) / r.height * 2 - 1, -1.5, 1.5);
+  eco.trz = -28 + nx * 10; eco.trx = 58 - ny * 6;
+});
+function fitEco() {
+  const s = Math.min(1, ecoStage.clientWidth / 700);
+  ecoPlane.style.setProperty('--eco-scale', s.toFixed(3));
+}
+fitEco();
+window.addEventListener('resize', fitEco);
 
 /* ------------------------------------------------------------------ industries orbit */
 
@@ -327,6 +373,10 @@ function frame(now) {
     const s = window.scrollY / window.innerHeight;
     heroMedia.style.transform = `translate3d(${heroCam.x.toFixed(2)}px, ${(heroCam.y + s * 120).toFixed(2)}px, 0) scale(${(1.08 + s * 0.06).toFixed(4)})`;
   }
+  eco.rx = damp(eco.rx, eco.trx, 3, dt);
+  eco.rz = damp(eco.rz, eco.trz, 3, dt);
+  ecoStage.style.setProperty('--rx', `${eco.rx.toFixed(2)}deg`);
+  ecoStage.style.setProperty('--rz', `${eco.rz.toFixed(2)}deg`);
   requestAnimationFrame(frame);
 }
 layoutOrbit(0);
