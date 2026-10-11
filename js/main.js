@@ -1,4 +1,5 @@
 import { initGlobe } from './globe.js';
+import { initChess } from './chess.js';
 import { REGIONS } from './world.js';
 import { clamp, damp, prefersReducedMotion } from './gl.js';
 
@@ -24,14 +25,14 @@ const SERVICES = [
     points: ['Opportunity identification and assessment', 'Partnerships and introductions', 'Commercial development'] },
 ];
 
-// Pillar placement on the plan (x, y in px from centre), footprint and height — deliberately unequal.
-const PILLARS = [
-  { x: -6, y: -228, w: 70, h: 150 },
-  { x: 205, y: -110, w: 58, h: 108 },
-  { x: 215, y: 120, w: 66, h: 128 },
-  { x: 10, y: 236, w: 54, h: 84 },
-  { x: -205, y: 125, w: 62, h: 116 },
-  { x: -222, y: -112, w: 56, h: 96 },
+// Each discipline is a chess piece: file c (a–h → 0–7), row r from the far side, height in world units.
+const PIECES = [
+  { type: 'king', c: 3, r: 4, h: 1.56 },   // Business Strategy — the piece everything protects
+  { type: 'knight', c: 5, r: 2, h: 1.1 }, // Market Entry — reaches places others cannot
+  { type: 'rook', c: 1, r: 2, h: 1.02 },   // Corporate & Commercial Advisory — structure
+  { type: 'pawn', c: 2, r: 6, h: 0.87 },    // Franchising — small steps that multiply
+  { type: 'bishop', c: 6, r: 5, h: 1.2 }, // F&B & Hospitality
+  { type: 'queen', c: 5, r: 6, h: 1.38 },  // Trading & Investment — the widest reach
 ];
 
 const INDUSTRIES = [
@@ -117,44 +118,41 @@ new IntersectionObserver(([e]) => { if (e.isIntersecting) chapters.style.setProp
 /* ------------------------------------------------------------------ expertise ecosystem */
 
 const ecoStage = $('[data-eco-stage]');
-const ecoPlane = $('[data-eco-plane]');
-const ecoLinks = $('[data-eco-links]');
 const ecoTabs = $$('[data-service]');
 const ecoDetail = $('[data-eco-detail]');
 let ecoIndex = 0, ecoTouched = false;
 
-const pillarEls = PILLARS.map((p, i) => {
-  const el = document.createElement('div');
-  el.className = 'pillar';
-  el.style.cssText = `left:${310 + p.x}px;top:${310 + p.y}px;--w:${p.w}px;--h:${p.h}px`;
-  el.innerHTML = `<div class="pillar__shadow"></div><div class="pillar__body">
-    <div class="pillar__face f-n"></div><div class="pillar__face f-w"></div><div class="pillar__face f-e"></div><div class="pillar__face f-s"></div>
-    <div class="pillar__top"></div></div><div class="pillar__label"><span>${SERVICES[i].short || SERVICES[i].title}</span></div>`;
-  el.addEventListener('pointerenter', () => { ecoTouched = true; setService(i); });
-  el.addEventListener('click', () => { ecoTouched = true; setService(i); });
-  ecoPlane.appendChild(el);
-  const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-  line.setAttribute('x1', 0); line.setAttribute('y1', 0);
-  line.setAttribute('x2', p.x * 500 / 310); line.setAttribute('y2', p.y * 500 / 310);
-  ecoLinks.appendChild(line);
-  return { el, line };
+const occupied = new Set(PIECES.map((p) => p.c + ',' + p.r));
+function legalMoves({ type, c, r }) {
+  const out = [], on = (x, y) => x >= 0 && x < 8 && y >= 0 && y < 8;
+  const ray = (dx, dy, max = 8) => {
+    for (let k = 1, x = c + dx, y = r + dy; k <= max && on(x, y) && !occupied.has(x + ',' + y); k++, x += dx, y += dy) out.push([x, y]);
+  };
+  const orth = [[1, 0], [-1, 0], [0, 1], [0, -1]], diag = [[1, 1], [1, -1], [-1, 1], [-1, -1]];
+  if (type === 'rook') orth.forEach(([x, y]) => ray(x, y));
+  if (type === 'bishop') diag.forEach(([x, y]) => ray(x, y));
+  if (type === 'queen') [...orth, ...diag].forEach(([x, y]) => ray(x, y));
+  if (type === 'king') [...orth, ...diag].forEach(([x, y]) => ray(x, y, 1));
+  if (type === 'pawn') ray(0, -1, 2);
+  if (type === 'knight') [[1, 2], [2, 1], [-1, 2], [-2, 1], [1, -2], [2, -1], [-1, -2], [-2, -1]]
+    .forEach(([x, y]) => { if (on(c + x, r + y) && !occupied.has(c + x + ',' + (r + y))) out.push([c + x, r + y]); });
+  return out;
+}
+
+const chess = initChess($('[data-chess]'), {
+  pieces: PIECES,
+  labels: SERVICES.map((s) => s.short || s.title),
+  labelEl: $('[data-chess-label]'),
+  onPick(i) { ecoTouched = true; setService(i); },
 });
-// outer ring of faint connections between neighbouring disciplines
-PILLARS.forEach((p, i) => {
-  const q = PILLARS[(i + 1) % PILLARS.length];
-  const l = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-  l.setAttribute('x1', p.x * 500 / 310); l.setAttribute('y1', p.y * 500 / 310);
-  l.setAttribute('x2', q.x * 500 / 310); l.setAttribute('y2', q.y * 500 / 310);
-  l.style.opacity = '.14';
-  ecoLinks.appendChild(l);
-});
+if (!chess) ecoStage.hidden = true;
 
 function setService(i) {
   if (i === ecoIndex && ecoDetail.dataset.init) return;
   ecoDetail.dataset.init = '1';
   ecoIndex = i;
   ecoTabs.forEach((t, k) => t.setAttribute('aria-selected', String(k === i)));
-  pillarEls.forEach((p, k) => { p.el.classList.toggle('is-active', k === i); p.line.classList.toggle('is-active', k === i); });
+  if (chess) chess.select(i, legalMoves(PIECES[i]));
   const s = SERVICES[i];
   ecoDetail.classList.add('is-swapping');
   setTimeout(() => {
@@ -180,22 +178,6 @@ setService(0);
 let ecoVisible = false;
 new IntersectionObserver(([e]) => { ecoVisible = e.isIntersecting; }, { threshold: 0.4 }).observe(ecoStage);
 if (!reduced) setInterval(() => { if (ecoVisible && !ecoTouched) setService((ecoIndex + 1) % SERVICES.length); }, 5200);
-
-// tilt with the cursor
-const eco = { rx: 58, rz: -28, trx: 58, trz: -28 };
-$('.expertise').addEventListener('pointermove', (e) => {
-  if (!finePointer || reduced) return;
-  const r = ecoStage.getBoundingClientRect();
-  const nx = clamp((e.clientX - r.left) / r.width * 2 - 1, -1.5, 1.5);
-  const ny = clamp((e.clientY - r.top) / r.height * 2 - 1, -1.5, 1.5);
-  eco.trz = -28 + nx * 10; eco.trx = 58 - ny * 6;
-});
-function fitEco() {
-  const s = Math.min(1, ecoStage.clientWidth / 700);
-  ecoPlane.style.setProperty('--eco-scale', s.toFixed(3));
-}
-fitEco();
-window.addEventListener('resize', fitEco);
 
 /* ------------------------------------------------------------------ industries orbit */
 
@@ -373,10 +355,6 @@ function frame(now) {
     const s = window.scrollY / window.innerHeight;
     heroMedia.style.transform = `translate3d(${heroCam.x.toFixed(2)}px, ${(heroCam.y + s * 120).toFixed(2)}px, 0) scale(${(1.08 + s * 0.06).toFixed(4)})`;
   }
-  eco.rx = damp(eco.rx, eco.trx, 3, dt);
-  eco.rz = damp(eco.rz, eco.trz, 3, dt);
-  ecoStage.style.setProperty('--rx', `${eco.rx.toFixed(2)}deg`);
-  ecoStage.style.setProperty('--rz', `${eco.rz.toFixed(2)}deg`);
   requestAnimationFrame(frame);
 }
 layoutOrbit(0);

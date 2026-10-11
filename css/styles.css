@@ -305,44 +305,11 @@ body.is-ready .hero__base { transition-delay: 1.5s; }
    ========================================================================== */
 .expertise { background: linear-gradient(180deg, var(--royal-deep) 0%, var(--navy) 100%); padding: clamp(110px, 14vw, 180px) 0 clamp(100px, 12vw, 160px); overflow: hidden; }
 .eco { display: grid; grid-template-columns: 1.25fr 1fr; gap: clamp(30px, 5vw, 80px); align-items: center; margin-top: clamp(40px, 6vw, 80px); }
-.eco__stage { position: relative; aspect-ratio: 1 / 0.9; perspective: 1500px; perspective-origin: 50% 20%; --rx: 58deg; --rz: -28deg; }
-.eco__plane {
-  position: absolute; left: 50%; top: 47%; width: 620px; height: 620px; margin: -310px 0 0 -310px;
-  transform-style: preserve-3d;
-  transform: scale(var(--eco-scale, 1)) rotateX(var(--rx)) rotateZ(var(--rz));
-}
-.eco__rings, .eco__rings i { position: absolute; inset: 0; border-radius: 50%; }
-.eco__rings i { border: 1px solid var(--hair); }
-.eco__rings i:nth-child(1) { inset: 6%; }
-.eco__rings i:nth-child(2) { inset: 24%; border-style: dashed; border-color: rgba(201,164,92,.25); }
-.eco__rings i:nth-child(3) { inset: 40%; }
-.eco__plane::before { content: ''; position: absolute; inset: -12%; background-image: linear-gradient(rgba(201,164,92,.09) 1px, transparent 1px), linear-gradient(90deg, rgba(201,164,92,.09) 1px, transparent 1px); background-size: 62px 62px; -webkit-mask-image: radial-gradient(circle, #000 30%, transparent 70%); mask-image: radial-gradient(circle, #000 30%, transparent 70%); }
-.eco__links { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-.eco__links line { stroke: var(--gold); stroke-width: 1; opacity: .35; transition: opacity .6s, stroke-width .6s; }
-.eco__links line.is-active { opacity: 1; stroke-width: 2; }
-.eco__core { position: absolute; left: 50%; top: 50%; width: 120px; height: 120px; margin: -60px 0 0 -60px; transform-style: preserve-3d; }
-.eco__core svg { position: absolute; left: 50%; top: 50%; width: 104px; margin: -44px 0 0 -52px; color: var(--white); --mark-accent: var(--gold); transform: translateZ(70px) rotateZ(calc(-1 * var(--rz))) rotateX(calc(-1 * var(--rx))); filter: drop-shadow(0 0 30px rgba(201,164,92,.3)); }
-.eco__core::before { content: ''; position: absolute; inset: 0; border-radius: 50%; border: 1px solid var(--gold); background: radial-gradient(circle, rgba(201,164,92,.25), transparent 70%); }
-
-/* pillars — CSS 3D prisms standing on the plane */
-.pillar { position: absolute; width: var(--w); height: var(--w); margin: calc(var(--w) / -2) 0 0 calc(var(--w) / -2); transform-style: preserve-3d; cursor: pointer; }
-.pillar__body { position: absolute; inset: 0; transform-style: preserve-3d; transition: transform 1s var(--ease); }
-.pillar__face { position: absolute; border: 1px solid rgba(201,164,92,.32); transition: border-color .8s; }
-.f-s { left: 0; top: calc(var(--w) - var(--h)); width: var(--w); height: var(--h); transform-origin: 50% 100%; transform: rotateX(-90deg); background: linear-gradient(to bottom, #2b54c9, #102a7d); }
-.f-n { left: 0; top: 0; width: var(--w); height: var(--h); transform-origin: 50% 0; transform: rotateX(90deg); background: linear-gradient(to top, #18388f, #0a1b52); }
-.f-e { top: 0; left: calc(var(--w) - var(--h)); width: var(--h); height: var(--w); transform-origin: 100% 50%; transform: rotateY(90deg); background: linear-gradient(to left, #0b1d5a, #1c3fa6); }
-.f-w { top: 0; left: 0; width: var(--h); height: var(--w); transform-origin: 0 50%; transform: rotateY(-90deg); background: linear-gradient(to right, #0d2266, #2449b8); }
-.pillar__top { position: absolute; inset: 0; transform: translateZ(var(--h)); background: linear-gradient(135deg, #3560d6, #15379e); border: 1px solid rgba(201,164,92,.7); transition: background .8s var(--ease), box-shadow .8s; }
-.pillar__top::after { content: ''; position: absolute; inset: 22%; border: 1px solid rgba(231,207,152,.55); }
-.pillar__shadow { position: absolute; inset: -30%; border-radius: 50%; background: radial-gradient(circle, rgba(0,4,20,.55), transparent 65%); transform: translate(20%, 24%); pointer-events: none; }
-.pillar__label { position: absolute; left: 50%; top: 50%; width: 0; height: 0; transform-style: preserve-3d; transform: translateZ(calc(var(--h) + 30px)) rotateZ(calc(-1 * var(--rz))) rotateX(calc(-1 * var(--rx))); pointer-events: none; transition: transform 1s var(--ease); }
-.pillar__label span { position: absolute; left: 0; bottom: 0; transform: translateX(-50%); white-space: nowrap; font-size: 11.5px; letter-spacing: .22em; text-transform: uppercase; color: rgba(255,255,255,.72); transition: color .6s; }
-.pillar__label span::before { content: ''; position: absolute; left: 50%; top: 100%; width: 1px; height: 22px; background: linear-gradient(var(--gold), transparent); opacity: .6; }
-.pillar.is-active .pillar__body { transform: translateZ(34px); }
-.pillar.is-active .pillar__label { transform: translateZ(calc(var(--h) + 64px)) rotateZ(calc(-1 * var(--rz))) rotateX(calc(-1 * var(--rx))); }
-.pillar.is-active .pillar__face { border-color: rgba(231,207,152,.8); }
-.pillar.is-active .pillar__top { background: linear-gradient(135deg, #f4e2b2, #c9a45c 50%, #9a7734); box-shadow: 0 0 70px rgba(201,164,92,.75); }
-.pillar.is-active .pillar__label span { color: var(--gold-light); }
+.eco__stage { position: relative; aspect-ratio: 1 / 0.86; }
+.chess { position: absolute; inset: 0; width: 100%; height: 100%; touch-action: pan-y; }
+.chess-label { position: absolute; left: 0; top: 0; pointer-events: none; white-space: nowrap; font-size: 11.5px; letter-spacing: .24em; text-transform: uppercase; color: var(--gold-light); text-shadow: 0 2px 12px rgba(0,5,25,.95); opacity: 0; transition: opacity .5s; }
+.chess-label.is-visible { opacity: 1; }
+.chess-label::after { content: ''; position: absolute; left: 50%; top: calc(100% + 4px); width: 1px; height: 10px; background: var(--gold); opacity: .7; }
 
 .eco__panel { position: relative; }
 .eco__list { border-top: 1px solid var(--hair-white); }
