@@ -333,30 +333,25 @@ body.is-ready .hero__base { transition-delay: 1.5s; }
 .eco__detail > * { transition: opacity .5s var(--ease), transform .7s var(--ease); }
 
 /* ==========================================================================
-   Industries — orbit
+   Industries — display cabinet
    ========================================================================== */
 .industries { background: var(--royal); padding: clamp(110px, 14vw, 180px) 0 clamp(60px, 8vw, 100px); overflow: hidden; }
 .industries::before { content: ''; position: absolute; inset: 0; background: radial-gradient(50% 50% at 50% 62%, rgba(255,255,255,.09), transparent 70%), radial-gradient(100% 60% at 50% 100%, rgba(5,12,40,.5), transparent); pointer-events: none; }
-.orbit { position: relative; height: clamp(540px, 50vw, 700px); margin-top: clamp(10px, 3vw, 40px); }
-.orbit__lines { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
-.orbit__lines .ring { fill: none; stroke: var(--hair); }
-.orbit__lines .spoke { stroke: var(--gold); stroke-width: 1; transition: opacity .5s; }
-.orbit__lines .chord { stroke: rgba(201,164,92,.22); stroke-width: 1; }
-.orbit__center { position: absolute; left: 50%; top: 50%; width: min(380px, 70vw); transform: translate(-50%, -50%); text-align: center; pointer-events: none; z-index: 5; }
-.orbit__mark { width: 74px; margin: 0 auto 22px; color: var(--white); --mark-accent: var(--gold); filter: drop-shadow(0 10px 30px rgba(0,0,0,.35)); }
-.orbit__kicker { font-size: 11px; letter-spacing: .3em; text-transform: uppercase; color: var(--gold-light); }
-.orbit__info h3 { font-family: var(--serif); font-size: clamp(28px, 2.8vw, 40px); line-height: 1.08; margin: 10px 0 12px; }
-.orbit__info p:last-child { font-size: 15.5px; color: var(--text-dim); }
-.orbit__info > * { transition: opacity .45s var(--ease), transform .6s var(--ease); }
-.orbit__info.is-swapping > * { opacity: 0; transform: translateY(8px); }
-.orbit__nodes { position: absolute; inset: 0; }
-.orbit__node { position: absolute; left: 0; top: 0; will-change: transform; z-index: 3; }
-.orbit__node button { display: flex; align-items: center; gap: 12px; transform: translate(-7px, -50%); white-space: nowrap; padding: 8px 0; }
-.orbit__node .dot { position: relative; width: 14px; height: 14px; flex: none; border: 1px solid var(--gold); transform: rotate(45deg); background: var(--royal); transition: background .5s, box-shadow .5s, transform .6s var(--ease); }
-.orbit__node .txt { font-size: 12.5px; letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,.85); transition: color .4s; }
-.orbit__node.is-left button { flex-direction: row-reverse; transform: translate(calc(-100% + 7px), -50%); }
-.orbit__node button:hover .dot, .orbit__node.is-active .dot { background: var(--gold); box-shadow: 0 0 24px rgba(231,207,152,.8); transform: rotate(45deg) scale(1.25); }
-.orbit__node button:hover .txt, .orbit__node.is-active .txt { color: var(--gold-light); }
+.cabinet { display: grid; grid-template-columns: 1.35fr 1fr; gap: clamp(30px, 5vw, 80px); align-items: center; margin-top: clamp(30px, 5vw, 60px); }
+.cabinet__stage { position: relative; aspect-ratio: 1 / 1.02; }
+.cabinet__stage::before { content: ''; position: absolute; inset: 6% 4% -2%; background: radial-gradient(50% 45% at 50% 55%, rgba(5, 12, 40, .55), transparent 70%); pointer-events: none; }
+.cabinet__gl { position: absolute; inset: 0; width: 100%; height: 100%; touch-action: pan-y; }
+.cabinet__kicker { font-size: 11px; letter-spacing: .3em; text-transform: uppercase; color: var(--gold-light); }
+.cabinet__detail { min-height: 190px; }
+.cabinet__detail h3 { font-family: var(--serif); font-size: clamp(34px, 3.2vw, 48px); line-height: 1.05; margin: 12px 0 14px; }
+.cabinet__detail p:last-child { color: var(--text-dim); max-width: 40ch; }
+.cabinet__detail > * { transition: opacity .45s var(--ease), transform .6s var(--ease); }
+.cabinet__detail.is-swapping > * { opacity: 0; transform: translateY(8px); }
+.cabinet__list { margin-top: 34px; display: grid; grid-template-columns: 1fr 1fr; column-gap: 28px; border-top: 1px solid var(--hair-white); }
+.cabinet__list button { width: 100%; display: flex; gap: 14px; align-items: baseline; padding: 12px 0; border-bottom: 1px solid var(--hair-white); text-align: left; font-size: 12.5px; letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,.7); transition: color .4s, padding .6s var(--ease); }
+.cabinet__list button span { font-family: var(--serif); font-style: italic; font-size: 15px; letter-spacing: 0; color: var(--gold); min-width: 20px; }
+.cabinet__list button:hover, .cabinet__list button[aria-pressed="true"] { color: var(--white); padding-left: 8px; }
+.cabinet__list button[aria-pressed="true"] { color: var(--gold-light); }
 
 /* ==========================================================================
    Global reach
@@ -538,6 +533,8 @@ body.is-ready .hero__base { transition-delay: 1.5s; }
   .eco { grid-template-columns: 1fr; }
   .eco__stage { max-width: 720px; width: 100%; margin: 0 auto; }
   .reach__grid { grid-template-columns: 1fr; }
+  .cabinet { grid-template-columns: 1fr; }
+  .cabinet__stage { max-width: 640px; width: 100%; margin: 0 auto; }
   .reach__globe { justify-self: center; max-width: 640px; }
   .contact__grid { grid-template-columns: 1fr; }
 }
@@ -573,13 +570,7 @@ body.is-ready .hero__base { transition-delay: 1.5s; }
   .fact { border-right: 0; border-bottom: 1px solid var(--hair-white); min-height: 0; }
   .fact:last-child { border-bottom: 0; }
   .eco__stage { aspect-ratio: 1 / 1; }
-  .orbit { height: 640px; }
-  .orbit__node .txt { font-size: 10px; letter-spacing: .12em; opacity: 0; transition: opacity .4s; }
-  .orbit__node.is-active .txt { opacity: 1; }
-  .orbit__center { width: 62vw; }
-  .orbit__info h3 { font-size: 24px; }
-  .orbit__info p:last-child { font-size: 14px; }
-  .orbit__mark { width: 50px; margin-bottom: 12px; }
+  .cabinet__list { grid-template-columns: 1fr; }
   .reach__regions button { flex-direction: column; gap: 2px; }
   .insights__grid { grid-template-columns: 1fr; }
   .story:not(.story--lead) { padding-left: 0; border-left: 0; }

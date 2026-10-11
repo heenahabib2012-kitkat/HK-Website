@@ -1,5 +1,6 @@
 import { initGlobe } from './globe.js';
 import { initChess } from './chess.js';
+import { initCabinet } from './cabinet.js';
 import { REGIONS } from './world.js';
 import { clamp, damp, prefersReducedMotion } from './gl.js';
 
@@ -179,68 +180,43 @@ let ecoVisible = false;
 new IntersectionObserver(([e]) => { ecoVisible = e.isIntersecting; }, { threshold: 0.4 }).observe(ecoStage);
 if (!reduced) setInterval(() => { if (ecoVisible && !ecoTouched) setService((ecoIndex + 1) % SERVICES.length); }, 5200);
 
-/* ------------------------------------------------------------------ industries orbit */
+/* ------------------------------------------------------------------ industries cabinet */
 
-const orbit = $('[data-orbit]');
-const orbitNodesEl = $('[data-orbit-nodes]');
-const orbitSvg = $('[data-orbit-lines]');
-const orbitInfo = $('.orbit__info');
-const svgNS = 'http://www.w3.org/2000/svg';
-const ring = document.createElementNS(svgNS, 'ellipse'); ring.setAttribute('class', 'ring');
-const ring2 = document.createElementNS(svgNS, 'ellipse'); ring2.setAttribute('class', 'ring'); ring2.style.opacity = '.45';
-orbitSvg.append(ring, ring2);
-let orbitActive = -1, orbitHover = false;
-const orbitNodes = INDUSTRIES.map((ind, i) => {
+const indList = $('[data-ind-list]');
+const indDetail = $('[data-ind-detail]');
+let indIndex = -1, indTouched = false;
+const indButtons = INDUSTRIES.map((ind, i) => {
   const li = document.createElement('li');
-  li.className = 'orbit__node';
-  li.innerHTML = `<button type="button" aria-pressed="false"><span class="dot"></span><span class="txt">${ind.name}</span></button>`;
-  const btn = li.firstElementChild;
-  btn.addEventListener('pointerenter', () => { if (finePointer) setIndustry(i); orbitHover = true; });
-  btn.addEventListener('pointerleave', () => { orbitHover = false; });
-  btn.addEventListener('focus', () => setIndustry(i));
-  btn.addEventListener('click', () => setIndustry(i));
-  orbitNodesEl.appendChild(li);
-  const spoke = document.createElementNS(svgNS, 'line'); spoke.setAttribute('class', 'spoke');
-  orbitSvg.append(spoke);
-  return { li, btn, spoke, x: 0, y: 0 };
+  li.innerHTML = `<button type="button" aria-pressed="false"><span>${String(i + 1).padStart(2, '0')}</span>${ind.name}</button>`;
+  const b = li.firstElementChild;
+  b.addEventListener('click', () => { indTouched = true; setIndustry(i); });
+  b.addEventListener('pointerenter', () => { if (finePointer) { indTouched = true; setIndustry(i); } });
+  b.addEventListener('focus', () => setIndustry(i));
+  indList.appendChild(li);
+  return b;
 });
+const cabinet = initCabinet($('[data-cabinet]'), {
+  names: INDUSTRIES.map((d) => d.name),
+  onPick(i) { indTouched = true; setIndustry(i); },
+});
+if (!cabinet) $('.cabinet__stage').hidden = true;
 function setIndustry(i) {
-  if (i === orbitActive) return;
-  orbitActive = i;
-  orbitNodes.forEach((n, k) => { n.li.classList.toggle('is-active', k === i); n.btn.setAttribute('aria-pressed', String(k === i)); });
-  orbitInfo.classList.add('is-swapping');
+  if (i === indIndex) return;
+  indIndex = i;
+  indButtons.forEach((b, k) => b.setAttribute('aria-pressed', String(k === i)));
+  if (cabinet) cabinet.select(i);
+  indDetail.classList.add('is-swapping');
   setTimeout(() => {
-    $('[data-orbit-kicker]').textContent = `Industry ${String(i + 1).padStart(2, '0')} / 09`;
-    $('[data-orbit-title]').textContent = INDUSTRIES[i].name;
-    $('[data-orbit-text]').textContent = INDUSTRIES[i].text;
-    orbitInfo.classList.remove('is-swapping');
+    $('[data-ind-kicker]').textContent = `Industry ${String(i + 1).padStart(2, '0')} / 09`;
+    $('[data-ind-title]').textContent = INDUSTRIES[i].name;
+    $('[data-ind-text]').textContent = INDUSTRIES[i].text;
+    indDetail.classList.remove('is-swapping');
   }, reduced ? 0 : 200);
 }
-
-let orbitAngle = -Math.PI / 2, orbitOn = false;
-new IntersectionObserver(([e]) => { orbitOn = e.isIntersecting; }, { rootMargin: '100px' }).observe(orbit);
-function layoutOrbit(dt) {
-  const w = orbit.clientWidth, h = orbit.clientHeight, cx = w / 2, cy = h / 2;
-  const small = w < 700;
-  const rx = small ? w * 0.36 : Math.min(w * 0.33, 470), ry = small ? h * 0.4 : h * 0.38;
-  if (!orbitHover && !reduced) orbitAngle += dt * 0.035;
-  ring.setAttribute('cx', cx); ring.setAttribute('cy', cy); ring.setAttribute('rx', rx); ring.setAttribute('ry', ry);
-  ring2.setAttribute('cx', cx); ring2.setAttribute('cy', cy); ring2.setAttribute('rx', rx * 0.62); ring2.setAttribute('ry', ry * 0.62);
-  orbitNodes.forEach((n, i) => {
-    const a = orbitAngle + (i / orbitNodes.length) * Math.PI * 2;
-    const depth = (Math.sin(a) + 1) / 2; // 0 back, 1 front
-    n.x = cx + Math.cos(a) * rx; n.y = cy + Math.sin(a) * ry;
-    const s = 0.82 + depth * 0.26;
-    n.li.style.transform = `translate3d(${n.x.toFixed(1)}px, ${n.y.toFixed(1)}px, 0) scale(${s.toFixed(3)})`;
-    n.li.style.opacity = (0.55 + depth * 0.45).toFixed(2);
-    n.li.style.zIndex = String(Math.round(depth * 10));
-    n.li.classList.toggle('is-left', n.x < cx);
-    const k = 0.42;
-    n.spoke.setAttribute('x1', cx + (n.x - cx) * k); n.spoke.setAttribute('y1', cy + (n.y - cy) * k);
-    n.spoke.setAttribute('x2', n.x); n.spoke.setAttribute('y2', n.y);
-    n.spoke.style.opacity = i === orbitActive ? '0.95' : (0.12 + depth * 0.25).toFixed(2);
-  });
-}
+setIndustry(0);
+let indVisible = false;
+new IntersectionObserver(([e]) => { indVisible = e.isIntersecting; }, { threshold: 0.4 }).observe($('.cabinet'));
+if (!reduced) setInterval(() => { if (indVisible && !indTouched) setIndustry((indIndex + 1) % INDUSTRIES.length); }, 4200);
 
 /* ------------------------------------------------------------------ global reach */
 
@@ -348,7 +324,6 @@ let prev = performance.now();
 function frame(now) {
   const dt = Math.min(0.05, (now - prev) / 1000);
   prev = now;
-  if (orbitOn) layoutOrbit(dt);
   if (!reduced && window.scrollY < window.innerHeight * 1.2) {
     heroCam.x = damp(heroCam.x, heroCam.tx, 2.5, dt);
     heroCam.y = damp(heroCam.y, heroCam.ty, 2.5, dt);
@@ -357,7 +332,6 @@ function frame(now) {
   }
   requestAnimationFrame(frame);
 }
-layoutOrbit(0);
 requestAnimationFrame(frame);
 
 /* ------------------------------------------------------------------ gold light trail */
