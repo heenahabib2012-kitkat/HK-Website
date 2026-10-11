@@ -1,6 +1,6 @@
 import { initGlobe } from './globe.js';
 import { initChess } from './chess.js';
-import { initCabinet } from './cabinet.js';
+import { initWheel } from './wheel.js';
 import { REGIONS } from './world.js';
 import { clamp, damp, prefersReducedMotion } from './gl.js';
 
@@ -180,7 +180,7 @@ let ecoVisible = false;
 new IntersectionObserver(([e]) => { ecoVisible = e.isIntersecting; }, { threshold: 0.4 }).observe(ecoStage);
 if (!reduced) setInterval(() => { if (ecoVisible && !ecoTouched) setService((ecoIndex + 1) % SERVICES.length); }, 5200);
 
-/* ------------------------------------------------------------------ industries cabinet */
+/* ------------------------------------------------------------------ industries dial-wheel */
 
 const indList = $('[data-ind-list]');
 const indDetail = $('[data-ind-detail]');
@@ -195,16 +195,16 @@ const indButtons = INDUSTRIES.map((ind, i) => {
   indList.appendChild(li);
   return b;
 });
-const cabinet = initCabinet($('[data-cabinet]'), {
+const wheel = initWheel($('[data-wheel]'), {
   names: INDUSTRIES.map((d) => d.name),
   onPick(i) { indTouched = true; setIndustry(i); },
 });
-if (!cabinet) $('.cabinet__stage').hidden = true;
+if (!wheel) $('.wheel__stage').hidden = true;
 function setIndustry(i) {
   if (i === indIndex) return;
   indIndex = i;
   indButtons.forEach((b, k) => b.setAttribute('aria-pressed', String(k === i)));
-  if (cabinet) cabinet.select(i);
+  if (wheel) wheel.select(i);
   indDetail.classList.add('is-swapping');
   setTimeout(() => {
     $('[data-ind-kicker]').textContent = `Industry ${String(i + 1).padStart(2, '0')} / 09`;
@@ -215,7 +215,7 @@ function setIndustry(i) {
 }
 setIndustry(0);
 let indVisible = false;
-new IntersectionObserver(([e]) => { indVisible = e.isIntersecting; }, { threshold: 0.4 }).observe($('.cabinet'));
+new IntersectionObserver(([e]) => { indVisible = e.isIntersecting; }, { threshold: 0.4 }).observe($('.wheel'));
 if (!reduced) setInterval(() => { if (indVisible && !indTouched) setIndustry((indIndex + 1) % INDUSTRIES.length); }, 4200);
 
 /* ------------------------------------------------------------------ global reach */
