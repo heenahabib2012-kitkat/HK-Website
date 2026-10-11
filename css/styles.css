@@ -526,6 +526,12 @@ body.is-ready .hero__base { transition-delay: 1.5s; }
 /* ==========================================================================
    Responsive
    ========================================================================== */
+/* homepage teaser for the associates page */
+.assoc-teaser { background: var(--page-navy) var(--page-bg); border-top: 1px solid rgba(201, 164, 92, .14); padding: clamp(90px, 11vw, 150px) 0; }
+.assoc-teaser__inner { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(30px, 6vw, 100px); align-items: end; }
+.assoc-teaser .lead { margin-bottom: 34px; max-width: 480px; }
+@media (max-width: 1000px) { .assoc-teaser__inner { grid-template-columns: 1fr; } }
+
 /* ==========================================================================
    Associate companies page
    ========================================================================== */
