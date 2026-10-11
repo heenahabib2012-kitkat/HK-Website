@@ -1,4 +1,5 @@
 import { initGlobe } from './globe.js';
+import { initChess } from './chess.js';
 import { REGIONS } from './world.js';
 import { clamp, damp, prefersReducedMotion } from './gl.js';
 
@@ -24,23 +25,14 @@ const SERVICES = [
     points: ['Opportunity identification and assessment', 'Partnerships and introductions', 'Commercial development'] },
 ];
 
-// Each discipline is a chess piece on the board: [file, rank-row from the top], height in px.
-const BASE = 'M9 97h42v-5c0-3-2-5-5-6H14c-3 1-5 3-5 6z M15 86h30l-3-7H18z';
-const PIECE_PATHS = {
-  king: 'M27.5 1h5v5h5v5h-5v6h-5v-6h-5V6h5z M17 19c0-1.5 1.5-2.5 3-2.5h20c1.5 0 3 1 3 2.5l-3 14H20z M18 33h24l-2 6H20z M23 39c0 16-4 29-8 40h30c-4-11-8-24-8-40z',
-  queen: 'M10.4 15a2.6 2.6 0 1 0 5.2 0a2.6 2.6 0 1 0-5.2 0z M19.4 13a2.6 2.6 0 1 0 5.2 0a2.6 2.6 0 1 0-5.2 0z M27.4 10a2.6 2.6 0 1 0 5.2 0a2.6 2.6 0 1 0-5.2 0z M35.4 13a2.6 2.6 0 1 0 5.2 0a2.6 2.6 0 1 0-5.2 0z M44.4 15a2.6 2.6 0 1 0 5.2 0a2.6 2.6 0 1 0-5.2 0z M13 16l6 14 3-15 5 14 3-16 3 16 5-14 3 15 6-14-3 18H16z M18 34h24l-2 6H20z M23 40c0 16-4 28-8 39h30c-4-11-8-23-8-39z',
-  rook: 'M15 12h7v6h4v-6h8v6h4v-6h7v15H15z M18 27h24l-2 6H20z M21 33h18l2 46H19z',
-  bishop: 'M30 3a3.5 3.5 0 1 1 0 7a3.5 3.5 0 1 1 0-7z M30 11c-8 7-11 14-10 21h20c1-7-2-14-10-21z M33.5 15.5l-6 8 1.6 1.2 6-8z M20 32h20l-2 5H22z M24 37c0 17-4 31-8 42h28c-4-11-8-25-8-42z',
-  knight: 'M17 79c1-11 6-19 11-27-5 3-10 4-14 2-3-2-3-5-1-8l11-14c1-6 5-11 11-14l1-6 4 6c7 4 12 12 12 26 0 13-3 25-5 35z M33 21.5a2 2 0 1 0 4 0a2 2 0 1 0-4 0z',
-  pawn: 'M30 10a11 11 0 1 1 0 22a11 11 0 1 1 0-22z M21 33h18l-2 5H23z M24 38c0 17-4 30-7 41h26c-3-11-7-24-7-41z',
-};
+// Each discipline is a chess piece: file c (a–h → 0–7), row r from the far side, height in world units.
 const PIECES = [
-  { type: 'king', c: 3, r: 4, h: 150 },   // Business Strategy — the piece everything protects
-  { type: 'knight', c: 5, r: 2, h: 118 }, // Market Entry — reaches places others cannot
-  { type: 'rook', c: 1, r: 2, h: 106 },   // Corporate & Commercial Advisory — structure
-  { type: 'pawn', c: 2, r: 6, h: 94 },    // Franchising — small steps that multiply
-  { type: 'bishop', c: 6, r: 5, h: 126 }, // F&B & Hospitality
-  { type: 'queen', c: 5, r: 6, h: 140 },  // Trading & Investment — the widest reach
+  { type: 'king', c: 3, r: 4, h: 1.56 },   // Business Strategy — the piece everything protects
+  { type: 'knight', c: 5, r: 2, h: 1.1 }, // Market Entry — reaches places others cannot
+  { type: 'rook', c: 1, r: 2, h: 1.02 },   // Corporate & Commercial Advisory — structure
+  { type: 'pawn', c: 2, r: 6, h: 0.87 },    // Franchising — small steps that multiply
+  { type: 'bishop', c: 6, r: 5, h: 1.2 }, // F&B & Hospitality
+  { type: 'queen', c: 5, r: 6, h: 1.38 },  // Trading & Investment — the widest reach
 ];
 
 const INDUSTRIES = [
@@ -126,21 +118,10 @@ new IntersectionObserver(([e]) => { if (e.isIntersecting) chapters.style.setProp
 /* ------------------------------------------------------------------ expertise ecosystem */
 
 const ecoStage = $('[data-eco-stage]');
-const ecoPlane = $('[data-eco-plane]');
 const ecoTabs = $$('[data-service]');
 const ecoDetail = $('[data-eco-detail]');
 let ecoIndex = 0, ecoTouched = false;
 
-// board squares
-const board = $('[data-board]');
-const squares = [];
-for (let r = 0; r < 8; r++) for (let c = 0; c < 8; c++) {
-  const sq = document.createElement('i');
-  sq.className = 'sq ' + ((r + c) % 2 ? 'sq--dark' : 'sq--light');
-  board.appendChild(sq);
-  squares.push(sq);
-}
-const SQ = 71, EDGE = 26; // square size and frame inset, in board pixels
 const occupied = new Set(PIECES.map((p) => p.c + ',' + p.r));
 function legalMoves({ type, c, r }) {
   const out = [], on = (x, y) => x >= 0 && x < 8 && y >= 0 && y < 8;
@@ -158,30 +139,20 @@ function legalMoves({ type, c, r }) {
   return out;
 }
 
-const pieceEls = PIECES.map((p, i) => {
-  const el = document.createElement('div');
-  el.className = 'piece';
-  el.style.cssText = `left:${EDGE + (p.c + 0.5) * SQ}px;top:${EDGE + (p.r + 0.5) * SQ}px;--ph:${p.h}px`;
-  el.innerHTML = `<div class="piece__shadow"></div><div class="piece__fig">
-    <span class="piece__label">${SERVICES[i].short || SERVICES[i].title}</span>
-    <svg viewBox="0 0 60 100"><path fill-rule="evenodd" d="${PIECE_PATHS[p.type]} ${BASE}"/></svg></div>`;
-  const fig = el.querySelector('.piece__fig');
-  fig.addEventListener('pointerenter', () => { ecoTouched = true; setService(i); });
-  fig.addEventListener('click', () => { ecoTouched = true; setService(i); });
-  ecoPlane.appendChild(el);
-  return el;
+const chess = initChess($('[data-chess]'), {
+  pieces: PIECES,
+  labels: SERVICES.map((s) => s.short || s.title),
+  labelEl: $('[data-chess-label]'),
+  onPick(i) { ecoTouched = true; setService(i); },
 });
+if (!chess) ecoStage.hidden = true;
 
 function setService(i) {
   if (i === ecoIndex && ecoDetail.dataset.init) return;
   ecoDetail.dataset.init = '1';
   ecoIndex = i;
   ecoTabs.forEach((t, k) => t.setAttribute('aria-selected', String(k === i)));
-  pieceEls.forEach((el, k) => el.classList.toggle('is-active', k === i));
-  squares.forEach((sq) => sq.classList.remove('is-from', 'is-move'));
-  const p = PIECES[i];
-  squares[p.r * 8 + p.c].classList.add('is-from');
-  legalMoves(p).forEach(([x, y], k) => { const sq = squares[y * 8 + x]; sq.style.setProperty('--d', `${k * 30}ms`); sq.classList.add('is-move'); });
+  if (chess) chess.select(i, legalMoves(PIECES[i]));
   const s = SERVICES[i];
   ecoDetail.classList.add('is-swapping');
   setTimeout(() => {
@@ -207,22 +178,6 @@ setService(0);
 let ecoVisible = false;
 new IntersectionObserver(([e]) => { ecoVisible = e.isIntersecting; }, { threshold: 0.4 }).observe(ecoStage);
 if (!reduced) setInterval(() => { if (ecoVisible && !ecoTouched) setService((ecoIndex + 1) % SERVICES.length); }, 5200);
-
-// tilt with the cursor
-const eco = { rx: 56, rz: -22, trx: 56, trz: -22 };
-$('.expertise').addEventListener('pointermove', (e) => {
-  if (!finePointer || reduced) return;
-  const r = ecoStage.getBoundingClientRect();
-  const nx = clamp((e.clientX - r.left) / r.width * 2 - 1, -1.5, 1.5);
-  const ny = clamp((e.clientY - r.top) / r.height * 2 - 1, -1.5, 1.5);
-  eco.trz = -22 + nx * 10; eco.trx = 56 - ny * 6;
-});
-function fitEco() {
-  const s = Math.min(1, ecoStage.clientWidth / (ecoStage.clientWidth < 600 ? 860 : 700));
-  ecoPlane.style.setProperty('--eco-scale', s.toFixed(3));
-}
-fitEco();
-window.addEventListener('resize', fitEco);
 
 /* ------------------------------------------------------------------ industries orbit */
 
@@ -400,10 +355,6 @@ function frame(now) {
     const s = window.scrollY / window.innerHeight;
     heroMedia.style.transform = `translate3d(${heroCam.x.toFixed(2)}px, ${(heroCam.y + s * 120).toFixed(2)}px, 0) scale(${(1.08 + s * 0.06).toFixed(4)})`;
   }
-  eco.rx = damp(eco.rx, eco.trx, 3, dt);
-  eco.rz = damp(eco.rz, eco.trz, 3, dt);
-  ecoStage.style.setProperty('--rx', `${eco.rx.toFixed(2)}deg`);
-  ecoStage.style.setProperty('--rz', `${eco.rz.toFixed(2)}deg`);
   requestAnimationFrame(frame);
 }
 layoutOrbit(0);
