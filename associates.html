@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Associate Companies — HK Business Consultancy</title>
+  <meta name="description" content="The associate companies of HK Business Consultancy, working together across the UAE and international markets.">
+  <meta name="theme-color" content="#071232">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500&display=swap">
+  <link rel="stylesheet" href="css/styles.css">
+  <script type="module" src="js/associates.js"></script>
+</head>
+<body class="page-sub">
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="hk-mark" viewBox="0 0 120 100">
+      <path d="M8 6h15.5v88H8zM54 6h15.5v88H54z" fill="currentColor"/>
+      <path d="M23.5 45.5H54v9H23.5z" fill="var(--mark-accent, #c9a45c)"/>
+      <path d="M69.5 46 101 6h17L69.5 67.6z" fill="currentColor"/>
+      <path d="M77.3 57.7 87.7 44.5 116 94H98z" fill="currentColor" opacity=".82"/>
+    </symbol>
+    <symbol id="hk-mark-lines" viewBox="0 0 120 100">
+      <g fill="none" stroke="currentColor" stroke-width="1.1">
+        <path d="M8 6h15.5v88H8z M54 6h15.5v88H54z M23.5 45.5H54v9H23.5z M69.5 46 101 6h17L69.5 67.6z M77.3 57.7 87.7 44.5 116 94H98z" pathLength="1"/>
+      </g>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ============ NAVIGATION ============ -->
+<header class="nav" data-nav>
+  <div class="nav__inner">
+    <a class="brand" href="index.html" aria-label="HK Business Consultancy — home">
+      <svg class="brand__mark" viewBox="0 0 120 100" aria-hidden="true"><use href="#hk-mark"/></svg>
+      <span class="brand__text"><span>HK</span><small>Business Consultancy</small></span>
+    </a>
+    <nav class="nav__links" aria-label="Primary">
+      <a href="index.html#about">About</a>
+      <a href="index.html#expertise">Expertise</a>
+      <a href="index.html#industries">Industries</a>
+      <a href="index.html#reach">Global Reach</a>
+      <a href="index.html#insights">Insights</a>
+      <a href="associates.html" class="is-active" aria-current="page">Associates</a>
+      <a href="index.html#contact" class="nav__cta">Contact</a>
+    </nav>
+    <button class="nav__toggle" aria-expanded="false" aria-controls="mobile-menu" data-menu-toggle>
+      <span class="sr-only">Menu</span><i></i><i></i>
+    </button>
+  </div>
+  <div class="nav__mobile" id="mobile-menu" hidden>
+    <a href="index.html#about">About</a>
+    <a href="index.html#expertise">Expertise</a>
+    <a href="index.html#industries">Industries</a>
+    <a href="index.html#reach">Global Reach</a>
+    <a href="index.html#insights">Insights</a>
+    <a href="associates.html" aria-current="page">Associates</a>
+    <a href="index.html#contact">Contact</a>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ============ PAGE HEADER ============ -->
+<section class="assoc-hero">
+  <div class="assoc-hero__mark" aria-hidden="true">
+    <svg viewBox="0 0 120 100"><use href="#hk-mark-lines"/></svg>
+  </div>
+  <div class="wrap">
+    <p class="eyebrow" data-reveal><span class="rule"></span>Associate Companies</p>
+    <h1 class="assoc-hero__title" data-reveal>The HK <em>Network.</em></h1>
+    <p class="lead assoc-hero__lede" data-reveal>A group of companies that share our standards and our ambitions — together extending what we can offer the businesses we work with.</p>
+    <p class="assoc-hero__count" data-reveal><span data-assoc-count>04</span> associate companies</p>
+  </div>
+</section>
+
+<!-- ============ DIRECTORY ============ -->
+<!--
+  HOW TO ADD A COMPANY
+  Copy one <article class="assoc"> … </article> block and edit:
+    · .assoc__logo  — replace the initials with <img src="assets/logos/name.svg" alt="Company name">
+    · h2            — company name
+    · .assoc__meta  — sector · location (· established, if you like)
+    · .assoc__desc  — one or two sentences about the company
+    · .assoc__link  — the company's website (remove the link if there isn't one)
+  Numbering updates automatically.
+-->
+<section class="assoc-list">
+  <div class="wrap">
+
+    <article class="assoc" data-reveal>
+      <span class="assoc__num"></span>
+      <div class="assoc__logo" aria-hidden="true"><span>AC</span></div>
+      <div class="assoc__body">
+        <h2>Associate Company Name</h2>
+        <p class="assoc__meta">Sector <i>·</i> Location</p>
+      </div>
+      <p class="assoc__desc">A short description of the company — what it does, who it serves and how it works alongside HK Business Consultancy.</p>
+      <a class="assoc__link" href="#" target="_blank" rel="noopener">Visit website<span aria-hidden="true">→</span></a>
+    </article>
+
+    <article class="assoc" data-reveal>
+      <span class="assoc__num"></span>
+      <div class="assoc__logo" aria-hidden="true"><span>AC</span></div>
+      <div class="assoc__body">
+        <h2>Associate Company Name</h2>
+        <p class="assoc__meta">Sector <i>·</i> Location</p>
+      </div>
+      <p class="assoc__desc">A short description of the company — what it does, who it serves and how it works alongside HK Business Consultancy.</p>
+      <a class="assoc__link" href="#" target="_blank" rel="noopener">Visit website<span aria-hidden="true">→</span></a>
+    </article>
+
+    <article class="assoc" data-reveal>
+      <span class="assoc__num"></span>
+      <div class="assoc__logo" aria-hidden="true"><span>AC</span></div>
+      <div class="assoc__body">
+        <h2>Associate Company Name</h2>
+        <p class="assoc__meta">Sector <i>·</i> Location</p>
+      </div>
+      <p class="assoc__desc">A short description of the company — what it does, who it serves and how it works alongside HK Business Consultancy.</p>
+      <a class="assoc__link" href="#" target="_blank" rel="noopener">Visit website<span aria-hidden="true">→</span></a>
+    </article>
+
+    <article class="assoc" data-reveal>
+      <span class="assoc__num"></span>
+      <div class="assoc__logo" aria-hidden="true"><span>AC</span></div>
+      <div class="assoc__body">
+        <h2>Associate Company Name</h2>
+        <p class="assoc__meta">Sector <i>·</i> Location</p>
+      </div>
+      <p class="assoc__desc">A short description of the company — what it does, who it serves and how it works alongside HK Business Consultancy.</p>
+      <a class="assoc__link" href="#" target="_blank" rel="noopener">Visit website<span aria-hidden="true">→</span></a>
+    </article>
+
+  </div>
+</section>
+
+<!-- ============ CLOSING ============ -->
+<section class="assoc-cta">
+  <div class="wrap assoc-cta__inner">
+    <div>
+      <p class="eyebrow" data-reveal><span class="rule"></span>Work with the network</p>
+      <h2 class="display" data-reveal>One conversation, <em>many capabilities.</em></h2>
+    </div>
+    <div data-reveal>
+      <p class="lead">Speak with HK Business Consultancy and we will bring in the right expertise from across our associate companies.</p>
+      <a class="btn btn--gold" href="index.html#contact"><span>Start a Conversation</span></a>
+    </div>
+  </div>
+
+  <footer class="footer wrap">
+    <a class="brand brand--footer" href="index.html" aria-label="HK Business Consultancy — home">
+      <svg class="brand__mark" viewBox="0 0 120 100" aria-hidden="true"><use href="#hk-mark"/></svg>
+      <span class="brand__text"><span>HK</span><small>Business Consultancy</small></span>
+    </a>
+    <p class="footer__tag">Building Businesses. Creating Possibilities.</p>
+    <nav class="footer__nav" aria-label="Footer">
+      <a href="index.html#about">About</a><a href="index.html#expertise">Expertise</a><a href="index.html#industries">Industries</a><a href="index.html#reach">Global Reach</a><a href="index.html#insights">Insights</a><a href="associates.html">Associates</a>
+    </nav>
+    <p class="footer__legal">© <span data-year>2026</span> HK Business Consultancy. United Arab Emirates.</p>
+  </footer>
+</section>
+
+</main>
+</body>
+</html>
