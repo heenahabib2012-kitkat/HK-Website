@@ -24,14 +24,23 @@ const SERVICES = [
     points: ['Opportunity identification and assessment', 'Partnerships and introductions', 'Commercial development'] },
 ];
 
-// Pillar placement on the plan (x, y in px from centre), footprint and height — deliberately unequal.
-const PILLARS = [
-  { x: -6, y: -228, w: 70, h: 150 },
-  { x: 205, y: -110, w: 58, h: 108 },
-  { x: 215, y: 120, w: 66, h: 128 },
-  { x: 10, y: 236, w: 54, h: 84 },
-  { x: -205, y: 125, w: 62, h: 116 },
-  { x: -222, y: -112, w: 56, h: 96 },
+// Each discipline is a chess piece on the board: [file, rank-row from the top], height in px.
+const BASE = 'M9 97h42v-5c0-3-2-5-5-6H14c-3 1-5 3-5 6z M15 86h30l-3-7H18z';
+const PIECE_PATHS = {
+  king: 'M27.5 1h5v5h5v5h-5v6h-5v-6h-5V6h5z M17 19c0-1.5 1.5-2.5 3-2.5h20c1.5 0 3 1 3 2.5l-3 14H20z M18 33h24l-2 6H20z M23 39c0 16-4 29-8 40h30c-4-11-8-24-8-40z',
+  queen: 'M10.4 15a2.6 2.6 0 1 0 5.2 0a2.6 2.6 0 1 0-5.2 0z M19.4 13a2.6 2.6 0 1 0 5.2 0a2.6 2.6 0 1 0-5.2 0z M27.4 10a2.6 2.6 0 1 0 5.2 0a2.6 2.6 0 1 0-5.2 0z M35.4 13a2.6 2.6 0 1 0 5.2 0a2.6 2.6 0 1 0-5.2 0z M44.4 15a2.6 2.6 0 1 0 5.2 0a2.6 2.6 0 1 0-5.2 0z M13 16l6 14 3-15 5 14 3-16 3 16 5-14 3 15 6-14-3 18H16z M18 34h24l-2 6H20z M23 40c0 16-4 28-8 39h30c-4-11-8-23-8-39z',
+  rook: 'M15 12h7v6h4v-6h8v6h4v-6h7v15H15z M18 27h24l-2 6H20z M21 33h18l2 46H19z',
+  bishop: 'M30 3a3.5 3.5 0 1 1 0 7a3.5 3.5 0 1 1 0-7z M30 11c-8 7-11 14-10 21h20c1-7-2-14-10-21z M33.5 15.5l-6 8 1.6 1.2 6-8z M20 32h20l-2 5H22z M24 37c0 17-4 31-8 42h28c-4-11-8-25-8-42z',
+  knight: 'M17 79c1-11 6-19 11-27-5 3-10 4-14 2-3-2-3-5-1-8l11-14c1-6 5-11 11-14l1-6 4 6c7 4 12 12 12 26 0 13-3 25-5 35z M33 21.5a2 2 0 1 0 4 0a2 2 0 1 0-4 0z',
+  pawn: 'M30 10a11 11 0 1 1 0 22a11 11 0 1 1 0-22z M21 33h18l-2 5H23z M24 38c0 17-4 30-7 41h26c-3-11-7-24-7-41z',
+};
+const PIECES = [
+  { type: 'king', c: 3, r: 4, h: 150 },   // Business Strategy — the piece everything protects
+  { type: 'knight', c: 5, r: 2, h: 118 }, // Market Entry — reaches places others cannot
+  { type: 'rook', c: 1, r: 2, h: 106 },   // Corporate & Commercial Advisory — structure
+  { type: 'pawn', c: 2, r: 6, h: 94 },    // Franchising — small steps that multiply
+  { type: 'bishop', c: 6, r: 5, h: 126 }, // F&B & Hospitality
+  { type: 'queen', c: 5, r: 6, h: 140 },  // Trading & Investment — the widest reach
 ];
 
 const INDUSTRIES = [
@@ -118,35 +127,49 @@ new IntersectionObserver(([e]) => { if (e.isIntersecting) chapters.style.setProp
 
 const ecoStage = $('[data-eco-stage]');
 const ecoPlane = $('[data-eco-plane]');
-const ecoLinks = $('[data-eco-links]');
 const ecoTabs = $$('[data-service]');
 const ecoDetail = $('[data-eco-detail]');
 let ecoIndex = 0, ecoTouched = false;
 
-const pillarEls = PILLARS.map((p, i) => {
+// board squares
+const board = $('[data-board]');
+const squares = [];
+for (let r = 0; r < 8; r++) for (let c = 0; c < 8; c++) {
+  const sq = document.createElement('i');
+  sq.className = 'sq ' + ((r + c) % 2 ? 'sq--dark' : 'sq--light');
+  board.appendChild(sq);
+  squares.push(sq);
+}
+const SQ = 71, EDGE = 26; // square size and frame inset, in board pixels
+const occupied = new Set(PIECES.map((p) => p.c + ',' + p.r));
+function legalMoves({ type, c, r }) {
+  const out = [], on = (x, y) => x >= 0 && x < 8 && y >= 0 && y < 8;
+  const ray = (dx, dy, max = 8) => {
+    for (let k = 1, x = c + dx, y = r + dy; k <= max && on(x, y) && !occupied.has(x + ',' + y); k++, x += dx, y += dy) out.push([x, y]);
+  };
+  const orth = [[1, 0], [-1, 0], [0, 1], [0, -1]], diag = [[1, 1], [1, -1], [-1, 1], [-1, -1]];
+  if (type === 'rook') orth.forEach(([x, y]) => ray(x, y));
+  if (type === 'bishop') diag.forEach(([x, y]) => ray(x, y));
+  if (type === 'queen') [...orth, ...diag].forEach(([x, y]) => ray(x, y));
+  if (type === 'king') [...orth, ...diag].forEach(([x, y]) => ray(x, y, 1));
+  if (type === 'pawn') ray(0, -1, 2);
+  if (type === 'knight') [[1, 2], [2, 1], [-1, 2], [-2, 1], [1, -2], [2, -1], [-1, -2], [-2, -1]]
+    .forEach(([x, y]) => { if (on(c + x, r + y) && !occupied.has(c + x + ',' + (r + y))) out.push([c + x, r + y]); });
+  return out;
+}
+
+const pieceEls = PIECES.map((p, i) => {
   const el = document.createElement('div');
-  el.className = 'pillar';
-  el.style.cssText = `left:${310 + p.x}px;top:${310 + p.y}px;--w:${p.w}px;--h:${p.h}px`;
-  el.innerHTML = `<div class="pillar__shadow"></div><div class="pillar__body">
-    <div class="pillar__face f-n"></div><div class="pillar__face f-w"></div><div class="pillar__face f-e"></div><div class="pillar__face f-s"></div>
-    <div class="pillar__top"></div></div><div class="pillar__label"><span>${SERVICES[i].short || SERVICES[i].title}</span></div>`;
-  el.addEventListener('pointerenter', () => { ecoTouched = true; setService(i); });
-  el.addEventListener('click', () => { ecoTouched = true; setService(i); });
+  el.className = 'piece';
+  el.style.cssText = `left:${EDGE + (p.c + 0.5) * SQ}px;top:${EDGE + (p.r + 0.5) * SQ}px;--ph:${p.h}px`;
+  el.innerHTML = `<div class="piece__shadow"></div><div class="piece__fig">
+    <span class="piece__label">${SERVICES[i].short || SERVICES[i].title}</span>
+    <svg viewBox="0 0 60 100"><path fill-rule="evenodd" d="${PIECE_PATHS[p.type]} ${BASE}"/></svg></div>`;
+  const fig = el.querySelector('.piece__fig');
+  fig.addEventListener('pointerenter', () => { ecoTouched = true; setService(i); });
+  fig.addEventListener('click', () => { ecoTouched = true; setService(i); });
   ecoPlane.appendChild(el);
-  const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-  line.setAttribute('x1', 0); line.setAttribute('y1', 0);
-  line.setAttribute('x2', p.x * 500 / 310); line.setAttribute('y2', p.y * 500 / 310);
-  ecoLinks.appendChild(line);
-  return { el, line };
-});
-// outer ring of faint connections between neighbouring disciplines
-PILLARS.forEach((p, i) => {
-  const q = PILLARS[(i + 1) % PILLARS.length];
-  const l = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-  l.setAttribute('x1', p.x * 500 / 310); l.setAttribute('y1', p.y * 500 / 310);
-  l.setAttribute('x2', q.x * 500 / 310); l.setAttribute('y2', q.y * 500 / 310);
-  l.style.opacity = '.14';
-  ecoLinks.appendChild(l);
+  return el;
 });
 
 function setService(i) {
@@ -154,7 +177,11 @@ function setService(i) {
   ecoDetail.dataset.init = '1';
   ecoIndex = i;
   ecoTabs.forEach((t, k) => t.setAttribute('aria-selected', String(k === i)));
-  pillarEls.forEach((p, k) => { p.el.classList.toggle('is-active', k === i); p.line.classList.toggle('is-active', k === i); });
+  pieceEls.forEach((el, k) => el.classList.toggle('is-active', k === i));
+  squares.forEach((sq) => sq.classList.remove('is-from', 'is-move'));
+  const p = PIECES[i];
+  squares[p.r * 8 + p.c].classList.add('is-from');
+  legalMoves(p).forEach(([x, y], k) => { const sq = squares[y * 8 + x]; sq.style.setProperty('--d', `${k * 30}ms`); sq.classList.add('is-move'); });
   const s = SERVICES[i];
   ecoDetail.classList.add('is-swapping');
   setTimeout(() => {
@@ -182,16 +209,16 @@ new IntersectionObserver(([e]) => { ecoVisible = e.isIntersecting; }, { threshol
 if (!reduced) setInterval(() => { if (ecoVisible && !ecoTouched) setService((ecoIndex + 1) % SERVICES.length); }, 5200);
 
 // tilt with the cursor
-const eco = { rx: 58, rz: -28, trx: 58, trz: -28 };
+const eco = { rx: 56, rz: -22, trx: 56, trz: -22 };
 $('.expertise').addEventListener('pointermove', (e) => {
   if (!finePointer || reduced) return;
   const r = ecoStage.getBoundingClientRect();
   const nx = clamp((e.clientX - r.left) / r.width * 2 - 1, -1.5, 1.5);
   const ny = clamp((e.clientY - r.top) / r.height * 2 - 1, -1.5, 1.5);
-  eco.trz = -28 + nx * 10; eco.trx = 58 - ny * 6;
+  eco.trz = -22 + nx * 10; eco.trx = 56 - ny * 6;
 });
 function fitEco() {
-  const s = Math.min(1, ecoStage.clientWidth / 700);
+  const s = Math.min(1, ecoStage.clientWidth / (ecoStage.clientWidth < 600 ? 860 : 700));
   ecoPlane.style.setProperty('--eco-scale', s.toFixed(3));
 }
 fitEco();

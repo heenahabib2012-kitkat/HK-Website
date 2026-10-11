@@ -37,6 +37,12 @@
       <path d="M69.5 46 101 6h17L69.5 67.6z" fill="currentColor"/>
       <path d="M77.3 57.7 87.7 44.5 116 94H98z" fill="currentColor" opacity=".82"/>
     </symbol>
+    <linearGradient id="pc-ivory" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#c7cee3"/><stop offset=".45" stop-color="#ffffff"/><stop offset="1" stop-color="#9aa6c8"/>
+    </linearGradient>
+    <linearGradient id="pc-gold" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#9a7734"/><stop offset=".45" stop-color="#f4e2b2"/><stop offset=".7" stop-color="#c9a45c"/><stop offset="1" stop-color="#7d5f27"/>
+    </linearGradient>
     <symbol id="hk-mark-lines" viewBox="0 0 120 100">
       <g fill="none" stroke="currentColor" stroke-width="1.1">
         <path d="M8 6h15.5v88H8z M54 6h15.5v88H54z M23.5 45.5H54v9H23.5z M69.5 46 101 6h17L69.5 67.6z M77.3 57.7 87.7 44.5 116 94H98z" pathLength="1"/>
@@ -192,17 +198,21 @@
   <div class="wrap">
     <div class="section-head">
       <p class="eyebrow" data-reveal><span class="rule"></span>Expertise</p>
-      <h2 class="display" data-reveal>An ecosystem of <em>capabilities,</em> working as one.</h2>
-      <p class="section-head__note" data-reveal>Each discipline stands on its own. Together they form a single, connected view of your business. Select a discipline to explore it.</p>
+      <h2 class="display" data-reveal>Every move, made with <em>strategy.</em></h2>
+      <p class="section-head__note" data-reveal>Like pieces on a board, each discipline has its own role — together they form one strategy for your business. Select a piece to explore it.</p>
     </div>
   </div>
 
   <div class="wrap eco">
     <div class="eco__stage" data-eco-stage aria-hidden="true">
       <div class="eco__plane" data-eco-plane>
-        <div class="eco__rings"><i></i><i></i><i></i></div>
-        <svg class="eco__links" viewBox="-500 -500 1000 1000" data-eco-links></svg>
-        <div class="eco__core"><svg viewBox="0 0 120 100"><use href="#hk-mark"/></svg></div>
+        <div class="board-edge board-edge--s"></div><div class="board-edge board-edge--n"></div>
+        <div class="board-edge board-edge--e"></div><div class="board-edge board-edge--w"></div>
+        <div class="board-frame">
+          <div class="board" data-board></div>
+          <div class="board-files"><span>a</span><span>b</span><span>c</span><span>d</span><span>e</span><span>f</span><span>g</span><span>h</span></div>
+          <div class="board-ranks"><span>8</span><span>7</span><span>6</span><span>5</span><span>4</span><span>3</span><span>2</span><span>1</span></div>
+        </div>
       </div>
     </div>
 
