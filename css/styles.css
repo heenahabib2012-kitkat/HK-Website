@@ -306,10 +306,10 @@ body.is-ready .hero__base { transition-delay: 1.5s; }
 .expertise { background: linear-gradient(180deg, var(--royal-deep) 0%, var(--navy) 100%); padding: clamp(110px, 14vw, 180px) 0 clamp(100px, 12vw, 160px); overflow: hidden; }
 .eco { display: grid; grid-template-columns: 1.25fr 1fr; gap: clamp(30px, 5vw, 80px); align-items: center; margin-top: clamp(40px, 6vw, 80px); }
 .eco__stage { position: relative; aspect-ratio: 1 / 0.86; }
-.chess { position: absolute; inset: 0; width: 100%; height: 100%; touch-action: pan-y; }
-.chess-label { position: absolute; left: 0; top: 0; pointer-events: none; white-space: nowrap; font-size: 11.5px; letter-spacing: .24em; text-transform: uppercase; color: var(--gold-light); text-shadow: 0 2px 12px rgba(0,5,25,.95); opacity: 0; transition: opacity .5s; }
-.chess-label.is-visible { opacity: 1; }
-.chess-label::after { content: ''; position: absolute; left: 50%; top: calc(100% + 4px); width: 1px; height: 10px; background: var(--gold); opacity: .7; }
+.model { position: absolute; inset: 0; width: 100%; height: 100%; touch-action: pan-y; }
+.model-label { position: absolute; left: 0; top: 0; pointer-events: none; white-space: nowrap; font-size: 11.5px; letter-spacing: .24em; text-transform: uppercase; color: var(--gold-light); text-shadow: 0 2px 12px rgba(0,5,25,.95); opacity: 0; transition: opacity .5s; }
+.model-label.is-visible { opacity: 1; }
+.model-label::after { content: ''; position: absolute; left: 50%; top: calc(100% + 4px); width: 1px; height: 10px; background: var(--gold); opacity: .7; }
 
 .eco__panel { position: relative; }
 .eco__list { border-top: 1px solid var(--hair-white); }

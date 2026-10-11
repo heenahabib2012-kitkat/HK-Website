@@ -1,5 +1,5 @@
 import { initGlobe } from './globe.js';
-import { initChess } from './chess.js';
+import { initModel } from './model.js';
 import { REGIONS } from './world.js';
 import { clamp, damp, prefersReducedMotion } from './gl.js';
 
@@ -23,16 +23,6 @@ const SERVICES = [
     points: ['Concept positioning and strategy', 'Commercial and operational planning', 'Growth and multi-site expansion'] },
   { title: 'Trading & Investment', short: 'Trading · Investment', summary: 'Business opportunities, partnerships and commercial development.',
     points: ['Opportunity identification and assessment', 'Partnerships and introductions', 'Commercial development'] },
-];
-
-// Each discipline is a chess piece: file c (a–h → 0–7), row r from the far side, height in world units.
-const PIECES = [
-  { type: 'king', c: 3, r: 4, h: 1.56 },   // Business Strategy — the piece everything protects
-  { type: 'knight', c: 5, r: 2, h: 1.1 }, // Market Entry — reaches places others cannot
-  { type: 'rook', c: 1, r: 2, h: 1.02 },   // Corporate & Commercial Advisory — structure
-  { type: 'pawn', c: 2, r: 6, h: 0.87 },    // Franchising — small steps that multiply
-  { type: 'bishop', c: 6, r: 5, h: 1.2 }, // F&B & Hospitality
-  { type: 'queen', c: 5, r: 6, h: 1.38 },  // Trading & Investment — the widest reach
 ];
 
 const INDUSTRIES = [
@@ -122,37 +112,19 @@ const ecoTabs = $$('[data-service]');
 const ecoDetail = $('[data-eco-detail]');
 let ecoIndex = 0, ecoTouched = false;
 
-const occupied = new Set(PIECES.map((p) => p.c + ',' + p.r));
-function legalMoves({ type, c, r }) {
-  const out = [], on = (x, y) => x >= 0 && x < 8 && y >= 0 && y < 8;
-  const ray = (dx, dy, max = 8) => {
-    for (let k = 1, x = c + dx, y = r + dy; k <= max && on(x, y) && !occupied.has(x + ',' + y); k++, x += dx, y += dy) out.push([x, y]);
-  };
-  const orth = [[1, 0], [-1, 0], [0, 1], [0, -1]], diag = [[1, 1], [1, -1], [-1, 1], [-1, -1]];
-  if (type === 'rook') orth.forEach(([x, y]) => ray(x, y));
-  if (type === 'bishop') diag.forEach(([x, y]) => ray(x, y));
-  if (type === 'queen') [...orth, ...diag].forEach(([x, y]) => ray(x, y));
-  if (type === 'king') [...orth, ...diag].forEach(([x, y]) => ray(x, y, 1));
-  if (type === 'pawn') ray(0, -1, 2);
-  if (type === 'knight') [[1, 2], [2, 1], [-1, 2], [-2, 1], [1, -2], [2, -1], [-1, -2], [-2, -1]]
-    .forEach(([x, y]) => { if (on(c + x, r + y) && !occupied.has(c + x + ',' + (r + y))) out.push([c + x, r + y]); });
-  return out;
-}
-
-const chess = initChess($('[data-chess]'), {
-  pieces: PIECES,
+const model = initModel($('[data-model]'), {
   labels: SERVICES.map((s) => s.short || s.title),
-  labelEl: $('[data-chess-label]'),
+  labelEl: $('[data-model-label]'),
   onPick(i) { ecoTouched = true; setService(i); },
 });
-if (!chess) ecoStage.hidden = true;
+if (!model) ecoStage.hidden = true;
 
 function setService(i) {
   if (i === ecoIndex && ecoDetail.dataset.init) return;
   ecoDetail.dataset.init = '1';
   ecoIndex = i;
   ecoTabs.forEach((t, k) => t.setAttribute('aria-selected', String(k === i)));
-  if (chess) chess.select(i, legalMoves(PIECES[i]));
+  if (model) model.select(i);
   const s = SERVICES[i];
   ecoDetail.classList.add('is-swapping');
   setTimeout(() => {
