@@ -135,7 +135,12 @@
   /* ---------- 4 services ---------- */
   .svc-head h2 { font-size: 31pt; }
   .svc-head .lead { margin-top: 5mm; max-width: 150mm; color: var(--muted); font-size: 10.5pt; }
-  .svc-grid { margin-top: 10mm; display: grid; grid-template-columns: 1fr 1fr 0.92fr; grid-template-rows: 1fr 1fr; gap: 5mm; height: 148mm; }
+  .svc-grid { margin-top: 10mm; display: grid; grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 1fr 1fr 30mm; gap: 5mm; height: 186mm; }
+  .svc-photo { grid-column: 1; grid-row: 1 / span 2; background: #0b1a4a url(img/business-setup.jpg) 24% top / cover; border-top: .5mm solid var(--gold); box-shadow: 0 1.5mm 5mm rgba(11,31,95,.12); }
+  .svc.svc-wide { grid-column: 1 / -1; display: grid; grid-template-columns: 11mm 52mm 1fr; gap: 6mm; align-items: center; padding: 6mm 14mm 6mm 7mm; }
+  .svc.svc-wide h3 { margin: 0; }
+  .svc.svc-wide h3::after { margin-top: 2.6mm; }
+  .svc.svc-wide .n { top: 6mm; }
   .svc { position: relative; background: #fff; padding: 8mm 7mm 7mm; box-shadow: 0 1.5mm 5mm rgba(11,31,95,.07); border-top: .5mm solid var(--gold); display: flex; flex-direction: column; }
   .svc-icon { width: 11mm; height: 11mm; color: var(--gold-d); }
   .svc .n { position: absolute; top: 7mm; right: 7mm; font-family: var(--serif); font-style: italic; font-size: 11pt; color: rgba(11,31,95,.2); }
@@ -153,7 +158,7 @@
   .svc-feature .n { position: absolute; top: 9mm; right: 8mm; font-family: var(--serif); font-style: italic; font-size: 11pt; color: rgba(231,207,152,.55); }
   .svc-band { position: absolute; left: 0; right: 0; bottom: 0; height: 60mm; background: url(img/services-band.jpg) center top/cover; }
   .svc-band::before { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, var(--ivory) 0%, rgba(247,244,237,0) 14%, rgba(5,12,40,0) 40%, rgba(5,12,40,.75) 100%); }
-  .svc-foot { position: absolute; left: 18mm; bottom: 20mm; display: flex; align-items: center; gap: 5mm; font-family: var(--serif); font-style: italic; font-size: 15pt; color: var(--gold-l); }
+  .svc-foot { position: absolute; left: 18mm; bottom: 19mm; display: flex; align-items: center; gap: 5mm; font-family: var(--serif); font-style: italic; font-size: 13pt; color: var(--gold-d); }
   .svc-foot::before { content: ''; width: 14mm; height: .3mm; background: var(--gold); }
 
   /* ---------- 5 industries ---------- */
@@ -311,15 +316,15 @@
       <p class="lead">From the first licence to an international rollout, HK supports every stage of a business — under one roof.</p>
     </div>
     <div class="svc-grid">
-      <div class="svc"><span class="n">01</span><svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V8l6-3v16M11 9h8v12M7.5 10h1.5M7.5 13.5h1.5M7.5 17h1.5M14 12.5h2M14 16h2"/></svg><h3>Business Setup</h3><p>End-to-end company formation support, including licensing, documentation, compliance and strategic launch.</p></div>
+      <div class="svc-photo" role="img" aria-label="Business Setup — end-to-end company formation support, including licensing, documentation, compliance and strategic launch."></div>
       <div class="svc"><span class="n">02</span><svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 3H6v18h6M14.5 3 19 7.5V11M14.5 3v4.5H19M8.5 10h6M8.5 13.5h4"/><path d="m14 21 .8-3.2 5-5 2.4 2.4-5 5z"/></svg><h3>Franchise Development &amp; Expansion</h3><p>Franchise creation, documentation, brand adaptation and international rollout support.</p></div>
       <div class="svc-feature"><div class="photo"></div><div class="shade"></div><span class="n">03</span><svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/><circle cx="12" cy="12" r="6.6"/></svg><h3>Operational Optimisation</h3><p>Streamline business systems, SOPs and team training for improved efficiency and scalability.</p></div>
       <div class="svc"><span class="n">04</span><svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5.4"/><circle cx="12" cy="12" r="1.8"/><path d="m12 12 8-8M17 4h3v3"/></svg><h3>Brand Strategy &amp; Expansion</h3><p>Build a brand that speaks and sells — identity design, market positioning, storytelling and digital presence.</p></div>
-      <div class="svc"><span class="n">05</span><svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M13.5 15.5 8.5 10.5C11 5 15 3 21 3c0 6-2 10-7.5 12.5Z"/><circle cx="15.5" cy="8.5" r="1.6"/><path d="M8.5 10.5H5L3 13h4.5M13.5 15.5V19l-2.5 2v-4.5M7 17l-3 3"/></svg><h3>Startup Consulting</h3><p>Without the right planning, even the best products and services won&rsquo;t conquer the market. Establish your venture the right way with our startup consulting services.</p></div>
+      <div class="svc svc-wide"><span class="n">05</span><svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M13.5 15.5 8.5 10.5C11 5 15 3 21 3c0 6-2 10-7.5 12.5Z"/><circle cx="15.5" cy="8.5" r="1.6"/><path d="M8.5 10.5H5L3 13h4.5M13.5 15.5V19l-2.5 2v-4.5M7 17l-3 3"/></svg><h3>Startup Consulting</h3><p>Without the right planning, even the best products and services won&rsquo;t conquer the market. Establish your venture the right way with our startup consulting services.</p></div>
     </div>
   </div>
-  <div class="svc-band"><p class="svc-foot">One partner, from setup to scale.</p></div>
-  <div class="folio" style="color:rgba(255,255,255,.55)"><span>HK Business Consultancy</span><b></b></div>
+  <p class="svc-foot">One partner, from setup to scale.</p>
+  <div class="folio"><span>HK Business Consultancy</span><b></b></div>
 </section>
 
 <!-- 5 · AT A GLANCE + WHY HK -->
