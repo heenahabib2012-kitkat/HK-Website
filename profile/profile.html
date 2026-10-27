@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>HK Business Consultancy — Company Profile</title>
+<style>
+  @page { size: A4; margin: 0; }
+  :root {
+    --navy: #071232; --navy-2: #0c1f5a; --ink: #040a1f;
+    --gold: #c9a45c; --gold-l: #e7cf98; --gold-d: #9a7734;
+    --ivory: #f7f4ed; --paper-line: #e3ddcf; --text: #1b2440; --muted: #5d6585;
+    --serif: 'Caladea', 'Bitstream Charter', 'Liberation Serif', Georgia, serif;
+    --sans: 'Inter', 'Liberation Sans', Arial, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #888; }
+  body { font-family: var(--sans); font-weight: 300; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .page { position: relative; width: 210mm; height: 297mm; overflow: hidden; page-break-after: always; break-after: page; }
+  .page:last-child { page-break-after: auto; break-after: auto; }
+  .navy { background: radial-gradient(75% 55% at 50% 42%, var(--navy-2) 0%, var(--navy) 72%); color: #fff; }
+  .ivory { background: var(--ivory); color: var(--text); }
+  .pad { position: absolute; inset: 20mm 18mm 18mm; }
+
+  .eyebrow { display: flex; align-items: center; gap: 4mm; font-size: 7.6pt; font-weight: 500; letter-spacing: .32em; text-transform: uppercase; color: var(--gold); }
+  .eyebrow::before { content: ''; width: 11mm; height: .3mm; background: currentColor; }
+  .ivory .eyebrow { color: var(--gold-d); }
+  h1, h2, h3 { font-family: var(--serif); font-weight: 400; }
+  h2 { font-size: 34pt; line-height: 1.04; letter-spacing: -.01em; margin-top: 6mm; }
+  h2 em, h1 em { color: var(--gold-l); }
+  .ivory h2 { color: #0b1f5f; } .ivory h2 em { color: var(--gold-d); }
+  p { font-size: 9.6pt; line-height: 1.62; }
+  .lead { font-size: 11.5pt; line-height: 1.6; }
+  .navy p { color: rgba(255,255,255,.76); }
+  .navy .lead { color: rgba(255,255,255,.9); }
+  .muted { color: var(--muted); }
+
+  /* running footer */
+  .folio { position: absolute; left: 18mm; right: 18mm; bottom: 9mm; display: flex; justify-content: space-between; font-size: 6.6pt; letter-spacing: .28em; text-transform: uppercase; }
+  .navy .folio { color: rgba(255,255,255,.4); } .ivory .folio { color: #9aa0b4; }
+  .folio b { font-family: var(--serif); font-weight: 400; font-size: 9pt; letter-spacing: 0; color: var(--gold); }
+
+  .mark { color: #fff; } .mark .acc { fill: var(--gold); }
+  .rule-gold { height: .3mm; background: linear-gradient(90deg, var(--gold), rgba(201,164,92,.1)); }
+
+  /* ---------- 1 cover ---------- */
+  .cover-img { position: absolute; inset: 0; background: url(img/office.jpg) center/cover; filter: saturate(.75) brightness(.8); }
+  .cover-tint { position: absolute; inset: 0; background: #15379e; mix-blend-mode: color; opacity: .38; }
+  .cover-veil { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(5,12,40,.55) 0%, rgba(5,12,40,.25) 30%, rgba(5,12,40,.85) 62%, #071232 82%); }
+  .cover .brand { position: absolute; top: 20mm; left: 18mm; display: flex; align-items: center; gap: 4mm; }
+  .cover .brand svg { width: 15mm; }
+  .cover .brand span { font-family: var(--serif); font-size: 15pt; letter-spacing: .2em; color: #fff; line-height: 1; }
+  .cover .brand small { display: block; font-family: var(--sans); font-size: 6.4pt; letter-spacing: .36em; color: var(--gold-l); margin-top: 1.6mm; text-transform: uppercase; }
+  .cover .year { position: absolute; top: 22mm; right: 18mm; font-size: 7pt; letter-spacing: .3em; color: rgba(255,255,255,.7); }
+  .cover-body { position: absolute; left: 18mm; right: 18mm; bottom: 30mm; }
+  .cover-body h1 { font-size: 52pt; line-height: .98; letter-spacing: -.015em; margin: 7mm 0 8mm; color: #fff; }
+  .cover-body p { max-width: 118mm; color: rgba(255,255,255,.82); font-size: 10.5pt; }
+  .cover-foot { position: absolute; left: 18mm; right: 18mm; bottom: 14mm; display: flex; justify-content: space-between; font-size: 6.8pt; letter-spacing: .3em; text-transform: uppercase; color: rgba(255,255,255,.5); padding-top: 4mm; border-top: .2mm solid rgba(255,255,255,.18); }
+
+  /* ---------- 2 introduction ---------- */
+  .intro-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10mm; margin-top: 12mm; }
+  .intro-grid p + p { margin-top: 4mm; }
+  .chapters { margin-top: 16mm; display: grid; grid-template-columns: 1fr 1fr; gap: 0 10mm; border-top: .25mm solid var(--paper-line); }
+  .chapter { padding: 7mm 0 6mm; border-bottom: .25mm solid var(--paper-line); position: relative; }
+  .chapter i { font-family: var(--serif); font-size: 11pt; color: var(--gold-d); }
+  .chapter h3 { font-size: 17pt; margin: 2mm 0 2mm; color: #0b1f5f; }
+  .intro-img { position: absolute; left: 0; right: 0; bottom: 0; height: 64mm; background: url(img/office2.jpg) center 40%/cover; }
+  .intro-img::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, var(--ivory) 0%, rgba(247,244,237,0) 30%), rgba(21,55,158,.18); }
+
+  /* ---------- 3 at a glance ---------- */
+  .facts { margin-top: 14mm; display: grid; grid-template-columns: 1fr 1fr; border: .25mm solid rgba(255,255,255,.16); }
+  .fact { padding: 9mm 8mm 8mm; min-height: 52mm; display: flex; flex-direction: column; justify-content: space-between; border-right: .25mm solid rgba(255,255,255,.16); border-bottom: .25mm solid rgba(255,255,255,.16); position: relative; }
+  .fact:nth-child(2n) { border-right: 0; } .fact:nth-child(n+3) { border-bottom: 0; }
+  .fact::before { content: ''; position: absolute; left: 0; top: 0; width: 14mm; height: .5mm; background: var(--gold); }
+  .fact .big { font-family: var(--serif); font-size: 40pt; line-height: .9; color: #fff; }
+  .fact .big sup { font-size: .45em; color: var(--gold); vertical-align: top; }
+  .fact .words { font-family: var(--serif); font-size: 21pt; line-height: 1.1; color: #fff; }
+  .fact .words i { color: var(--gold-l); }
+  .fact p { margin-top: 6mm; padding-top: 3mm; border-top: .2mm solid rgba(255,255,255,.16); font-size: 9pt; }
+  .principles { margin-top: 14mm; }
+  .principle { display: grid; grid-template-columns: 12mm 1fr 62mm; align-items: baseline; gap: 4mm; padding: 3.2mm 0; border-top: .2mm solid rgba(255,255,255,.14); }
+  .principle:last-child { border-bottom: .2mm solid rgba(255,255,255,.14); }
+  .principle span { font-size: 7pt; letter-spacing: .2em; color: var(--gold); }
+  .principle h3 { font-size: 28pt; line-height: 1; color: var(--gold-l); }
+  .principle p { font-family: var(--serif); font-style: italic; font-size: 11pt; line-height: 1.35; color: rgba(255,255,255,.85); }
+
+  /* ---------- 4 expertise ---------- */
+  .band { position: absolute; left: 0; right: 0; top: 0; height: 112mm; overflow: hidden; }
+  .band .pad { inset: 20mm 18mm 10mm; }
+  .band-img { position: absolute; right: -6mm; top: 10mm; width: 108mm; -webkit-mask-image: radial-gradient(closest-side, #000 72%, transparent 100%); mask-image: radial-gradient(closest-side, #000 72%, transparent 100%); }
+  .band h2 { max-width: 88mm; color: #fff; } .band h2 em { color: var(--gold-l); } .band .eyebrow { color: var(--gold); }
+  .services { position: absolute; left: 18mm; right: 18mm; top: 124mm; display: grid; grid-template-columns: 1fr 1fr; gap: 0 10mm; }
+  .service { padding: 5.2mm 0 4.6mm; border-top: .25mm solid var(--paper-line); }
+  .service:nth-last-child(-n+2) { border-bottom: .25mm solid var(--paper-line); }
+  .service .n { font-size: 7pt; letter-spacing: .22em; color: var(--gold-d); }
+  .service h3 { font-size: 15.5pt; color: #0b1f5f; margin: 1.4mm 0 1.6mm; line-height: 1.1; }
+  .service p { font-size: 9pt; color: var(--text); }
+  .service ul { list-style: none; margin-top: 2mm; }
+  .service li { position: relative; padding-left: 5mm; font-size: 8.4pt; line-height: 1.6; color: var(--muted); }
+  .service li::before { content: ''; position: absolute; left: 0; top: .78em; width: 3mm; height: .25mm; background: var(--gold); }
+
+  /* ---------- 5 industries ---------- */
+  .ind-wrap { display: grid; grid-template-columns: 82mm 1fr; gap: 8mm; margin-top: 10mm; align-items: start; }
+  .ind-wrap img { width: 96mm; margin-left: -10mm; margin-top: 2mm; -webkit-mask-image: radial-gradient(closest-side, #000 72%, transparent 100%); mask-image: radial-gradient(closest-side, #000 72%, transparent 100%); }
+  .industries { border-top: .2mm solid rgba(255,255,255,.14); }
+  .industry { display: grid; grid-template-columns: 8mm 1fr; gap: 2mm; padding: 3.1mm 0; border-bottom: .2mm solid rgba(255,255,255,.14); }
+  .industry span { font-family: var(--serif); font-style: italic; font-size: 9.5pt; color: var(--gold); }
+  .industry h3 { font-size: 12.5pt; color: #fff; line-height: 1.15; }
+  .industry p { font-size: 8.4pt; line-height: 1.5; margin-top: .8mm; }
+
+  /* ---------- 6 global reach ---------- */
+  .globe-img { position: absolute; right: -54mm; top: 64mm; width: 156mm; -webkit-mask-image: radial-gradient(closest-side, #000 72%, transparent 100%); mask-image: radial-gradient(closest-side, #000 72%, transparent 100%); }
+  .reach-copy { max-width: 96mm; }
+  .regions { position: absolute; left: 18mm; width: 92mm; top: 128mm; }
+  .region { padding: 3.8mm 0; border-top: .2mm solid rgba(255,255,255,.14); }
+  .region:last-child { border-bottom: .2mm solid rgba(255,255,255,.14); }
+  .region h3 { font-size: 13pt; color: #fff; display: flex; justify-content: space-between; align-items: baseline; gap: 4mm; }
+  .region h3 small { font-family: var(--sans); font-size: 6.4pt; letter-spacing: .18em; text-transform: uppercase; color: var(--gold-l); }
+  .region p { font-size: 8.5pt; line-height: 1.5; margin-top: 1mm; }
+  .hub-note { position: absolute; right: 18mm; bottom: 30mm; width: 62mm; border-left: .3mm solid var(--gold); padding-left: 5mm; }
+  .hub-note p { font-family: var(--serif); font-style: italic; font-size: 11pt; line-height: 1.4; color: rgba(255,255,255,.88); }
+
+  /* ---------- 7 engagements ---------- */
+  .cases { margin-top: 12mm; display: grid; grid-template-columns: 1fr 1fr; gap: 7mm; }
+  .case { background: #fff; padding: 7mm 7mm 6mm; box-shadow: 0 2mm 6mm rgba(11,31,95,.08); }
+  .case .tag { font-size: 6.6pt; letter-spacing: .24em; text-transform: uppercase; color: var(--gold-d); }
+  .case h3 { font-size: 15pt; color: #0b1f5f; margin: 2mm 0 4mm; line-height: 1.1; }
+  .case dl div { padding: 2.4mm 0; border-top: .2mm solid var(--paper-line); }
+  .case dt { font-size: 6.4pt; letter-spacing: .22em; text-transform: uppercase; color: #15379e; margin-bottom: 1mm; }
+  .case dd { font-size: 8.4pt; line-height: 1.5; color: #364066; }
+  .case .pending { font-family: var(--serif); font-style: italic; font-size: 9.4pt; color: var(--gold-d); }
+  .case .num { float: right; font-family: var(--serif); font-style: italic; font-size: 22pt; color: rgba(11,31,95,.12); line-height: 1; }
+  .approach { margin-top: 10mm; padding: 7mm 8mm; background: radial-gradient(75% 90% at 50% 40%, var(--navy-2), var(--navy)); color: #fff; display: grid; grid-template-columns: 1fr 1.5fr; gap: 8mm; align-items: center; }
+  .approach h3 { font-size: 19pt; line-height: 1.1; } .approach h3 em { color: var(--gold-l); }
+  .approach p { color: rgba(255,255,255,.8); font-size: 9pt; }
+
+  /* ---------- 8 back cover ---------- */
+  .back h1 { font-size: 58pt; line-height: .95; letter-spacing: -.02em; margin: 8mm 0 10mm; }
+  .back h1 em { display: block; }
+  .back .outline { position: absolute; right: -20mm; bottom: 34mm; width: 180mm; color: var(--gold); opacity: .12; }
+  .contact { position: absolute; left: 18mm; right: 18mm; bottom: 34mm; display: grid; grid-template-columns: repeat(2, 1fr); gap: 0 10mm; }
+  .contact div { padding: 4mm 0; border-top: .2mm solid rgba(255,255,255,.18); }
+  .contact dt { font-size: 6.6pt; letter-spacing: .3em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5mm; }
+  .contact dd { font-family: var(--serif); font-size: 13pt; color: #fff; }
+  .contact dd.todo { color: rgba(255,255,255,.45); font-style: italic; font-size: 11pt; }
+  .back .sign { position: absolute; left: 18mm; right: 18mm; bottom: 14mm; display: flex; justify-content: space-between; align-items: center; padding-top: 5mm; border-top: .3mm solid var(--gold); }
+  .back .sign svg { width: 11mm; }
+  .back .sign p { font-family: var(--serif); font-style: italic; font-size: 10.5pt; color: rgba(255,255,255,.75); }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="hk" viewBox="0 0 120 100">
+      <path d="M8 6h15.5v88H8zM54 6h15.5v88H54zM69.5 46 101 6h17L69.5 67.6z" fill="currentColor"/>
+      <path d="M77.3 57.7 87.7 44.5 116 94H98z" fill="currentColor" opacity=".82"/>
+      <path d="M23.5 45.5H54v9H23.5z" fill="#c9a45c"/>
+    </symbol>
+    <symbol id="hk-lines" viewBox="0 0 120 100">
+      <path d="M8 6h15.5v88H8z M54 6h15.5v88H54z M23.5 45.5H54v9H23.5z M69.5 46 101 6h17L69.5 67.6z M77.3 57.7 87.7 44.5 116 94H98z" fill="none" stroke="currentColor" stroke-width=".35"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- 1 · COVER -->
+<section class="page navy cover">
+  <div class="cover-img"></div><div class="cover-tint"></div><div class="cover-veil"></div>
+  <div class="brand"><svg viewBox="0 0 120 100" class="mark"><use href="#hk"/></svg><span>HK<small>Business Consultancy</small></span></div>
+  <div class="year">COMPANY PROFILE · 2026</div>
+  <div class="cover-body">
+    <p class="eyebrow">Company Profile</p>
+    <h1>Building Businesses.<br><em>Creating Possibilities.</em></h1>
+    <p>Strategic business solutions for companies, entrepreneurs and investors navigating growth across the UAE and international markets.</p>
+  </div>
+  <div class="cover-foot"><span>United Arab Emirates</span><span>International</span></div>
+</section>
+
+<!-- 2 · INTRODUCTION -->
+<section class="page ivory">
+  <div class="pad">
+    <p class="eyebrow">About HK</p>
+    <h2>Experience That Moves<br>Business <em>Forward.</em></h2>
+    <div class="intro-grid">
+      <p class="lead">HK Business Consultancy is a UAE-based advisory practice built on decades of combined commercial experience. We work alongside founders, established companies and investors — bringing structure to ambition and clarity to complex decisions.</p>
+      <div>
+        <p class="muted">Our perspective is shaped by the UAE's role as a meeting point of markets. We understand how business is done locally, and we understand what international partners expect.</p>
+        <p class="muted">That balance informs every engagement.</p>
+      </div>
+    </div>
+    <div class="chapters">
+      <div class="chapter"><i>I</i><h3>Experience</h3><p class="muted">Over three decades of combined business experience across founding, operating, advising and growing companies.</p></div>
+      <div class="chapter"><i>II</i><h3>A UAE Base</h3><p class="muted">Rooted in the UAE — one of the world's most dynamic commercial environments and a natural bridge between regions.</p></div>
+      <div class="chapter"><i>III</i><h3>International Exposure</h3><p class="muted">Hands-on familiarity with international markets, partners and the expectations of cross-border business.</p></div>
+      <div class="chapter"><i>IV</i><h3>Long-Term Value</h3><p class="muted">Advice measured not by activity, but by durable outcomes for the businesses we support.</p></div>
+    </div>
+  </div>
+  <div class="intro-img"></div>
+  <div class="folio" style="color:rgba(255,255,255,.75)"><span>HK Business Consultancy</span><b>02</b></div>
+</section>
+
+<!-- 3 · AT A GLANCE + WHY HK -->
+<section class="page navy">
+  <div class="pad">
+    <p class="eyebrow">At a Glance</p>
+    <h2>A consultancy shaped by <em>experience.</em></h2>
+    <div class="facts">
+      <div class="fact"><div class="big">30<sup>+</sup></div><p>Years of combined business experience</p></div>
+      <div class="fact"><div class="words">UAE <i>&amp;</i><br>International</div><p>Market exposure</p></div>
+      <div class="fact"><div class="words">Multiple<br>Industries</div><p>Across diverse sectors</p></div>
+      <div class="fact"><div class="words">Strategic<br>Approach</div><p>Built around long-term value</p></div>
+    </div>
+    <div class="principles">
+      <p class="eyebrow" style="margin-bottom:5mm">Why HK</p>
+      <div class="principle"><span>01</span><h3>Experience</h3><p>Decades of commercial exposure.</p></div>
+      <div class="principle"><span>02</span><h3>Perspective</h3><p>Local understanding with international outlook.</p></div>
+      <div class="principle"><span>03</span><h3>Relationships</h3><p>Connecting businesses, people and opportunities.</p></div>
+      <div class="principle"><span>04</span><h3>Execution</h3><p>Turning strategy into practical action.</p></div>
+    </div>
+  </div>
+  <div class="folio"><span>HK Business Consultancy</span><b>03</b></div>
+</section>
+
+<!-- 4 · EXPERTISE -->
+<section class="page ivory">
+  <div class="band navy">
+    <img class="band-img" src="img/chess.jpg" alt="">
+    <div class="pad">
+      <p class="eyebrow">Expertise</p>
+      <h2>Every move,<br>made with <em>strategy.</em></h2>
+      <p style="max-width:84mm;margin-top:6mm">Six disciplines, each with its own role — together forming one strategy for your business.</p>
+    </div>
+  </div>
+  <div class="services">
+    <div class="service"><span class="n">01</span><h3>Business Strategy</h3><p>Market positioning, strategic planning and growth.</p><ul><li>Market and competitive positioning</li><li>Strategic and business planning</li><li>Growth priorities and roadmaps</li></ul></div>
+    <div class="service"><span class="n">02</span><h3>Market Entry</h3><p>Helping businesses establish and expand in the UAE and international markets.</p><ul><li>Market assessment and route to entry</li><li>Set-up and structuring considerations</li><li>Local partnerships and go-to-market</li></ul></div>
+    <div class="service"><span class="n">03</span><h3>Corporate &amp; Commercial Advisory</h3><p>Business structuring, commercial strategy and advisory support.</p><ul><li>Business structuring</li><li>Commercial strategy and arrangements</li><li>Ongoing advisory support for leadership</li></ul></div>
+    <div class="service"><span class="n">04</span><h3>Franchising</h3><p>Franchise strategy, development and expansion.</p><ul><li>Franchise readiness and model design</li><li>Franchise development and partner criteria</li><li>Regional and international expansion</li></ul></div>
+    <div class="service"><span class="n">05</span><h3>F&amp;B &amp; Hospitality</h3><p>Strategic support for hospitality, food and beverage ventures.</p><ul><li>Concept positioning and strategy</li><li>Commercial and operational planning</li><li>Growth and multi-site expansion</li></ul></div>
+    <div class="service"><span class="n">06</span><h3>Trading &amp; Investment</h3><p>Business opportunities, partnerships and commercial development.</p><ul><li>Opportunity identification and assessment</li><li>Partnerships and introductions</li><li>Commercial development</li></ul></div>
+  </div>
+  <div class="folio"><span>HK Business Consultancy</span><b>04</b></div>
+</section>
+
+<!-- 5 · INDUSTRIES -->
+<section class="page navy">
+  <div class="pad">
+    <p class="eyebrow">Industries</p>
+    <h2>Every sector, <em>one hub.</em></h2>
+    <p style="max-width:120mm;margin-top:5mm">Nine industries, turning around one consistent standard of advice.</p>
+    <div class="ind-wrap">
+      <img src="img/wheel.jpg" alt="">
+      <div class="industries">
+        <div class="industry"><span>01</span><div><h3>F&amp;B &amp; Hospitality</h3><p>Concepts, operators and brands — from positioning to regional expansion.</p></div></div>
+        <div class="industry"><span>02</span><div><h3>Trading</h3><p>Commercial strategy, partnerships and market access for trading businesses.</p></div></div>
+        <div class="industry"><span>03</span><div><h3>Education</h3><p>Bringing structure, planning and market insight to education ventures.</p></div></div>
+        <div class="industry"><span>04</span><div><h3>Real Estate</h3><p>A commercial perspective on real estate ventures and opportunities.</p></div></div>
+        <div class="industry"><span>05</span><div><h3>Retail</h3><p>Positioning, market entry and expansion for retail concepts.</p></div></div>
+        <div class="industry"><span>06</span><div><h3>Luxury &amp; Fashion</h3><p>Discreet, brand-conscious advice for luxury and fashion businesses.</p></div></div>
+        <div class="industry"><span>07</span><div><h3>Professional Services</h3><p>Growth, structuring and positioning for service-led firms.</p></div></div>
+        <div class="industry"><span>08</span><div><h3>Technology</h3><p>Helping technology businesses establish and scale in the region.</p></div></div>
+        <div class="industry"><span>09</span><div><h3>Investment</h3><p>Evaluating opportunities and building the partnerships to realise them.</p></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="folio"><span>HK Business Consultancy</span><b>05</b></div>
+</section>
+
+<!-- 6 · GLOBAL REACH -->
+<section class="page navy">
+  <img class="globe-img" src="img/globe.jpg" alt="">
+  <div class="pad">
+    <div class="reach-copy">
+      <p class="eyebrow">Global Reach</p>
+      <h2>The UAE, a gateway to <em>global opportunity.</em></h2>
+      <p class="lead" style="margin-top:7mm">Positioned between East and West, the UAE connects businesses to the Gulf, Europe, Asia and Africa. We help clients use that position deliberately — entering the region, or reaching outward from it.</p>
+    </div>
+  </div>
+  <div class="regions">
+    <div class="region"><h3>GCC &amp; Middle East <small>Riyadh · Doha · Muscat</small></h3><p>The immediate neighbourhood: shared commercial culture, close trade corridors and a growing appetite for regional expansion.</p></div>
+    <div class="region"><h3>Europe &amp; UK <small>London · Istanbul · Paris</small></h3><p>Established brands and investors looking east, and regional businesses building partnerships in European markets.</p></div>
+    <div class="region"><h3>Asia <small>Mumbai · Singapore · Hong Kong</small></h3><p>Deep trade ties with the Indian subcontinent and the major commercial centres of South-East and East Asia.</p></div>
+    <div class="region"><h3>Africa <small>Cairo · Nairobi · Johannesburg</small></h3><p>Fast-growing markets where the UAE has long served as a commercial and logistics bridge.</p></div>
+    <div class="region"><h3>The Americas <small>New York · São Paulo</small></h3><p>International businesses using the UAE as a base to access the Middle East, Africa and South Asia.</p></div>
+  </div>
+  <div class="hub-note"><p>A stable, internationally connected base with access to markets across multiple continents.</p></div>
+  <div class="folio"><span>HK Business Consultancy</span><b>06</b></div>
+</section>
+
+<!-- 7 · ENGAGEMENTS -->
+<section class="page ivory">
+  <div class="pad">
+    <p class="eyebrow">Selected Engagements</p>
+    <h2>How we <em>work</em> with clients.</h2>
+    <p class="muted" style="max-width:130mm;margin-top:5mm">Representative types of mandate. Detailed case studies are available on request, subject to client confidentiality.</p>
+    <div class="cases">
+      <div class="case"><span class="num">01</span><p class="tag">Market Entry · Cross-sector</p><h3>Establishing in the UAE</h3><dl>
+        <div><dt>Challenge</dt><dd>An international business assessing how, where and with whom to establish a presence in the UAE.</dd></div>
+        <div><dt>Strategic Approach</dt><dd>Market assessment, structuring options, partner identification and a phased entry roadmap.</dd></div>
+        <div><dt>Outcome</dt><dd class="pending">Available on request.</dd></div></dl></div>
+      <div class="case"><span class="num">02</span><p class="tag">Franchising · F&amp;B &amp; Hospitality</p><h3>Building a franchise model</h3><dl>
+        <div><dt>Challenge</dt><dd>A hospitality concept with regional ambitions, seeking a repeatable model for expansion.</dd></div>
+        <div><dt>Strategic Approach</dt><dd>Franchise readiness review, commercial model design, operating standards and partner criteria.</dd></div>
+        <div><dt>Outcome</dt><dd class="pending">Available on request.</dd></div></dl></div>
+      <div class="case"><span class="num">03</span><p class="tag">Corporate &amp; Commercial Advisory</p><h3>Restructuring for growth</h3><dl>
+        <div><dt>Challenge</dt><dd>A growing business whose structure and commercial arrangements had not kept pace with its ambitions.</dd></div>
+        <div><dt>Strategic Approach</dt><dd>Review of structure, governance and commercial terms, with a practical plan for realignment.</dd></div>
+        <div><dt>Outcome</dt><dd class="pending">Available on request.</dd></div></dl></div>
+      <div class="case"><span class="num">04</span><p class="tag">Trading &amp; Investment</p><h3>Evaluating an opportunity</h3><dl>
+        <div><dt>Challenge</dt><dd>An investor weighing a commercial opportunity and the partners required to realise it.</dd></div>
+        <div><dt>Strategic Approach</dt><dd>Opportunity assessment, partner evaluation and a structured route to commercial development.</dd></div>
+        <div><dt>Outcome</dt><dd class="pending">Available on request.</dd></div></dl></div>
+    </div>
+    <div class="approach">
+      <h3>One conversation,<br><em>many capabilities.</em></h3>
+      <p>Each engagement draws on the disciplines it needs — strategy, market entry, structuring, franchising, hospitality or investment — brought together around one clear objective.</p>
+    </div>
+  </div>
+  <div class="folio"><span>HK Business Consultancy</span><b>07</b></div>
+</section>
+
+<!-- 8 · BACK COVER -->
+<section class="page navy back">
+  <svg class="outline" viewBox="0 0 120 100"><use href="#hk-lines"/></svg>
+  <div class="pad">
+    <p class="eyebrow">Contact</p>
+    <h1>Let's Build<em>What's Next.</em></h1>
+    <p class="lead" style="max-width:120mm">Whether you are entering the UAE, expanding an existing business or exploring a new opportunity, let's start the conversation.</p>
+  </div>
+  <dl class="contact">
+    <div><dt>Based in</dt><dd>United Arab Emirates</dd></div>
+    <div><dt>Email</dt><dd class="todo">[ email address ]</dd></div>
+    <div><dt>Telephone</dt><dd class="todo">[ phone number ]</dd></div>
+    <div><dt>Website</dt><dd class="todo">[ website address ]</dd></div>
+  </dl>
+  <div class="sign">
+    <svg viewBox="0 0 120 100" class="mark"><use href="#hk"/></svg>
+    <p>Building Businesses. Creating Possibilities.</p>
+  </div>
+</section>
+
+</body>
+</html>
