@@ -133,24 +133,24 @@
   .vm-seal { position: absolute; right: 18mm; top: 20mm; width: 24mm; opacity: .95; }
 
   /* ---------- 4 services ---------- */
-  .svc-page { background: radial-gradient(80% 60% at 50% 35%, #0d1d4a 0%, #08142f 70%); color: #fff; }
-  .svc-head h2 { font-size: 32pt; line-height: 1.02; color: #fff; }
-  .svc-head h2 em { display: block; color: var(--gold-l); }
-  .navy .svc-head .lead { margin-top: 5mm; max-width: 150mm; color: rgba(255,255,255,.72); font-size: 10.5pt; }
+  .svc-page { background: #fff; color: var(--text); }
+  .svc-page .svc-head h2 { font-size: 32pt; line-height: 1.02; color: #0b1f5f; }
+  .svc-page .svc-head h2 em { display: block; color: var(--gold-d); }
+  .svc-page .svc-head .lead { margin-top: 5mm; max-width: 150mm; color: var(--muted); font-size: 10.5pt; }
   .svc-grid { margin-top: 9mm; display: grid; grid-template-columns: 1fr 1fr 0.92fr; grid-template-rows: 1fr 1fr; gap: 4.5mm; height: 182mm; }
-  .svc { position: relative; overflow: hidden; border: .25mm solid rgba(201,164,92,.5); background: #0a1736; display: flex; flex-direction: column; }
+  .svc { position: relative; overflow: hidden; border: .25mm solid rgba(201,164,92,.6); background: #0a1736; box-shadow: 0 2mm 6mm rgba(11,31,95,.18); display: flex; flex-direction: column; }
   .svc .txt { position: relative; z-index: 1; padding: 6mm 5.5mm 0; }
   .svc .art { margin-top: auto; height: 34mm; background-size: cover; background-position: center bottom; -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 30%); mask-image: linear-gradient(180deg, transparent 0%, #000 30%); }
   .svc-icon { width: 10mm; height: 10mm; color: var(--gold); }
   .svc .n { position: absolute; top: 6mm; right: 5.5mm; font-family: var(--serif); font-style: italic; font-size: 11pt; color: rgba(231,207,152,.55); }
   .svc h3 { font-size: 15pt; line-height: 1.1; color: #fff; margin: 4mm 0 2.6mm; }
   .svc h3::after { content: ''; display: block; width: 9mm; height: .4mm; background: var(--gold); margin-top: 3mm; }
-  .navy .svc p { font-size: 8.4pt; line-height: 1.5; color: rgba(255,255,255,.78); }
+  .svc-page .svc p { font-size: 8.4pt; line-height: 1.5; color: rgba(255,255,255,.78); }
   .svc.tall { grid-column: 3; grid-row: 1 / span 2; }
   .svc.tall .txt { padding: 7mm 6mm 0; }
   .svc.tall h3 { font-size: 17pt; margin-top: 6mm; }
   .svc.tall .art { height: 126mm; background-position: center bottom; }
-  .navy .svc-foot { position: absolute; left: 18mm; bottom: 19mm; display: flex; align-items: center; gap: 5mm; font-family: var(--serif); font-style: italic; font-size: 15pt; color: var(--gold-l); }
+  .svc-page .svc-foot { position: absolute; left: 18mm; bottom: 19mm; display: flex; align-items: center; gap: 5mm; font-family: var(--serif); font-style: italic; font-size: 15pt; color: var(--gold-d); }
   .svc-foot::before { content: ''; width: 14mm; height: .3mm; background: var(--gold); }
 
   /* ---------- 5 industries ---------- */
@@ -300,7 +300,7 @@
 </section>
 
 <!-- 4 · OUR SERVICES -->
-<section class="page navy svc-page">
+<section class="page ivory svc-page">
   <div class="pad">
     <div class="svc-head">
       <p class="eyebrow">Our Services</p>
