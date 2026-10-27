@@ -43,16 +43,19 @@
   .rule-gold { height: .3mm; background: linear-gradient(90deg, var(--gold), rgba(201,164,92,.1)); }
 
   /* ---------- 1 cover ---------- */
-  .cover-img { position: absolute; inset: 0; background: url(img/office.jpg) center/cover; filter: saturate(.75) brightness(.8); }
-  .cover-tint { position: absolute; inset: 0; background: #15379e; mix-blend-mode: color; opacity: .38; }
-  .cover-veil { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(5,12,40,.55) 0%, rgba(5,12,40,.25) 30%, rgba(5,12,40,.85) 62%, #071232 82%); }
+  .cover-img { position: absolute; inset: 0; background: url(img/skyline.jpg) center top/cover; }
+    .cover-veil { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(3,8,23,.6) 0%, rgba(3,8,23,0) 16%, rgba(3,8,23,0) 58%, rgba(5,12,40,.72) 72%, rgba(5,12,40,.92) 100%); }
   .cover .brand { position: absolute; top: 20mm; left: 18mm; display: flex; align-items: center; gap: 4mm; }
   .cover .brand svg { width: 15mm; }
   .cover .brand span { font-family: var(--serif); font-size: 15pt; letter-spacing: .2em; color: #fff; line-height: 1; }
   .cover .brand small { display: block; font-family: var(--sans); font-size: 6.4pt; letter-spacing: .36em; color: var(--gold-l); margin-top: 1.6mm; text-transform: uppercase; }
   .cover .year { position: absolute; top: 22mm; right: 18mm; font-size: 7pt; letter-spacing: .3em; color: rgba(255,255,255,.7); }
   .cover-body { position: absolute; left: 18mm; right: 18mm; bottom: 30mm; }
-  .cover-body h1 { font-size: 52pt; line-height: .98; letter-spacing: -.015em; margin: 7mm 0 8mm; color: #fff; }
+  .cover-body h1 { font-size: 50pt; line-height: .98; letter-spacing: -.015em; margin: 7mm 0 7mm; color: #fff; }
+  .cover-body h1 em { color: var(--gold-l); }
+  .cover-tag { display: flex; align-items: center; gap: 5mm; margin-bottom: 6mm; }
+  .cover-tag::before { content: ''; width: 14mm; height: .3mm; background: var(--gold); }
+  .cover-body .cover-tag p { font-family: var(--serif); font-style: italic; font-size: 14pt; color: var(--gold-l); max-width: none; }
   .cover-body p { max-width: 118mm; color: rgba(255,255,255,.82); font-size: 10.5pt; }
   .cover-foot { position: absolute; left: 18mm; right: 18mm; bottom: 14mm; display: flex; justify-content: space-between; font-size: 6.8pt; letter-spacing: .3em; text-transform: uppercase; color: rgba(255,255,255,.5); padding-top: 4mm; border-top: .2mm solid rgba(255,255,255,.18); }
 
@@ -164,12 +167,12 @@
 
 <!-- 1 · COVER -->
 <section class="page navy cover">
-  <div class="cover-img"></div><div class="cover-tint"></div><div class="cover-veil"></div>
-  <div class="brand"><svg viewBox="0 0 120 100" class="mark"><use href="#hk"/></svg><span>HK<small>Business Consultancy</small></span></div>
-  <div class="year">COMPANY PROFILE · 2026</div>
+  <div class="cover-img"></div><div class="cover-veil"></div>
+  <div class="brand"><svg viewBox="0 0 120 100" class="mark"><use href="#hk"/></svg></div>
   <div class="cover-body">
-    <p class="eyebrow">Company Profile</p>
-    <h1>Building Businesses.<br><em>Creating Possibilities.</em></h1>
+    <p class="eyebrow">Company Profile · 2026</p>
+    <h1>HK Business<br><em>Consultancy</em></h1>
+    <div class="cover-tag"><p>Building Businesses. Creating Possibilities.</p></div>
     <p>Strategic business solutions for companies, entrepreneurs and investors navigating growth across the UAE and international markets.</p>
   </div>
   <div class="cover-foot"><span>United Arab Emirates</span><span>International</span></div>
