@@ -112,7 +112,27 @@
   .principle h3 { font-size: 28pt; line-height: 1; color: var(--gold-l); }
   .principle p { font-family: var(--serif); font-style: italic; font-size: 11pt; line-height: 1.35; color: rgba(255,255,255,.85); }
 
-  /* ---------- 3 services ---------- */
+  /* ---------- 3 vision & mission ---------- */
+  .vm-bg { position: absolute; inset: 0; background: url(img/skyline.jpg) center/cover; transform: translateY(23%); }
+  .vm-shade { position: absolute; inset: 0; background: linear-gradient(180deg, #071232 0%, rgba(7,18,50,.97) 36%, rgba(7,18,50,.55) 52%, rgba(7,18,50,.15) 68%, rgba(5,12,40,.35) 82%, rgba(5,12,40,.9) 100%); }
+  .vm-head h2 { font-size: 30pt; }
+  .vm-block { margin-top: 12mm; display: grid; grid-template-columns: 52mm 1fr; gap: 8mm; padding-top: 8mm; border-top: .3mm solid rgba(201,164,92,.45); }
+  .vm-block .label { font-family: var(--serif); font-size: 38pt; line-height: .95; color: #fff; }
+  .vm-block .label small { display: block; margin-top: 4mm; font-family: var(--sans); font-size: 6.8pt; letter-spacing: .3em; text-transform: uppercase; color: var(--gold); }
+  .vm-block .label::after { content: ''; display: block; width: 12mm; height: .5mm; background: var(--gold); margin-top: 5mm; }
+  .navy .vm-vision { font-family: var(--serif); font-style: italic; font-size: 17pt; line-height: 1.35; color: #fff; }
+  .vm-vision em { font-style: italic; color: var(--gold-l); }
+  .navy .vm-mission { font-size: 10.6pt; line-height: 1.7; color: rgba(255,255,255,.86); }
+  .vm-mission strong { font-weight: 500; color: #fff; }
+  .vm-values { position: absolute; left: 18mm; right: 18mm; bottom: 26mm; display: grid; grid-template-columns: repeat(3, 1fr); background: rgba(7,18,50,.72); border: .25mm solid rgba(201,164,92,.4); }
+  .vm-values div { padding: 6mm 6mm 5.5mm; border-right: .25mm solid rgba(201,164,92,.25); }
+  .vm-values div:last-child { border-right: 0; }
+  .vm-values span { font-size: 6.6pt; letter-spacing: .26em; text-transform: uppercase; color: var(--gold); }
+  .vm-values h3 { font-size: 15pt; color: #fff; margin-top: 2mm; line-height: 1.1; }
+  .vm-values-title { position: absolute; left: 18mm; bottom: 58mm; }
+  .vm-seal { position: absolute; right: 18mm; top: 20mm; width: 24mm; opacity: .95; }
+
+  /* ---------- 4 services ---------- */
   .svc-head h2 { font-size: 31pt; }
   .svc-head .lead { margin-top: 5mm; max-width: 150mm; color: var(--muted); font-size: 10.5pt; }
   .svc-grid { margin-top: 10mm; display: grid; grid-template-columns: 1fr 1fr 0.92fr; grid-template-rows: 1fr 1fr; gap: 5mm; height: 148mm; }
@@ -255,7 +275,34 @@
   <div class="folio" style="color:rgba(255,255,255,.45)"><span>HK Business Consultancy</span><b></b></div>
 </section>
 
-<!-- 3 · OUR SERVICES -->
+<!-- 3 · VISION & MISSION -->
+<section class="page navy">
+  <div class="vm-bg"></div><div class="vm-shade"></div>
+  <img class="vm-seal" src="img/hk-seal.png" alt="">
+  <div class="pad">
+    <div class="vm-head">
+      <p class="eyebrow">Vision &amp; Mission</p>
+      <h2>Where we are going,<br>and <em>how we get there.</em></h2>
+    </div>
+    <div class="vm-block">
+      <p class="label">Vision<small>Where we are going</small></p>
+      <p class="vm-vision">To be the most trusted growth partner for businesses worldwide — empowering ideas, transforming brands, and driving sustainable success through <em>strategic clarity and global insight.</em></p>
+    </div>
+    <div class="vm-block">
+      <p class="label">Mission<small>How we get there</small></p>
+      <p class="vm-mission">At HK Business Consultancy, we deliver personalised, end-to-end business solutions that combine <strong>legal expertise, brand strategy, franchising and operations.</strong> Guided by trust, innovation and deep regional understanding, we partner with entrepreneurs, investors and legacy brands to help them <strong>launch, scale and thrive</strong> in competitive markets.</p>
+    </div>
+  </div>
+  <p class="eyebrow vm-values-title">Guided by</p>
+  <div class="vm-values">
+    <div><span>01</span><h3>Trust</h3></div>
+    <div><span>02</span><h3>Innovation</h3></div>
+    <div><span>03</span><h3>Deep Regional Understanding</h3></div>
+  </div>
+  <div class="folio"><span>HK Business Consultancy</span><b></b></div>
+</section>
+
+<!-- 4 · OUR SERVICES -->
 <section class="page ivory">
   <div class="pad">
     <div class="svc-head">
@@ -275,7 +322,7 @@
   <div class="folio" style="color:rgba(255,255,255,.55)"><span>HK Business Consultancy</span><b></b></div>
 </section>
 
-<!-- 4 · AT A GLANCE + WHY HK -->
+<!-- 5 · AT A GLANCE + WHY HK -->
 <section class="page navy">
   <div class="pad">
     <p class="eyebrow">At a Glance</p>
