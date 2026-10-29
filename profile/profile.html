@@ -162,14 +162,32 @@
   .svc-page .svc-foot { position: absolute; left: 18mm; bottom: 19mm; display: flex; align-items: center; gap: 5mm; font-family: var(--serif); font-style: italic; font-size: 15pt; color: var(--gold-d); }
   .svc-foot::before { content: ''; width: 14mm; height: .3mm; background: var(--gold); }
 
-  /* ---------- 5 industries ---------- */
-  .ind-wrap { display: grid; grid-template-columns: 82mm 1fr; gap: 8mm; margin-top: 10mm; align-items: start; }
-  .ind-wrap img { width: 96mm; margin-left: -10mm; margin-top: 2mm; -webkit-mask-image: radial-gradient(closest-side, #000 72%, transparent 100%); mask-image: radial-gradient(closest-side, #000 72%, transparent 100%); }
-  .industries { border-top: .2mm solid rgba(255,255,255,.14); }
-  .industry { display: grid; grid-template-columns: 8mm 1fr; gap: 2mm; padding: 3.1mm 0; border-bottom: .2mm solid rgba(255,255,255,.14); }
-  .industry span { font-family: var(--serif); font-style: italic; font-size: 9.5pt; color: var(--gold); }
-  .industry h3 { font-size: 12.5pt; color: #fff; line-height: 1.15; }
-  .industry p { font-size: 8.4pt; line-height: 1.5; margin-top: .8mm; }
+  /* ---------- 6 industries ---------- */
+  .ind-page { background: #fff; color: var(--text); }
+  .ind-page > * { position: absolute; }
+  .ind-top { left: 18mm; right: 18mm; top: 20mm; }
+  .ind-top .tags { position: absolute; right: 0; top: 0; font-size: 6.4pt; letter-spacing: .3em; text-transform: uppercase; color: #0b1f5f; }
+  .ind-top .tags i { font-style: normal; color: var(--gold-d); margin: 0 2mm; }
+  .ind-page h2 { font-size: 36pt; line-height: 1; color: #0b1f5f; margin-top: 7mm; letter-spacing: -.01em; }
+  .ind-page h2 em { color: var(--gold-d); }
+  .ind-top .sub { margin-top: 5mm; font-size: 11pt; color: #364066; }
+  .ind-svg { left: 0; top: 0; width: 210mm; height: 297mm; }
+  .ind-svg line { stroke: var(--gold); stroke-width: .3; }
+  .ind-svg .dot { fill: var(--gold-d); }
+  .ind-svg .ring { fill: none; stroke: var(--gold); stroke-width: .35; opacity: .7; }
+  .ind-svg .ring2 { fill: none; stroke: rgba(201,164,92,.25); stroke-width: .25; }
+  .ind-hub { left: 82mm; top: 143mm; width: 46mm; height: 46mm; border-radius: 50%; filter: drop-shadow(0 1.5mm 3mm rgba(11,31,95,.3)); }
+  .ind-node { width: 19mm; height: 19mm; border-radius: 50%; background: #fff; border: .4mm solid var(--gold); box-shadow: 0 1.2mm 3mm rgba(11,31,95,.12); display: grid; place-items: center; color: #0b1f5f; }
+  .ind-node svg { width: 9.5mm; height: 9.5mm; }
+  .ind-label .n { display: block; font-family: var(--serif); font-style: italic; font-size: 8.5pt; color: var(--gold-d); }
+  .ind-label h3 { font-size: 12pt; line-height: 1.15; color: #0b1f5f; margin: .6mm 0 1.4mm; }
+  .ind-label p { font-size: 7.8pt; line-height: 1.45; color: #48527a; }
+  .ind-label.left p { margin-left: auto; max-width: 44mm; }
+  .ind-label.right p { max-width: 44mm; }
+  .ind-label.top p { max-width: 70mm; margin: 0 auto; }
+  .ind-foot { left: 18mm; bottom: 22mm; font-size: 6.6pt; letter-spacing: .32em; text-transform: uppercase; color: #0b1f5f; line-height: 1.9; }
+  .ind-foot::before { content: ''; display: block; width: 12mm; height: .4mm; background: var(--gold); margin-bottom: 4mm; }
+  .ind-mark { right: -26mm; bottom: 18mm; width: 70mm; height: 70mm; border-radius: 50%; border: .5mm solid rgba(201,164,92,.18); display: grid; place-items: center; font-family: var(--serif); font-size: 64pt; color: rgba(201,164,92,.13); }
 
   /* ---------- 6 global reach ---------- */
   .globe-img { position: absolute; right: -54mm; top: 64mm; width: 156mm; -webkit-mask-image: radial-gradient(closest-side, #000 72%, transparent 100%); mask-image: radial-gradient(closest-side, #000 72%, transparent 100%); }
@@ -354,27 +372,40 @@
   <div class="folio"><span>HK Business Consultancy</span><b></b></div>
 </section>
 
-<!-- 5 · INDUSTRIES -->
-<section class="page navy">
-  <div class="pad">
+<!-- 6 · INDUSTRIES -->
+<section class="page ind-page">
+  <div class="ind-top">
     <p class="eyebrow">Industries</p>
-    <h2>Every sector, <em>one hub.</em></h2>
-    <p style="max-width:120mm;margin-top:5mm">Nine industries, turning around one consistent standard of advice.</p>
-    <div class="ind-wrap">
-      <img src="img/wheel.jpg" alt="">
-      <div class="industries">
-        <div class="industry"><span>01</span><div><h3>F&amp;B &amp; Hospitality</h3><p>Concepts, operators and brands — from positioning to regional expansion.</p></div></div>
-        <div class="industry"><span>02</span><div><h3>Trading</h3><p>Commercial strategy, partnerships and market access for trading businesses.</p></div></div>
-        <div class="industry"><span>03</span><div><h3>Education</h3><p>Bringing structure, planning and market insight to education ventures.</p></div></div>
-        <div class="industry"><span>04</span><div><h3>Real Estate</h3><p>A commercial perspective on real estate ventures and opportunities.</p></div></div>
-        <div class="industry"><span>05</span><div><h3>Retail</h3><p>Positioning, market entry and expansion for retail concepts.</p></div></div>
-        <div class="industry"><span>06</span><div><h3>Luxury &amp; Fashion</h3><p>Discreet, brand-conscious advice for luxury and fashion businesses.</p></div></div>
-        <div class="industry"><span>07</span><div><h3>Professional Services</h3><p>Growth, structuring and positioning for service-led firms.</p></div></div>
-        <div class="industry"><span>08</span><div><h3>Technology</h3><p>Helping technology businesses establish and scale in the region.</p></div></div>
-        <div class="industry"><span>09</span><div><h3>Investment</h3><p>Evaluating opportunities and building the partnerships to realise them.</p></div></div>
-      </div>
-    </div>
+    <p class="tags">Strategy<i>/</i>Partnerships<i>/</i>Growth</p>
+    <h2>Every sector. <em>One hub.</em></h2>
+    <p class="sub">Nine industries, turning around one consistent standard of advice.</p>
   </div>
+  <svg class="ind-svg" viewBox="0 0 210 297">
+    <ellipse class="ring2" cx="105" cy="166" rx="41" ry="68"/>
+    <circle class="ring" cx="105" cy="166" r="25.5"/>
+    <line x1="105.00" y1="139.00" x2="105.00" y2="108.70"/><circle class="dot" cx="105.00" cy="139.00" r=".75"/><circle class="dot" cx="105.00" cy="108.70" r=".75"/><line x1="117.19" y1="141.91" x2="126.52" y2="123.46"/><circle class="dot" cx="117.19" cy="141.91" r=".75"/><circle class="dot" cx="126.52" cy="123.46" r=".75"/><line x1="130.91" y1="158.42" x2="135.11" y2="157.20"/><circle class="dot" cx="130.91" cy="158.42" r=".75"/><circle class="dot" cx="135.11" cy="157.20" r=".75"/><line x1="124.50" y1="184.67" x2="132.78" y2="192.60"/><circle class="dot" cx="124.50" cy="184.67" r=".75"/><circle class="dot" cx="132.78" cy="192.60" r=".75"/><line x1="110.79" y1="192.37" x2="116.73" y2="219.45"/><circle class="dot" cx="110.79" cy="192.37" r=".75"/><circle class="dot" cx="116.73" cy="219.45" r=".75"/><line x1="99.21" y1="192.37" x2="93.27" y2="219.45"/><circle class="dot" cx="99.21" cy="192.37" r=".75"/><circle class="dot" cx="93.27" cy="219.45" r=".75"/><line x1="85.50" y1="184.67" x2="77.22" y2="192.60"/><circle class="dot" cx="85.50" cy="184.67" r=".75"/><circle class="dot" cx="77.22" cy="192.60" r=".75"/><line x1="79.09" y1="158.42" x2="74.89" y2="157.20"/><circle class="dot" cx="79.09" cy="158.42" r=".75"/><circle class="dot" cx="74.89" cy="157.20" r=".75"/><line x1="92.81" y1="141.91" x2="83.48" y2="123.46"/><circle class="dot" cx="92.81" cy="141.91" r=".75"/><circle class="dot" cx="83.48" cy="123.46" r=".75"/>
+  </svg>
+  <img class="ind-hub" src="img/hk-seal.png" alt="HK Business Consultancy">
+    <div class="ind-node" style="left:95.50mm;top:88.50mm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17.5h18M4.5 17.5a7.5 7.5 0 0 1 15 0M12 7.6V6M10.5 6h3M2.5 20h19"/></svg></div>
+  <div class="ind-label top" style="left:60.00mm;width:90mm;bottom:211.50mm;text-align:center"><span class="n">01</span><h3>F&amp;B &amp; Hospitality</h3><p>Concepts, operators and brands — from positioning to regional expansion.</p></div>
+  <div class="ind-node" style="left:121.85mm;top:104.41mm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="9" cy="7" rx="5.5" ry="2.2"/><path d="M3.5 7v3c0 1.2 2.5 2.2 5.5 2.2s5.5-1 5.5-2.2V7M3.5 10v3c0 1.2 2.5 2.2 5.5 2.2M3.5 13v3c0 1.2 2.5 2.2 5.5 2.2"/><ellipse cx="15" cy="13.5" rx="5.5" ry="2.2"/><path d="M9.5 13.5v3c0 1.2 2.5 2.2 5.5 2.2s5.5-1 5.5-2.2v-3M9.5 16.5v2.5c0 1.2 2.5 2.2 5.5 2.2s5.5-1 5.5-2.2v-2.5"/></svg></div>
+  <div class="ind-label right" style="left:144.85mm;right:16mm;top:107.41mm"><span class="n">02</span><h3>Trading</h3><p>Commercial strategy, partnerships and market access for trading businesses.</p></div>
+  <div class="ind-node" style="left:135.88mm;top:144.69mm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V4h9v17M13 9h7v12M2.5 21h19M7 7.5h1.5M9.5 7.5H11M7 11h1.5M9.5 11H11M7 14.5h1.5M9.5 14.5H11M15.5 12.5h2M15.5 16h2M8 21v-3h2v3"/></svg></div>
+  <div class="ind-label right" style="left:158.88mm;right:16mm;top:147.69mm"><span class="n">03</span><h3>Real Estate</h3><p>A commercial perspective on real estate ventures and opportunities.</p></div>
+  <div class="ind-node" style="left:131.01mm;top:190.50mm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h14l-1.2 13H6.2z"/><path d="M8.8 10V6.5a3.2 3.2 0 0 1 6.4 0V10"/></svg></div>
+  <div class="ind-label right" style="left:154.01mm;right:16mm;top:193.50mm"><span class="n">04</span><h3>Retail</h3><p>Positioning, market entry and expansion for retail concepts.</p></div>
+  <div class="ind-node" style="left:109.52mm;top:220.40mm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 4h11l4 5.2L12 20.5 2.5 9.2z"/><path d="M2.5 9.2h19M9 4l-1.7 5.2L12 20.5l4.7-11.3L15 4"/></svg></div>
+  <div class="ind-label right" style="left:132.52mm;right:16mm;top:223.40mm"><span class="n">05</span><h3>Luxury &amp; Fashion</h3><p>Discreet, brand-conscious advice for luxury and fashion businesses.</p></div>
+  <div class="ind-node" style="left:81.48mm;top:220.40mm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="2.8"/><circle cx="5.8" cy="9" r="2.2"/><circle cx="18.2" cy="9" r="2.2"/><path d="M6.8 19.5v-1.8a5.2 5.2 0 0 1 10.4 0v1.8zM2 18.5v-1a4 4 0 0 1 5.4-3.7M22 18.5v-1a4 4 0 0 0-5.4-3.7"/></svg></div>
+  <div class="ind-label left" style="right:132.52mm;left:16mm;top:223.40mm;text-align:right"><span class="n">06</span><h3>Professional Services</h3><p>Growth, structuring and positioning for service-led firms.</p></div>
+  <div class="ind-node" style="left:59.99mm;top:190.50mm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="1"/><rect x="9" y="9" width="6" height="6"/><path d="M9 2.5V6M12 2.5V6M15 2.5V6M9 18v3.5M12 18v3.5M15 18v3.5M2.5 9H6M2.5 12H6M2.5 15H6M18 9h3.5M18 12h3.5M18 15h3.5"/></svg></div>
+  <div class="ind-label left" style="right:154.01mm;left:16mm;top:193.50mm;text-align:right"><span class="n">07</span><h3>Technology</h3><p>Helping technology businesses establish and scale in the region.</p></div>
+  <div class="ind-node" style="left:55.12mm;top:144.69mm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M6 21v-6M10.5 21v-9M15 21v-5M19.5 21V9"/><path d="M4 12.5 9.5 7l4 3.5L20 4M16 4h4v4"/></svg></div>
+  <div class="ind-label left" style="right:158.88mm;left:16mm;top:147.69mm;text-align:right"><span class="n">08</span><h3>Investment</h3><p>Evaluating opportunities and building the partnerships to realise them.</p></div>
+  <div class="ind-node" style="left:69.15mm;top:104.41mm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3.5h6v5.5h5.5v6H15v5.5H9V15H3.5V9H9z"/></svg></div>
+  <div class="ind-label left" style="right:144.85mm;left:16mm;top:107.41mm;text-align:right"><span class="n">09</span><h3>Healthcare</h3><p>Strategic support for healthcare providers, innovation and investment.</p></div>
+  <p class="ind-foot">Global expertise.<br>Local insight.</p>
+  <div class="ind-mark">Hk</div>
   <div class="folio"><span>HK Business Consultancy</span><b></b></div>
 </section>
 
