@@ -190,16 +190,23 @@
   .ind-mark { right: -26mm; bottom: 18mm; width: 70mm; height: 70mm; border-radius: 50%; border: .5mm solid rgba(201,164,92,.18); display: grid; place-items: center; font-family: var(--serif); font-size: 64pt; color: rgba(201,164,92,.13); }
 
   /* ---------- 6 global reach ---------- */
-  .globe-img { position: absolute; right: -54mm; top: 64mm; width: 156mm; -webkit-mask-image: radial-gradient(closest-side, #000 72%, transparent 100%); mask-image: radial-gradient(closest-side, #000 72%, transparent 100%); }
-  .reach-copy { max-width: 96mm; }
-  .regions { position: absolute; left: 18mm; width: 92mm; top: 128mm; }
-  .region { padding: 3.8mm 0; border-top: .2mm solid rgba(255,255,255,.14); }
-  .region:last-child { border-bottom: .2mm solid rgba(255,255,255,.14); }
-  .region h3 { font-size: 13pt; color: #fff; display: flex; justify-content: space-between; align-items: baseline; gap: 4mm; }
-  .region h3 small { font-family: var(--sans); font-size: 6.4pt; letter-spacing: .18em; text-transform: uppercase; color: var(--gold-l); }
-  .region p { font-size: 8.5pt; line-height: 1.5; margin-top: 1mm; }
-  .hub-note { position: absolute; right: 18mm; bottom: 30mm; width: 62mm; border-left: .3mm solid var(--gold); padding-left: 5mm; }
-  .hub-note p { font-family: var(--serif); font-style: italic; font-size: 11pt; line-height: 1.4; color: rgba(255,255,255,.88); }
+  .gr-page > * { position: absolute; z-index: 1; }
+  .gr-head { left: 18mm; top: 20mm; width: 108mm; }
+  .gr-head h2 { font-size: 33pt; line-height: 1.02; margin-top: 6mm; }
+  .gr-head h2 em { display: block; }
+  .gr-seal { right: 18mm; top: 18mm; width: 26mm; }
+  .gr-globe { right: -14mm; top: 70mm; width: 118mm; height: 118mm; }
+  .gr-globe::before { content: ''; position: absolute; inset: -10%; border-radius: 50%; background: radial-gradient(circle, rgba(70,110,230,.35) 0%, rgba(40,80,200,.12) 45%, transparent 70%); }
+  .gr-globe img { position: relative; width: 100%; height: 100%; filter: drop-shadow(0 4mm 8mm rgba(0,4,20,.6)); }
+  .navy .gr-intro { left: 18mm; top: 70mm; width: 82mm; font-size: 10.6pt; line-height: 1.62; color: rgba(255,255,255,.82); }
+  .gr-quote { left: 18mm; top: 120mm; width: 76mm; border-left: .4mm solid var(--gold); padding-left: 5mm; }
+  .navy .gr-quote p { font-family: var(--serif); font-style: italic; font-size: 13.5pt; line-height: 1.35; color: #fff; }
+  .gr-regions { left: 18mm; right: 18mm; top: 194mm; border-top: .25mm solid rgba(201,164,92,.45); }
+  .gr-region { display: grid; grid-template-columns: 9mm 48mm 1fr; align-items: baseline; gap: 3mm; padding: 2.8mm 0; border-bottom: .2mm solid rgba(255,255,255,.14); }
+  .gr-region span { font-family: var(--serif); font-style: italic; font-size: 9pt; color: var(--gold); }
+  .gr-region h3 { font-size: 14pt; color: #fff; line-height: 1.1; }
+  .navy .gr-region p { font-size: 8.6pt; line-height: 1.5; color: rgba(255,255,255,.76); }
+  .gr-page .folio { position: absolute; }
 
   /* ---------- 7 engagements ---------- */
   .cases { margin-top: 12mm; display: grid; grid-template-columns: 1fr 1fr; gap: 7mm; }
@@ -388,23 +395,22 @@
 </section>
 
 <!-- 6 · GLOBAL REACH -->
-<section class="page navy">
-  <img class="globe-img" src="img/globe.jpg" alt="">
-  <div class="pad">
-    <div class="reach-copy">
-      <p class="eyebrow">Global Reach</p>
-      <h2>The UAE, a gateway to <em>global opportunity.</em></h2>
-      <p class="lead" style="margin-top:7mm">Positioned between East and West, the UAE connects businesses to the Gulf, Europe, Asia and Africa. We help clients use that position deliberately — entering the region, or reaching outward from it.</p>
-    </div>
+<section class="page navy gr-page">
+  <div class="gr-head">
+    <p class="eyebrow">Global Reach</p>
+    <h2>The UAE, a gateway to<em>global opportunity.</em></h2>
   </div>
-  <div class="regions">
-    <div class="region"><h3>GCC &amp; Middle East <small>Riyadh · Doha · Muscat</small></h3><p>The immediate neighbourhood: shared commercial culture, close trade corridors and a growing appetite for regional expansion.</p></div>
-    <div class="region"><h3>Europe &amp; UK <small>London · Istanbul · Paris</small></h3><p>Established brands and investors looking east, and regional businesses building partnerships in European markets.</p></div>
-    <div class="region"><h3>Asia <small>Mumbai · Singapore · Hong Kong</small></h3><p>Deep trade ties with the Indian subcontinent and the major commercial centres of South-East and East Asia.</p></div>
-    <div class="region"><h3>Africa <small>Cairo · Nairobi · Johannesburg</small></h3><p>Fast-growing markets where the UAE has long served as a commercial and logistics bridge.</p></div>
-    <div class="region"><h3>The Americas <small>New York · São Paulo</small></h3><p>International businesses using the UAE as a base to access the Middle East, Africa and South Asia.</p></div>
+  <img class="gr-seal" src="img/hk-seal.png" alt="">
+  <p class="gr-intro">Positioned between East and West, the UAE connects businesses to the Gulf, Europe, Asia and Africa. We help clients use that position deliberately — entering the region, or reaching outward from it.</p>
+  <div class="gr-globe"><img src="img/globe-gold.png" alt=""></div>
+  <div class="gr-quote"><p>A stable, internationally connected base with access to markets across multiple continents.</p></div>
+  <div class="gr-regions">
+    <div class="gr-region"><span>01</span><h3>GCC &amp; Middle East</h3><p>The immediate neighbourhood: shared commercial culture, close trade corridors and a growing appetite for regional expansion.</p></div>
+    <div class="gr-region"><span>02</span><h3>Europe</h3><p>Established brands and investors looking east, and regional businesses building partnerships in European markets.</p></div>
+    <div class="gr-region"><span>03</span><h3>Asia</h3><p>Deep trade ties with the Indian subcontinent and the major commercial centres of South-East and East Asia.</p></div>
+    <div class="gr-region"><span>04</span><h3>Africa</h3><p>Fast-growing markets, where the UAE has long served as a commercial and logistics bridge.</p></div>
+    <div class="gr-region"><span>05</span><h3>The Americas</h3><p>International businesses using the UAE as a base to access the Middle East, Africa and South Asia.</p></div>
   </div>
-  <div class="hub-note"><p>A stable, internationally connected base with access to markets across multiple continents.</p></div>
   <div class="folio"><span>HK Business Consultancy</span><b></b></div>
 </section>
 
