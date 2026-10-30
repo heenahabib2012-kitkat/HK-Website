@@ -234,6 +234,33 @@
   .navy .gr-region p { font-size: 8.6pt; line-height: 1.5; color: rgba(255,255,255,.76); }
   .gr-page .folio { position: absolute; }
 
+  /* ---------- associate companies ---------- */
+  .as-page > * { position: absolute; }
+  .as-head { left: 18mm; right: 18mm; top: 20mm; }
+  .as-head h2 { font-size: 32pt; line-height: 1.05; margin-top: 6mm; }
+  .navy .as-head .lead { margin-top: 5mm; max-width: 140mm; font-size: 10.5pt; }
+  .as-list { left: 18mm; right: 18mm; top: 76mm; border-top: .25mm solid rgba(201,164,92,.45); }
+  .as-row { display: grid; grid-template-columns: 9mm 32mm 1fr; gap: 6mm; align-items: center; padding: 7mm 0; border-bottom: .2mm solid rgba(255,255,255,.14); }
+  .as-row .n { font-family: var(--serif); font-style: italic; font-size: 11pt; color: var(--gold); }
+  .as-logo { width: 32mm; height: 32mm; border: .3mm solid var(--gold); display: grid; place-items: center; font-family: var(--serif); font-size: 20pt; letter-spacing: .06em; color: var(--gold-l); background: rgba(255,255,255,.03); }
+  .as-row h3 { font-size: 17pt; color: #fff; line-height: 1.1; }
+  .as-row .meta { margin: 1.6mm 0 2.4mm; font-size: 6.8pt; letter-spacing: .24em; text-transform: uppercase; color: var(--gold); }
+  .navy .as-row p.desc { font-size: 9pt; line-height: 1.55; color: rgba(255,255,255,.76); max-width: 110mm; }
+  .as-row .web { display: inline-block; margin-top: 2.4mm; font-size: 7.6pt; letter-spacing: .14em; color: var(--gold-l); }
+
+  /* ---------- clients ---------- */
+  .cl-page > * { position: absolute; }
+  .cl-head { left: 18mm; right: 18mm; top: 20mm; }
+  .cl-head h2 { font-size: 32pt; line-height: 1.05; margin-top: 6mm; color: #0b1f5f; }
+  .cl-head h2 em { color: var(--gold-d); }
+  .cl-head .lead { margin-top: 5mm; max-width: 140mm; font-size: 10.5pt; color: var(--muted); }
+  .cl-grid { left: 18mm; right: 18mm; top: 76mm; display: grid; grid-template-columns: repeat(4, 1fr); border-top: .25mm solid var(--paper-line); border-left: .25mm solid var(--paper-line); }
+  .cl-grid div { height: 29mm; display: grid; place-items: center; border-right: .25mm solid var(--paper-line); border-bottom: .25mm solid var(--paper-line); font-size: 6.6pt; letter-spacing: .22em; text-transform: uppercase; color: #b5b9c8; background: #fff; }
+  .cl-quote { left: 18mm; right: 18mm; top: 208mm; display: grid; grid-template-columns: 12mm 1fr; gap: 4mm; padding-top: 7mm; border-top: .3mm solid var(--gold); }
+  .cl-quote .q { font-family: var(--serif); font-size: 46pt; line-height: .7; color: var(--gold); }
+  .cl-quote p { font-family: var(--serif); font-style: italic; font-size: 13pt; line-height: 1.45; color: #0b1f5f; }
+  .cl-quote small { display: block; margin-top: 3mm; font-size: 6.8pt; letter-spacing: .26em; text-transform: uppercase; color: var(--gold-d); font-style: normal; font-family: var(--sans); }
+
   /* ---------- 7 engagements ---------- */
   .cases { margin-top: 12mm; display: grid; grid-template-columns: 1fr 1fr; gap: 7mm; }
   .case { background: #fff; padding: 7mm 7mm 6mm; }
@@ -467,6 +494,67 @@
     <div class="gr-region"><span>04</span><h3>Africa</h3><p>Fast-growing markets, where the UAE has long served as a commercial and logistics bridge.</p></div>
     <div class="gr-region"><span>05</span><h3>The Americas</h3><p>International businesses using the UAE as a base to access the Middle East, Africa and South Asia.</p></div>
   </div>
+  <div class="folio"><span>HK Business Consultancy</span><b></b></div>
+</section>
+
+<!-- ASSOCIATE COMPANIES -->
+<!-- Replace each [ … ] entry with real details; swap "AC" for <img src="img/logos/name.png"> to show a logo. -->
+<section class="page navy as-page">
+  <img class="corner-seal" src="img/hk-seal.png" alt="">
+  <div class="as-head">
+    <p class="eyebrow">Associate Companies</p>
+    <h2>The HK <em>Network.</em></h2>
+    <p class="lead">A group of companies that share our standards and our ambitions — together extending what we can offer the businesses we work with.</p>
+  </div>
+  <div class="as-list">
+    <div class="as-row"><span class="n">01</span><div class="as-logo">AC</div><div>
+      <h3>[ Associate Company Name ]</h3><p class="meta">Sector · Location</p>
+      <p class="desc">A short description of the company — what it does, who it serves and how it works alongside HK Business Consultancy.</p>
+      <span class="web">www.website.com</span></div></div>
+    <div class="as-row"><span class="n">02</span><div class="as-logo">AC</div><div>
+      <h3>[ Associate Company Name ]</h3><p class="meta">Sector · Location</p>
+      <p class="desc">A short description of the company — what it does, who it serves and how it works alongside HK Business Consultancy.</p>
+      <span class="web">www.website.com</span></div></div>
+    <div class="as-row"><span class="n">03</span><div class="as-logo">AC</div><div>
+      <h3>[ Associate Company Name ]</h3><p class="meta">Sector · Location</p>
+      <p class="desc">A short description of the company — what it does, who it serves and how it works alongside HK Business Consultancy.</p>
+      <span class="web">www.website.com</span></div></div>
+    <div class="as-row"><span class="n">04</span><div class="as-logo">AC</div><div>
+      <h3>[ Associate Company Name ]</h3><p class="meta">Sector · Location</p>
+      <p class="desc">A short description of the company — what it does, who it serves and how it works alongside HK Business Consultancy.</p>
+      <span class="web">www.website.com</span></div></div>
+  </div>
+  <div class="folio"><span>HK Business Consultancy</span><b></b></div>
+</section>
+
+<!-- CLIENTS -->
+<!-- Replace each "Client logo" tile with <img src="img/clients/name.png" alt="Client name"> (only with each client's permission). -->
+<section class="page ivory cl-page" style="background:#fff">
+  <img class="corner-seal" src="img/hk-seal.png" alt="">
+  <div class="cl-head">
+    <p class="eyebrow">Our Clients</p>
+    <h2>Trusted by businesses <em>that build.</em></h2>
+    <p class="lead">From first-time founders to established brands, we are proud of the businesses we have helped launch, grow and expand.</p>
+  </div>
+  <div class="cl-grid">
+    <div>Client logo</div>
+    <div>Client logo</div>
+    <div>Client logo</div>
+    <div>Client logo</div>
+    <div>Client logo</div>
+    <div>Client logo</div>
+    <div>Client logo</div>
+    <div>Client logo</div>
+    <div>Client logo</div>
+    <div>Client logo</div>
+    <div>Client logo</div>
+    <div>Client logo</div>
+    <div>Client logo</div>
+    <div>Client logo</div>
+    <div>Client logo</div>
+    <div>Client logo</div>
+  </div>
+  <div class="cl-quote"><span class="q">&ldquo;</span><div><p>[ A short testimonial from a client, in their own words. ]</p><small>[ Name · Title, Company ]</small></div></div>
   <div class="folio"><span>HK Business Consultancy</span><b></b></div>
 </section>
 
