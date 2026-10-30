@@ -117,11 +117,13 @@
   .ch-page > * { position: absolute; }
   .ch-head { left: 18mm; right: 18mm; top: 20mm; }
   .ch-head h2 { font-size: 27pt; line-height: 1.1; max-width: 150mm; margin-top: 5mm; }
-  .ch-photo { left: 18mm; top: 66mm; width: 62mm; height: 82mm; background: radial-gradient(80% 70% at 50% 35%, #12286b, #071232); border: .3mm solid var(--gold); display: grid; place-items: center; }
-  .ch-photo::after { content: ''; position: absolute; inset: 3mm; border: .2mm solid rgba(201,164,92,.45); }
+  .ch-frame { left: 22mm; top: 70mm; width: 62mm; height: 82mm; border: .35mm solid var(--gold); }
+  .ch-photo { left: 15mm; top: 63mm; width: 62mm; height: 82mm; background: #071232; border: 1.6mm solid #fff; outline: .35mm solid var(--gold); }
   .ch-photo img.founder { position: absolute; inset: 0; width: 100%; height: 100%; }
-  .ch-photo::after { z-index: 1; }
-  .ch-name { left: 18mm; top: 154mm; width: 62mm; }
+  .ch-corner { width: 8mm; height: 8mm; border-color: var(--gold-d); border-style: solid; border-width: 0; }
+  .ch-corner.tl { left: 11mm; top: 59mm; border-top-width: .6mm; border-left-width: .6mm; }
+  .ch-corner.br { left: 80mm; top: 149mm; border-bottom-width: .6mm; border-right-width: .6mm; }
+  .ch-name { left: 15mm; top: 160mm; width: 62mm; }
   .ch-name p { font-family: var(--serif); font-size: 14pt; color: #0b1f5f; line-height: 1.15; }
   .ch-name small { display: block; margin-top: 1.6mm; font-size: 6.6pt; letter-spacing: .26em; text-transform: uppercase; color: var(--gold-d); }
   .ch-body { left: 90mm; right: 18mm; top: 66mm; }
@@ -337,6 +339,7 @@
     <h2>&ldquo;I don&rsquo;t just help businesses grow. <em>I grow with them.</em>&rdquo;</h2>
   </div>
 
+  <div class="ch-frame"></div><span class="ch-corner tl"></span><span class="ch-corner br"></span>
   <div class="ch-photo"><img class="founder" src="img/founder.jpg" alt="Habib Koya Marapatta, Founder"></div>
   <div class="ch-name">
     <p>Habib Koya Marapatta</p>
