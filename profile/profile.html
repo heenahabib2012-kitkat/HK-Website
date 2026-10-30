@@ -113,6 +113,28 @@
   .principle h3 { font-size: 28pt; line-height: 1; color: var(--gold-l); }
   .principle p { font-family: var(--serif); font-style: italic; font-size: 11pt; line-height: 1.35; color: rgba(255,255,255,.85); }
 
+  /* ---------- chairman's message ---------- */
+  .ch-page > * { position: absolute; }
+  .ch-head { left: 18mm; right: 18mm; top: 20mm; }
+  .ch-head h2 { font-size: 27pt; line-height: 1.1; max-width: 150mm; margin-top: 5mm; }
+  .ch-photo { left: 18mm; top: 66mm; width: 62mm; height: 82mm; background: radial-gradient(80% 70% at 50% 35%, #12286b, #071232); border: .3mm solid var(--gold); display: grid; place-items: center; }
+  .ch-photo::after { content: ''; position: absolute; inset: 3mm; border: .2mm solid rgba(201,164,92,.45); }
+  .ch-photo img { width: 30mm; opacity: .9; }
+  .ch-name { left: 18mm; top: 154mm; width: 62mm; }
+  .ch-name p { font-family: var(--serif); font-size: 14pt; color: #0b1f5f; line-height: 1.15; }
+  .ch-name small { display: block; margin-top: 1.6mm; font-size: 6.6pt; letter-spacing: .26em; text-transform: uppercase; color: var(--gold-d); }
+  .ch-body { left: 90mm; right: 18mm; top: 66mm; }
+  .ch-body .q { font-family: var(--serif); font-size: 52pt; line-height: .6; color: var(--gold); height: 9mm; }
+  .ch-body p { font-size: 10pt; line-height: 1.72; color: #364066; margin-bottom: 3.6mm; }
+  .ch-body p.open { font-family: var(--serif); font-style: italic; font-size: 13pt; line-height: 1.45; color: #0b1f5f; }
+  .ch-sign { left: 90mm; right: 18mm; top: 176mm; padding-top: 5mm; border-top: .3mm solid var(--gold); display: flex; justify-content: space-between; align-items: flex-end; }
+  .ch-band { left: 0; right: 0; bottom: 0; height: 74mm; background: radial-gradient(80% 120% at 30% 30%, var(--navy-2), var(--navy) 70%); padding: 18mm 18mm 0; }
+  .ch-band p { font-family: var(--serif); font-size: 24pt; line-height: 1.15; color: #fff; }
+  .ch-band em { color: var(--gold-l); }
+  .ch-band small { display: block; margin-top: 5mm; font-size: 6.8pt; letter-spacing: .3em; text-transform: uppercase; color: var(--gold); }
+  .ch-sign .sig { font-family: var(--serif); font-style: italic; font-size: 20pt; color: #0b1f5f; }
+  .ch-sign small { font-size: 6.6pt; letter-spacing: .26em; text-transform: uppercase; color: var(--gold-d); text-align: right; line-height: 1.8; }
+
   /* ---------- 3 vision & mission ---------- */
   .vm-page { background: #04172e url(img/liberty.jpg) center/cover no-repeat; }
   .vm-page::before { content: ''; position: absolute; inset: 0; background:
@@ -302,6 +324,35 @@
         <cite>Honest &amp; Keen · The HK philosophy</cite>
       </div>
     </div>
+  </div>
+  <div class="folio" style="color:rgba(255,255,255,.45)"><span>HK Business Consultancy</span><b></b></div>
+</section>
+
+<!-- FOUNDER'S MESSAGE -->
+<section class="page ivory ch-page">
+  <img class="corner-seal" src="img/hk-seal.png" alt="">
+  <div class="ch-head">
+    <p class="eyebrow">Founder&rsquo;s Message</p>
+    <h2>&ldquo;I don&rsquo;t just help businesses grow. <em>I grow with them.</em>&rdquo;</h2>
+  </div>
+
+  <div class="ch-photo"><img src="img/hk-seal.png" alt=""></div>
+  <div class="ch-name">
+    <p>Habib Koya Marapatta</p>
+    <small>Founder</small>
+  </div>
+
+  <div class="ch-body">
+    <div class="q">&ldquo;</div>
+    <p class="open">What began as simple coffee conversations in Kuwait quickly evolved into something much bigger.</p>
+    <p>I was fortunate to have friends who believed in my ideas more than I did. Their encouragement is what sparked HK Business Consultancy.</p>
+    <p>Over the years, I&rsquo;ve learned that success is never built in isolation. It takes <strong>strategy, trust, execution and empathy.</strong> At HK Business Consultancy, our mission is to walk with you through every challenge, every pivot and every breakthrough.</p>
+  </div>
+
+  <div class="ch-band"><p>We don&rsquo;t just give you a plan.<br><em>We build your future with you.</em></p><small>Honest &amp; Keen</small></div>
+  <div class="ch-sign">
+    <span class="sig">Habib Koya Marapatta</span>
+    <small>Founder<br>HK Business Consultancy</small>
   </div>
   <div class="folio" style="color:rgba(255,255,255,.45)"><span>HK Business Consultancy</span><b></b></div>
 </section>
