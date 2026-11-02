@@ -1,0 +1,437 @@
+<title>Competitor Ledger</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a tailor's ledger. Masthead, summary, price ladder against our target bands, filter bar, one entry per house; the editor opens as a sheet. */
+:root{
+  --paper:#f1f0eb; --sheet:#fbfaf7; --ink:#15213b; --ink-2:#525b74; --rule:#d8d5cb;
+  --brass:#8c6d31; --brass-soft:#ece2cc; --navy-soft:#e1e6f0; --navy-bar:#2a3a62;
+  --hi:#a3352b; --hi-bg:#f6e2de; --mid:#8a5f0e; --mid-bg:#f4e8cf; --lo:#356246; --lo-bg:#e0ede4;
+  --display:"Bodoni Moda","Didot","Bodoni 72",Georgia,serif;
+  --body:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#0e1422; --sheet:#151d30; --ink:#ebe7dc; --ink-2:#a2a8b9; --rule:#28324d;
+  --brass:#d2af69; --brass-soft:#3a3122; --navy-soft:#1e2843; --navy-bar:#8fa3d6;
+  --hi:#ee8b7f; --hi-bg:#3c2020; --mid:#e3b862; --mid-bg:#3a2f18; --lo:#88c39d; --lo-bg:#1a3325; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#0e1422; --sheet:#151d30; --ink:#ebe7dc; --ink-2:#a2a8b9; --rule:#28324d;
+  --brass:#d2af69; --brass-soft:#3a3122; --navy-soft:#1e2843; --navy-bar:#8fa3d6;
+  --hi:#ee8b7f; --hi-bg:#3c2020; --mid:#e3b862; --mid-bg:#3a2f18; --lo:#88c39d; --lo-bg:#1a3325; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5}
+.wrap{max-width:1180px;margin:0 auto;padding-block:28px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:28px}
+h1,h2,h3{font-family:var(--display);font-weight:500;margin:0;text-wrap:balance}
+.eyebrow{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--brass);font-weight:600}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+
+/* masthead */
+.mast{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px;border-bottom:1px solid var(--ink);padding-bottom:18px}
+.mast h1{font-size:clamp(34px,6vw,54px);line-height:1;letter-spacing:-.01em}
+.mast h1 em{font-style:italic;color:var(--brass)}
+.mast p{margin:8px 0 0;color:var(--ink-2);max-width:56ch}
+.actions{display:flex;gap:10px;flex-wrap:wrap}
+.btn{border:1px solid var(--ink);background:transparent;padding:9px 16px;border-radius:2px;cursor:pointer;font-weight:500;font-size:14px}
+.btn:hover{background:var(--navy-soft)}
+.btn.primary{background:var(--ink);color:var(--paper)}
+.btn.primary:hover{opacity:.9}
+.btn.danger{border-color:var(--hi);color:var(--hi)}
+.btn.danger.armed{background:var(--hi);color:var(--sheet)}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.note{font-size:13px;color:var(--mid);background:var(--mid-bg);padding:8px 12px;border-radius:2px}
+
+/* summary */
+.summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.summary div{padding:14px 16px;border-right:1px solid var(--rule)}
+.summary div:last-child{border-right:0}
+.summary b{display:block;font-family:var(--display);font-size:30px;font-weight:500;line-height:1.1}
+.summary span{font-size:12px;color:var(--ink-2)}
+
+/* ladder */
+.ladder{background:var(--sheet);border:1px solid var(--rule);padding:20px;display:grid;gap:14px}
+.ladder-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:12px}
+.ladder-head h2{font-size:24px}
+.seg{display:inline-flex;border:1px solid var(--rule);border-radius:2px}
+.seg button{border:0;background:transparent;padding:6px 12px;cursor:pointer;font-size:13px;color:var(--ink-2)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.chart-scroll{overflow-x:auto}
+.chart{min-width:560px;display:grid;grid-template-columns:150px 1fr;row-gap:6px;font-size:13px}
+.chart .lbl{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-right:10px;align-self:center}
+.chart .lbl.ours{font-family:var(--display);font-style:italic;color:var(--brass)}
+.track{position:relative;height:22px}
+.zone{position:absolute;top:-6px;bottom:-6px;background:var(--brass-soft);border-left:1px dashed var(--brass);border-right:1px dashed var(--brass)}
+.bar{position:absolute;top:6px;height:10px;background:var(--navy-bar);border-radius:5px;min-width:4px}
+.bar.ours{background:var(--brass)}
+.bar-txt{position:absolute;top:2px;font-size:11px;color:var(--ink-2);white-space:nowrap}
+.axis{position:relative;height:20px;border-top:1px solid var(--rule)}
+.axis span{position:absolute;top:4px;transform:translateX(-50%);font-size:11px;color:var(--ink-2)}
+.legend{font-size:12px;color:var(--ink-2);display:flex;flex-wrap:wrap;gap:16px}
+.legend i{display:inline-block;width:14px;height:10px;vertical-align:-1px;margin-right:6px}
+.empty-chart{color:var(--ink-2);font-size:13px;padding:8px 0}
+
+/* toolbar */
+.toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.toolbar input,.toolbar select{background:var(--sheet);border:1px solid var(--rule);padding:8px 10px;border-radius:2px;min-width:0}
+.toolbar input{flex:1 1 220px}
+.count{margin-left:auto;font-size:13px;color:var(--ink-2)}
+
+/* entries */
+.list{display:grid;gap:12px}
+.entry{background:var(--sheet);border:1px solid var(--rule);display:grid;grid-template-columns:4px minmax(0,1.4fr) minmax(0,1fr) minmax(0,1fr) auto;gap:18px;padding:16px 18px 16px 0;cursor:pointer;text-align:left;width:100%;align-items:start}
+.entry:hover{border-color:var(--ink-2)}
+.stripe{align-self:stretch;background:var(--rule)}
+.stripe.High{background:var(--hi)} .stripe.Medium{background:var(--mid)} .stripe.Low{background:var(--lo)}
+.entry h3{font-size:22px;line-height:1.15}
+.entry .meta{font-size:13px;color:var(--ink-2);margin-top:2px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.chip{font-size:11px;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--rule);padding:2px 7px;border-radius:2px;color:var(--ink-2)}
+.pill{font-size:12px;font-weight:600;padding:3px 9px;border-radius:999px;white-space:nowrap}
+.pill.High{background:var(--hi-bg);color:var(--hi)} .pill.Medium{background:var(--mid-bg);color:var(--mid)} .pill.Low{background:var(--lo-bg);color:var(--lo)}
+.pill.status{background:var(--navy-soft);color:var(--ink)}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:2px 12px;font-size:13px}
+.kv dt{color:var(--ink-2)} .kv dd{margin:0}
+.scores{display:grid;gap:4px;font-size:12px}
+.srow{display:grid;grid-template-columns:82px 1fr 18px;gap:8px;align-items:center;color:var(--ink-2)}
+.sbar{height:5px;background:var(--rule);border-radius:3px;overflow:hidden}
+.sbar i{display:block;height:100%;background:var(--ink)}
+.overall{text-align:right;display:grid;gap:6px;justify-items:end}
+.overall b{font-family:var(--display);font-size:34px;font-weight:500;line-height:1}
+.overall small{font-size:11px;color:var(--ink-2)}
+.empty{background:var(--sheet);border:1px dashed var(--rule);padding:36px 24px;text-align:center;color:var(--ink-2)}
+.empty h3{color:var(--ink);font-size:24px;margin-bottom:6px}
+@media (max-width:860px){
+  .entry{grid-template-columns:4px minmax(0,1fr) auto;row-gap:12px}
+  .entry .c-price,.entry .c-scores{grid-column:2 / 4}
+  .entry .overall{grid-row:1;grid-column:3}
+}
+
+/* editor */
+dialog{border:0;padding:0;background:var(--sheet);color:var(--ink);width:min(820px,100%);max-height:calc(100% - 24px);border-radius:2px;box-shadow:0 20px 60px rgba(10,15,30,.35)}
+dialog::backdrop{background:rgba(12,18,34,.55)}
+.ed{display:grid;grid-template-rows:auto 1fr auto;max-height:calc(100vh - 24px)}
+.ed-head{padding:20px 22px 14px;border-bottom:1px solid var(--rule);display:flex;justify-content:space-between;gap:12px;align-items:start}
+.ed-head h2{font-size:28px}
+.ed-body{overflow:auto;padding:4px 22px 22px;display:grid;gap:22px}
+.ed-foot{padding:14px 22px;border-top:1px solid var(--rule);display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.ed-foot .spacer{flex:1}
+fieldset{border:0;padding:0;margin:0;display:grid;gap:12px}
+legend{padding:16px 0 8px;font-family:var(--display);font-size:19px;border-bottom:1px solid var(--rule);width:100%;margin-bottom:4px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+label.f{display:grid;gap:4px;font-size:12px;color:var(--ink-2);font-weight:500}
+label.f input,label.f select,label.f textarea{background:var(--paper);border:1px solid var(--rule);padding:8px 10px;border-radius:2px;font-size:14px;color:var(--ink);width:100%}
+textarea{resize:vertical;min-height:72px}
+.checks{display:flex;flex-wrap:wrap;gap:8px}
+.checks label{display:inline-flex;gap:6px;align-items:center;font-size:13px;border:1px solid var(--rule);padding:6px 10px;border-radius:2px;cursor:pointer}
+.checks input{accent-color:var(--brass)}
+.price-row{display:grid;grid-template-columns:90px 1fr 1fr;gap:10px;align-items:end}
+.price-row .pl{font-size:13px;padding-bottom:9px}
+.score-row{display:grid;grid-template-columns:120px 1fr 28px;gap:10px;align-items:center;font-size:13px}
+.score-row input{accent-color:var(--ink);width:100%}
+.hint{font-size:12px;color:var(--ink-2);margin:0}
+.x{border:0;background:transparent;font-size:24px;line-height:1;cursor:pointer;color:var(--ink-2);padding:4px 8px}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--paper);padding:10px 16px;border-radius:2px;font-size:14px}
+@media (prefers-reduced-motion:no-preference){.entry{transition:border-color .15s}}
+</style>
+
+<div class="wrap">
+  <header class="mast">
+    <div>
+      <div class="eyebrow">Project Executive · R&amp;D · Workstream 02</div>
+      <h1>Competitor <em>Ledger</em></h1>
+      <p>Every house we study, in one place: what they sell, what they charge, how well they make it, and where we can beat them.</p>
+    </div>
+    <div class="actions">
+      <button class="btn" id="exportBtn" type="button">Export CSV</button>
+      <button class="btn primary" id="addBtn" type="button">Add competitor</button>
+    </div>
+  </header>
+  <div class="note" id="note" hidden></div>
+
+  <section class="summary" id="summary" aria-label="Summary"></section>
+
+  <section class="ladder" aria-labelledby="ladderTitle">
+    <div class="ladder-head">
+      <div>
+        <div class="eyebrow">Price ladder · ₹, GST-inclusive</div>
+        <h2 id="ladderTitle">Where they sit against our target bands</h2>
+      </div>
+      <div class="seg" role="group" aria-label="Category">
+        <button type="button" data-cat="suit" aria-pressed="true">Suits</button>
+        <button type="button" data-cat="shirt" aria-pressed="false">Shirts</button>
+        <button type="button" data-cat="trouser" aria-pressed="false">Trousers</button>
+      </div>
+    </div>
+    <div class="chart-scroll"><div class="chart" id="chart"></div></div>
+    <div class="legend">
+      <span><i style="background:var(--navy-bar)"></i>Competitor's price range</span>
+      <span><i style="background:var(--brass-soft);border:1px dashed var(--brass)"></i>Our target band (working hypothesis)</span>
+    </div>
+  </section>
+
+  <section aria-label="Competitors" style="display:grid;gap:14px">
+    <div class="toolbar">
+      <input id="q" type="search" placeholder="Search names, notes, strengths…" aria-label="Search">
+      <select id="fTier" aria-label="Tier"><option value="">All tiers</option></select>
+      <select id="fThreat" aria-label="Threat"><option value="">Any threat</option><option>High</option><option>Medium</option><option>Low</option></select>
+      <select id="fStatus" aria-label="Status"><option value="">Any status</option></select>
+      <select id="sort" aria-label="Sort by">
+        <option value="threat">Sort: threat</option>
+        <option value="score">Sort: overall score</option>
+        <option value="suit">Sort: suit price</option>
+        <option value="name">Sort: name</option>
+        <option value="updated">Sort: recently updated</option>
+      </select>
+      <span class="count" id="count"></span>
+    </div>
+    <div class="list" id="list"></div>
+  </section>
+</div>
+
+<dialog id="dlg" aria-labelledby="edTitle">
+  <form class="ed" id="form" method="dialog">
+    <div class="ed-head">
+      <div><div class="eyebrow" id="edEyebrow">New entry</div><h2 id="edTitle">Add competitor</h2></div>
+      <button class="x" type="button" id="closeX" aria-label="Close">×</button>
+    </div>
+    <div class="ed-body">
+      <fieldset>
+        <legend>The house</legend>
+        <div class="grid2">
+          <label class="f">Brand name<input id="f_name" required placeholder="e.g. Louis Philippe"></label>
+          <label class="f">Parent company<input id="f_parent" placeholder="e.g. Aditya Birla Lifestyle Brands"></label>
+          <label class="f">Tier<select id="f_tier"></select></label>
+          <label class="f">Origin<input id="f_origin" placeholder="e.g. India, Italy"></label>
+          <label class="f">Website<input id="f_website" placeholder="https://"></label>
+          <label class="f">Analysis status<select id="f_status"></select></label>
+          <label class="f">Threat to us<select id="f_threat"><option>High</option><option>Medium</option><option>Low</option></select></label>
+          <label class="f">Analysed by<input id="f_by" placeholder="Vyshnav, …"></label>
+        </div>
+        <div><div class="hint" style="margin-bottom:6px">What they sell in our three categories</div><div class="checks" id="f_cats"></div></div>
+        <div><div class="hint" style="margin-bottom:6px">How they make suits</div><div class="checks" id="f_offers"></div></div>
+        <label class="f">Distribution (stores, online, multi-brand, cities)<input id="f_channels" placeholder="e.g. 500+ exclusive stores, own site, Myntra"></label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Pricing</legend>
+        <p class="hint">Retail prices in rupees as seen on shelf or site. Leave blank if you haven't checked yet.</p>
+        <div class="price-row"><span></span><span class="hint">From ₹</span><span class="hint">To ₹</span></div>
+        <div class="price-row"><span class="pl">Shirts</span><input class="num" id="p_shirt_min" inputmode="numeric" aria-label="Shirts from"><input class="num" id="p_shirt_max" inputmode="numeric" aria-label="Shirts to"></div>
+        <div class="price-row"><span class="pl">Trousers</span><input class="num" id="p_trouser_min" inputmode="numeric" aria-label="Trousers from"><input class="num" id="p_trouser_max" inputmode="numeric" aria-label="Trousers to"></div>
+        <div class="price-row"><span class="pl">Suits</span><input class="num" id="p_suit_min" inputmode="numeric" aria-label="Suits from"><input class="num" id="p_suit_max" inputmode="numeric" aria-label="Suits to"></div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Scorecard</legend>
+        <p class="hint">1 = poor, 5 = excellent. Score what you've touched and worn, not what the ads say. 0 = not scored yet.</p>
+        <div id="f_scores" style="display:grid;gap:8px"></div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Analysis</legend>
+        <div class="grid2">
+          <label class="f">Fabrics &amp; construction<textarea id="f_fabric" placeholder="Mills, composition, fused vs canvas, collar build…"></textarea></label>
+          <label class="f">Fit notes<textarea id="f_fit" placeholder="Fits offered, how they sit on Indian proportions…"></textarea></label>
+          <label class="f">Strengths<textarea id="f_strengths"></textarea></label>
+          <label class="f">Weaknesses<textarea id="f_weak"></textarea></label>
+        </div>
+        <label class="f">Our opening against them<textarea id="f_opp" placeholder="What we can do that they can't or won't"></textarea></label>
+        <label class="f">Sources &amp; dates<textarea id="f_sources" placeholder="Store visit, Bandra, 12 Nov · Business Standard, July 2025…"></textarea></label>
+      </fieldset>
+    </div>
+    <div class="ed-foot">
+      <button class="btn danger" type="button" id="delBtn" hidden>Delete</button>
+      <span class="spacer"></span>
+      <span class="hint" id="edMsg"></span>
+      <button class="btn" type="button" id="cancelBtn">Cancel</button>
+      <button class="btn primary" type="submit" id="saveBtn">Save</button>
+    </div>
+  </form>
+</dialog>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+const TIERS=["Mass premium","Premium","Accessible luxury","Luxury","Bespoke house"];
+const STATUSES=["To analyse","In progress","Analysed"];
+const CATS=[["shirt","Shirts"],["trouser","Trousers"],["suit","Suits"]];
+const OFFERS=["Ready-to-wear","Made-to-measure","Bespoke"];
+const SCORES=[["fit","Fit"],["fabric","Fabric"],["construction","Construction"],["brand","Brand"],["value","Value"],["experience","Experience"]];
+const OURS={shirt:[[2499,3999,"Our shirts"]],trouser:[[3499,5499,"Our trousers"]],suit:[[17999,29999,"Our RTW suits"],[40000,90000,"Our bespoke"]]};
+const THREAT_RANK={High:0,Medium:1,Low:2};
+
+let items=[], loaded=false, mode="db", col=null, canWrite=true, editingId=null, cat="suit";
+const $=s=>document.getElementById(s);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const inr=n=>"₹"+Number(n).toLocaleString("en-IN");
+const short=n=>n>=100000?"₹"+(n/100000).toFixed(n%100000?1:0)+"L":n>=1000?"₹"+(n/1000).toFixed(n%1000?1:0)+"k":"₹"+n;
+
+function overall(it){const v=SCORES.map(([k])=>+(it.scores||{})[k]||0).filter(x=>x>0);return v.length?v.reduce((a,b)=>a+b,0)/v.length:0}
+function range(it,c){const p=(it.prices||{})[c]||{};const a=+p.min||0,b=+p.max||0;if(!a&&!b)return null;return [a||b,b||a]}
+function note(msg){$("note").textContent=msg;$("note").hidden=!msg}
+function toast(msg){const t=$("toast");t.textContent=msg;t.hidden=false;clearTimeout(toast._t);toast._t=setTimeout(()=>t.hidden=true,2400)}
+
+/* ---------- render ---------- */
+function render(){renderSummary();renderChart();renderList();$("addBtn").disabled=!canWrite}
+
+function renderSummary(){
+  const n=items.length, done=items.filter(i=>i.status==="Analysed").length, high=items.filter(i=>i.threat==="High").length;
+  const suits=items.map(i=>range(i,"suit")).filter(Boolean);
+  const med=suits.length?suits.map(r=>(r[0]+r[1])/2).sort((a,b)=>a-b)[Math.floor(suits.length/2)]:0;
+  const sc=items.map(overall).filter(x=>x>0); const best=sc.length?Math.max(...sc):0;
+  $("summary").innerHTML=[
+    [n,"houses in the ledger"],[done+" / "+n,"fully analysed"],[high,"rated high threat"],
+    [med?short(Math.round(med)):"—","median suit price seen"],[best?best.toFixed(1):"—","best overall score"]
+  ].map(([b,s])=>`<div><b class="num">${esc(b)}</b><span>${esc(s)}</span></div>`).join("");
+}
+
+function renderChart(){
+  document.querySelectorAll(".seg button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.cat===cat));
+  const rows=items.map(i=>({name:i.name,r:range(i,cat)})).filter(x=>x.r).sort((a,b)=>a.r[0]-b.r[0]);
+  const zones=OURS[cat];
+  let max=Math.max(...zones.map(z=>z[1]),...rows.map(x=>x.r[1]));
+  const steps=[500,1000,2000,2500,5000,10000,20000,25000,50000,100000];
+  const step=steps.find(s=>max/s<=6)||200000; max=Math.ceil(max*1.05/step)*step;
+  const pct=v=>(v/max*100).toFixed(2)+"%";
+  const zoneHtml=zones.map(z=>`<div class="zone" style="left:${pct(z[0])};width:calc(${pct(z[1])} - ${pct(z[0])})"></div>`).join("");
+  let h="";
+  zones.forEach(z=>{h+=`<div class="lbl ours">${esc(z[2])}</div><div class="track">${zoneHtml}<div class="bar ours" style="left:${pct(z[0])};width:calc(${pct(z[1])} - ${pct(z[0])})"></div><span class="bar-txt num" style="left:calc(${pct(z[1])} + 6px)">${short(z[0])}–${short(z[1])}</span></div>`});
+  rows.forEach(x=>{const [a,b]=x.r;const right=b/max>.8;
+    h+=`<div class="lbl" title="${esc(x.name)}">${esc(x.name)}</div><div class="track">${zoneHtml}<div class="bar" style="left:${pct(a)};width:calc(${pct(b)} - ${pct(a)})"></div><span class="bar-txt num" style="${right?`right:calc(100% - ${pct(a)} + 6px)`:`left:calc(${pct(b)} + 6px)`}">${a===b?short(a):short(a)+"–"+short(b)}</span></div>`});
+  let ticks="";for(let v=0;v<=max;v+=step)ticks+=`<span class="num" style="left:${pct(v)}">${v?short(v):"0"}</span>`;
+  h+=`<div></div><div class="axis">${ticks}</div>`;
+  if(!rows.length)h+=`<div></div><div class="empty-chart">No ${cat} prices recorded yet. Add a range on any competitor and it appears here.</div>`;
+  $("chart").innerHTML=h;
+}
+
+function renderList(){
+  const q=$("q").value.trim().toLowerCase(), ft=$("fTier").value, fth=$("fThreat").value, fs=$("fStatus").value, s=$("sort").value;
+  let rows=items.filter(i=>(!ft||i.tier===ft)&&(!fth||i.threat===fth)&&(!fs||i.status===fs)&&
+    (!q||[i.name,i.parent,i.origin,i.channels,i.fabric,i.fit,i.strengths,i.weaknesses,i.opportunity,i.sources].join(" ").toLowerCase().includes(q)));
+  const by={name:(a,b)=>(a.name||"").localeCompare(b.name||""),
+    threat:(a,b)=>(THREAT_RANK[a.threat]??3)-(THREAT_RANK[b.threat]??3)||by.name(a,b),
+    score:(a,b)=>overall(b)-overall(a)||by.name(a,b),
+    suit:(a,b)=>((range(b,"suit")||[0,0])[1])-((range(a,"suit")||[0,0])[1]),
+    updated:(a,b)=>(b.updatedAt||"").localeCompare(a.updatedAt||"")};
+  rows.sort(by[s]);
+  $("count").textContent=items.length?`${rows.length} of ${items.length}`:"";
+  if(!loaded){$("list").innerHTML=`<div class="empty"><h3>Opening the ledger…</h3>Fetching your saved competitors.</div>`;return}
+  if(!items.length){$("list").innerHTML=`<div class="empty"><h3>No houses recorded yet</h3>Start with the brands you're measuring yourself against. Press <b>Add competitor</b> and fill in what you know; leave the rest for later.</div>`;return}
+  if(!rows.length){$("list").innerHTML=`<div class="empty">Nothing matches these filters.</div>`;return}
+  $("list").innerHTML=rows.map(i=>{
+    const o=overall(i);
+    const prices=CATS.map(([k,l])=>{const r=range(i,k);return `<dt>${l}</dt><dd class="num">${r?(r[0]===r[1]?inr(r[0]):inr(r[0])+" – "+inr(r[1])):"—"}</dd>`}).join("");
+    const sc=SCORES.map(([k,l])=>{const v=+(i.scores||{})[k]||0;return `<div class="srow"><span>${l}</span><span class="sbar"><i style="width:${v*20}%"></i></span><span class="num">${v||"–"}</span></div>`}).join("");
+    const chips=[...(i.offers||[]),i.origin].filter(Boolean).map(c=>`<span class="chip">${esc(c)}</span>`).join("");
+    return `<button type="button" class="entry" data-id="${esc(i.id)}">
+      <span class="stripe ${esc(i.threat)}"></span>
+      <div><h3>${esc(i.name||"Untitled")}</h3><div class="meta">${esc([i.tier,i.parent].filter(Boolean).join(" · "))}</div><div class="chips">${chips}</div>
+        ${i.opportunity?`<div class="meta" style="margin-top:8px;color:var(--ink)"><span class="eyebrow">Our opening</span> ${esc(i.opportunity.length>140?i.opportunity.slice(0,140)+"…":i.opportunity)}</div>`:""}</div>
+      <dl class="kv c-price">${prices}</dl>
+      <div class="scores c-scores">${sc}</div>
+      <div class="overall"><b class="num">${o?o.toFixed(1):"–"}</b><small>overall / 5</small>
+        ${i.threat?`<span class="pill ${esc(i.threat)}">${esc(i.threat)} threat</span>`:""}<span class="pill status">${esc(i.status||"To analyse")}</span></div>
+    </button>`}).join("");
+}
+
+/* ---------- editor ---------- */
+function fillSelect(el,opts){el.innerHTML=opts.map(o=>`<option>${esc(o)}</option>`).join("")}
+fillSelect($("f_tier"),TIERS);fillSelect($("f_status"),STATUSES);
+$("fTier").innerHTML+=TIERS.map(t=>`<option>${esc(t)}</option>`).join("");
+$("fStatus").innerHTML+=STATUSES.map(t=>`<option>${esc(t)}</option>`).join("");
+$("f_cats").innerHTML=CATS.map(([k,l])=>`<label><input type="checkbox" id="cat_${k}" value="${k}">${l}</label>`).join("");
+$("f_offers").innerHTML=OFFERS.map((o,n)=>`<label><input type="checkbox" id="off_${n}" value="${o}">${o}</label>`).join("");
+$("f_scores").innerHTML=SCORES.map(([k,l])=>`<div class="score-row"><label for="s_${k}">${l}</label><input type="range" id="s_${k}" min="0" max="5" step="1" value="0"><output class="num" id="o_${k}">–</output></div>`).join("");
+SCORES.forEach(([k])=>$("s_"+k).addEventListener("input",e=>$("o_"+k).textContent=+e.target.value||"–"));
+
+const F={name:"f_name",parent:"f_parent",tier:"f_tier",origin:"f_origin",website:"f_website",status:"f_status",threat:"f_threat",analysedBy:"f_by",channels:"f_channels",fabric:"f_fabric",fit:"f_fit",strengths:"f_strengths",weaknesses:"f_weak",opportunity:"f_opp",sources:"f_sources"};
+
+function openEditor(id){
+  editingId=id||null; const it=items.find(i=>i.id===id)||{tier:"Premium",status:"To analyse",threat:"Medium",categories:["shirt","trouser","suit"],offers:["Ready-to-wear"]};
+  $("edTitle").textContent=id?(it.name||"Untitled"):"Add competitor";
+  $("edEyebrow").textContent=id?("Last updated "+(it.updatedAt?new Date(it.updatedAt).toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"}):"—")):"New entry";
+  for(const [k,el] of Object.entries(F))$(el).value=it[k]??"";
+  CATS.forEach(([k])=>$("cat_"+k).checked=(it.categories||[]).includes(k));
+  OFFERS.forEach((o,n)=>$("off_"+n).checked=(it.offers||[]).includes(o));
+  CATS.forEach(([k])=>{const p=(it.prices||{})[k]||{};$(`p_${k}_min`).value=p.min||"";$(`p_${k}_max`).value=p.max||""});
+  SCORES.forEach(([k])=>{const v=+(it.scores||{})[k]||0;$("s_"+k).value=v;$("o_"+k).textContent=v||"–"});
+  $("delBtn").hidden=!id||!canWrite;$("delBtn").classList.remove("armed");$("delBtn").textContent="Delete";
+  $("saveBtn").disabled=!canWrite;$("edMsg").textContent=canWrite?"":"You can view this ledger but not change it.";
+  $("dlg").showModal();
+}
+function readForm(){
+  const it=editingId?items.find(i=>i.id===editingId):null; const now=new Date().toISOString(); const d={};
+  for(const [k,el] of Object.entries(F))d[k]=$(el).value.trim();
+  d.categories=CATS.map(([k])=>k).filter(k=>$("cat_"+k).checked);
+  d.offers=OFFERS.filter((o,n)=>$("off_"+n).checked);
+  const num=v=>{const n=parseInt(String(v).replace(/[^\d]/g,""),10);return isNaN(n)?0:n};
+  d.prices={};CATS.forEach(([k])=>{let a=num($(`p_${k}_min`).value),b=num($(`p_${k}_max`).value);if(a&&b&&a>b)[a,b]=[b,a];d.prices[k]={min:a,max:b}});
+  d.scores={};SCORES.forEach(([k])=>d.scores[k]=+$("s_"+k).value);
+  d.createdAt=it?.createdAt||now; d.updatedAt=now; return d;
+}
+$("form").addEventListener("submit",async e=>{
+  e.preventDefault(); if(!canWrite)return;
+  if(!$("f_name").value.trim()){$("f_name").focus();$("edMsg").textContent="Give the brand a name first.";return}
+  const d=readForm(); $("saveBtn").disabled=true; $("edMsg").textContent="Saving…";
+  try{await save(editingId,d);$("dlg").close();toast(editingId?"Saved":"Added to the ledger")}
+  catch(err){$("edMsg").textContent=errMsg(err)}
+  finally{$("saveBtn").disabled=!canWrite}
+});
+$("delBtn").addEventListener("click",async()=>{
+  const b=$("delBtn"); if(!b.classList.contains("armed")){b.classList.add("armed");b.textContent="Press again to delete";return}
+  try{await remove(editingId);$("dlg").close();toast("Deleted")}catch(err){$("edMsg").textContent=errMsg(err)}
+});
+$("cancelBtn").onclick=$("closeX").onclick=()=>$("dlg").close();
+$("addBtn").onclick=()=>openEditor(null);
+$("list").addEventListener("click",e=>{const b=e.target.closest(".entry");if(b)openEditor(b.dataset.id)});
+["q","fTier","fThreat","fStatus","sort"].forEach(id=>$(id).addEventListener("input",renderList));
+document.querySelectorAll(".seg button").forEach(b=>b.onclick=()=>{cat=b.dataset.cat;renderChart()});
+
+function errMsg(err){
+  if(err?.code==="invalid_argument"){canWrite=false;render();return "You don't have permission to change this ledger."}
+  if(err?.code==="quota_exceeded")return "The ledger is full. Delete an old entry, then try again.";
+  return "Couldn't save. Check your connection and try again.";
+}
+
+/* ---------- storage ---------- */
+const LS="competitor-ledger-v1";
+function lsLoad(){try{return JSON.parse(localStorage.getItem(LS)||"[]")}catch{return []}}
+function lsSave(){try{localStorage.setItem(LS,JSON.stringify(items))}catch{}}
+async function save(id,d){
+  if(mode==="local"){if(id){items=items.map(i=>i.id===id?{id,...d}:i)}else{items.push({id:"c"+Date.now().toString(36),...d})}lsSave();render();return}
+  await (id?col.doc(id):col.doc()).set(d);
+}
+async function remove(id){
+  if(mode==="local"){items=items.filter(i=>i.id!==id);lsSave();render();return}
+  await col.doc(id).delete();
+}
+
+/* ---------- export ---------- */
+$("exportBtn").addEventListener("click",async()=>{
+  const head=["Name","Parent","Tier","Origin","Status","Threat","Offers","Shirt min","Shirt max","Trouser min","Trouser max","Suit min","Suit max",...SCORES.map(s=>s[1]),"Overall","Channels","Fabric & construction","Fit","Strengths","Weaknesses","Our opening","Sources","Analysed by","Updated"];
+  const q=v=>`"${String(v??"").replace(/"/g,'""')}"`;
+  const lines=[head.map(q).join(",")].concat(items.map(i=>{const p=k=>(i.prices||{})[k]||{};return [i.name,i.parent,i.tier,i.origin,i.status,i.threat,(i.offers||[]).join("; "),p("shirt").min,p("shirt").max,p("trouser").min,p("trouser").max,p("suit").min,p("suit").max,...SCORES.map(([k])=>(i.scores||{})[k]||""),overall(i)?overall(i).toFixed(1):"",i.channels,i.fabric,i.fit,i.strengths,i.weaknesses,i.opportunity,i.sources,i.analysedBy,i.updatedAt].map(q).join(",")}));
+  try{const dl=window.claude?.use?await window.claude.use("downloads"):null;
+    if(!dl){toast("Export isn't available in this view");return}
+    await dl.save({filename:"competitor-ledger.csv",data:"﻿"+lines.join("\n")});
+  }catch(err){if(err?.code!=="declined")toast("Export didn't complete")}
+});
+
+/* ---------- boot ---------- */
+render();
+(async()=>{
+  let db=null; try{db=window.claude?.use?await window.claude.use("db"):null}catch{}
+  if(!db){mode="local";items=lsLoad();loaded=true;note("Saving on this device only. Open the shared link while signed in to keep one ledger for the whole R&D team.");render();return}
+  try{const u=await window.claude.use("user");if(u&&(await u.can("data.write"))===false)canWrite=false}catch{}
+  col=db.collection("competitors");
+  const timer=setTimeout(()=>note("Can't reach the ledger yet. It will fill in once the connection returns."),10000);
+  col.onSnapshot(snap=>{
+    if(!snap.metadata.fromCache){clearTimeout(timer);note("")}
+    items=snap.docs.map(d=>({id:d.id,...d.data()}));loaded=true;render();
+  },()=>{clearTimeout(timer);loaded=true;note("The ledger stopped syncing. Reload the page to reconnect.");render()});
+})();
+</script>
