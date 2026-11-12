@@ -239,6 +239,12 @@
   .as-head { left: 18mm; right: 18mm; top: 20mm; }
   .as-head h2 { font-size: 32pt; line-height: 1.05; margin-top: 6mm; }
   .navy .as-head .lead { margin-top: 5mm; max-width: 140mm; font-size: 10.5pt; }
+  .as-grid { left: 18mm; right: 18mm; top: 80mm; display: grid; grid-template-columns: 1fr 1fr; gap: 9mm 8mm; }
+  .as-tile { height: 64mm; display: grid; place-items: center; border: .4mm solid var(--gold); outline: .25mm solid rgba(201,164,92,.35); outline-offset: 1.6mm; }
+  .as-fill { background-size: cover; background-position: center; }
+  .as-tile img { max-width: 70%; max-height: 62%; object-fit: contain; }
+  .as-card p { margin-top: 5mm; display: flex; align-items: baseline; gap: 4mm; font-family: var(--serif); font-size: 15pt; color: #fff; }
+  .as-card p span { font-style: italic; font-size: 10pt; color: var(--gold); }
   .as-list { left: 18mm; right: 18mm; top: 76mm; border-top: .25mm solid rgba(201,164,92,.45); }
   .as-row { display: grid; grid-template-columns: 9mm 32mm 1fr; gap: 6mm; align-items: center; padding: 7mm 0; border-bottom: .2mm solid rgba(255,255,255,.14); }
   .as-row .n { font-family: var(--serif); font-style: italic; font-size: 11pt; color: var(--gold); }
@@ -498,7 +504,7 @@
 </section>
 
 <!-- ASSOCIATE COMPANIES -->
-<!-- Replace each [ … ] entry with real details; swap "AC" for <img src="img/logos/name.png"> to show a logo. -->
+<!-- Add a company: copy an .as-card and point it at a logo in img/logos/. -->
 <section class="page navy as-page">
   <img class="corner-seal" src="img/hk-seal.png" alt="">
   <div class="as-head">
@@ -506,23 +512,11 @@
     <h2>The HK <em>Network.</em></h2>
     <p class="lead">A group of companies that share our standards and our ambitions — together extending what we can offer the businesses we work with.</p>
   </div>
-  <div class="as-list">
-    <div class="as-row"><span class="n">01</span><div class="as-logo">AC</div><div>
-      <h3>[ Associate Company Name ]</h3><p class="meta">Sector · Location</p>
-      <p class="desc">A short description of the company — what it does, who it serves and how it works alongside HK Business Consultancy.</p>
-      <span class="web">www.website.com</span></div></div>
-    <div class="as-row"><span class="n">02</span><div class="as-logo">AC</div><div>
-      <h3>[ Associate Company Name ]</h3><p class="meta">Sector · Location</p>
-      <p class="desc">A short description of the company — what it does, who it serves and how it works alongside HK Business Consultancy.</p>
-      <span class="web">www.website.com</span></div></div>
-    <div class="as-row"><span class="n">03</span><div class="as-logo">AC</div><div>
-      <h3>[ Associate Company Name ]</h3><p class="meta">Sector · Location</p>
-      <p class="desc">A short description of the company — what it does, who it serves and how it works alongside HK Business Consultancy.</p>
-      <span class="web">www.website.com</span></div></div>
-    <div class="as-row"><span class="n">04</span><div class="as-logo">AC</div><div>
-      <h3>[ Associate Company Name ]</h3><p class="meta">Sector · Location</p>
-      <p class="desc">A short description of the company — what it does, who it serves and how it works alongside HK Business Consultancy.</p>
-      <span class="web">www.website.com</span></div></div>
+  <div class="as-grid">
+    <div class="as-card"><div class="as-tile" style="background:#fff"><img src="img/logos/maplitho.png" alt="Maplitho"></div><p><span>01</span>Maplitho</p></div>
+    <div class="as-card"><div class="as-tile as-fill" style="background-image:url(img/logos/valencia-galleria.png)" role="img" aria-label="Valencia Galleria"></div><p><span>02</span>Valencia Galleria</p></div>
+    <div class="as-card"><div class="as-tile" style="background:#fff"><img src="img/logos/rbs.png" alt="RBS"></div><p><span>03</span>RBS</p></div>
+    <div class="as-card"><div class="as-tile" style="background:#fff"><img src="img/logos/providus.png" alt="Providus"></div><p><span>04</span>Providus</p></div>
   </div>
   <div class="folio"><span>HK Business Consultancy</span><b></b></div>
 </section>
