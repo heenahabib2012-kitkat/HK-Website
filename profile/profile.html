@@ -262,6 +262,8 @@
   .cl-head .lead { margin-top: 5mm; max-width: 140mm; font-size: 10.5pt; color: var(--muted); }
   .cl-grid { left: 18mm; right: 18mm; top: 76mm; display: grid; grid-template-columns: repeat(4, 1fr); border-top: .25mm solid var(--paper-line); border-left: .25mm solid var(--paper-line); }
   .cl-grid div { height: 29mm; display: grid; place-items: center; border-right: .25mm solid var(--paper-line); border-bottom: .25mm solid var(--paper-line); font-size: 6.6pt; letter-spacing: .22em; text-transform: uppercase; color: #b5b9c8; background: #fff; }
+  .cl-grid .cl-tile { padding: 0; }
+  .cl-tile img { max-width: 30mm; max-height: 20mm; object-fit: contain; }
   .cl-quote { left: 18mm; right: 18mm; top: 208mm; display: grid; grid-template-columns: 12mm 1fr; gap: 4mm; padding-top: 7mm; border-top: .3mm solid var(--gold); }
   .cl-quote .q { font-family: var(--serif); font-size: 46pt; line-height: .7; color: var(--gold); }
   .cl-quote p { font-family: var(--serif); font-style: italic; font-size: 13pt; line-height: 1.45; color: #0b1f5f; }
@@ -513,9 +515,9 @@
     <p class="lead">A group of companies that share our standards and our ambitions — together extending what we can offer the businesses we work with.</p>
   </div>
   <div class="as-grid">
-    <div class="as-card"><div class="as-tile" style="background:#fff"><img src="img/logos/maplitho.png" alt="Maplitho"></div><p><span>01</span>Maplitho</p></div>
-    <div class="as-card"><div class="as-tile as-fill" style="background-image:url(img/logos/valencia-galleria.png)" role="img" aria-label="Valencia Galleria"></div><p><span>02</span>Valencia Galleria</p></div>
-    <div class="as-card"><div class="as-tile" style="background:#fff"><img src="img/logos/rbs.png" alt="RBS"></div><p><span>03</span>RBS</p></div>
+    <div class="as-card"><div class="as-tile" style="background:#fff"><img src="img/logos/rbs.png" alt="RBS"></div><p><span>01</span>RBS</p></div>
+    <div class="as-card"><div class="as-tile" style="background:#fff"><img src="img/logos/maplitho.png" alt="Maplitho"></div><p><span>02</span>Maplitho</p></div>
+    <div class="as-card"><div class="as-tile as-fill" style="background-image:url(img/logos/valencia-galleria.png)" role="img" aria-label="Valencia Galleria"></div><p><span>03</span>Valencia Galleria</p></div>
     <div class="as-card"><div class="as-tile" style="background:#fff"><img src="img/logos/providus.png" alt="Providus"></div><p><span>04</span>Providus</p></div>
   </div>
   <div class="folio"><span>HK Business Consultancy</span><b></b></div>
@@ -531,11 +533,11 @@
     <p class="lead">From first-time founders to established brands, we are proud of the businesses we have helped launch, grow and expand.</p>
   </div>
   <div class="cl-grid">
-    <div>Client logo</div>
-    <div>Client logo</div>
-    <div>Client logo</div>
-    <div>Client logo</div>
-    <div>Client logo</div>
+    <div class="cl-tile" style="background:#000"><img src="img/clients/nells.png" alt="Nells Restaurant"></div>
+    <div class="cl-tile" style="background:#fff"><img src="img/clients/burger-lounge.png" alt="Burger Lounge"></div>
+    <div class="cl-tile" style="background:#fff"><img src="img/clients/coterra.png" alt="Coterra Coffee Roasters"></div>
+    <div class="cl-tile" style="background:#151a37"><img src="img/clients/clarus.png" alt="Clarus Lifestyle Jewellery"></div>
+    <div class="cl-tile" style="background:#fff"><img src="img/clients/address.png" alt="Address Men’s Apparel"></div>
     <div>Client logo</div>
     <div>Client logo</div>
     <div>Client logo</div>
