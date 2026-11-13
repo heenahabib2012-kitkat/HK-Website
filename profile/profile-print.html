@@ -1,0 +1,649 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>HK Business Consultancy — Company Profile</title>
+<style>
+  @page { size: A4; margin: 0; }
+  :root {
+    --navy: #071232; --navy-2: #0c1f5a; --ink: #040a1f;
+    --gold: #c9a45c; --gold-l: #e7cf98; --gold-d: #9a7734;
+    --ivory: #f7f4ed; --paper-line: #e3ddcf; --text: #1b2440; --muted: #5d6585;
+    --serif: 'Caladea', 'Bitstream Charter', 'Liberation Serif', Georgia, serif;
+    --sans: 'Inter', 'Liberation Sans', Arial, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #888; }
+  body { font-family: var(--sans); font-weight: 300; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .page { position: relative; width: 210mm; height: 297mm; overflow: hidden; page-break-after: always; break-after: page; }
+  body { counter-reset: pg; }
+  .page { counter-increment: pg; }
+  .folio b::after { content: counter(pg, decimal-leading-zero); }
+  .page:last-child { page-break-after: auto; break-after: auto; }
+  .navy { background: radial-gradient(75% 55% at 50% 42%, var(--navy-2) 0%, var(--navy) 72%); color: #fff; }
+  .ivory { background: var(--ivory); color: var(--text); }
+  .pad { position: absolute; inset: 20mm 18mm 18mm; }
+
+  .eyebrow { display: flex; align-items: center; gap: 4mm; font-size: 7.6pt; font-weight: 500; letter-spacing: .32em; text-transform: uppercase; color: var(--gold); }
+  .eyebrow::before { content: ''; width: 11mm; height: .3mm; background: currentColor; }
+  .ivory .eyebrow { color: var(--gold-d); }
+  h1, h2, h3 { font-family: var(--serif); font-weight: 400; }
+  h2 { font-size: 34pt; line-height: 1.04; letter-spacing: -.01em; margin-top: 6mm; }
+  h2 em, h1 em { color: var(--gold-l); }
+  .ivory h2 { color: #0b1f5f; } .ivory h2 em { color: var(--gold-d); }
+  p { font-size: 9.6pt; line-height: 1.62; }
+  .lead { font-size: 11.5pt; line-height: 1.6; }
+  .navy p { color: rgba(255,255,255,.76); }
+  .navy .lead { color: rgba(255,255,255,.9); }
+  .muted { color: var(--muted); }
+
+  /* running footer */
+  .folio { position: absolute; left: 18mm; right: 18mm; bottom: 9mm; display: flex; justify-content: space-between; font-size: 6.6pt; letter-spacing: .28em; text-transform: uppercase; }
+  .navy .folio { color: rgba(255,255,255,.4); } .ivory .folio { color: #9aa0b4; }
+  .folio b { font-family: var(--serif); font-weight: 400; font-size: 9pt; letter-spacing: 0; color: var(--gold); }
+
+  .mark { color: #fff; } .mark .acc { fill: var(--gold); }
+  .rule-gold { height: .3mm; background: linear-gradient(90deg, var(--gold), rgba(201,164,92,.1)); }
+
+  .corner-seal { position: absolute; right: 18mm; top: 18mm; width: 22mm; z-index: 2; }
+  /* ---------- 1 cover ---------- */
+  .cover-img { position: absolute; inset: 0; background: url(img/skyline.jpg) center top/cover; }
+    .cover-veil { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(3,8,23,.6) 0%, rgba(3,8,23,0) 16%, rgba(3,8,23,0) 58%, rgba(5,12,40,.72) 72%, rgba(5,12,40,.92) 100%); }
+  .cover .brand { position: absolute; top: 20mm; left: 18mm; display: flex; align-items: center; gap: 4mm; }
+  .cover .brand .cover-seal { width: 28mm; }
+  .cover .brand span { font-family: var(--serif); font-size: 15pt; letter-spacing: .2em; color: #fff; line-height: 1; }
+  .cover .brand small { display: block; font-family: var(--sans); font-size: 6.4pt; letter-spacing: .36em; color: var(--gold-l); margin-top: 1.6mm; text-transform: uppercase; }
+  .cover .year { position: absolute; top: 22mm; right: 18mm; font-size: 7pt; letter-spacing: .3em; color: rgba(255,255,255,.7); }
+  .cover-body { position: absolute; left: 18mm; right: 18mm; bottom: 30mm; }
+  .cover-body h1 { font-size: 50pt; line-height: .98; letter-spacing: -.015em; margin: 7mm 0 7mm; color: #fff; }
+  .cover-body h1 em { color: var(--gold-l); }
+  .cover-tag { display: flex; align-items: center; gap: 5mm; margin-bottom: 6mm; }
+  .cover-tag::before { content: ''; width: 14mm; height: .3mm; background: var(--gold); }
+  .cover-body .cover-tag p { font-family: var(--serif); font-style: italic; font-size: 14pt; color: var(--gold-l); max-width: none; }
+  .cover-body p { max-width: 118mm; color: rgba(255,255,255,.82); font-size: 10.5pt; }
+  .cover-foot { position: absolute; left: 18mm; right: 18mm; bottom: 14mm; display: flex; justify-content: space-between; font-size: 6.8pt; letter-spacing: .3em; text-transform: uppercase; color: rgba(255,255,255,.5); padding-top: 4mm; border-top: .2mm solid rgba(255,255,255,.18); }
+
+  /* ---------- 2 about us ---------- */
+  .about-head { display: grid; grid-template-columns: 1fr 40mm; gap: 8mm; align-items: start; }
+  .about-head h2 { font-size: 30pt; }
+  .seal { width: 40mm; height: 40mm; }
+  .about-lede { margin-top: 7mm; max-width: 150mm; }
+  .about-lede strong { font-weight: 500; color: #0b1f5f; }
+
+  .timeline { position: relative; margin-top: 10mm; display: grid; grid-template-columns: repeat(4, 1fr); gap: 6mm; }
+  .timeline::before { content: ''; position: absolute; left: 0; right: 0; top: 3.2mm; height: .3mm; background: linear-gradient(90deg, var(--gold-d), var(--gold) 50%, rgba(201,164,92,.25)); }
+  .moment { position: relative; padding-top: 9mm; }
+  .moment::before { content: ''; position: absolute; left: 0; top: 1.4mm; width: 3.4mm; height: 3.4mm; background: var(--ivory); border: .35mm solid var(--gold-d); transform: rotate(45deg); }
+  .moment.now::before { background: var(--gold); border-color: var(--gold); }
+  .moment .yr { font-family: var(--serif); font-size: 22pt; line-height: 1; color: #0b1f5f; }
+  .moment .place { display: block; margin: 1.6mm 0 2.4mm; font-size: 6.6pt; letter-spacing: .24em; text-transform: uppercase; color: var(--gold-d); }
+  .moment h3 { font-size: 12pt; color: #0b1f5f; margin-bottom: 1.6mm; line-height: 1.15; }
+  .moment p { font-size: 8.3pt; line-height: 1.5; color: var(--muted); }
+  .moment q { display: block; margin-top: 2mm; font-family: var(--serif); font-style: italic; font-size: 10pt; line-height: 1.3; color: var(--gold-d); quotes: "\201C" "\201D"; }
+
+  .chapters { margin-top: 10mm; display: grid; grid-template-columns: 1fr 1fr; gap: 0 10mm; border-top: .25mm solid var(--paper-line); }
+  .chapter { display: grid; grid-template-columns: 10mm 1fr; gap: 2mm; padding: 4.6mm 0 4mm; border-bottom: .25mm solid var(--paper-line); }
+  .chapter i { font-family: var(--serif); font-size: 13pt; color: var(--gold-d); line-height: 1.2; }
+  .chapter h3 { font-size: 13.5pt; margin-bottom: 1.2mm; color: #0b1f5f; line-height: 1.15; }
+  .chapter p { font-size: 8.4pt; line-height: 1.5; }
+
+  .about-band { position: absolute; left: 0; right: 0; bottom: 0; height: 50mm; background: radial-gradient(80% 120% at 30% 30%, var(--navy-2), var(--navy) 70%); color: #fff; }
+  .about-band .inner { position: absolute; left: 18mm; right: 18mm; top: 12mm; display: grid; grid-template-columns: 1fr auto; gap: 10mm; align-items: center; }
+  .about-band blockquote { font-family: var(--serif); font-size: 26pt; line-height: 1.05; color: #fff; }
+  .about-band blockquote em { color: var(--gold-l); }
+  .about-band cite { display: block; margin-top: 4mm; font-style: normal; font-size: 7pt; letter-spacing: .3em; text-transform: uppercase; color: var(--gold); }
+  .about-band .sign { text-align: right; }
+  .about-band .sign p { font-family: var(--serif); font-style: italic; font-size: 13pt; color: rgba(255,255,255,.85); }
+  .about-band .sign small { display: block; margin-top: 2mm; font-size: 6.6pt; letter-spacing: .28em; text-transform: uppercase; color: rgba(255,255,255,.5); }
+
+  /* ---------- 3 at a glance ---------- */
+  .facts { margin-top: 14mm; display: grid; grid-template-columns: 1fr 1fr; border: .25mm solid rgba(255,255,255,.16); }
+  .fact { padding: 9mm 8mm 8mm; min-height: 52mm; display: flex; flex-direction: column; justify-content: space-between; border-right: .25mm solid rgba(255,255,255,.16); border-bottom: .25mm solid rgba(255,255,255,.16); position: relative; }
+  .fact:nth-child(2n) { border-right: 0; } .fact:nth-child(n+3) { border-bottom: 0; }
+  .fact::before { content: ''; position: absolute; left: 0; top: 0; width: 14mm; height: .5mm; background: var(--gold); }
+  .fact .big { font-family: var(--serif); font-size: 40pt; line-height: .9; color: #fff; }
+  .fact .big sup { font-size: .45em; color: var(--gold); vertical-align: top; }
+  .fact .words { font-family: var(--serif); font-size: 21pt; line-height: 1.1; color: #fff; }
+  .fact .words i { color: var(--gold-l); }
+  .fact p { margin-top: 6mm; padding-top: 3mm; border-top: .2mm solid rgba(255,255,255,.16); font-size: 9pt; }
+  .principles { margin-top: 14mm; }
+  .principle { display: grid; grid-template-columns: 12mm 1fr 62mm; align-items: baseline; gap: 4mm; padding: 3.2mm 0; border-top: .2mm solid rgba(255,255,255,.14); }
+  .principle:last-child { border-bottom: .2mm solid rgba(255,255,255,.14); }
+  .principle span { font-size: 7pt; letter-spacing: .2em; color: var(--gold); }
+  .principle h3 { font-size: 28pt; line-height: 1; color: var(--gold-l); }
+  .principle p { font-family: var(--serif); font-style: italic; font-size: 11pt; line-height: 1.35; color: rgba(255,255,255,.85); }
+
+  /* ---------- chairman's message ---------- */
+  .ch-page > * { position: absolute; }
+  .ch-head { left: 18mm; right: 18mm; top: 20mm; }
+  .ch-head h2 { font-size: 27pt; line-height: 1.1; max-width: 150mm; margin-top: 5mm; }
+  .ch-frame { left: 22mm; top: 70mm; width: 62mm; height: 82mm; border: .35mm solid var(--gold); }
+  .ch-photo { left: 15mm; top: 63mm; width: 62mm; height: 82mm; background: #071232; border: 1.6mm solid #fff; outline: .35mm solid var(--gold); }
+  .ch-photo img.founder { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .ch-corner { width: 8mm; height: 8mm; border-color: var(--gold-d); border-style: solid; border-width: 0; }
+  .ch-corner.tl { left: 11mm; top: 59mm; border-top-width: .6mm; border-left-width: .6mm; }
+  .ch-corner.br { left: 80mm; top: 149mm; border-bottom-width: .6mm; border-right-width: .6mm; }
+  .ch-name { left: 15mm; top: 160mm; width: 62mm; }
+  .ch-name p { font-family: var(--serif); font-size: 14pt; color: #0b1f5f; line-height: 1.15; }
+  .ch-name small { display: block; margin-top: 1.6mm; font-size: 6.6pt; letter-spacing: .26em; text-transform: uppercase; color: var(--gold-d); }
+  .ch-body { left: 90mm; right: 18mm; top: 66mm; }
+  .ch-body .q { font-family: var(--serif); font-size: 52pt; line-height: .6; color: var(--gold); height: 9mm; }
+  .ch-body p { font-size: 10pt; line-height: 1.72; color: #364066; margin-bottom: 3.6mm; }
+  .ch-body p.open { font-family: var(--serif); font-style: italic; font-size: 13pt; line-height: 1.45; color: #0b1f5f; }
+  .ch-sign { left: 90mm; right: 18mm; top: 176mm; padding-top: 5mm; border-top: .3mm solid var(--gold); display: flex; justify-content: space-between; align-items: flex-end; }
+  .ch-band { left: 0; right: 0; bottom: 0; height: 74mm; background: radial-gradient(80% 120% at 30% 30%, var(--navy-2), var(--navy) 70%); padding: 18mm 18mm 0; }
+  .ch-band p { font-family: var(--serif); font-size: 24pt; line-height: 1.15; color: #fff; }
+  .ch-band em { color: var(--gold-l); }
+  .ch-band small { display: block; margin-top: 5mm; font-size: 6.8pt; letter-spacing: .3em; text-transform: uppercase; color: var(--gold); }
+  .ch-sign .sig { font-family: var(--serif); font-style: italic; font-size: 20pt; color: #0b1f5f; }
+  .ch-sign small { font-size: 6.6pt; letter-spacing: .26em; text-transform: uppercase; color: var(--gold-d); text-align: right; line-height: 1.8; }
+
+  /* ---------- 3 vision & mission ---------- */
+  .vm-page { background: #04172e url(img/liberty.jpg) center/cover no-repeat; }
+  .vm-page::before { content: ''; position: absolute; inset: 0; background:
+      linear-gradient(90deg, rgba(4,20,44,.55) 0%, rgba(4,20,44,0) 34%, rgba(4,20,44,0) 66%, rgba(4,20,44,.55) 100%),
+      linear-gradient(180deg, rgba(4,20,44,.35) 0%, rgba(4,20,44,0) 20%, rgba(4,20,44,0) 78%, rgba(4,16,36,.6) 100%); }
+  .vm-page > * { position: absolute; z-index: 1; }
+  .vm-head { left: 18mm; top: 20mm; width: 72mm; }
+  .vm-head h2 { font-size: 19pt; line-height: 1.12; margin-top: 4mm; }
+  .vm-seal { right: 18mm; top: 18mm; width: 22mm; }
+  .vm-col { top: 82mm; width: 62mm; }
+  .vm-col.left { left: 18mm; }
+  .vm-col.right { right: 18mm; }
+  .vm-col .label { font-family: var(--serif); font-size: 32pt; line-height: 1; color: #fff; }
+  .vm-col .label small { display: block; margin-top: 3mm; font-family: var(--sans); font-size: 6.6pt; letter-spacing: .3em; text-transform: uppercase; color: var(--gold); }
+  .vm-col .rule { width: 12mm; height: .5mm; background: var(--gold); margin: 5mm 0 6mm; }
+  .navy .vm-col .vm-vision { font-family: var(--serif); font-style: italic; font-size: 13.5pt; line-height: 1.42; color: #fff; }
+  .vm-vision em { color: var(--gold-l); }
+  .navy .vm-col .vm-mission { font-size: 9.2pt; line-height: 1.68; color: rgba(255,255,255,.86); }
+  .vm-mission strong { font-weight: 500; color: #fff; }
+  .vm-values-wrap { left: 18mm; right: 18mm; bottom: 19mm; }
+  .vm-values-wrap .eyebrow { justify-content: center; margin-bottom: 3mm; color: var(--gold-l); background: #061633; padding: 1mm 4mm; width: max-content; margin-left: auto; margin-right: auto; }
+  .vm-values-wrap .eyebrow::after { content: ''; width: 11mm; height: .3mm; background: currentColor; }
+  .vm-values { display: grid; grid-template-columns: repeat(3, 1fr); border: .25mm solid rgba(201,164,92,.55); background: rgba(4,18,40,.82); }
+  .vm-values div { padding: 3mm 5mm; text-align: center; border-right: .25mm solid rgba(201,164,92,.3); }
+  .vm-values div:last-child { border-right: 0; }
+  .vm-values span { font-size: 6.4pt; letter-spacing: .26em; color: var(--gold); }
+  .vm-values h3 { font-size: 12.5pt; color: #fff; margin-top: 1.4mm; line-height: 1.15; }
+  .vm-page .folio { position: absolute; }
+
+  /* ---------- 4 services ---------- */
+  .svc-page { background: #fff; color: var(--text); }
+  .svc-page .svc-head h2 { font-size: 32pt; line-height: 1.02; color: #0b1f5f; }
+  .svc-page .svc-head h2 em { display: block; color: var(--gold-d); }
+  .svc-page .svc-head .lead { margin-top: 5mm; max-width: 150mm; color: var(--muted); font-size: 10.5pt; }
+  .svc-grid { margin-top: 9mm; display: grid; grid-template-columns: 1fr 1fr 0.92fr; grid-template-rows: minmax(0,1fr) minmax(0,1fr); gap: 4.5mm; height: 174mm; }
+  .svc { position: relative; overflow: hidden; border: .25mm solid rgba(201,164,92,.6); background: #0a1736; display: flex; flex-direction: column; }
+  .svc .txt { position: relative; z-index: 1; padding: 6mm 5.5mm 0; }
+  .svc .art { display: block; margin-top: auto; width: 100%; height: 27mm; flex: none; }
+  .svc-icon { width: 10mm; height: 10mm; color: var(--gold); }
+  .svc .n { position: absolute; top: 6mm; right: 5.5mm; font-family: var(--serif); font-style: italic; font-size: 11pt; color: rgba(231,207,152,.55); }
+  .svc h3 { font-size: 15pt; line-height: 1.1; color: #fff; margin: 4mm 0 2.6mm; }
+  .svc h3::after { content: ''; display: block; width: 9mm; height: .4mm; background: var(--gold); margin-top: 3mm; }
+  .svc-page .svc p { font-size: 8.4pt; line-height: 1.5; color: rgba(255,255,255,.78); }
+  .svc.tall { grid-column: 3; grid-row: 1 / span 2; }
+  .svc.tall .txt { padding: 7mm 6mm 0; }
+  .svc.tall h3 { font-size: 17pt; margin-top: 6mm; }
+  .svc.tall .art { height: 118mm; }
+  .svc-page .svc-foot { position: absolute; left: 18mm; bottom: 18mm; display: flex; align-items: center; gap: 5mm; font-family: var(--serif); font-style: italic; font-size: 13pt; color: var(--gold-d); }
+  .svc-foot::before { content: ''; width: 14mm; height: .3mm; background: var(--gold); }
+
+  /* ---------- 6 industries ---------- */
+  .ind-page { background: #fff; color: var(--text); }
+  .ind-page > * { position: absolute; }
+  .ind-top { left: 18mm; right: 18mm; top: 20mm; }
+  .ind-top .tags { position: absolute; right: 0; top: 0; font-size: 6.4pt; letter-spacing: .3em; text-transform: uppercase; color: #0b1f5f; }
+  .ind-top .tags i { font-style: normal; color: var(--gold-d); margin: 0 2mm; }
+  .ind-page h2 { font-size: 36pt; line-height: 1; color: #0b1f5f; margin-top: 7mm; letter-spacing: -.01em; }
+  .ind-page h2 em { color: var(--gold-d); }
+  .ind-top .sub { margin-top: 5mm; font-size: 11pt; color: #364066; }
+  .ind-svg { left: 0; top: 0; width: 210mm; height: 297mm; }
+  .ind-svg line { stroke: var(--gold); stroke-width: .3; }
+  .ind-svg .dot { fill: var(--gold-d); }
+  .ind-svg .ring { fill: none; stroke: var(--gold); stroke-width: .35; opacity: .7; }
+  .ind-svg .ring2 { fill: none; stroke: rgba(201,164,92,.25); stroke-width: .25; }
+  .ind-hub { left: 82mm; top: 143mm; width: 46mm; height: 46mm; border-radius: 50%; }
+  .ind-node { width: 19mm; height: 19mm; border-radius: 50%; background: #fff; border: .4mm solid var(--gold); display: grid; place-items: center; color: #0b1f5f; }
+  .ind-node svg { width: 9.5mm; height: 9.5mm; }
+  .ind-label .n { display: block; font-family: var(--serif); font-style: italic; font-size: 8.5pt; color: var(--gold-d); }
+  .ind-label h3 { font-size: 12pt; line-height: 1.15; color: #0b1f5f; margin: .6mm 0 1.4mm; }
+  .ind-label p { font-size: 7.8pt; line-height: 1.45; color: #48527a; }
+  .ind-label.left p { margin-left: auto; max-width: 44mm; }
+  .ind-label.right p { max-width: 44mm; }
+  .ind-label.top p { max-width: 70mm; margin: 0 auto; }
+  .ind-foot { left: 18mm; bottom: 22mm; font-size: 6.6pt; letter-spacing: .32em; text-transform: uppercase; color: #0b1f5f; line-height: 1.9; }
+  .ind-foot::before { content: ''; display: block; width: 12mm; height: .4mm; background: var(--gold); margin-bottom: 4mm; }
+  .ind-mark { right: -36mm; bottom: 20mm; width: 56mm; opacity: .07; }
+
+  /* ---------- 6 global reach ---------- */
+  .gr-page > * { position: absolute; z-index: 1; }
+  .gr-head { left: 18mm; top: 20mm; width: 108mm; }
+  .gr-head h2 { font-size: 33pt; line-height: 1.02; margin-top: 6mm; }
+  .gr-head h2 em { display: block; }
+  .gr-seal { right: 18mm; top: 18mm; width: 26mm; }
+  .gr-globe { right: -14mm; top: 70mm; width: 118mm; height: 118mm; }
+  .gr-globe::before { content: ''; position: absolute; inset: -10%; border-radius: 50%; background: radial-gradient(circle, rgba(70,110,230,.35) 0%, rgba(40,80,200,.12) 45%, transparent 70%); }
+  .gr-globe img { position: relative; width: 100%; height: 100%; }
+  .navy .gr-intro { left: 18mm; top: 70mm; width: 82mm; font-size: 10.6pt; line-height: 1.62; color: rgba(255,255,255,.82); }
+  .gr-quote { left: 18mm; top: 120mm; width: 76mm; border-left: .4mm solid var(--gold); padding-left: 5mm; }
+  .navy .gr-quote p { font-family: var(--serif); font-style: italic; font-size: 13.5pt; line-height: 1.35; color: #fff; }
+  .gr-regions { left: 18mm; right: 18mm; top: 194mm; border-top: .25mm solid rgba(201,164,92,.45); }
+  .gr-region { display: grid; grid-template-columns: 9mm 48mm 1fr; align-items: baseline; gap: 3mm; padding: 2.8mm 0; border-bottom: .2mm solid rgba(255,255,255,.14); }
+  .gr-region span { font-family: var(--serif); font-style: italic; font-size: 9pt; color: var(--gold); }
+  .gr-region h3 { font-size: 14pt; color: #fff; line-height: 1.1; }
+  .navy .gr-region p { font-size: 8.6pt; line-height: 1.5; color: rgba(255,255,255,.76); }
+  .gr-page .folio { position: absolute; }
+
+  /* ---------- associate companies ---------- */
+  .as-page > * { position: absolute; }
+  .as-head { left: 18mm; right: 18mm; top: 20mm; }
+  .as-head h2 { font-size: 32pt; line-height: 1.05; margin-top: 6mm; }
+  .navy .as-head .lead { margin-top: 5mm; max-width: 140mm; font-size: 10.5pt; }
+  .as-grid { left: 18mm; right: 18mm; top: 80mm; display: grid; grid-template-columns: 1fr 1fr; gap: 9mm 8mm; }
+  .as-tile { height: 64mm; display: grid; place-items: center; border: .4mm solid var(--gold); outline: .25mm solid rgba(201,164,92,.35); outline-offset: 1.6mm; }
+  .as-fill { background-size: cover; background-position: center; }
+  .as-tile img { max-width: 70%; max-height: 62%; object-fit: contain; }
+  .as-card p { margin-top: 5mm; display: flex; align-items: baseline; gap: 4mm; font-family: var(--serif); font-size: 15pt; color: #fff; }
+  .as-card p span { font-style: italic; font-size: 10pt; color: var(--gold); }
+  .as-list { left: 18mm; right: 18mm; top: 76mm; border-top: .25mm solid rgba(201,164,92,.45); }
+  .as-row { display: grid; grid-template-columns: 9mm 32mm 1fr; gap: 6mm; align-items: center; padding: 7mm 0; border-bottom: .2mm solid rgba(255,255,255,.14); }
+  .as-row .n { font-family: var(--serif); font-style: italic; font-size: 11pt; color: var(--gold); }
+  .as-logo { width: 32mm; height: 32mm; border: .3mm solid var(--gold); display: grid; place-items: center; font-family: var(--serif); font-size: 20pt; letter-spacing: .06em; color: var(--gold-l); background: rgba(255,255,255,.03); }
+  .as-row h3 { font-size: 17pt; color: #fff; line-height: 1.1; }
+  .as-row .meta { margin: 1.6mm 0 2.4mm; font-size: 6.8pt; letter-spacing: .24em; text-transform: uppercase; color: var(--gold); }
+  .navy .as-row p.desc { font-size: 9pt; line-height: 1.55; color: rgba(255,255,255,.76); max-width: 110mm; }
+  .as-row .web { display: inline-block; margin-top: 2.4mm; font-size: 7.6pt; letter-spacing: .14em; color: var(--gold-l); }
+
+  /* ---------- clients ---------- */
+  .cl-page > * { position: absolute; }
+  .cl-head { left: 18mm; right: 18mm; top: 20mm; }
+  .cl-head h2 { font-size: 32pt; line-height: 1.05; margin-top: 6mm; color: #0b1f5f; }
+  .cl-head h2 em { color: var(--gold-d); }
+  .cl-head .lead { margin-top: 5mm; max-width: 140mm; font-size: 10.5pt; color: var(--muted); }
+  .cl-grid { left: 18mm; right: 18mm; top: 76mm; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2mm; }
+  .cl-logo { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; outline: .2mm solid var(--paper-line); outline-offset: -.2mm; }
+  .cl-more { left: 18mm; right: 18mm; top: 200mm; display: flex; align-items: center; justify-content: center; gap: 6mm; }
+  .cl-more::before, .cl-more::after { content: ''; flex: 1; height: .3mm; background: linear-gradient(90deg, transparent, var(--gold)); }
+  .cl-more::after { background: linear-gradient(90deg, var(--gold), transparent); }
+  .cl-more span { font-family: var(--serif); font-style: italic; font-size: 20pt; color: #0b1f5f; white-space: nowrap; }
+  .cl-more em { color: var(--gold-d); }
+  .cl-quotes { left: 18mm; right: 18mm; top: 216mm; display: grid; grid-template-columns: 1fr 1fr; gap: 8mm; }
+  .cl-q { position: relative; display: flex; flex-direction: column; padding: 8mm 12mm 6mm 7mm; background: var(--ivory); border-top: .5mm solid var(--gold); }
+  .cl-q .mk { position: absolute; top: 2mm; right: 4mm; font-family: var(--serif); font-size: 40pt; line-height: 1; color: rgba(201,164,92,.45); }
+  .cl-q p { font-family: var(--serif); font-style: italic; font-size: 10.6pt; line-height: 1.5; color: #0b1f5f; }
+  .cl-q .who { margin-top: auto; padding-top: 4.5mm; display: flex; align-items: center; gap: 3mm; }
+  .cl-q .who img { width: 12mm; height: 8mm; outline: .2mm solid var(--paper-line); }
+  .cl-q .who b { display: block; font-family: var(--serif); font-weight: 400; font-size: 10.5pt; color: #0b1f5f; }
+  .cl-q .who small { display: block; margin-top: .6mm; font-size: 6pt; letter-spacing: .2em; text-transform: uppercase; color: var(--gold-d); }
+
+  /* ---------- 7 engagements ---------- */
+  .cases { margin-top: 12mm; display: grid; grid-template-columns: 1fr 1fr; gap: 7mm; }
+  .case { background: #fff; padding: 7mm 7mm 6mm; }
+  .case .tag { font-size: 6.6pt; letter-spacing: .24em; text-transform: uppercase; color: var(--gold-d); }
+  .case h3 { font-size: 15pt; color: #0b1f5f; margin: 2mm 0 4mm; line-height: 1.1; }
+  .case dl div { padding: 2.4mm 0; border-top: .2mm solid var(--paper-line); }
+  .case dt { font-size: 6.4pt; letter-spacing: .22em; text-transform: uppercase; color: #15379e; margin-bottom: 1mm; }
+  .case dd { font-size: 8.4pt; line-height: 1.5; color: #364066; }
+  .case .pending { font-family: var(--serif); font-style: italic; font-size: 9.4pt; color: var(--gold-d); }
+  .case .num { float: right; font-family: var(--serif); font-style: italic; font-size: 22pt; color: rgba(11,31,95,.12); line-height: 1; }
+  .approach { margin-top: 10mm; padding: 7mm 8mm; background: radial-gradient(75% 90% at 50% 40%, var(--navy-2), var(--navy)); color: #fff; display: grid; grid-template-columns: 1fr 1.5fr; gap: 8mm; align-items: center; }
+  .approach h3 { font-size: 19pt; line-height: 1.1; } .approach h3 em { color: var(--gold-l); }
+  .approach p { color: rgba(255,255,255,.8); font-size: 9pt; }
+
+  /* ---------- 8 back cover ---------- */
+  .back h1 { font-size: 58pt; line-height: .95; letter-spacing: -.02em; margin: 8mm 0 10mm; }
+  .back h1 em { display: block; }
+  .back-seal-wm { position: absolute; right: -34mm; top: 40mm; width: 130mm; opacity: .1; }
+  .contact { position: absolute; left: 18mm; right: 18mm; bottom: 36mm; display: grid; grid-template-columns: repeat(2, 1fr); gap: 0 10mm; }
+  .contact div { padding: 4mm 0; border-top: .2mm solid rgba(255,255,255,.18); }
+  .contact dt { font-size: 6.6pt; letter-spacing: .3em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5mm; }
+  .contact dd { font-family: var(--serif); font-size: 12.5pt; line-height: 1.35; color: #fff; }
+  .contact .social dd { display: flex; align-items: center; gap: 3mm; font-family: var(--sans); font-size: 9.6pt; }
+  .contact .ico { width: 7mm; height: 7mm; border-radius: 50%; border: .3mm solid var(--gold); display: grid; place-items: center; color: var(--gold-l); flex: none; }
+  .contact .ico svg { width: 4mm; height: 4mm; }
+  .contact dd.todo { color: rgba(255,255,255,.45); font-style: italic; font-size: 11pt; }
+  .back .sign { position: absolute; left: 18mm; right: 18mm; bottom: 14mm; display: flex; justify-content: space-between; align-items: center; padding-top: 5mm; border-top: .3mm solid var(--gold); }
+  .back .sign .sign-seal { width: 16mm; }
+  .back .sign p { font-family: var(--serif); font-style: italic; font-size: 10.5pt; color: rgba(255,255,255,.75); }
+
+  /* ---------- print edition: A4 + 3 mm bleed ---------- */
+  @page { size: 216mm 303mm; margin: 0; }
+  html, body { background: #fff; }
+  .page { zoom: 1.028571; height: 294.58mm; }
+  .ibc { background: radial-gradient(70% 55% at 50% 45%, var(--navy-2) 0%, var(--navy) 72%); color: #fff; }
+  .ibc > * { position: absolute; }
+  .ibc .seal-big { left: 50%; top: 92mm; width: 74mm; margin-left: -37mm; }
+  .ibc .line { left: 30mm; right: 30mm; top: 182mm; text-align: center; font-family: var(--serif); font-size: 26pt; line-height: 1.15; color: #fff; }
+  .ibc .line em { color: var(--gold-l); }
+  .ibc .tag { left: 0; right: 0; top: 206mm; text-align: center; font-size: 7pt; letter-spacing: .34em; text-transform: uppercase; color: var(--gold); }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="hk" viewBox="0 0 120 100">
+      <path d="M8 6h15.5v88H8zM54 6h15.5v88H54zM69.5 46 101 6h17L69.5 67.6z" fill="currentColor"/>
+      <path d="M77.3 57.7 87.7 44.5 116 94H98z" fill="currentColor" opacity=".82"/>
+      <path d="M23.5 45.5H54v9H23.5z" fill="#c9a45c"/>
+    </symbol>
+    <symbol id="hk-lines" viewBox="0 0 120 100">
+      <path d="M8 6h15.5v88H8z M54 6h15.5v88H54z M23.5 45.5H54v9H23.5z M69.5 46 101 6h17L69.5 67.6z M77.3 57.7 87.7 44.5 116 94H98z" fill="none" stroke="currentColor" stroke-width=".35"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- 1 · COVER -->
+<section class="page navy cover">
+  <div class="cover-img"></div><div class="cover-veil"></div>
+  <div class="brand"><img class="cover-seal" src="img/hk-seal.png" alt="HK Business Consultancy"></div>
+  <div class="cover-body">
+    <p class="eyebrow">Company Profile · 2026</p>
+    <h1>HK Business<br><em>Consultancy</em></h1>
+    <div class="cover-tag"><p>Building Businesses. Creating Possibilities.</p></div>
+    <p>Strategic business solutions for companies, entrepreneurs and investors navigating growth across the UAE and international markets.</p>
+  </div>
+  <div class="cover-foot"><span>United Arab Emirates</span><span>International</span></div>
+</section>
+
+<!-- 2 · ABOUT US -->
+<section class="page ivory">
+  <div class="pad">
+    <div class="about-head">
+      <div>
+        <p class="eyebrow">About Us</p>
+        <h2>From coffee conversations<br>to a <em>global practice.</em></h2>
+      </div>
+      <img class="seal" src="img/hk-seal.png" alt="HK Business Consultancy — Honest &amp; Keen">
+    </div>
+    <p class="lead about-lede">HK Business Consultancy was founded by <strong>Habib Koya Marapatta</strong>. What began as informal advice between friends has grown into a Dubai-headquartered firm that brings franchising, brand strategy, operations and compliance together under one roof.</p>
+
+    <div class="timeline">
+      <div class="moment"><span class="yr">2015</span><span class="place">Kuwait</span><h3>Coffee conversations</h3><p>As a Commercial Director, Habib began offering business advice to friends. Their consistent success led them to say:</p><q>Turn your hobby into a profession.</q></div>
+      <div class="moment"><span class="yr">2017</span><span class="place">Across borders</span><h3>Brands, expanding</h3><p>The advice became a practice — helping brands take their businesses into new markets and across borders.</p></div>
+      <div class="moment"><span class="yr">2021</span><span class="place">Dubai, UAE</span><h3>Global headquarters</h3><p>HK established its global headquarters in Dubai, becoming a new-generation firm with franchising, brand strategy, operations and compliance under one roof.</p></div>
+      <div class="moment now"><span class="yr">Today</span><span class="place">UAE &amp; International</span><h3>A trusted growth partner</h3><p>From launching start-ups to expanding legacy brands, HK remains a trusted partner for businesses at every stage of growth.</p></div>
+    </div>
+
+    <div class="chapters">
+      <div class="chapter"><i>I</i><div><h3>Experience</h3><p class="muted">Over three decades of combined business experience across founding, operating, advising and growing companies.</p></div></div>
+      <div class="chapter"><i>II</i><div><h3>A UAE Base</h3><p class="muted">Rooted in the UAE — one of the world's most dynamic commercial environments and a natural bridge between regions.</p></div></div>
+      <div class="chapter"><i>III</i><div><h3>International Exposure</h3><p class="muted">Hands-on familiarity with international markets, partners and the expectations of cross-border business.</p></div></div>
+      <div class="chapter"><i>IV</i><div><h3>Long-Term Value</h3><p class="muted">Advice measured not by activity, but by durable outcomes for the businesses we support.</p></div></div>
+    </div>
+  </div>
+
+  <div class="about-band">
+    <div class="inner">
+      <div>
+        <blockquote>&ldquo;We grow when <em>you grow.</em>&rdquo;</blockquote>
+        <cite>Honest &amp; Keen · The HK philosophy</cite>
+      </div>
+    </div>
+  </div>
+  <div class="folio" style="color:rgba(255,255,255,.45)"><span>HK Business Consultancy</span><b></b></div>
+</section>
+
+<!-- FOUNDER'S MESSAGE -->
+<section class="page ivory ch-page">
+  <img class="corner-seal" src="img/hk-seal.png" alt="">
+  <div class="ch-head">
+    <p class="eyebrow">Founder&rsquo;s Message</p>
+    <h2>&ldquo;I don&rsquo;t just help businesses grow. <em>I grow with them.</em>&rdquo;</h2>
+  </div>
+
+  <div class="ch-frame"></div><span class="ch-corner tl"></span><span class="ch-corner br"></span>
+  <div class="ch-photo"><img class="founder" src="img/founder.jpg" alt="Habib Koya Marapatta, Founder"></div>
+  <div class="ch-name">
+    <p>Habib Koya Marapatta</p>
+    <small>Founder</small>
+  </div>
+
+  <div class="ch-body">
+    <div class="q">&ldquo;</div>
+    <p class="open">What began as simple coffee conversations in Kuwait quickly evolved into something much bigger.</p>
+    <p>I was fortunate to have friends who believed in my ideas more than I did. Their encouragement is what sparked HK Business Consultancy.</p>
+    <p>Over the years, I&rsquo;ve learned that success is never built in isolation. It takes <strong>strategy, trust, execution and empathy.</strong> At HK Business Consultancy, our mission is to walk with you through every challenge, every pivot and every breakthrough.</p>
+  </div>
+
+  <div class="ch-band"><p>We don&rsquo;t just give you a plan.<br><em>We build your future with you.</em></p><small>Honest &amp; Keen</small></div>
+  <div class="ch-sign">
+    <span class="sig">Habib Koya Marapatta</span>
+    <small>Founder<br>HK Business Consultancy</small>
+  </div>
+  <div class="folio" style="color:rgba(255,255,255,.45)"><span>HK Business Consultancy</span><b></b></div>
+</section>
+
+<!-- 3 · VISION & MISSION -->
+<section class="page navy vm-page">
+  <div class="vm-head">
+    <p class="eyebrow">Vision &amp; Mission</p>
+    <h2>Where we are going, and <em>how we get there.</em></h2>
+  </div>
+  <img class="vm-seal" src="img/hk-seal.png" alt="">
+
+  <div class="vm-col left">
+    <p class="label">Vision<small>Where we are going</small></p>
+    <div class="rule"></div>
+    <p class="vm-vision">To be the most trusted growth partner for businesses worldwide — empowering ideas, transforming brands, and driving sustainable success through <em>strategic clarity and global insight.</em></p>
+  </div>
+
+  <div class="vm-col right">
+    <p class="label">Mission<small>How we get there</small></p>
+    <div class="rule"></div>
+    <p class="vm-mission">At HK Business Consultancy, we deliver personalised, end-to-end business solutions that combine <strong>franchising, brand strategy, operations and compliance.</strong> Guided by trust, innovation and deep regional understanding, we partner with entrepreneurs, investors and legacy brands to help them <strong>launch, scale and thrive</strong> in competitive markets.</p>
+  </div>
+
+  <div class="vm-values-wrap">
+    <p class="eyebrow">Guided by</p>
+    <div class="vm-values">
+      <div><span>01</span><h3>Trust</h3></div>
+      <div><span>02</span><h3>Innovation</h3></div>
+      <div><span>03</span><h3>Deep Regional Understanding</h3></div>
+    </div>
+  </div>
+  <div class="folio"><span>HK Business Consultancy</span><b></b></div>
+</section>
+
+<!-- 4 · OUR SERVICES -->
+<section class="page ivory svc-page">
+  <img class="corner-seal" src="img/hk-seal.png" alt="">
+  <div class="pad">
+    <div class="svc-head">
+      <p class="eyebrow">Our Services</p>
+      <h2>Building Brands.<em>Enabling Growth.</em></h2>
+      <p class="lead">From the first licence to an international rollout, HK supports every stage of a business — under one roof.</p>
+    </div>
+    <div class="svc-grid">
+      <div class="svc"><div class="txt"><span class="n">01</span><svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 3H6v18h6M14.5 3 19 7.5V11M14.5 3v4.5H19M8.5 10h6M8.5 13.5h4"/><path d="m14 21 .8-3.2 5-5 2.4 2.4-5 5z"/></svg><h3>Franchise Development &amp; Expansion</h3><p>Franchise creation, documentation, brand adaptation and international rollout support.</p></div><img class="art" src="img/art-franchise-f.jpg" alt=""></div>
+      <div class="svc"><div class="txt"><span class="n">02</span><svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V8l6-3v16M11 9h8v12M7.5 10h1.5M7.5 13.5h1.5M7.5 17h1.5M14 12.5h2M14 16h2"/></svg><h3>Business Setup</h3><p>End-to-end company formation support, including licensing, documentation, compliance and strategic launch.</p></div><img class="art" src="img/art-setup-f.jpg" alt=""></div>
+      <div class="svc tall"><div class="txt"><span class="n">03</span><svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/><circle cx="12" cy="12" r="6.6"/></svg><h3>Operational Optimisation</h3><p>Streamline business systems, SOPs and team training for improved efficiency and scalability.</p></div><img class="art" src="img/art-ops-f.jpg" alt=""></div>
+      <div class="svc"><div class="txt"><span class="n">04</span><svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5.4"/><circle cx="12" cy="12" r="1.8"/><path d="m12 12 8-8M17 4h3v3"/></svg><h3>Brand Strategy &amp; Expansion</h3><p>Build a brand that speaks and sells — identity design, market positioning, storytelling and digital presence.</p></div><img class="art" src="img/art-brand-f.jpg" alt=""></div>
+      <div class="svc"><div class="txt"><span class="n">05</span><svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M13.5 15.5 8.5 10.5C11 5 15 3 21 3c0 6-2 10-7.5 12.5Z"/><circle cx="15.5" cy="8.5" r="1.6"/><path d="M8.5 10.5H5L3 13h4.5M13.5 15.5V19l-2.5 2v-4.5M7 17l-3 3"/></svg><h3>Startup Consulting</h3><p>Without the right planning, even the best products and services won&rsquo;t conquer the market. Establish your venture the right way with our startup consulting services.</p></div><img class="art" src="img/art-startup-f.jpg" alt=""></div>
+    </div>
+  </div>
+  <p class="svc-foot">One partner, from setup to scale.</p>
+  <div class="folio"><span>HK Business Consultancy</span><b></b></div>
+</section>
+
+<!-- 6 · INDUSTRIES -->
+<section class="page ind-page">
+  <div class="ind-top">
+    <p class="eyebrow">Industries</p>
+    <p class="tags">Strategy<i>/</i>Partnerships<i>/</i>Growth</p>
+    <h2>Every sector. <em>One hub.</em></h2>
+    <p class="sub">Nine industries, turning around one consistent standard of advice.</p>
+  </div>
+  <svg class="ind-svg" viewBox="0 0 210 297">
+    <ellipse class="ring2" cx="105" cy="166" rx="41" ry="68"/>
+    <circle class="ring" cx="105" cy="166" r="25.5"/>
+    <line x1="105.00" y1="139.00" x2="105.00" y2="108.70"/><circle class="dot" cx="105.00" cy="139.00" r=".75"/><circle class="dot" cx="105.00" cy="108.70" r=".75"/><line x1="117.19" y1="141.91" x2="126.52" y2="123.46"/><circle class="dot" cx="117.19" cy="141.91" r=".75"/><circle class="dot" cx="126.52" cy="123.46" r=".75"/><line x1="130.91" y1="158.42" x2="135.11" y2="157.20"/><circle class="dot" cx="130.91" cy="158.42" r=".75"/><circle class="dot" cx="135.11" cy="157.20" r=".75"/><line x1="124.50" y1="184.67" x2="132.78" y2="192.60"/><circle class="dot" cx="124.50" cy="184.67" r=".75"/><circle class="dot" cx="132.78" cy="192.60" r=".75"/><line x1="110.79" y1="192.37" x2="116.73" y2="219.45"/><circle class="dot" cx="110.79" cy="192.37" r=".75"/><circle class="dot" cx="116.73" cy="219.45" r=".75"/><line x1="99.21" y1="192.37" x2="93.27" y2="219.45"/><circle class="dot" cx="99.21" cy="192.37" r=".75"/><circle class="dot" cx="93.27" cy="219.45" r=".75"/><line x1="85.50" y1="184.67" x2="77.22" y2="192.60"/><circle class="dot" cx="85.50" cy="184.67" r=".75"/><circle class="dot" cx="77.22" cy="192.60" r=".75"/><line x1="79.09" y1="158.42" x2="74.89" y2="157.20"/><circle class="dot" cx="79.09" cy="158.42" r=".75"/><circle class="dot" cx="74.89" cy="157.20" r=".75"/><line x1="92.81" y1="141.91" x2="83.48" y2="123.46"/><circle class="dot" cx="92.81" cy="141.91" r=".75"/><circle class="dot" cx="83.48" cy="123.46" r=".75"/>
+  </svg>
+  <img class="ind-hub" src="img/hk-seal.png" alt="HK Business Consultancy">
+    <div class="ind-node" style="left:95.50mm;top:88.50mm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17.5h18M4.5 17.5a7.5 7.5 0 0 1 15 0M12 7.6V6M10.5 6h3M2.5 20h19"/></svg></div>
+  <div class="ind-label top" style="left:60.00mm;width:90mm;bottom:211.50mm;text-align:center"><span class="n">01</span><h3>F&amp;B &amp; Hospitality</h3><p>Concepts, operators and brands — from positioning to regional expansion.</p></div>
+  <div class="ind-node" style="left:121.85mm;top:104.41mm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="9" cy="7" rx="5.5" ry="2.2"/><path d="M3.5 7v3c0 1.2 2.5 2.2 5.5 2.2s5.5-1 5.5-2.2V7M3.5 10v3c0 1.2 2.5 2.2 5.5 2.2M3.5 13v3c0 1.2 2.5 2.2 5.5 2.2"/><ellipse cx="15" cy="13.5" rx="5.5" ry="2.2"/><path d="M9.5 13.5v3c0 1.2 2.5 2.2 5.5 2.2s5.5-1 5.5-2.2v-3M9.5 16.5v2.5c0 1.2 2.5 2.2 5.5 2.2s5.5-1 5.5-2.2v-2.5"/></svg></div>
+  <div class="ind-label right" style="left:144.85mm;right:16mm;top:107.41mm"><span class="n">02</span><h3>Trading</h3><p>Commercial strategy, partnerships and market access for trading businesses.</p></div>
+  <div class="ind-node" style="left:135.88mm;top:144.69mm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V4h9v17M13 9h7v12M2.5 21h19M7 7.5h1.5M9.5 7.5H11M7 11h1.5M9.5 11H11M7 14.5h1.5M9.5 14.5H11M15.5 12.5h2M15.5 16h2M8 21v-3h2v3"/></svg></div>
+  <div class="ind-label right" style="left:158.88mm;right:16mm;top:147.69mm"><span class="n">03</span><h3>Real Estate</h3><p>A commercial perspective on real estate ventures and opportunities.</p></div>
+  <div class="ind-node" style="left:131.01mm;top:190.50mm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h14l-1.2 13H6.2z"/><path d="M8.8 10V6.5a3.2 3.2 0 0 1 6.4 0V10"/></svg></div>
+  <div class="ind-label right" style="left:154.01mm;right:16mm;top:193.50mm"><span class="n">04</span><h3>Retail</h3><p>Positioning, market entry and expansion for retail concepts.</p></div>
+  <div class="ind-node" style="left:109.52mm;top:220.40mm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 4h11l4 5.2L12 20.5 2.5 9.2z"/><path d="M2.5 9.2h19M9 4l-1.7 5.2L12 20.5l4.7-11.3L15 4"/></svg></div>
+  <div class="ind-label right" style="left:132.52mm;right:16mm;top:223.40mm"><span class="n">05</span><h3>Luxury &amp; Fashion</h3><p>Discreet, brand-conscious advice for luxury and fashion businesses.</p></div>
+  <div class="ind-node" style="left:81.48mm;top:220.40mm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="2.8"/><circle cx="5.8" cy="9" r="2.2"/><circle cx="18.2" cy="9" r="2.2"/><path d="M6.8 19.5v-1.8a5.2 5.2 0 0 1 10.4 0v1.8zM2 18.5v-1a4 4 0 0 1 5.4-3.7M22 18.5v-1a4 4 0 0 0-5.4-3.7"/></svg></div>
+  <div class="ind-label left" style="right:132.52mm;left:16mm;top:223.40mm;text-align:right"><span class="n">06</span><h3>Professional Services</h3><p>Growth, structuring and positioning for service-led firms.</p></div>
+  <div class="ind-node" style="left:59.99mm;top:190.50mm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="1"/><rect x="9" y="9" width="6" height="6"/><path d="M9 2.5V6M12 2.5V6M15 2.5V6M9 18v3.5M12 18v3.5M15 18v3.5M2.5 9H6M2.5 12H6M2.5 15H6M18 9h3.5M18 12h3.5M18 15h3.5"/></svg></div>
+  <div class="ind-label left" style="right:154.01mm;left:16mm;top:193.50mm;text-align:right"><span class="n">07</span><h3>Technology</h3><p>Helping technology businesses establish and scale in the region.</p></div>
+  <div class="ind-node" style="left:55.12mm;top:144.69mm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M6 21v-6M10.5 21v-9M15 21v-5M19.5 21V9"/><path d="M4 12.5 9.5 7l4 3.5L20 4M16 4h4v4"/></svg></div>
+  <div class="ind-label left" style="right:158.88mm;left:16mm;top:147.69mm;text-align:right"><span class="n">08</span><h3>Investment</h3><p>Evaluating opportunities and building the partnerships to realise them.</p></div>
+  <div class="ind-node" style="left:69.15mm;top:104.41mm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3.5h6v5.5h5.5v6H15v5.5H9V15H3.5V9H9z"/></svg></div>
+  <div class="ind-label left" style="right:144.85mm;left:16mm;top:107.41mm;text-align:right"><span class="n">09</span><h3>Healthcare</h3><p>Strategic support for healthcare providers, innovation and investment.</p></div>
+  <p class="ind-foot">Global expertise.<br>Local insight.</p>
+  <img class="ind-mark" src="img/hk-seal.png" alt="">
+  <div class="folio"><span>HK Business Consultancy</span><b></b></div>
+</section>
+
+<!-- 6 · GLOBAL REACH -->
+<section class="page navy gr-page">
+  <div class="gr-head">
+    <p class="eyebrow">Global Reach</p>
+    <h2>The UAE, a gateway to<em>global opportunity.</em></h2>
+  </div>
+  <img class="gr-seal" src="img/hk-seal.png" alt="">
+  <p class="gr-intro">Positioned between East and West, the UAE connects businesses to the Gulf, Europe, Asia and Africa. We help clients use that position deliberately — entering the region, or reaching outward from it.</p>
+  <div class="gr-globe"><img src="img/globe-gold.png" alt=""></div>
+  <div class="gr-quote"><p>A stable, internationally connected base with access to markets across multiple continents.</p></div>
+  <div class="gr-regions">
+    <div class="gr-region"><span>01</span><h3>GCC &amp; Middle East</h3><p>The immediate neighbourhood: shared commercial culture, close trade corridors and a growing appetite for regional expansion.</p></div>
+    <div class="gr-region"><span>02</span><h3>Europe</h3><p>Established brands and investors looking east, and regional businesses building partnerships in European markets.</p></div>
+    <div class="gr-region"><span>03</span><h3>Asia</h3><p>Deep trade ties with the Indian subcontinent and the major commercial centres of South-East and East Asia.</p></div>
+    <div class="gr-region"><span>04</span><h3>Africa</h3><p>Fast-growing markets, where the UAE has long served as a commercial and logistics bridge.</p></div>
+    <div class="gr-region"><span>05</span><h3>The Americas</h3><p>International businesses using the UAE as a base to access the Middle East, Africa and South Asia.</p></div>
+  </div>
+  <div class="folio"><span>HK Business Consultancy</span><b></b></div>
+</section>
+
+<!-- ASSOCIATE COMPANIES -->
+<!-- Add a company: copy an .as-card and point it at a logo in img/logos/. -->
+<section class="page navy as-page">
+  <img class="corner-seal" src="img/hk-seal.png" alt="">
+  <div class="as-head">
+    <p class="eyebrow">Associate Companies</p>
+    <h2>The HK <em>Network.</em></h2>
+    <p class="lead">A group of companies that share our standards and our ambitions — together extending what we can offer the businesses we work with.</p>
+  </div>
+  <div class="as-grid">
+    <div class="as-card"><div class="as-tile" style="background:#fff"><img src="img/logos/rbs.png" alt="RBS"></div><p><span>01</span>RBS</p></div>
+    <div class="as-card"><div class="as-tile" style="background:#fff"><img src="img/logos/maplitho.png" alt="Maplitho"></div><p><span>02</span>Maplitho</p></div>
+    <div class="as-card"><div class="as-tile as-fill" style="background-image:url(img/logos/valencia-galleria.png)" role="img" aria-label="Valencia Galleria"></div><p><span>03</span>Valencia Galleria</p></div>
+    <div class="as-card"><div class="as-tile" style="background:#fff"><img src="img/logos/providus.png" alt="Providus"></div><p><span>04</span>Providus</p></div>
+  </div>
+  <div class="folio"><span>HK Business Consultancy</span><b></b></div>
+</section>
+
+<!-- CLIENTS -->
+<!-- Replace each "Client logo" tile with <img src="img/clients/name.png" alt="Client name"> (only with each client's permission). -->
+<section class="page ivory cl-page" style="background:#fff">
+  <img class="corner-seal" src="img/hk-seal.png" alt="">
+  <div class="cl-head">
+    <p class="eyebrow">Our Clients</p>
+    <h2>Trusted by businesses <em>that build.</em></h2>
+    <p class="lead">From first-time founders to established brands, we are proud of the businesses we have helped launch, grow and expand.</p>
+  </div>
+  <div class="cl-grid">
+    <img class="cl-logo" src="img/clients/tiles/address.jpg" alt="Address Men&rsquo;s Apparel">
+    <img class="cl-logo" src="img/clients/tiles/clarus.jpg" alt="Clarus Lifestyle Jewellery">
+    <img class="cl-logo" src="img/clients/tiles/nellara.jpg" alt="Nellara">
+    <img class="cl-logo" src="img/clients/tiles/imamom.jpg" alt="Imamom">
+    <img class="cl-logo" src="img/clients/tiles/nells.jpg" alt="Nells Restaurant">
+    <img class="cl-logo" src="img/clients/tiles/burger-lounge.jpg" alt="Burger Lounge">
+    <img class="cl-logo" src="img/clients/tiles/coterra.jpg" alt="Coterra Coffee Roasters">
+    <img class="cl-logo" src="img/clients/tiles/freshii.jpg" alt="Freshii">
+    <img class="cl-logo" src="img/clients/tiles/fishbae.jpg" alt="Fish Bae">
+    <img class="cl-logo" src="img/clients/tiles/fez-inn.jpg" alt="Fez Inn Hotel">
+    <img class="cl-logo" src="img/clients/tiles/wecare.jpg" alt="WeCare Holdings &amp; Healthcare Berhad">
+    <img class="cl-logo" src="img/clients/tiles/laderach.jpg" alt="L&auml;derach Chocolatier Suisse">
+    <img class="cl-logo" src="img/clients/tiles/safa.jpg" alt="Safa Gold &amp; Diamonds">
+    <img class="cl-logo" src="img/clients/tiles/mawj.jpg" alt="Mawj Coastal Kitchen &amp; Seafood">
+    <img class="cl-logo" src="img/clients/tiles/guzzini-studio.jpg" alt="Guzzini Studio">
+    <img class="cl-logo" src="img/clients/tiles/bl.jpg" alt="bL">
+  </div>
+  <p class="cl-more"><span>&amp; many <em>more.</em></span></p>
+  <div class="cl-quotes">
+    <div class="cl-q"><span class="mk">&rdquo;</span>
+      <p>HK understood our brand from the very first conversation. Their guidance on strategy and expansion has been practical, honest and always focused on what is right for our business.</p>
+      <div class="who"><img src="img/clients/tiles/address.jpg" alt=""><div><b>Mr. Shamsudheen Nellara</b><small>Chairman &amp; Managing Director &middot; Address Apparel</small></div></div>
+    </div>
+    <div class="cl-q"><span class="mk">&rdquo;</span>
+      <p>From concept to launch, HK walked with us at every step. They brought clarity to every decision and genuinely cared about Fish Bae&rsquo;s success as much as we did.</p>
+      <div class="who"><img src="img/clients/tiles/fishbae.jpg" alt=""><div><b>Mr. Fahim</b><small>Founder &middot; Fish Bae</small></div></div>
+    </div>
+  </div>
+  <div class="folio"><span>HK Business Consultancy</span><b></b></div>
+</section>
+
+<!-- 7 · ENGAGEMENTS -->
+<section class="page ivory">
+  <img class="corner-seal" src="img/hk-seal.png" alt="">
+  <div class="pad">
+    <p class="eyebrow">Selected Engagements</p>
+    <h2>How we <em>work</em> with clients.</h2>
+    <p class="muted" style="max-width:130mm;margin-top:5mm">Representative types of mandate. Detailed case studies are available on request, subject to client confidentiality.</p>
+    <div class="cases">
+      <div class="case"><span class="num">01</span><p class="tag">Franchising · F&amp;B &amp; Hospitality</p><h3>Building a franchise model</h3><dl>
+        <div><dt>Challenge</dt><dd>A hospitality concept with regional ambitions, seeking a repeatable model for expansion.</dd></div>
+        <div><dt>Strategic Approach</dt><dd>Franchise readiness review, commercial model design, operating standards and partner criteria.</dd></div>
+        <div><dt>Outcome</dt><dd class="pending">Available on request.</dd></div></dl></div>
+      <div class="case"><span class="num">02</span><p class="tag">Market Entry · Cross-sector</p><h3>Establishing in the UAE</h3><dl>
+        <div><dt>Challenge</dt><dd>An international business assessing how, where and with whom to establish a presence in the UAE.</dd></div>
+        <div><dt>Strategic Approach</dt><dd>Market assessment, structuring options, partner identification and a phased entry roadmap.</dd></div>
+        <div><dt>Outcome</dt><dd class="pending">Available on request.</dd></div></dl></div>
+      <div class="case"><span class="num">03</span><p class="tag">Corporate &amp; Commercial Advisory</p><h3>Restructuring for growth</h3><dl>
+        <div><dt>Challenge</dt><dd>A growing business whose structure and commercial arrangements had not kept pace with its ambitions.</dd></div>
+        <div><dt>Strategic Approach</dt><dd>Review of structure, governance and commercial terms, with a practical plan for realignment.</dd></div>
+        <div><dt>Outcome</dt><dd class="pending">Available on request.</dd></div></dl></div>
+      <div class="case"><span class="num">04</span><p class="tag">Trading &amp; Investment</p><h3>Evaluating an opportunity</h3><dl>
+        <div><dt>Challenge</dt><dd>An investor weighing a commercial opportunity and the partners required to realise it.</dd></div>
+        <div><dt>Strategic Approach</dt><dd>Opportunity assessment, partner evaluation and a structured route to commercial development.</dd></div>
+        <div><dt>Outcome</dt><dd class="pending">Available on request.</dd></div></dl></div>
+    </div>
+    <div class="approach">
+      <h3>One conversation,<br><em>many capabilities.</em></h3>
+      <p>Each engagement draws on the disciplines it needs — strategy, market entry, structuring, franchising, hospitality or investment — brought together around one clear objective.</p>
+    </div>
+  </div>
+  <div class="folio"><span>HK Business Consultancy</span><b></b></div>
+</section>
+
+<!-- INSIDE BACK COVER (print edition) -->
+<section class="page navy ibc">
+  <img class="seal-big" src="img/hk-seal.png" alt="HK Business Consultancy">
+  <p class="line">Building Businesses.<br><em>Creating Possibilities.</em></p>
+  <p class="tag">Honest &amp; Keen</p>
+  <div class="folio"><span>HK Business Consultancy</span><b></b></div>
+</section>
+
+<!-- 8 · BACK COVER -->
+<section class="page navy back">
+  <img class="back-seal-wm" src="img/hk-seal.png" alt="">
+  <div class="pad">
+    <p class="eyebrow">Contact</p>
+    <h1>Let's Build<em>What's Next.</em></h1>
+    <p class="lead" style="max-width:120mm">Whether you are entering the UAE, expanding an existing business or exploring a new opportunity, let's start the conversation.</p>
+  </div>
+  <dl class="contact">
+    <div><dt>Website</dt><dd>www.hkbusinessconsultancy.com</dd></div>
+    <div><dt>Email</dt><dd>info@honestandkeen.com</dd></div>
+    <div><dt>Telephone · UAE</dt><dd>+971 5858 15229<br>+971 585822086</dd></div>
+    <div><dt>Telephone · India</dt><dd>+91 7829500009<br>+91 9544392026</dd></div>
+    <div class="social"><dt>Follow us</dt><dd><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r=".9" fill="currentColor" stroke="none"/></svg></span>@hk.businessconsultancy</dd></div>
+    <div class="social"><dt>&nbsp;</dt><dd><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="12" cy="10" r="3"/><path d="M6.5 18c1.2-2.6 3.2-3.8 5.5-3.8s4.3 1.2 5.5 3.8"/></svg></span>Honest and Keen Business Consultancy</dd></div>
+  </dl>
+  <div class="sign">
+    <img class="sign-seal" src="img/hk-seal.png" alt="HK Business Consultancy">
+    <p>Building Businesses. Creating Possibilities.</p>
+  </div>
+</section>
+
+</body>
+</html>
