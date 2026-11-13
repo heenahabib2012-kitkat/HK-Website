@@ -260,14 +260,8 @@
   .cl-head h2 { font-size: 32pt; line-height: 1.05; margin-top: 6mm; color: #0b1f5f; }
   .cl-head h2 em { color: var(--gold-d); }
   .cl-head .lead { margin-top: 5mm; max-width: 140mm; font-size: 10.5pt; color: var(--muted); }
-  .cl-grid { left: 18mm; right: 18mm; top: 76mm; display: grid; grid-template-columns: repeat(4, 1fr); border-top: .25mm solid var(--paper-line); border-left: .25mm solid var(--paper-line); }
-  .cl-grid div { height: 29mm; display: grid; place-items: center; border-right: .25mm solid var(--paper-line); border-bottom: .25mm solid var(--paper-line); font-size: 6.6pt; letter-spacing: .22em; text-transform: uppercase; color: #b5b9c8; background: #fff; }
-  .cl-grid .cl-tile { padding: 0; }
-  .cl-tile img { max-width: 30mm; max-height: 20mm; object-fit: contain; }
-  .cl-tile.cl-sq img { max-width: 100%; max-height: 100%; height: 29mm; }
-  .cl-grid .cl-more { background: #0b1f5f; }
-  .cl-more span { font-family: var(--serif); font-size: 15pt; line-height: 1.1; color: #fff; letter-spacing: 0; text-transform: none; text-align: center; }
-  .cl-more em { color: var(--gold-l); }
+  .cl-grid { left: 18mm; right: 18mm; top: 76mm; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2mm; }
+  .cl-logo { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; outline: .2mm solid var(--paper-line); outline-offset: -.2mm; }
   .cl-quote { left: 18mm; right: 18mm; top: 208mm; display: grid; grid-template-columns: 12mm 1fr; gap: 4mm; padding-top: 7mm; border-top: .3mm solid var(--gold); }
   .cl-quote .q { font-family: var(--serif); font-size: 46pt; line-height: .7; color: var(--gold); }
   .cl-quote p { font-family: var(--serif); font-style: italic; font-size: 13pt; line-height: 1.45; color: #0b1f5f; }
@@ -537,22 +531,22 @@
     <p class="lead">From first-time founders to established brands, we are proud of the businesses we have helped launch, grow and expand.</p>
   </div>
   <div class="cl-grid">
-    <div class="cl-tile" style="background:#000"><img src="img/clients/nells.png" alt="Nells Restaurant"></div>
-    <div class="cl-tile" style="background:#fff"><img src="img/clients/burger-lounge.png" alt="Burger Lounge"></div>
-    <div class="cl-tile" style="background:#fff"><img src="img/clients/coterra.png" alt="Coterra Coffee Roasters"></div>
-    <div class="cl-tile" style="background:#151a37"><img src="img/clients/clarus.png" alt="Clarus Lifestyle Jewellery"></div>
-    <div class="cl-tile" style="background:#fff"><img src="img/clients/address.png" alt="Address Men’s Apparel"></div>
-    <div class="cl-tile" style="background:#fcf9e3"><img src="img/clients/fishbae.png" alt="Fish Bae"></div>
-    <div class="cl-tile" style="background:#fff"><img src="img/clients/wecare.png" alt="WeCare Holdings &amp; Healthcare Berhad"></div>
-    <div class="cl-tile cl-sq" style="background:#007b3f url(img/clients/freshii.png) center/contain no-repeat" role="img" aria-label="Freshii"></div>
-    <div class="cl-tile" style="background:#fff"><img src="img/clients/laderach.png" alt="L&auml;derach Chocolatier Suisse"></div>
-    <div class="cl-tile cl-sq" style="background:#013660 url(img/clients/fez-inn.png) center/contain no-repeat" role="img" aria-label="Fez Inn Hotel"></div>
-    <div class="cl-tile" style="background:#fff"><img src="img/clients/nellara.png" alt="Nellara"></div>
-    <div class="cl-tile" style="background:#fff"><img src="img/clients/imamom.png" alt="Imamom"></div>
-    <div class="cl-tile" style="background:#000"><img src="img/clients/guzzini-studio.png" alt="Guzzini Studio"></div>
-    <div class="cl-tile" style="background:#10542b"><img src="img/clients/safa.png" alt="Safa Gold &amp; Diamonds"></div>
-    <div class="cl-tile" style="background:#fff"><img src="img/clients/mawj.png" alt="Mawj Coastal Kitchen &amp; Seafood"></div>
-    <div class="cl-tile" style="background:#713d63 url(img/clients/bl.png) center/contain no-repeat" role="img" aria-label="bL"></div>
+    <img class="cl-logo" src="img/clients/tiles/clarus.jpg" alt="Clarus Lifestyle Jewellery">
+    <img class="cl-logo" src="img/clients/tiles/address.jpg" alt="Address Men&rsquo;s Apparel">
+    <img class="cl-logo" src="img/clients/tiles/nellara.jpg" alt="Nellara">
+    <img class="cl-logo" src="img/clients/tiles/imamom.jpg" alt="Imamom">
+    <img class="cl-logo" src="img/clients/tiles/nells.jpg" alt="Nells Restaurant">
+    <img class="cl-logo" src="img/clients/tiles/burger-lounge.jpg" alt="Burger Lounge">
+    <img class="cl-logo" src="img/clients/tiles/coterra.jpg" alt="Coterra Coffee Roasters">
+    <img class="cl-logo" src="img/clients/tiles/freshii.jpg" alt="Freshii">
+    <img class="cl-logo" src="img/clients/tiles/fishbae.jpg" alt="Fish Bae">
+    <img class="cl-logo" src="img/clients/tiles/fez-inn.jpg" alt="Fez Inn Hotel">
+    <img class="cl-logo" src="img/clients/tiles/wecare.jpg" alt="WeCare Holdings &amp; Healthcare Berhad">
+    <img class="cl-logo" src="img/clients/tiles/laderach.jpg" alt="L&auml;derach Chocolatier Suisse">
+    <img class="cl-logo" src="img/clients/tiles/safa.jpg" alt="Safa Gold &amp; Diamonds">
+    <img class="cl-logo" src="img/clients/tiles/mawj.jpg" alt="Mawj Coastal Kitchen &amp; Seafood">
+    <img class="cl-logo" src="img/clients/tiles/guzzini-studio.jpg" alt="Guzzini Studio">
+    <img class="cl-logo" src="img/clients/tiles/bl.jpg" alt="bL">
   </div>
   <div class="cl-quote"><span class="q">&ldquo;</span><div><p>[ A short testimonial from a client, in their own words. ]</p><small>[ Name · Title, Company ]</small></div></div>
   <div class="folio"><span>HK Business Consultancy</span><b></b></div>
