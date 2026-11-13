@@ -262,10 +262,19 @@
   .cl-head .lead { margin-top: 5mm; max-width: 140mm; font-size: 10.5pt; color: var(--muted); }
   .cl-grid { left: 18mm; right: 18mm; top: 76mm; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2mm; }
   .cl-logo { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; outline: .2mm solid var(--paper-line); outline-offset: -.2mm; }
-  .cl-quote { left: 18mm; right: 18mm; top: 208mm; display: grid; grid-template-columns: 12mm 1fr; gap: 4mm; padding-top: 7mm; border-top: .3mm solid var(--gold); }
-  .cl-quote .q { font-family: var(--serif); font-size: 46pt; line-height: .7; color: var(--gold); }
-  .cl-quote p { font-family: var(--serif); font-style: italic; font-size: 13pt; line-height: 1.45; color: #0b1f5f; }
-  .cl-quote small { display: block; margin-top: 3mm; font-size: 6.8pt; letter-spacing: .26em; text-transform: uppercase; color: var(--gold-d); font-style: normal; font-family: var(--sans); }
+  .cl-more { left: 18mm; right: 18mm; top: 200mm; display: flex; align-items: center; justify-content: center; gap: 6mm; }
+  .cl-more::before, .cl-more::after { content: ''; flex: 1; height: .3mm; background: linear-gradient(90deg, transparent, var(--gold)); }
+  .cl-more::after { background: linear-gradient(90deg, var(--gold), transparent); }
+  .cl-more span { font-family: var(--serif); font-style: italic; font-size: 20pt; color: #0b1f5f; white-space: nowrap; }
+  .cl-more em { color: var(--gold-d); }
+  .cl-quotes { left: 18mm; right: 18mm; top: 216mm; display: grid; grid-template-columns: 1fr 1fr; gap: 8mm; }
+  .cl-q { position: relative; display: flex; flex-direction: column; padding: 8mm 12mm 6mm 7mm; background: var(--ivory); border-top: .5mm solid var(--gold); }
+  .cl-q .mk { position: absolute; top: 2mm; right: 4mm; font-family: var(--serif); font-size: 40pt; line-height: 1; color: rgba(201,164,92,.45); }
+  .cl-q p { font-family: var(--serif); font-style: italic; font-size: 10.6pt; line-height: 1.5; color: #0b1f5f; }
+  .cl-q .who { margin-top: auto; padding-top: 4.5mm; display: flex; align-items: center; gap: 3mm; }
+  .cl-q .who img { width: 12mm; height: 8mm; outline: .2mm solid var(--paper-line); }
+  .cl-q .who b { display: block; font-family: var(--serif); font-weight: 400; font-size: 10.5pt; color: #0b1f5f; }
+  .cl-q .who small { display: block; margin-top: .6mm; font-size: 6pt; letter-spacing: .2em; text-transform: uppercase; color: var(--gold-d); }
 
   /* ---------- 7 engagements ---------- */
   .cases { margin-top: 12mm; display: grid; grid-template-columns: 1fr 1fr; gap: 7mm; }
@@ -548,7 +557,17 @@
     <img class="cl-logo" src="img/clients/tiles/guzzini-studio.jpg" alt="Guzzini Studio">
     <img class="cl-logo" src="img/clients/tiles/bl.jpg" alt="bL">
   </div>
-  <div class="cl-quote"><span class="q">&ldquo;</span><div><p>[ A short testimonial from a client, in their own words. ]</p><small>[ Name · Title, Company ]</small></div></div>
+  <p class="cl-more"><span>&amp; many <em>more.</em></span></p>
+  <div class="cl-quotes">
+    <div class="cl-q"><span class="mk">&rdquo;</span>
+      <p>HK understood our brand from the very first conversation. Their guidance on strategy and expansion has been practical, honest and always focused on what is right for our business.</p>
+      <div class="who"><img src="img/clients/tiles/address.jpg" alt=""><div><b>Mr. Shamsudheen Nellara</b><small>Chairman &amp; Managing Director &middot; Address Apparel</small></div></div>
+    </div>
+    <div class="cl-q"><span class="mk">&rdquo;</span>
+      <p>From concept to launch, HK walked with us at every step. They brought clarity to every decision and genuinely cared about Fish Bae&rsquo;s success as much as we did.</p>
+      <div class="who"><img src="img/clients/tiles/fishbae.jpg" alt=""><div><b>Mr. Fahim</b><small>Founder &middot; Fish Bae</small></div></div>
+    </div>
+  </div>
   <div class="folio"><span>HK Business Consultancy</span><b></b></div>
 </section>
 
