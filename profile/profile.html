@@ -305,6 +305,35 @@
   .back .sign { position: absolute; left: 18mm; right: 18mm; bottom: 14mm; display: flex; justify-content: space-between; align-items: center; padding-top: 5mm; border-top: .3mm solid var(--gold); }
   .back .sign .sign-seal { width: 16mm; }
   .back .sign p { font-family: var(--serif); font-style: italic; font-size: 10.5pt; color: rgba(255,255,255,.75); }
+
+  /* ---------- inside front cover ---------- */
+  .ifc > * { position: absolute; }
+  .ifc .seal-sm { left: 50%; top: 80mm; width: 30mm; margin-left: -15mm; }
+  .ifc .promise { left: 30mm; right: 30mm; top: 124mm; text-align: center; font-family: var(--serif); font-size: 30pt; line-height: 1.12; color: #fff; }
+  .ifc .promise em { color: var(--gold-l); }
+  .ifc .rule-c { left: 50%; top: 162mm; width: 14mm; margin-left: -7mm; height: .4mm; background: var(--gold); }
+  .ifc .pair { left: 26mm; right: 26mm; top: 176mm; display: grid; grid-template-columns: 1fr 1fr; gap: 12mm; }
+  .ifc .pair h3 { font-family: var(--serif); font-size: 19pt; color: var(--gold-l); margin-bottom: 3mm; }
+  .navy.ifc .pair p { font-size: 9.6pt; line-height: 1.65; color: rgba(255,255,255,.82); }
+  .ifc .pair div { border-top: .25mm solid rgba(201,164,92,.45); padding-top: 5mm; }
+
+  /* ---------- lead-in to contact ---------- */
+  .lead-in { background: #04122a url(img/skyline.jpg) center 60%/cover; }
+  .lead-in::before { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(4,14,36,.92) 0%, rgba(4,14,36,.55) 34%, rgba(4,14,36,.1) 60%, rgba(4,14,36,.75) 100%); }
+  .lead-in > * { position: absolute; z-index: 1; }
+  .lead-in .big { left: 18mm; right: 24mm; top: 34mm; font-family: var(--serif); font-size: 40pt; line-height: 1.05; color: #fff; }
+  .lead-in .big em { display: block; color: var(--gold-l); }
+  .navy.lead-in .sub { left: 18mm; width: 120mm; top: 92mm; font-size: 11pt; line-height: 1.6; color: rgba(255,255,255,.85); }
+
+  /* ---------- back cover ---------- */
+  .bc { background: radial-gradient(70% 55% at 50% 45%, var(--navy-2) 0%, var(--navy) 72%); color: #fff; }
+  .bc > * { position: absolute; }
+  .bc .seal-big { left: 50%; top: 92mm; width: 74mm; margin-left: -37mm; }
+  .bc .line { left: 30mm; right: 30mm; top: 182mm; text-align: center; font-family: var(--serif); font-size: 26pt; line-height: 1.15; color: #fff; }
+  .bc .line em { color: var(--gold-l); }
+  .bc .tag { left: 0; right: 0; top: 206mm; text-align: center; font-size: 7pt; letter-spacing: .34em; text-transform: uppercase; color: var(--gold); }
+  .bc .web { left: 0; right: 0; bottom: 18mm; text-align: center; font-size: 7.6pt; letter-spacing: .24em; color: rgba(255,255,255,.6); }
+  .no-folio .folio { display: none; }
 </style>
 </head>
 <body>
@@ -333,6 +362,17 @@
     <p>Strategic business solutions for companies, entrepreneurs and investors navigating growth across the UAE and international markets.</p>
   </div>
   <div class="cover-foot"><span>United Arab Emirates</span><span>International</span></div>
+</section>
+
+<!-- INSIDE FRONT COVER -->
+<section class="page navy ifc no-folio">
+  <img class="seal-sm" src="img/hk-seal.png" alt="">
+  <p class="promise">A promise<br>in <em>our name.</em></p>
+  <div class="rule-c"></div>
+  <div class="pair">
+    <div><h3>Honest</h3><p>Candid advice, clearly given — even when it is not what you expected to hear. Every recommendation we make is one we would make for our own business.</p></div>
+    <div><h3>Keen</h3><p>Genuinely invested in your outcome. We bring energy, attention and care to every engagement, and we measure our success by yours.</p></div>
+  </div>
 </section>
 
 <!-- 2 · ABOUT US -->
@@ -604,7 +644,14 @@
   <div class="folio"><span>HK Business Consultancy</span><b></b></div>
 </section>
 
-<!-- 8 · BACK COVER -->
+<!-- LEAD-IN TO CONTACT -->
+<section class="page navy lead-in">
+  <p class="big">Every great business<em>begins with a conversation.</em></p>
+  <p class="sub">Whether you are launching a first venture, entering the UAE or taking an established brand into new markets — we would be glad to hear what you are building.</p>
+  <div class="folio" style="color:rgba(255,255,255,.55)"><span>HK Business Consultancy</span><b></b></div>
+</section>
+
+<!-- CONTACT -->
 <section class="page navy back">
   <img class="back-seal-wm" src="img/hk-seal.png" alt="">
   <div class="pad">
@@ -625,6 +672,15 @@
     <p>Building Businesses. Creating Possibilities.</p>
   </div>
 </section>
+
+<!-- BACK COVER -->
+<section class="page navy bc no-folio">
+  <img class="seal-big" src="img/hk-seal.png" alt="HK Business Consultancy">
+  <p class="line">Building Businesses.<br><em>Creating Possibilities.</em></p>
+  <p class="tag">Honest &amp; Keen</p>
+  <p class="web">www.hkbusinessconsultancy.com</p>
+</section>
+
 
 </body>
 </html>
