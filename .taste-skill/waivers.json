@@ -1,0 +1,17 @@
+[
+ {
+  "check": "phone-number",
+  "target": "dd.phones",
+  "reason": "the client's own UAE and India numbers, given in the brief and printed in their company profile"
+ },
+ {
+  "check": "button-styles",
+  "target": "(one screen)",
+  "reason": "the odd ones are the still hub diagram's node pills, not buttons; the page has one primary and one secondary style"
+ },
+ {
+  "check": "no-visual",
+  "target": "section#book",
+  "reason": "the booking form section, which sections.md allows without a picture; it also carries a Dubai photograph"
+ }
+]

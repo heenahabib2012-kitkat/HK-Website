@@ -1,0 +1,36 @@
+{
+ "palettes": [],
+ "types": [],
+ "dealt": [
+  "source-serif",
+  "hanken",
+  "zilla"
+ ],
+ "moments": [
+  {
+   "id": "word-highlight",
+   "at": "2026-11-14T07:50:35.491Z",
+   "seed": "26172db1"
+  },
+  {
+   "id": "photo-chapters",
+   "at": "2026-11-14T07:50:35.491Z",
+   "seed": "26172db1"
+  }
+ ],
+ "photos": [
+  {
+   "trade": "office",
+   "lead": null,
+   "ids": [],
+   "sections": [
+    "services",
+    "steps",
+    "story",
+    "close"
+   ],
+   "seed": "gwu9be",
+   "at": "2026-11-14T07:54:53.412Z"
+  }
+ ]
+}

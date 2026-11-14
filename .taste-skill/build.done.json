@@ -1,0 +1,11 @@
+{
+ "page": "index.html",
+ "url": null,
+ "root": null,
+ "kind": "service",
+ "category": "business consultancy",
+ "primary": "Book a consultation",
+ "rounds": 3,
+ "start": "2026-11-14T07:50:30.014Z",
+ "by": "gate.mjs --start"
+}
