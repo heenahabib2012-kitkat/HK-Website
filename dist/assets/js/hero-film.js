@@ -65,16 +65,20 @@
   if (video && !reduce) {
     const mobileSrc = video.dataset.mobileSrc;
     if (mobileSrc && window.matchMedia('(max-width: 700px)').matches) video.src = mobileSrc;
-    video.muted = true;
-    const fallback = setTimeout(() => { if (!usingVideo) bootCanvasFilm(); }, 6000);
+    video.muted = true; video.defaultMuted = true; video.setAttribute('muted', '');
+    // Keep the film's own still visible until it plays (Low Power Mode, data saver and
+    // some in-app browsers block autoplay); retry on the visitor's first touch or click.
+    hero.classList.add('has-video-still');
+    const retry = () => { if (!usingVideo) video.play().catch(() => {}); };
+    ['touchstart', 'pointerdown', 'scroll'].forEach((ev) => window.addEventListener(ev, retry, { once: true, passive: true }));
     video.addEventListener('playing', () => {
-      clearTimeout(fallback);
       usingVideo = true; video.classList.add('is-playing'); hero.classList.add('has-film', 'has-video');
+      hero.classList.remove('has-video-still');
       if (filmCtl) { filmCtl.stop(); canvas.classList.remove('is-running'); }
       if (!chapterTimer) chapterTimer = setInterval(nextChapter, 7000);
     }, { once: true });
-    video.addEventListener('error', () => { clearTimeout(fallback); bootCanvasFilm(); }, { once: true });
-    video.play().catch(() => { clearTimeout(fallback); bootCanvasFilm(); });
+    if (video.src) video.load();
+    video.play().catch(() => { /* still frame stays; retried on first interaction */ });
     new IntersectionObserver(([en]) => { if (!usingVideo || paused) return; en.isIntersecting ? video.play().catch(() => {}) : video.pause(); }, { threshold: 0.02 }).observe(hero);
   } else if (!(video && reduce)) {
     bootCanvasFilm();

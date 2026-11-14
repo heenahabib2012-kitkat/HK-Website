@@ -986,3 +986,6 @@ body.menu-open { overflow: hidden; }
 .associate__plate { flex: none; }
 .associate__body { flex: 1; display: flex; flex-direction: column; justify-content: flex-start; }
 .associate h3 { min-height: 2.4em; }
+
+/* Brand film waiting to play (or autoplay blocked): show its still frame */
+.hero.has-video-still .hero__poster { opacity: 1; transform: none; }

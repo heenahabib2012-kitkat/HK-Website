@@ -177,7 +177,7 @@ const analytics = config.analytics?.ga4
 // Optional produced brand film: src/assets/video/hk-brand-film.mp4 (+ -mobile.mp4, .webm)
 const vid = (n) => fs.existsSync(path.join(SRC, 'assets/video', n)) ? `assets/video/${n}` : null;
 const heroVideo = vid('hk-brand-film.mp4')
-  ? `<video class="hero__video" data-video muted loop playsinline preload="auto"${photoFor('hero-poster') ? ` poster="${photoFor('hero-poster')}"` : ''}${vid('hk-brand-film-mobile.mp4') ? ` data-mobile-src="${vid('hk-brand-film-mobile.mp4')}"` : ''}>${vid('hk-brand-film.webm') ? `<source src="${vid('hk-brand-film.webm')}" type="video/webm">` : ''}<source src="${vid('hk-brand-film.mp4')}" type="video/mp4"></video>`
+  ? `<video class="hero__video" data-video muted loop playsinline preload="auto"${photoFor('hero-poster') ? ` poster="${photoFor('hero-poster')}"` : ''}${vid('hk-brand-film-mobile.mp4') ? ` data-mobile-src="${vid('hk-brand-film-mobile.mp4')}"` : ''}><source src="${vid('hk-brand-film.mp4')}" type="video/mp4">${vid('hk-brand-film.webm') ? `<source src="${vid('hk-brand-film.webm')}" type="video/webm">` : ''}</video>`
   : '';
 
 // Photo credits (src/data/photo-credits.json) -> rendered on credits.html
