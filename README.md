@@ -39,7 +39,7 @@ npm run serve      # http://localhost:4173
 
 The build prints anything still pending. These were not available when the site was built:
 
-1. **Official HK logo** — the header/footer currently use an interim gold-framed HK monogram. Replace `src/partials/logo.html` (one place) with the official logo, and `src/assets/brand/hk-mark.svg` (favicon).
+1. **Official HK logo** — in place (`src/assets/brand/hk-logo.png`, web sizes `hk-logo-128.webp` / `hk-logo-256.webp`, favicon and touch icon). The header, footer, network diagram and opening animation use it via `src/partials/logo.html`.
 2. **Founder photograph** — save as `src/assets/img/photos/founder.jpg`. Until then a framed placeholder is shown.
 3. **Photography** — every image slot uses a generated architectural line-art plate in the brand colours. Drop real photography into `src/assets/img/photos/<slot>.jpg` to replace any of them (slot list in that folder's README).
 4. **Brand film** — the home hero plays a graded brand film edited from licensed stock footage (curved glass → Downtown Dubai at night → a tilt up the Burj Khalifa): `src/assets/video/hk-brand-film.mp4` / `.webm` (desktop) and `hk-brand-film-mobile.mp4` (portrait, phones). To re-cut it, put the source clips in `footage/` as `glass.mp4`, `night.mp4`, `burj.mp4` and run `bash tools/edit-brand-film.sh` (needs ffmpeg). If the video can't play, the page falls back to a real-time 3D film (three.js, loaded only when needed), then a 2D line film. Add `?film-t=12` to the home URL to freeze the 3D fallback for review.
