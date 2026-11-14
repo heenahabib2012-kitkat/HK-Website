@@ -55,9 +55,6 @@
 <!-- PROLOGUE -->
 <section class="prologue" id="prologue" aria-labelledby="prologue-title">
   <div class="container prologue__grid">
-    <div class="prologue__index reveal" aria-hidden="true">
-      <span>Kuwait</span><span>Across Borders</span><span>Dubai</span><span>Today</span>
-    </div>
     <div class="prologue__text">
       <p class="eyebrow eyebrow--dark reveal">About HK</p>
       <h2 id="prologue-title" class="display display--ink reveal-words">An advisory practice that began over coffee — and grew into a consultancy with franchising, brand strategy, operations and compliance under one roof.</h2>
@@ -66,8 +63,34 @@
         <p class="reveal"><a class="link-arrow" href="about.html">Read our story <span aria-hidden="true">→</span></a></p>
       </div>
     </div>
-    <figure class="prologue__figure mask-reveal">
-      <div class="media media--tall" {{media home-prologue}} data-parallax="-0.08" role="img" aria-label="Architectural study of a tower rising towards the sky"></div>
+    <figure class="prologue__figure journey mask-reveal" data-journey>
+      <div class="journey__frame">
+        <svg class="journey__art" viewBox="0 0 400 500" role="img" aria-labelledby="journey-desc">
+          <desc id="journey-desc">An animated gold line drawing of HK's journey: a coffee cup in Kuwait, a route to Dubai, the Dubai skyline, and connections reaching out internationally.</desc>
+          <defs>
+            <linearGradient id="j-bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#132F6B"/><stop offset="1" stop-color="#071735"/></linearGradient>
+            <radialGradient id="j-glow" cx=".5" cy=".55" r=".6"><stop offset="0" stop-color="#C6A45C" stop-opacity=".16"/><stop offset="1" stop-color="#C6A45C" stop-opacity="0"/></radialGradient>
+            <pattern id="j-grid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0V20" fill="none" stroke="#fff" stroke-opacity=".045"/></pattern>
+          </defs>
+          <rect width="400" height="500" fill="url(#j-bg)"/>
+          <rect width="400" height="500" fill="url(#j-grid)"/>
+          <rect width="400" height="500" fill="url(#j-glow)"/>
+          <path d="M18 34V18H34M366 18H382V34M382 466V482H366M34 482H18V466" fill="none" stroke="#C6A45C" stroke-opacity=".6"/>
+          <g class="j-group" data-s="0" transform="translate(200 300) scale(1.32) translate(-200 -290)"><path class="d" pathLength="1" style="--k:0" d="M112 352 Q200 374 288 352"/><path class="d" pathLength="1" style="--k:1" d="M150 361 Q200 369 250 361"/><path class="d" pathLength="1" style="--k:2" d="M140 252 L151 330 Q156 346 176 346 L224 346 Q244 346 249 330 L260 252"/><path class="d" pathLength="1" style="--k:3" d="M140 252 Q200 264 260 252"/><path class="d" pathLength="1" style="--k:4" d="M258 270 Q292 270 290 293 Q288 315 252 313"/><path class="d" pathLength="1" style="--k:6" d="M182 232 C170 207 196 196 183 172 C172 151 192 141 185 118" class="d steam"/><path class="d" pathLength="1" style="--k:7" d="M216 234 C204 209 230 198 217 174 C206 153 226 143 219 120" class="d steam"/></g>
+          <g class="j-group" data-s="1"><path class="d" pathLength="1" style="--k:0" d="M24 392 H376"/><path class="d" pathLength="1" style="--k:2" d="M86 300 Q193 120 306 322" id="j-route"/><circle class="j-dot" cx="86" cy="300" r="4"/><circle class="j-dot" cx="306" cy="322" r="4"/>
+<text class="j-label" x="58" y="330">KUWAIT</text><text class="j-label" x="282" y="352">DUBAI</text>
+<circle class="j-traveller" r="3.4"/></g>
+          <g class="j-group" data-s="2"><path class="d" pathLength="1" style="--k:0" d="M24 380 H70 V340 H88 V380 H100 V300 H122 V380 H134 V268 H152 V250 H158 V380 H176 V230 L188 212 V380 H194 V180 L198 150 L200 66 L202 150 L206 180 V380 H214 V220 H232 V380 H246 V286 H266 V380 H278 V320 H296 V260 H310 V380 H324 V336 H344 V380 H376"/><path class="d" pathLength="1" style="--k:3" d="M60 394 H340"/><path class="d" pathLength="1" style="--k:4" d="M96 404 H304"/><path class="d" pathLength="1" style="--k:5" d="M140 413 H260"/></g>
+          <g class="j-group" data-s="3"><path class="d" pathLength="1" style="--k:0" d="M200 66 Q100 40 26 150"/><path class="d" pathLength="1" style="--k:1" d="M200 66 Q140 0 70 34"/><path class="d" pathLength="1" style="--k:2" d="M200 66 Q270 0 334 30"/><path class="d" pathLength="1" style="--k:3" d="M200 66 Q300 44 378 148"/><path class="d" pathLength="1" style="--k:4" d="M200 66 Q330 120 392 262"/><circle class="j-end" cx="26" cy="150" r="3.4"/><circle class="j-end" cx="70" cy="34" r="3.4"/><circle class="j-end" cx="334" cy="30" r="3.4"/><circle class="j-end" cx="378" cy="148" r="3.4"/><circle class="j-end" cx="392" cy="262" r="3.4"/>
+<circle class="j-pulse" cx="200" cy="66" r="6"/></g>
+        </svg>
+      </div>
+      <ol class="journey__steps" aria-label="Our journey">
+        <li><button type="button" data-step="0" aria-pressed="true"><span class="journey__year">2015</span><span class="journey__place">Kuwait</span></button></li>
+        <li><button type="button" data-step="1" aria-pressed="false"><span class="journey__year">2017</span><span class="journey__place">Across Borders</span></button></li>
+        <li><button type="button" data-step="2" aria-pressed="false"><span class="journey__year">2021</span><span class="journey__place">Dubai</span></button></li>
+        <li><button type="button" data-step="3" aria-pressed="false"><span class="journey__year">Today</span><span class="journey__place">UAE &amp; International</span></button></li>
+      </ol>
     </figure>
   </div>
 </section>

@@ -210,6 +210,37 @@
     }
   }
 
+  /* ---------- Journey animation (home · About HK) ---------- */
+  const journey = $('[data-journey]');
+  if (journey) {
+    const groups = $$('.j-group', journey);
+    const steps = $$('[data-step]', journey);
+    const HOLD = [4200, 4200, 4000, 5600];
+    let cur = -1, timer = null, inView = false;
+    const show = (n) => {
+      cur = n;
+      groups.forEach((g, i) => {
+        g.classList.toggle('is-on', i === n);
+        g.classList.toggle('is-dim', n === 3 && i === 2); // the skyline stays under today's connections
+      });
+      steps.forEach((b, i) => b.setAttribute('aria-pressed', String(i === n)));
+      journey.style.setProperty('--journey-step', `${HOLD[n] / 1000}s`);
+    };
+    const next = () => {
+      clearTimeout(timer);
+      if (!inView || reduce) return;
+      timer = setTimeout(() => { show((cur + 1) % groups.length); next(); }, HOLD[cur]);
+    };
+    steps.forEach((b) => b.addEventListener('click', () => { show(+b.dataset.step); next(); }));
+    if (reduce || !('IntersectionObserver' in window)) { show(3); groups[2].classList.add('is-dim'); }
+    else {
+      new IntersectionObserver(([en]) => {
+        inView = en.isIntersecting;
+        if (inView) { if (cur < 0) show(0); next(); } else clearTimeout(timer);
+      }, { threshold: 0.35 }).observe(journey);
+    }
+  }
+
   /* ---------- Cursor gallery (expertise list) ---------- */
   const gallery = $('.cursor-gallery');
   const galleryList = $('[data-cursor-gallery]');

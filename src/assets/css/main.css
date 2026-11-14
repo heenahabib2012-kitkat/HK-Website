@@ -277,12 +277,10 @@ body.menu-open { overflow: hidden; }
    ========================================================= */
 /* Prologue — editorial, white */
 .prologue { background: var(--white); padding-block: var(--section); position: relative; }
-.prologue__grid { display: grid; grid-template-columns: 1fr 7fr 4fr; gap: clamp(24px, 4vw, 72px); align-items: start; }
-.prologue__index { display: flex; flex-direction: column; gap: 14px; padding-top: 70px; font-size: .7rem; letter-spacing: .22em; text-transform: uppercase; color: var(--ink-2); writing-mode: vertical-rl; transform: rotate(180deg); align-self: stretch; justify-content: flex-end; }
-.prologue__index span + span::before { content: '— '; color: var(--gold-ink); }
+.prologue__grid { display: grid; grid-template-columns: 7fr 5fr; gap: clamp(32px, 6vw, 110px); align-items: center; }
 .prologue__text .display { font-size: clamp(1.9rem, 3.6vw, 3.3rem); line-height: 1.14; }
 .prologue__cols { display: grid; grid-template-columns: 1.4fr 1fr; gap: 40px; margin-top: 48px; align-items: end; color: var(--ink-2); }
-.prologue__figure { margin-top: clamp(40px, 10vw, 160px); }
+.prologue__figure { margin: 0; }
 @media (max-width: 900px) {
   .prologue__grid { grid-template-columns: 1fr; }
   .prologue__index { writing-mode: horizontal-tb; transform: none; flex-direction: row; flex-wrap: wrap; padding: 0; gap: 8px; }
@@ -898,3 +896,43 @@ body.menu-open { overflow: hidden; }
   .hero.has-video .hero__veil { background:
     linear-gradient(180deg, rgba(8, 26, 58, .55) 0%, rgba(8, 26, 58, .45) 22%, rgba(8, 26, 58, .8) 48%, rgba(8, 26, 58, .92) 100%); }
 }
+
+/* ---------- Journey animation (home · About HK) ---------- */
+.journey__frame { position: relative; aspect-ratio: 4 / 5; max-width: 100%; box-shadow: 0 40px 80px -40px rgba(8, 26, 58, .55); }
+.journey__art { width: 100%; height: 100%; display: block; }
+.journey .j-group { opacity: 0; transition: opacity .9s var(--ease-soft); }
+.journey .j-group.is-on { opacity: 1; }
+.journey .j-group.is-dim { opacity: .38; }
+.journey .d { fill: none; stroke: var(--gold); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 2s var(--ease-in-out); transition-delay: calc(var(--k, 0) * .16s); }
+.journey .j-group.is-on .d, .journey .j-group.is-dim .d { stroke-dashoffset: 0; }
+.journey .j-group:not(.is-on):not(.is-dim) .d { transition-duration: .6s; transition-delay: 0s; }
+.journey .steam { stroke: #E8D5A8; stroke-width: 1.2; opacity: .85; }
+.journey .j-group.is-on .steam { animation: steam 3.2s ease-in-out 2s infinite; }
+@keyframes steam { 0%, 100% { transform: translateY(0); opacity: .85; } 50% { transform: translateY(-6px); opacity: .45; } }
+.journey .j-dot, .journey .j-end { fill: var(--gold); opacity: 0; transition: opacity .6s var(--ease-out) 1.6s; }
+.journey .j-group.is-on .j-dot, .journey .j-group.is-on .j-end { opacity: 1; }
+.journey .j-label { fill: rgba(255, 255, 255, .78); font: 600 9px var(--sans); letter-spacing: .22em; opacity: 0; transition: opacity .8s var(--ease-out) 1.2s; }
+.journey .j-group.is-on .j-label { opacity: 1; }
+.journey .j-traveller { fill: #FFF3D6; offset-path: path('M86 300 Q193 120 306 322'); offset-distance: 0%; opacity: 0; filter: drop-shadow(0 0 4px #C6A45C); }
+.journey .j-group.is-on .j-traveller { animation: travel 2.6s var(--ease-in-out) 1.4s infinite; }
+@keyframes travel { 0% { offset-distance: 0%; opacity: 0; } 12% { opacity: 1; } 88% { opacity: 1; } 100% { offset-distance: 100%; opacity: 0; } }
+.journey .j-pulse { fill: none; stroke: var(--gold); transform-box: fill-box; transform-origin: center; opacity: 0; }
+.journey .j-group.is-on .j-pulse { animation: pulse 2.6s var(--ease-out) 1.2s infinite; }
+.journey__steps { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 22px; border-top: 1px solid var(--line-dark); }
+.journey__steps button { position: relative; width: 100%; min-height: 64px; padding: 14px 8px 4px 0; text-align: left; display: flex; flex-direction: column; gap: 3px; color: var(--ink-2); transition: color var(--dur-2); }
+.journey__steps button::before { content: ''; position: absolute; left: 0; right: 0; top: -1px; height: 2px; background: var(--gold); transform: scaleX(0); transform-origin: left; }
+.journey__steps button[aria-pressed="true"]::before { transform: scaleX(1); transition: transform var(--journey-step, 4s) linear; }
+.journey__steps button[aria-pressed="true"] { color: var(--ink); }
+.journey__year { font-family: var(--serif); font-size: 1.35rem; line-height: 1; color: var(--royal); }
+.journey__steps button[aria-pressed="true"] .journey__year { color: var(--gold-ink); }
+.journey__place { font-size: .64rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; line-height: 1.3; }
+.journey__steps button:hover { color: var(--ink); }
+@media (max-width: 900px) {
+  .prologue__grid { grid-template-columns: 1fr; }
+  .prologue__figure { max-width: 480px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .journey .j-traveller, .journey .j-pulse { display: none; }
+}
+.journey .j-group[data-s="0"] .d { stroke-width: 1.2; }
+.journey .j-group[data-s="0"] .steam { stroke-width: .95; }
