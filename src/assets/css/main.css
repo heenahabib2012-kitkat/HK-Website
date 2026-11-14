@@ -610,7 +610,6 @@ body.menu-open { overflow: hidden; }
 .svc--franchise .svc__grid { display: grid; grid-template-columns: 7fr 5fr; gap: clamp(40px, 6vw, 110px); align-items: center; }
 .svc--franchise .svc__media { aspect-ratio: 6 / 5; }
 .svc__media-wrap { position: relative; }
-.svc__media-wrap::before { content: attr(data-n); position: absolute; right: .18em; top: .02em; z-index: 2; font-family: var(--serif); font-size: clamp(5rem, 10vw, 9rem); line-height: 1; color: transparent; -webkit-text-stroke: 1px var(--gold); pointer-events: none; }
 /* 02 setup — dark band with a step sequence */
 .svc--setup { background: var(--midnight); color: var(--white); overflow: hidden; }
 .svc--setup .svc__grid { display: grid; grid-template-columns: 5fr 7fr; gap: clamp(40px, 6vw, 110px); align-items: start; }
