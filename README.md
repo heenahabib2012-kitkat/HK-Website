@@ -50,3 +50,10 @@ The build prints anything still pending. These were not available when the site 
 ## Motion
 
 All motion is subtle and purposeful: an intro where gold lines converge into the mark, word-by-word headline reveals, image mask reveals, gentle parallax, a cursor-following preview on the expertise list, animated map corridors and page-transition curtains. Everything respects `prefers-reduced-motion`, pauses off-screen, and the hero film has a pause control.
+
+## WordPress (GoDaddy Managed WordPress)
+
+`python3 tools/make-wp-theme.py` packages the built site as a theme: `share/hk-business-consultancy-theme.zip`.
+Upload it under **Appearance → Themes → Add New → Upload Theme** and activate it. The theme (`wp-theme/`) serves the
+site from its `site/` folder at the domain root (`/`, `/about.html`, …), leaves WordPress admin untouched, emails
+contact-form enquiries with `wp_mail()` to the address in `site.config.json`, and keeps a copy under **Tools → HK Enquiries**.
