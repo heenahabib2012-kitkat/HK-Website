@@ -1,4 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1200" preserveAspectRatio="xMidYMid slice">
+<style>
+@keyframes breathe { 0%,100% { opacity: .35 } 50% { opacity: 1 } }
+@keyframes twinkle { 0%,100% { opacity: 0; transform: scale(.4) } 45%,55% { opacity: 1; transform: scale(1) } }
+@keyframes pulse { 0% { transform: scale(1); opacity: .7 } 100% { transform: scale(6); opacity: 0 } }
+@keyframes sweep { 0% { transform: translateX(-700px) } 60%,100% { transform: translateX(1900px) } }
+@keyframes blink { 0%,49% { opacity: 1 } 50%,100% { opacity: 0 } }
+.tw, .pl { transform-box: fill-box; transform-origin: center; }
+.ecg { stroke-dasharray: .14 .86; animation: beat 4.5s linear infinite } @keyframes beat { from { stroke-dashoffset: 1 } to { stroke-dashoffset: 0 } }@media (prefers-reduced-motion: reduce){*{animation:none!important}}</style>
 <defs>
 <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0F2A5E"/><stop offset="1" stop-color="#061430"/></linearGradient>
 <radialGradient id="glow" cx="0.62" cy="0.45" r=".75"><stop offset="0" stop-color="#21468F" stop-opacity="0.85"/><stop offset="1" stop-color="#21468F" stop-opacity="0"/></radialGradient>
@@ -7,4 +15,5 @@
 <rect width="1600" height="1200" fill="url(#bg)"/><rect width="1600" height="1200" fill="url(#glow)"/>
 <g fill="none" stroke="#C6A45C" stroke-linecap="round" stroke-linejoin="round"><circle cx="992" cy="560" r="44" stroke-opacity="0.66" stroke-width="0.9"/><circle cx="992" cy="560" r="88" stroke-opacity="0.62" stroke-width="0.9"/><circle cx="992" cy="560" r="132" stroke-opacity="0.57" stroke-width="0.9"/><circle cx="992" cy="560" r="176" stroke-opacity="0.53" stroke-width="1.6"/><circle cx="992" cy="560" r="220" stroke-opacity="0.49" stroke-width="0.9"/><circle cx="992" cy="560" r="264" stroke-opacity="0.45" stroke-width="0.9"/><circle cx="992" cy="560" r="308" stroke-opacity="0.41" stroke-width="0.9"/><circle cx="992" cy="560" r="352" stroke-opacity="0.36" stroke-width="1.6"/><circle cx="992" cy="560" r="396" stroke-opacity="0.32" stroke-width="0.9"/><circle cx="992" cy="560" r="440" stroke-opacity="0.28" stroke-width="0.9"/><circle cx="992" cy="560" r="484" stroke-opacity="0.24" stroke-width="0.9"/><circle cx="992" cy="560" r="528" stroke-opacity="0.20" stroke-width="1.6"/><circle cx="992" cy="560" r="572" stroke-opacity="0.15" stroke-width="0.9"/><circle cx="992" cy="560" r="616" stroke-opacity="0.11" stroke-width="0.9"/><circle cx="992" cy="560" r="660" stroke-opacity="0.07" stroke-width="0.9"/><path d="M932 560H1052M992 500V620" stroke-opacity=".95" stroke-width="1.8"/><path d="M0 560H692l40 -90l50 180l40 -90H1600" stroke-opacity=".35" stroke-width="1.2"/></g>
 <g fill="none" stroke="#C6A45C" stroke-opacity=".5"><path d="M60 60h80M60 60v80M1540 1140h-80M1540 1140v-80" stroke-width="1.2"/></g>
+<g fill="none" stroke="#C6A45C" stroke-linecap="round"><path class="ecg" pathLength="1" d="M0 560H692l40 -90l50 180l40 -90H1600" stroke="#F3E2B5" stroke-width="2.2" stroke-opacity=".9"/><circle class="pl" style="animation: pulse 5.1s ease-out 0s infinite" cx="992" cy="560" r="60" stroke-width="1.4"/><circle class="pl" style="animation: pulse 5.1s ease-out 1.7s infinite" cx="992" cy="560" r="60" stroke-width="1.4"/><circle class="pl" style="animation: pulse 5.1s ease-out 3.4s infinite" cx="992" cy="560" r="60" stroke-width="1.4"/></g>
 </svg>

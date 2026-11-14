@@ -182,7 +182,7 @@ function ascent() {
     for (let y = base - 30; y > base - h; y -= 30) s += line(x - 22, y, x + 22, y, 0.1, 0.8);
     d += `${prev ? 'L' : 'M'}${x} ${f(base - h - 50)}`; prev = 1;
   }
-  s += `<path d="${d}" stroke-opacity=".95" stroke-width="1.8"/>`;
+  s += `<path class="trend" pathLength="1" d="${d}" stroke-opacity=".95" stroke-width="1.8"/>`;
   s += line(80, base, W - 80, base, 0.7, 1.4);
   return wrap(s, { glow: [0.85, 0.2] });
 }
@@ -399,9 +399,11 @@ function port() {
   for (let y = 380; y < wl; y += 90) s += `<path d="M1300 ${y} L1460 ${y + 90} M1460 ${y} L1300 ${y + 90}" stroke-opacity=".22"/>`;
   s += `<path d="M1090 300 L1300 230 L1580 300 M1300 230 V300" stroke-opacity=".6"/>`;
   // trolley, cables and the box being lifted
+  s += '<g class="lift">';
   s += `<path d="M1150 300 h44 v16 h-44Z M1160 316 V520 M1184 316 V520" stroke-opacity=".8"/>`;
   s += `<path d="M1126 520h92v50h-92Z" stroke-opacity="1" stroke-width="1.6"/>`;
   for (let c = 1; c < 6; c++) s += line(1126 + (92 / 6) * c, 526, 1126 + (92 / 6) * c, 564, 0.3, 0.8);
+  s += '</g>';
   return wrap(boost(s), { glow: [0.55, 0.3] });
 }
 
@@ -510,12 +512,96 @@ function shopfront() {
   return wrap(boost(s), { glow: [0.5, 0.45] });
 }
 
+/* ---------- discreet motion for the industry scenes ----------
+   Each scene gets a short looping animation inside its own SVG (CSS + SMIL),
+   so it plays even though the drawing is used as a background image. */
+const REDUCED = '@media (prefers-reduced-motion: reduce){*{animation:none!important}}';
+const COMMON = `
+@keyframes breathe { 0%,100% { opacity: .35 } 50% { opacity: 1 } }
+@keyframes twinkle { 0%,100% { opacity: 0; transform: scale(.4) } 45%,55% { opacity: 1; transform: scale(1) } }
+@keyframes pulse { 0% { transform: scale(1); opacity: .7 } 100% { transform: scale(6); opacity: 0 } }
+@keyframes sweep { 0% { transform: translateX(-700px) } 60%,100% { transform: translateX(1900px) } }
+@keyframes blink { 0%,49% { opacity: 1 } 50%,100% { opacity: 0 } }
+.tw, .pl { transform-box: fill-box; transform-origin: center; }
+`;
+const sparkle = (x, y, s, d, dur = 3.6) => `<path class="tw" style="animation: twinkle ${dur}s ease-in-out ${d}s infinite" transform="translate(${x} ${y}) scale(${s})" d="M0 -14 L3 -3 L14 0 L3 3 L0 14 L-3 3 L-14 0 L-3 -3 Z" fill="#F3E2B5" stroke="none"/>`;
+const glowDefs = `<defs><radialGradient id="lg"><stop offset="0" stop-color="#E9C77E" stop-opacity=".55"/><stop offset="1" stop-color="#E9C77E" stop-opacity="0"/></radialGradient>
+<linearGradient id="sw" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".14"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs>`;
+const band = (cls, dur, delay = 0) => `<rect class="${cls}" style="animation: sweep ${dur}s ease-in-out ${delay}s infinite" x="0" y="-200" width="260" height="1600" fill="url(#sw)" stroke="none" transform="skewX(-22)"/>`;
+
+const MOTION = {
+  dining: {
+    svg: glowDefs + [[520, 372, 0], [800, 422, 1.6], [1080, 372, 3.1]].map(([x, y, d]) =>
+      `<ellipse style="animation: breathe 6.5s ease-in-out ${d}s infinite" cx="${x}" cy="${y + 120}" rx="150" ry="170" fill="url(#lg)" stroke="none" opacity=".26"/>`
+      + `<circle style="animation: breathe 6.5s ease-in-out ${d}s infinite" cx="${x}" cy="${y}" r="26" fill="url(#lg)" stroke="none"/>`).join('')
+      + sparkle(586, 806, 0.7, 0.4) + sparkle(866, 806, 0.7, 2.1) + sparkle(1146, 806, 0.7, 3.4),
+  },
+  port: {
+    css: `.lift { animation: trolley 10s ease-in-out infinite } @keyframes trolley { 0%,100% { transform: translateX(0) } 45%,55% { transform: translateX(-150px) } }
+      .wave { stroke-dasharray: 30 70; animation: drift 6s linear infinite } @keyframes drift { to { stroke-dashoffset: -200 } }`,
+    svg: [[0, 852, 0.35], [80, 878, 0.25], [0, 912, 0.18]].map(([x, y, o]) => `<path class="wave" d="M${x} ${y} H1600" stroke-opacity="${o}" stroke-width="1.4"/>`).join(''),
+  },
+  plan: {
+    css: '.room { animation: breathe 7s ease-in-out infinite }',
+    svg: `<rect class="room" x="940" y="460" width="400" height="540" fill="#C6A45C" fill-opacity=".07" stroke="none"/>
+      <circle r="6" fill="#F3E2B5" stroke="none"><animateMotion dur="16s" repeatCount="indefinite" path="M260 200 H1340 V1000 H260 Z"/></circle>
+      <circle r="14" fill="url(#lg)" stroke="none"><animateMotion dur="16s" repeatCount="indefinite" path="M260 200 H1340 V1000 H260 Z"/></circle>` + glowDefs,
+  },
+  shopfront: {
+    css: '.win1 { clip-path: url(#w1) } .win2 { clip-path: url(#w2) }',
+    svg: glowDefs + `<clipPath id="w1"><rect x="320" y="470" width="380" height="430"/></clipPath><clipPath id="w2"><rect x="900" y="470" width="380" height="430"/></clipPath>`
+      + [420, 600, 1000, 1180].map((x, i) => `<path style="animation: breathe 5.5s ease-in-out ${i * 1.1}s infinite" d="M${x - 8} 486 L${x - 70} 880 H${x + 70} L${x + 8} 486 Z" fill="#E9C77E" fill-opacity=".09" stroke="none"/>`).join('')
+      + `<g class="win1">${band('sw1', 9)}</g><g class="win2">${band('sw2', 9, 1.2)}</g>`,
+  },
+  diamond: {
+    svg: glowDefs + `<clipPath id="gem"><circle cx="800" cy="560" r="380"/></clipPath><g clip-path="url(#gem)">${band('gs', 8)}</g>`
+      + sparkle(980, 470, 1.1, 0) + sparkle(640, 520, 0.8, 1.3) + sparkle(820, 420, 0.9, 2.2) + sparkle(1060, 560, 0.7, 3) + sparkle(760, 760, 0.8, 1.8),
+  },
+  boardroom: {
+    svg: glowDefs + (() => {
+      let s = '';
+      const pts = [[300, 520], [345, 470], [420, 540], [470, 455], [540, 500], [610, 545], [690, 430], [745, 515], [820, 470], [880, 540], [950, 505], [1010, 450], [1080, 530], [1150, 480], [1220, 520], [1290, 470]];
+      pts.forEach(([x, y], i) => { s += `<rect style="animation: breathe ${4 + (i % 4)}s ease-in-out ${(i * 0.37) % 3}s infinite" x="${x}" y="${y}" width="7" height="7" fill="#E9C77E" stroke="none"/>`; });
+      return s + `<clipPath id="win"><rect x="260" y="140" width="1080" height="440"/></clipPath><g clip-path="url(#win)">${band('ws', 11, 2)}</g>`;
+    })(),
+  },
+  tech: {
+    css: '.node { animation: pulse 3.4s ease-out infinite }',
+    svg: glowDefs + [[330, 300, 0], [540, 170, 0.6], [800, 120, 1.2], [1060, 170, 1.8], [1270, 300, 2.4]].map(([x, y, d]) => `<circle class="pl node" style="animation-delay:${d}s" cx="${x}" cy="${y}" r="9" stroke-width="1.2"/>`).join('')
+      + [['M800 120 L540 170 L330 300 L430 470 L580 380', 0], ['M800 120 L1060 170 L1270 300 L1170 470 L1020 380', 1.4], ['M800 134 V360', 0.7], ['M800 120 L430 470', 2.2], ['M800 120 L1170 470', 2.9]]
+        .map(([p, d]) => `<circle r="4.5" fill="#F3E2B5" stroke="none"><animateMotion dur="3.6s" begin="${d}s" repeatCount="indefinite" path="${p}"/></circle>`).join('')
+      + `<rect style="animation: blink 1.1s steps(1) infinite" x="806" y="425" width="10" height="20" fill="#E9C77E" stroke="none"/>`,
+  },
+  ascent: {
+    css: '.trend { stroke-dasharray: 1; animation: grow 8s ease-in-out infinite } @keyframes grow { 0% { stroke-dashoffset: 1; opacity: 1 } 55%,85% { stroke-dashoffset: 0; opacity: 1 } 100% { stroke-dashoffset: 0; opacity: 0 } }',
+    svg: '',
+  },
+  rings: {
+    css: '.ecg { stroke-dasharray: .14 .86; animation: beat 4.5s linear infinite } @keyframes beat { from { stroke-dashoffset: 1 } to { stroke-dashoffset: 0 } }',
+    svg: `<path class="ecg" pathLength="1" d="M0 560H692l40 -90l50 180l40 -90H1600" stroke="#F3E2B5" stroke-width="2.2" stroke-opacity=".9"/>`
+      + [0, 1.7, 3.4].map((d) => `<circle class="pl" style="animation: pulse 5.1s ease-out ${d}s infinite" cx="992" cy="560" r="60" stroke-width="1.4"/>`).join(''),
+  },
+};
+
+function withMotion(svg, kind) {
+  const m = MOTION[kind];
+  if (!m) return svg;
+  return svg
+    .replace('<defs>', `<style>${COMMON}${m.css || ''}${REDUCED}</style>\n<defs>`)
+    .replace(/\n<\/svg>$/, `\n<g fill="none" stroke="${G}" stroke-linecap="round">${m.svg}</g>\n</svg>`);
+}
+
 export const plates = {
   dining, port, boardroom, tech, shopfront,
   skyline: () => skyline(7), skyline2: () => skyline(19), facade, arches, columns, stairs, containers, diamond,
   circuit, rings, ascent, plan, vitrine, flow, monolith, blueprint, replica, dunes, bridge,
   globe, horizon, contour, link, 'facade-light': facadeLight,
 };
+
+for (const k of ['dining', 'port', 'plan', 'shopfront', 'diamond', 'boardroom', 'tech', 'ascent', 'rings']) {
+  const base = plates[k];
+  plates[k] = () => withMotion(base(), k);
+}
 
 // slot → plate. Add a photo at src/assets/img/photos/<slot>.(jpg|webp) to override.
 export const slots = {
