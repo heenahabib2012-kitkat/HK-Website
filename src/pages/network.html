@@ -1,0 +1,57 @@
+---json
+{
+  "title": "The HK Network — Associate Companies | HK Business Consultancy",
+  "description": "The HK Network: associate companies that share our standards and ambitions — RBS, Maplitho, Valencia Galleria and WeCare Holdings & Healthcare Berhad.",
+  "bodyClass": "page-network"
+}
+---
+<section class="page-hero" aria-labelledby="net-title">
+  <div class="page-hero__art media" {{media network}} data-parallax="0.1" aria-hidden="true"></div>
+  <div class="container">
+    <p class="page-hero__crumb"><a href="index.html">Home</a><span aria-hidden="true">/</span>Our Network</p>
+    <p class="eyebrow reveal">Associate Companies</p>
+    <h1 id="net-title" class="display display--light reveal-words">The HK <em>Network.</em></h1>
+    <p class="lede reveal">A group of companies that share our standards and ambitions — together extending what we can offer the businesses we work with.</p>
+  </div>
+  <span class="page-hero__index" aria-hidden="true">04</span>
+</section>
+
+<section class="ecosystem" aria-label="The HK network of associate companies">
+  <div class="container">
+    <div class="eco" role="list">
+      <svg class="eco__svg" viewBox="0 0 100 100" aria-hidden="true">
+        <circle class="eco__orbit" cx="50" cy="50" r="41"/>
+        <circle class="eco__orbit eco__orbit--gold" cx="50" cy="50" r="28"/>
+        <line class="eco__link" data-node="1" pathLength="1" x1="50" y1="35" x2="50" y2="21"/>
+        <line class="eco__link" data-node="2" pathLength="1" x1="65" y1="50" x2="79" y2="50"/>
+        <line class="eco__link" data-node="3" pathLength="1" x1="50" y1="65" x2="50" y2="79"/>
+        <line class="eco__link" data-node="4" pathLength="1" x1="35" y1="50" x2="21" y2="50"/>
+      </svg>
+      <div class="eco__core" role="listitem"><span class="brand">{{> logo}}</span></div>
+      <div class="eco__node eco__node--1" data-node="1" role="listitem" tabindex="0"><div><span class="eco__node-n">01</span><span class="eco__node-name">RBS</span></div></div>
+      <div class="eco__node eco__node--2" data-node="2" role="listitem" tabindex="0"><div><span class="eco__node-n">02</span><span class="eco__node-name">Maplitho</span></div></div>
+      <div class="eco__node eco__node--3" data-node="3" role="listitem" tabindex="0"><div><span class="eco__node-n">03</span><span class="eco__node-name">Valencia Galleria</span></div></div>
+      <div class="eco__node eco__node--4" data-node="4" role="listitem" tabindex="0"><div><span class="eco__node-n">04</span><span class="eco__node-name">WeCare Holdings &amp; Healthcare Berhad</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="associates" aria-labelledby="assoc-title">
+  <div class="container">
+    <header class="section-head section-head--split">
+      <div>
+        <p class="eyebrow eyebrow--dark reveal">Associate Companies</p>
+        <h2 id="assoc-title" class="display display--ink display--md reveal-words">Shared standards. Shared ambitions.</h2>
+      </div>
+      <p class="lede lede--ink reveal">Each associate company brings its own strengths — and together, the network widens the doors HK can open for the businesses we work with.</p>
+    </header>
+    <ol class="associates__list">
+      <li class="associate reveal"><div class="associate__logo"><span class="wordmark">RBS</span></div><span class="associate__n">01</span><h3>RBS</h3><p>Associate company</p></li>
+      <li class="associate reveal"><div class="associate__logo"><span class="wordmark">Maplitho</span></div><span class="associate__n">02</span><h3>Maplitho</h3><p>Associate company</p></li>
+      <li class="associate reveal"><div class="associate__logo"><span class="wordmark">Valencia<small>Galleria</small></span></div><span class="associate__n">03</span><h3>Valencia Galleria</h3><p>Associate company</p></li>
+      <li class="associate reveal"><div class="associate__logo"><span class="wordmark">WeCare<small>Holdings &amp; Healthcare Berhad</small></span></div><span class="associate__n">04</span><h3>WeCare Holdings &amp; Healthcare Berhad</h3><p>Associate company</p></li>
+    </ol>
+  </div>
+</section>
+
+{{> cta}}

@@ -1,0 +1,24 @@
+{
+  "siteUrl": "https://www.hkbusinessconsultancy.com",
+  "siteName": "HK Business Consultancy",
+  "legalName": "Honest & Keen Business Consultancy LLC",
+  "tagline": "Building Businesses. Creating Possibilities.",
+  "email": "info@honestandkeen.com",
+  "phones": {
+    "uae": ["+971 5858 15229", "+971 585822086"],
+    "india": ["+91 7829500009", "+91 9544392026"]
+  },
+  "social": {
+    "instagram": "https://www.instagram.com/hk.businessconsultancy/",
+    "instagramHandle": "@hk.businessconsultancy",
+    "facebook": "https://www.facebook.com/search/top?q=Honest%20and%20Keen%20Business%20Consultancy",
+    "facebookName": "Honest and Keen Business Consultancy"
+  },
+  "forms": {
+    "endpoint": "",
+    "_note": "Leave endpoint empty on Netlify (Netlify Forms is used automatically). On other hosts set a Formspree/Web3Forms/CRM endpoint URL that accepts POSTed form data."
+  },
+  "analytics": {
+    "ga4": ""
+  }
+}

@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{title}}</title>
+<meta name="description" content="{{description}}">
+<link rel="canonical" href="{{canonical}}">
+<meta name="theme-color" content="#081A3A">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="{{config.siteName}}">
+<meta property="og:title" content="{{title}}">
+<meta property="og:description" content="{{description}}">
+<meta property="og:url" content="{{canonical}}">
+<meta property="og:image" content="{{ogImage}}">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/brand/hk-mark.svg" type="image/svg+xml">
+<link rel="preload" href="assets/fonts/cormorant-garamond-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/manrope-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+{{preload}}
+<link rel="stylesheet" href="assets/css/main.css">
+<script>document.documentElement.classList.add('js');</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"ProfessionalService","name":"{{config.siteName}}","legalName":"{{config.legalName}}","slogan":"{{config.tagline}}","url":"{{config.siteUrl}}","email":"{{config.email}}","telephone":"+971585815229","founder":{"@type":"Person","name":"Habib Koya Marapatta"},"areaServed":["United Arab Emirates","GCC","International"],"sameAs":["{{config.social.instagram}}"]}
+</script>
+{{analytics}}
+</head>
+<body class="{{bodyClass}}">
+<a class="skip-link" href="#main">Skip to content</a>
+{{> header}}
+<main id="main" tabindex="-1">
+{{content}}
+</main>
+{{> footer}}
+<div class="curtain" aria-hidden="true"><span class="curtain__line"></span></div>
+<script src="assets/js/main.js" defer></script>
+{{scripts}}
+</body>
+</html>

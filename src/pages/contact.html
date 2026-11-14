@@ -1,0 +1,66 @@
+---json
+{
+  "title": "Contact — Let’s Build What’s Next | HK Business Consultancy",
+  "description": "Start a conversation with HK Business Consultancy. Email info@honestandkeen.com or call +971 5858 15229 (UAE) / +91 7829500009 (India).",
+  "bodyClass": "page-contact"
+}
+---
+<section class="page-hero" aria-labelledby="ct-title">
+  <div class="page-hero__art media" {{media contact}} data-parallax="0.1" aria-hidden="true"></div>
+  <div class="container">
+    <p class="page-hero__crumb"><a href="index.html">Home</a><span aria-hidden="true">/</span>Contact</p>
+    <p class="eyebrow reveal">Business Enquiries</p>
+    <h1 id="ct-title" class="display display--light reveal-words">Let’s Build <em>What’s Next.</em></h1>
+    <p class="lede reveal">Whether you are entering the UAE, expanding an existing business or exploring a new opportunity, let’s start the conversation.</p>
+  </div>
+</section>
+
+<section class="contact" aria-label="Contact details and enquiry form">
+  <div class="container contact__grid">
+    <aside class="contact__info">
+      <div class="contact__block reveal"><h2>Email</h2><a href="mailto:{{config.email}}">{{config.email}}</a></div>
+      <div class="contact__block reveal contact__phones">
+        <div><h2>UAE</h2><a href="tel:+971585815229">+971 5858 15229</a><a href="tel:+971585822086">+971 585822086</a></div>
+        <div><h2>India</h2><a href="tel:+917829500009">+91 7829500009</a><a href="tel:+919544392026">+91 9544392026</a></div>
+      </div>
+      <div class="contact__block reveal"><h2>Social</h2><a href="{{config.social.instagram}}" target="_blank" rel="noopener">Instagram {{config.social.instagramHandle}}</a><a href="{{config.social.facebook}}" target="_blank" rel="noopener">Facebook — {{config.social.facebookName}}</a></div>
+      <div class="contact__block reveal"><h2>Website</h2><a href="{{config.siteUrl}}">www.hkbusinessconsultancy.com</a></div>
+    </aside>
+
+    <div>
+      <form class="form" name="enquiry" method="POST" action="/contact.html" data-netlify="true" netlify-honeypot="bot-field" data-contact-form data-endpoint="{{config.forms.endpoint}}" data-email="{{config.email}}" novalidate>
+        <input type="hidden" name="form-name" value="enquiry">
+        <p class="form__hp" aria-hidden="true"><label>Leave this field empty <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+        <div class="field reveal"><label for="f-name">Full Name <span class="req" aria-hidden="true">*</span></label><input id="f-name" name="name" type="text" autocomplete="name" required aria-describedby="e-name"><span class="field__error" id="e-name" aria-live="polite"></span></div>
+        <div class="field reveal"><label for="f-company">Company Name</label><input id="f-company" name="company" type="text" autocomplete="organization"><span class="field__error"></span></div>
+        <div class="field reveal"><label for="f-email">Email <span class="req" aria-hidden="true">*</span></label><input id="f-email" name="email" type="email" autocomplete="email" required aria-describedby="e-email"><span class="field__error" id="e-email" aria-live="polite"></span></div>
+        <div class="field reveal"><label for="f-phone">Telephone</label><input id="f-phone" name="phone" type="tel" autocomplete="tel" aria-describedby="e-phone"><span class="field__error" id="e-phone" aria-live="polite"></span></div>
+        <div class="field reveal"><label for="f-country">Country <span class="req" aria-hidden="true">*</span></label><input id="f-country" name="country" type="text" autocomplete="country-name" required aria-describedby="e-country"><span class="field__error" id="e-country" aria-live="polite"></span></div>
+        <div class="field reveal"><label for="f-enquiry">Nature of Enquiry <span class="req" aria-hidden="true">*</span></label>
+          <select id="f-enquiry" name="enquiry" required aria-describedby="e-enquiry">
+            <option value="">Select…</option>
+            <option data-key="franchise">Franchise Development &amp; Expansion</option>
+            <option data-key="setup">Business Setup</option>
+            <option data-key="operations">Operational Optimisation</option>
+            <option data-key="brand">Brand Strategy &amp; Expansion</option>
+            <option data-key="startup">Startup Consulting</option>
+            <option data-key="industry">Industry-specific advice</option>
+            <option data-key="partnership">Partnership or investment</option>
+            <option data-key="other">Other</option>
+          </select><span class="field__error" id="e-enquiry" aria-live="polite"></span></div>
+        <div class="field field--full reveal"><label for="f-message">Message <span class="req" aria-hidden="true">*</span></label><textarea id="f-message" name="message" required aria-describedby="e-message"></textarea><span class="field__error" id="e-message" aria-live="polite"></span></div>
+        <input type="hidden" name="sector" value="">
+        <p class="form__status" data-form-status role="alert"></p>
+        <div class="form__foot reveal">
+          <p class="form__consent">By submitting, you agree that HK may use these details to respond to your enquiry, as described in our <a href="privacy.html">Privacy Policy</a>.</p>
+          <button class="btn btn--ink" type="submit">Send Enquiry</button>
+        </div>
+      </form>
+      <div class="form-success" data-form-success aria-live="polite">
+        <svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" pathLength="1"/><path d="M20 33l8 8 16-18" pathLength="1"/></svg>
+        <h2>Thank you, <span data-success-name></span>.</h2>
+        <p>Your enquiry has reached HK Business Consultancy. A member of our team will be in touch shortly to start the conversation.</p>
+      </div>
+    </div>
+  </div>
+</section>

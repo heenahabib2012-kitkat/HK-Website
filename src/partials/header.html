@@ -1,0 +1,39 @@
+<header class="site-header" data-header>
+  <div class="site-header__inner">
+    <a class="brand" href="index.html" aria-label="HK Business Consultancy — home">{{> logo}}</a>
+    <nav class="primary-nav" aria-label="Primary">
+      <ul>
+        <li><a href="index.html"{{nav.index}}>Home</a></li>
+        <li><a href="about.html"{{nav.about}}>About HK</a></li>
+        <li><a href="expertise.html"{{nav.expertise}}>Our Expertise</a></li>
+        <li><a href="industries.html"{{nav.industries}}>Industries</a></li>
+        <li><a href="global-reach.html"{{nav.global-reach}}>Global Reach</a></li>
+        <li><a href="network.html"{{nav.network}}>Our Network</a></li>
+        <li><a href="clients.html"{{nav.clients}}>Our Clients</a></li>
+        <li><a href="contact.html"{{nav.contact}}>Contact</a></li>
+      </ul>
+    </nav>
+    <a class="btn btn--ghost-gold site-header__cta" href="contact.html">Let’s Talk</a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" data-menu-toggle>
+      <span class="sr-only">Menu</span><span class="menu-toggle__bars" aria-hidden="true"><span></span><span></span></span>
+    </button>
+  </div>
+</header>
+<div class="mobile-menu" id="mobile-menu" data-mobile-menu hidden>
+  <nav aria-label="Mobile">
+    <ol class="mobile-menu__list">
+      <li><a href="index.html"{{nav.index}}><span>01</span>Home</a></li>
+      <li><a href="about.html"{{nav.about}}><span>02</span>About HK</a></li>
+      <li><a href="expertise.html"{{nav.expertise}}><span>03</span>Our Expertise</a></li>
+      <li><a href="industries.html"{{nav.industries}}><span>04</span>Industries</a></li>
+      <li><a href="global-reach.html"{{nav.global-reach}}><span>05</span>Global Reach</a></li>
+      <li><a href="network.html"{{nav.network}}><span>06</span>Our Network</a></li>
+      <li><a href="clients.html"{{nav.clients}}><span>07</span>Our Clients</a></li>
+      <li><a href="contact.html"{{nav.contact}}><span>08</span>Contact</a></li>
+    </ol>
+  </nav>
+  <div class="mobile-menu__foot">
+    <a href="mailto:{{config.email}}">{{config.email}}</a>
+    <a href="tel:+971585815229">+971 5858 15229</a>
+  </div>
+</div>

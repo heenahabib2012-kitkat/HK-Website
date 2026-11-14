@@ -1,0 +1,260 @@
+---json
+{
+  "title": "HK Business Consultancy — Building Businesses. Creating Possibilities.",
+  "description": "Honest & Keen Business Consultancy LLC — a Dubai-headquartered consultancy for franchise development, business setup, operations, brand strategy and startup consulting across the UAE and international markets.",
+  "bodyClass": "page-home has-hero",
+  "scripts": ["hero-film.js"]
+}
+---
+<section class="hero" data-hero aria-labelledby="hero-title">
+  <div class="hero__stage" aria-hidden="true">
+    <div class="hero__poster media" {{media hero-poster}}></div>
+    <canvas class="hero__canvas" data-film></canvas>
+    {{heroVideo}}
+    <div class="hero__veil"></div>
+    <div class="hero__grain"></div>
+  </div>
+
+  <div class="hero__intro" data-intro aria-hidden="true">
+    <svg class="hero__intro-lines" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+      <path d="M-40 220H1640" /><path d="M-40 680H1640" /><path d="M420 -40V940" /><path d="M1180 -40V940" />
+      <path d="M-40 940L800 450" /><path d="M1640 -40L800 450" /><path d="M-40 -40L800 450" /><path d="M1640 940L800 450" />
+    </svg>
+    <div class="hero__intro-mark">
+      <svg viewBox="0 0 64 64" fill="none">
+        <path class="draw" d="M2 16V2h14M48 2h14v14M62 48v14H48M16 62H2V48"/>
+        <rect class="draw draw--soft" x="6" y="6" width="52" height="52"/>
+        <path class="draw draw--letters" d="M20 18v28M34 18v28M20 32h14M34 33l13-15M38.5 28L48 46M17 18h6M17 46h6M31 18h6M31 46h6M44 18h6M45 46h6"/>
+      </svg>
+      <span class="hero__intro-word">Honest &amp; Keen</span>
+    </div>
+  </div>
+
+  <div class="container hero__content">
+    <p class="eyebrow hero__eyebrow"><span class="eyebrow__rule"></span>Honest &amp; Keen Business Consultancy · Dubai, UAE</p>
+    <h1 id="hero-title" class="hero__title">
+      <span class="line"><span>Building Businesses.</span></span>
+      <span class="line"><span><em>Creating Possibilities.</em></span></span>
+    </h1>
+    <p class="hero__lede">Strategic business solutions for companies, entrepreneurs and investors navigating growth across the UAE and international markets.</p>
+    <div class="btn-row hero__actions">
+      <a class="btn btn--gold" href="expertise.html">Explore Our Expertise</a>
+      <a class="btn btn--line-light" href="contact.html">Start a Conversation</a>
+    </div>
+  </div>
+
+  <div class="hero__foot container">
+    <a class="scroll-cue" href="#prologue"><span class="scroll-cue__line" aria-hidden="true"></span>Scroll</a>
+    <p class="hero__chapters" aria-hidden="true"><span data-chapter>Kuwait · 2015</span></p>
+    <button class="film-toggle" type="button" data-film-toggle aria-pressed="false"><span class="film-toggle__icon" aria-hidden="true"></span><span class="film-toggle__label">Pause film</span></button>
+  </div>
+</section>
+
+<!-- PROLOGUE -->
+<section class="prologue" id="prologue" aria-labelledby="prologue-title">
+  <div class="container prologue__grid">
+    <div class="prologue__index reveal" aria-hidden="true">
+      <span>Kuwait</span><span>Across Borders</span><span>Dubai</span><span>Today</span>
+    </div>
+    <div class="prologue__text">
+      <p class="eyebrow eyebrow--dark reveal">About HK</p>
+      <h2 id="prologue-title" class="display display--ink reveal-words">An advisory practice that began over coffee — and grew into a consultancy with franchising, brand strategy, operations and compliance under one roof.</h2>
+      <div class="prologue__cols">
+        <p class="reveal">What started as informal business advice between friends in Kuwait became a Dubai-headquartered practice working with businesses at every stage of growth — from launching new ventures to supporting established brands.</p>
+        <p class="reveal"><a class="link-arrow" href="about.html">Read our story <span aria-hidden="true">→</span></a></p>
+      </div>
+    </div>
+    <figure class="prologue__figure mask-reveal">
+      <div class="media media--tall" {{media home-prologue}} data-parallax="-0.08" role="img" aria-label="Architectural study of a tower rising towards the sky"></div>
+    </figure>
+  </div>
+</section>
+
+<!-- A PROMISE IN OUR NAME -->
+<section class="promise" aria-labelledby="promise-title" data-promise>
+  <div class="promise__lines" aria-hidden="true"><span></span><span></span><span></span></div>
+  <div class="container">
+    <header class="promise__head">
+      <p class="eyebrow reveal">The HK Difference</p>
+      <h2 id="promise-title" class="display display--light reveal-words">A Promise in Our Name.</h2>
+    </header>
+    <div class="promise__pair" role="tablist" aria-label="Our two values">
+      <button class="promise__word is-active" role="tab" id="tab-honest" aria-selected="true" aria-controls="panel-honest" data-value="honest">
+        <span class="promise__letter" aria-hidden="true">H</span>
+        <span class="promise__name"><span class="promise__fill" aria-hidden="true">Honest</span>Honest</span>
+      </button>
+      <span class="promise__amp" aria-hidden="true">&amp;</span>
+      <button class="promise__word" role="tab" id="tab-keen" aria-selected="false" aria-controls="panel-keen" data-value="keen" tabindex="-1">
+        <span class="promise__letter" aria-hidden="true">K</span>
+        <span class="promise__name"><span class="promise__fill" aria-hidden="true">Keen</span>Keen</span>
+      </button>
+    </div>
+    <div class="promise__panels">
+      <div class="promise__panel is-active" role="tabpanel" id="panel-honest" aria-labelledby="tab-honest">
+        <p class="promise__def">Candid advice, clearly given — <em>even when it is not what the client expected to hear.</em></p>
+        <p>Every recommendation is made with the client’s best interests in mind.</p>
+      </div>
+      <div class="promise__panel" role="tabpanel" id="panel-keen" aria-labelledby="tab-keen" hidden>
+        <p class="promise__def">Genuinely invested in the client’s outcome — <em>energy, attention and care in every engagement.</em></p>
+        <p>Success is measured by the client’s success.</p>
+      </div>
+    </div>
+    <p class="promise__statement reveal"><span class="rule-gold" aria-hidden="true"></span>We grow when you grow.</p>
+  </div>
+</section>
+
+<!-- EXPERTISE INDEX -->
+<section class="expertise-index" aria-labelledby="exp-title">
+  <div class="container">
+    <header class="section-head section-head--split">
+      <div>
+        <p class="eyebrow eyebrow--dark reveal">Our Expertise</p>
+        <h2 id="exp-title" class="display display--ink reveal-words">Building Brands. Enabling Growth.</h2>
+      </div>
+      <p class="lede lede--ink reveal">From the first licence to an international rollout, HK supports every stage of a business — under one roof.</p>
+    </header>
+    <ol class="svc-list" data-cursor-gallery>
+      <li class="svc-list__item reveal" data-preview="svc-franchise">
+        <a href="expertise.html#franchise">
+          <span class="svc-list__num">01</span>
+          <span class="svc-list__title">Franchise Development &amp; Expansion</span>
+          <span class="svc-list__desc">Franchise creation, documentation, brand adaptation and international rollout support.</span>
+          <span class="svc-list__arrow" aria-hidden="true">→</span>
+        </a>
+      </li>
+      <li class="svc-list__item reveal" data-preview="svc-setup">
+        <a href="expertise.html#business-setup">
+          <span class="svc-list__num">02</span>
+          <span class="svc-list__title">Business Setup</span>
+          <span class="svc-list__desc">End-to-end company formation — licensing, documentation, compliance and strategic launch.</span>
+          <span class="svc-list__arrow" aria-hidden="true">→</span>
+        </a>
+      </li>
+      <li class="svc-list__item reveal" data-preview="svc-ops">
+        <a href="expertise.html#operations">
+          <span class="svc-list__num">03</span>
+          <span class="svc-list__title">Operational Optimisation</span>
+          <span class="svc-list__desc">Streamlined systems, SOPs and team training for efficiency and scalability.</span>
+          <span class="svc-list__arrow" aria-hidden="true">→</span>
+        </a>
+      </li>
+      <li class="svc-list__item reveal" data-preview="svc-brand">
+        <a href="expertise.html#brand">
+          <span class="svc-list__num">04</span>
+          <span class="svc-list__title">Brand Strategy &amp; Expansion</span>
+          <span class="svc-list__desc">Identity design, market positioning, storytelling and digital presence — a brand that speaks and sells.</span>
+          <span class="svc-list__arrow" aria-hidden="true">→</span>
+        </a>
+      </li>
+      <li class="svc-list__item reveal" data-preview="svc-startup">
+        <a href="expertise.html#startup">
+          <span class="svc-list__num">05</span>
+          <span class="svc-list__title">Startup Consulting</span>
+          <span class="svc-list__desc">Business planning, strategic guidance and structured development for new ventures.</span>
+          <span class="svc-list__arrow" aria-hidden="true">→</span>
+        </a>
+      </li>
+    </ol>
+    <div class="cursor-gallery" aria-hidden="true">
+      <div class="cursor-gallery__frame">
+        <div class="media" {{media svc-franchise}}></div><div class="media" {{media svc-setup}}></div><div class="media" {{media svc-ops}}></div><div class="media" {{media svc-brand}}></div><div class="media" {{media svc-startup}}></div>
+      </div>
+    </div>
+    <p class="statement-line reveal"><span class="rule-gold" aria-hidden="true"></span>One Partner, From Setup to Scale.</p>
+  </div>
+</section>
+
+<!-- INDUSTRIES MOSAIC -->
+<section class="sector-mosaic" aria-labelledby="sector-title">
+  <div class="container">
+    <header class="section-head section-head--split">
+      <div>
+        <p class="eyebrow reveal">Industries</p>
+        <h2 id="sector-title" class="display display--light reveal-words">Every Sector. One Hub.</h2>
+      </div>
+      <p class="lede reveal">Nine industries, brought together by one consistent standard of advice.</p>
+    </header>
+    <ul class="mosaic">
+      <li class="mosaic__tile mosaic__tile--a mask-reveal"><a href="industries.html#fnb"><span class="media" {{media ind-fnb}}></span><span class="mosaic__num">01</span><span class="mosaic__name">F&amp;B &amp; Hospitality</span></a></li>
+      <li class="mosaic__tile mosaic__tile--b mask-reveal"><a href="industries.html#trading"><span class="media" {{media ind-trading}}></span><span class="mosaic__num">02</span><span class="mosaic__name">Trading</span></a></li>
+      <li class="mosaic__tile mosaic__tile--c mask-reveal"><a href="industries.html#real-estate"><span class="media" {{media ind-realestate}}></span><span class="mosaic__num">03</span><span class="mosaic__name">Real Estate</span></a></li>
+      <li class="mosaic__tile mosaic__tile--d mask-reveal"><a href="industries.html#retail"><span class="media" {{media ind-retail}}></span><span class="mosaic__num">04</span><span class="mosaic__name">Retail</span></a></li>
+      <li class="mosaic__tile mosaic__tile--e mask-reveal"><a href="industries.html#luxury"><span class="media" {{media ind-luxury}}></span><span class="mosaic__num">05</span><span class="mosaic__name">Luxury &amp; Fashion</span></a></li>
+      <li class="mosaic__tile mosaic__tile--f mask-reveal"><a href="industries.html#professional"><span class="media" {{media ind-professional}}></span><span class="mosaic__num">06</span><span class="mosaic__name">Professional Services</span></a></li>
+      <li class="mosaic__tile mosaic__tile--g mask-reveal"><a href="industries.html#technology"><span class="media" {{media ind-technology}}></span><span class="mosaic__num">07</span><span class="mosaic__name">Technology</span></a></li>
+      <li class="mosaic__tile mosaic__tile--h mask-reveal"><a href="industries.html#investment"><span class="media" {{media ind-investment}}></span><span class="mosaic__num">08</span><span class="mosaic__name">Investment</span></a></li>
+      <li class="mosaic__tile mosaic__tile--i mask-reveal"><a href="industries.html#healthcare"><span class="media" {{media ind-healthcare}}></span><span class="mosaic__num">09</span><span class="mosaic__name">Healthcare</span></a></li>
+    </ul>
+    <div class="sector-mosaic__foot">
+      <p class="statement-line statement-line--light reveal"><span class="rule-gold" aria-hidden="true"></span>Global Expertise. Local Insight.</p>
+      <a class="link-arrow link-arrow--light reveal" href="industries.html">Explore all industries <span aria-hidden="true">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- GLOBAL TEASER -->
+<section class="global-teaser" aria-labelledby="global-title">
+  <div class="container global-teaser__grid">
+    <div class="global-teaser__text">
+      <p class="eyebrow reveal">Global Reach</p>
+      <h2 id="global-title" class="display display--light reveal-words">The UAE, a Gateway to Global Opportunity.</h2>
+      <p class="lede reveal">Positioned between the Gulf, Europe, Asia and Africa, the UAE is a commercially connected base — for businesses entering the region, and for those expanding outward.</p>
+      <a class="link-arrow link-arrow--light reveal" href="global-reach.html">Explore the corridors <span aria-hidden="true">→</span></a>
+    </div>
+    <div class="global-teaser__map reveal" data-map-autoplay>
+      {{map home-map}}
+    </div>
+  </div>
+</section>
+
+<!-- FOUNDER -->
+<section class="founder-teaser" aria-labelledby="founder-title">
+  <div class="container founder-teaser__grid">
+    <figure class="portrait mask-reveal">
+      <div class="portrait__frame media" {{media founder}}>
+        <span class="portrait__rule" aria-hidden="true"></span>
+        <span class="portrait__placeholder">Founder portrait<br><small>Habib Koya Marapatta</small></span>
+      </div>
+      <figcaption><strong>Habib Koya Marapatta</strong><span>Founder, HK Business Consultancy</span></figcaption>
+    </figure>
+    <div class="founder-teaser__text">
+      <p class="eyebrow eyebrow--dark reveal">Founder’s Message</p>
+      <blockquote class="pullquote">
+        <p id="founder-title" class="reveal-words">“I don’t just help businesses grow. <em>I grow with them.</em>”</p>
+      </blockquote>
+      <p class="reveal">From informal coffee conversations in Kuwait to a consultancy headquartered in Dubai, HK has been built on a simple conviction: business success needs more than a plan.</p>
+      <ul class="four-words reveal" aria-label="The founder’s four principles">
+        <li>Strategy</li><li>Trust</li><li>Execution</li><li>Empathy</li>
+      </ul>
+      <a class="link-arrow reveal" href="about.html#founder">Read the founder’s message <span aria-hidden="true">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="voices" aria-labelledby="voices-title" data-voices>
+  <div class="container">
+    <header class="voices__head">
+      <p class="eyebrow eyebrow--dark reveal">Our Clients</p>
+      <h2 id="voices-title" class="display display--ink reveal-words">Trusted by Businesses That Build.</h2>
+    </header>
+    <div class="voices__stage">
+      <span class="voices__mark" aria-hidden="true">“</span>
+      <figure class="voice is-active" data-voice>
+        <blockquote><p>HK understood our brand from the very first conversation. Their guidance on strategy and expansion has been practical, honest and always focused on what is right for our business.</p></blockquote>
+        <figcaption><span class="voice__client">Address Apparels</span><strong>Mr. Shamsudheen Nellara</strong><span>Chairman &amp; Managing Director</span></figcaption>
+      </figure>
+      <figure class="voice" data-voice hidden>
+        <blockquote><p>From concept to launch, HK walked with us at every step. They brought clarity to every decision and genuinely cared about Fish Bae’s success as much as we did.</p></blockquote>
+        <figcaption><span class="voice__client">Fish Bae</span><strong>Mr. Fahim</strong><span>Founder</span></figcaption>
+      </figure>
+      <div class="voices__nav">
+        <button type="button" class="voices__btn" data-voice-prev aria-label="Previous testimonial">←</button>
+        <span class="voices__count" aria-live="polite"><span data-voice-index>01</span> / 02</span>
+        <button type="button" class="voices__btn" data-voice-next aria-label="Next testimonial">→</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+{{> cta}}
