@@ -337,7 +337,133 @@ function facadeLight() {
   return wrap(s, { tone: 'light', glow: [0.3, 0.2] });
 }
 
+
+/* ---------- industry scenes (v2) ---------- */
+const boost = (svg) => svg.replace(/stroke-opacity="([\d.]+)"/g, (m, v) => `stroke-opacity="${Math.min(1, v * 1.3).toFixed(2)}"`);
+function dining() {
+  // F&B & Hospitality: a set table in perspective under pendant lamps
+  let s = '';
+  s += line(0, 110, W, 110, 0.35, 1.2);
+  for (const [x, len] of [[520, 250], [800, 300], [1080, 250]]) {
+    const y = 110 + len;
+    s += line(x, 110, x, y - 70, 0.55, 1);
+    s += `<path d="M${x - 95} ${y} Q${x - 92} ${y - 88} ${x} ${y - 90} Q${x + 92} ${y - 88} ${x + 95} ${y} Z" stroke-opacity=".95" stroke-width="1.5"/>`;
+    s += `<path d="M${x - 70} ${y} Q${x} ${y + 26} ${x + 70} ${y}" stroke-opacity=".7"/>`;
+    s += `<circle cx="${x}" cy="${y + 12}" r="9" stroke-opacity=".9"/>`;
+    for (let k = -2; k <= 2; k++) s += line(x + k * 18, y + 30, x + k * 70, y + 330, 0.07, 1); // light falling
+  }
+  // table (one-point perspective)
+  const fy = 900, by = 700;
+  s += `<path d="M300 ${fy} L560 ${by} H1040 L1300 ${fy} Z" stroke-opacity=".95" stroke-width="1.6"/>`;
+  s += `<path d="M300 ${fy} V${fy + 22} H1300 V${fy}" stroke-opacity=".7"/>`;
+  s += `<path d="M330 ${fy + 22} V1110M1270 ${fy + 22} V1110M590 ${by + 10} V${by + 140}M1010 ${by + 10} V${by + 140}" stroke-opacity=".55"/>`;
+  // chairs beyond the table
+  for (const x of [610, 760, 910]) s += `<path d="M${x} ${by} V${by - 120} Q${x + 40} ${by - 136} ${x + 80} ${by - 120} V${by}" stroke-opacity=".5"/>`;
+  // plates, cutlery, glasses
+  const plate = (cx, cy, rx) => `<ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${f(rx * 0.24)}" stroke-opacity=".9"/><ellipse cx="${cx}" cy="${cy}" rx="${f(rx * 0.62)}" ry="${f(rx * 0.15)}" stroke-opacity=".5"/>`;
+  [[520, 850, 74], [800, 850, 74], [1080, 850, 74], [660, 740, 46], [940, 740, 46]].forEach(([x, y, r]) => {
+    s += plate(x, y, r);
+    s += line(x - r - 18, y - 10, x - r - 18, y + 14, 0.6, 1.2) + line(x + r + 18, y - 10, x + r + 18, y + 14, 0.6, 1.2);
+    const gx = x + r * 0.9, gy = y - r * 0.55, gs = r / 74;
+    s += `<path d="M${f(gx - 16 * gs)} ${f(gy - 46 * gs)} Q${f(gx - 18 * gs)} ${f(gy - 10 * gs)} ${f(gx)} ${f(gy - 6 * gs)} Q${f(gx + 18 * gs)} ${f(gy - 10 * gs)} ${f(gx + 16 * gs)} ${f(gy - 46 * gs)} Z M${f(gx)} ${f(gy - 6 * gs)} V${f(gy + 20 * gs)} M${f(gx - 12 * gs)} ${f(gy + 20 * gs)} H${f(gx + 12 * gs)}" stroke-opacity=".75"/>`;
+  });
+  for (let i = 1; i < 9; i++) s += line(0, 1110 + i * i * 1.4, W, 1110 + i * i * 1.4, 0.05, 1);
+  return wrap(boost(s), { glow: [0.5, 0.35] });
+}
+
+function port() {
+  // Trading: a container ship at the quay, a gantry crane lifting a box aboard
+  let s = ''; const r = rng(31);
+  const wl = 830;
+  s += line(0, wl, W, wl, 0.6, 1.3);
+  for (let i = 1; i < 12; i++) s += line(60 + (i % 3) * 40, wl + i * i * 2.6, W - 60 - (i % 2) * 80, wl + i * i * 2.6, 0.05 + 0.01 * (i % 3), 1);
+  // hull
+  s += `<path d="M180 770 H1180 L1150 ${wl + 40} H230 Z" stroke-opacity=".95" stroke-width="1.6"/>`;
+  s += line(200, 800, 1165, 800, 0.35, 1);
+  // bridge at the stern
+  s += `<path d="M200 770 V560 H320 V770M200 600 H320M200 640 H320M215 560 V520 H300 V560" stroke-opacity=".8" stroke-width="1.3"/>`;
+  s += line(260, 520, 260, 470, 0.6, 1);
+  // stacked containers
+  const cw = 92, ch = 50;
+  for (let x = 350; x + cw <= 1150; x += cw + 6) {
+    const stacks = 2 + Math.floor(r() * 3);
+    for (let k = 0; k < stacks; k++) {
+      const y = 770 - (k + 1) * (ch + 4);
+      s += `<path d="M${x} ${y}h${cw}v${ch}h${-cw}Z" stroke-opacity="${(0.55 + r() * 0.35).toFixed(2)}" stroke-width="1.2"/>`;
+      for (let c = 1; c < 6; c++) s += line(x + (cw / 6) * c, y + 6, x + (cw / 6) * c, y + ch - 6, 0.16, 0.8);
+    }
+  }
+  // quay and gantry crane
+  s += `<path d="M1180 ${wl} H${W} M1180 ${wl} V${wl + 60}" stroke-opacity=".7"/>`;
+  s += `<path d="M1300 ${wl} V330 M1460 ${wl} V330 M1300 330 H1460 M1090 300 H1580 M1300 330 L1380 300 L1460 330" stroke-opacity=".95" stroke-width="1.6"/>`;
+  for (let y = 380; y < wl; y += 90) s += `<path d="M1300 ${y} L1460 ${y + 90} M1460 ${y} L1300 ${y + 90}" stroke-opacity=".22"/>`;
+  s += `<path d="M1090 300 L1300 230 L1580 300 M1300 230 V300" stroke-opacity=".6"/>`;
+  // trolley, cables and the box being lifted
+  s += `<path d="M1150 300 h44 v16 h-44Z M1160 316 V520 M1184 316 V520" stroke-opacity=".8"/>`;
+  s += `<path d="M1126 520h92v50h-92Z" stroke-opacity="1" stroke-width="1.6"/>`;
+  for (let c = 1; c < 6; c++) s += line(1126 + (92 / 6) * c, 526, 1126 + (92 / 6) * c, 564, 0.3, 0.8);
+  return wrap(boost(s), { glow: [0.55, 0.3] });
+}
+
+function boardroom() {
+  // Professional services: a boardroom table before a window wall
+  let s = '';
+  // window wall with a skyline beyond
+  s += `<path d="M260 140 H1340 V580 H260 Z" stroke-opacity=".7" stroke-width="1.3"/>`;
+  for (let x = 380; x < 1340; x += 120) s += line(x, 140, x, 580, 0.3, 1);
+  s += line(260, 360, 1340, 360, 0.25, 1);
+  const r = rng(8); let sk = 'M260 580';
+  for (let x = 260; x < 1340;) { const w = 40 + r() * 70, h = 60 + r() * 200; sk += `V${f(580 - h)}H${f(Math.min(1340, x + w))}`; x += w; }
+  s += `<path d="${sk}V580" stroke-opacity=".28"/>`;
+  // table in perspective
+  const bl = 680, br = 920, by = 620, fl = 400, fr = 1200, fy = 1010;
+  s += `<path d="M${fl} ${fy} L${bl} ${by} H${br} L${fr} ${fy} Z" stroke-opacity=".95" stroke-width="1.6"/>`;
+  s += `<path d="M${fl} ${fy} V${fy + 26} H${fr} V${fy}" stroke-opacity=".6"/>`;
+  // chairs along both sides: a rounded back above a seat, scaled with depth
+  const chair = (cx, cy, sc) => {
+    const w = 52 * sc, h = 78 * sc, sh = 14 * sc, x0 = cx - w / 2;
+    return `<path d="M${f(x0)} ${f(cy)} V${f(cy - h + 8 * sc)} Q${f(x0)} ${f(cy - h)} ${f(x0 + 8 * sc)} ${f(cy - h)} H${f(x0 + w - 8 * sc)} Q${f(x0 + w)} ${f(cy - h)} ${f(x0 + w)} ${f(cy - h + 8 * sc)} V${f(cy)}" stroke-opacity="${(0.55 + sc * 0.3).toFixed(2)}" stroke-width="1.4"/>`
+      + `<path d="M${f(x0 - 4 * sc)} ${f(cy + sh)} H${f(x0 + w + 4 * sc)} M${f(x0 + 4 * sc)} ${f(cy + sh)} V${f(cy + sh + 46 * sc)} M${f(x0 + w - 4 * sc)} ${f(cy + sh)} V${f(cy + sh + 46 * sc)}" stroke-opacity="${(0.45 + sc * 0.3).toFixed(2)}" stroke-width="1.2"/>`;
+  };
+  for (let i = 0; i < 4; i++) {
+    const t = 0.1 + i * 0.26, sc = 0.55 + t * 0.55;
+    const yl = by + (fy - by) * t;
+    const xl = bl + (fl - bl) * t, xr = br + (fr - br) * t;
+    s += chair(xl - 46 * sc, yl - 6 * sc, sc);
+    s += chair(xr + 46 * sc, yl - 6 * sc, sc);
+  }
+  s += chair(800, by - 18, 0.6); // head of the table
+  // papers and a pen on the table
+  s += `<path d="M720 900 L760 820 H850 L830 900 Z M870 930 L900 860 H980 L966 930 Z" stroke-opacity=".75"/>`;
+  s += line(780, 880, 840, 836, 0.9, 1.6);
+  for (let i = 1; i < 8; i++) s += line(0, 1050 + i * i * 2, W, 1050 + i * i * 2, 0.05, 1);
+  return wrap(boost(s), { glow: [0.5, 0.25] });
+}
+
+function tech() {
+  // Technology: a laptop with code, linked to a network of nodes, circuit traces below
+  let s = '';
+  const nodes = [[330, 300], [540, 170], [800, 120], [1060, 170], [1270, 300], [430, 470], [1170, 470]];
+  const links = [[0, 1], [1, 2], [2, 3], [3, 4], [0, 5], [4, 6], [1, 5], [3, 6], [2, 5], [2, 6]];
+  links.forEach(([a, b]) => { s += line(nodes[a][0], nodes[a][1], nodes[b][0], nodes[b][1], 0.35, 1); });
+  nodes.forEach(([x, y], i) => { s += `<circle cx="${x}" cy="${y}" r="${i === 2 ? 14 : 9}" stroke-opacity=".95" stroke-width="1.4"/><circle cx="${x}" cy="${y}" r="3" fill="${G}" stroke="none"/>`; });
+  s += line(800, 134, 800, 360, 0.5, 1.2);
+  s += line(430, 479, 580, 380, 0.35, 1) + line(1170, 479, 1020, 380, 0.35, 1);
+  // laptop
+  s += `<path d="M560 360 H1040 V690 H560 Z" stroke-opacity=".95" stroke-width="1.6"/><path d="M580 380 H1020 V670 H580 Z" stroke-opacity=".5"/>`;
+  s += `<path d="M500 700 H1100 L1150 748 H450 Z" stroke-opacity=".9" stroke-width="1.5"/><path d="M760 712 H840 L846 728 H754 Z" stroke-opacity=".5"/>`;
+  const code = [[0, 210], [1, 160], [1, 250], [2, 120], [2, 200], [1, 90], [0, 140], [1, 230], [2, 170], [0, 100]];
+  code.forEach(([ind, len], i) => { const y = 410 + i * 25; s += line(610 + ind * 28, y, 610 + ind * 28 + len, y, i % 3 === 1 ? 0.95 : 0.55, 1.4); });
+  s += line(1000, 410, 1000, 640, 0.15, 6);
+  // circuit traces
+  const traces = ['M450 748 V800 H300 V900', 'M600 748 V830 H520 V980', 'M1000 748 V830 H1080 V980', 'M1150 748 V800 H1300 V900', 'M800 748 V1020'];
+  traces.forEach((d) => { s += `<path d="${d}" stroke-opacity=".38" stroke-width="1.1"/>`; const m = d.match(/(\d+) (\d+)$/) || d.match(/H(\d+) V(\d+)$/); });
+  [[300, 900], [520, 980], [1080, 980], [1300, 900], [800, 1020]].forEach(([x, y]) => { s += `<circle cx="${x}" cy="${y}" r="6" stroke-opacity=".6"/>`; });
+  return wrap(boost(s), { glow: [0.5, 0.42] });
+}
+
 export const plates = {
+  dining, port, boardroom, tech,
   skyline: () => skyline(7), skyline2: () => skyline(19), facade, arches, columns, stairs, containers, diamond,
   circuit, rings, ascent, plan, vitrine, flow, monolith, blueprint, replica, dunes, bridge,
   globe, horizon, contour, link, 'facade-light': facadeLight,
@@ -349,8 +475,8 @@ export const slots = {
   'home-prologue': 'facade',
   'about-hero': 'horizon',
   'svc-franchise': 'replica', 'svc-setup': 'blueprint', 'svc-ops': 'flow', 'svc-brand': 'monolith', 'svc-startup': 'stairs',
-  'ind-fnb': 'arches', 'ind-trading': 'containers', 'ind-realestate': 'plan', 'ind-retail': 'vitrine', 'ind-luxury': 'diamond',
-  'ind-professional': 'columns', 'ind-technology': 'circuit', 'ind-investment': 'ascent', 'ind-healthcare': 'rings',
+  'ind-fnb': 'dining', 'ind-trading': 'port', 'ind-realestate': 'plan', 'ind-retail': 'vitrine', 'ind-luxury': 'diamond',
+  'ind-professional': 'boardroom', 'ind-technology': 'tech', 'ind-investment': 'ascent', 'ind-healthcare': 'rings',
   'tl-2015': 'dunes', 'tl-2017': 'bridge', 'tl-2021': 'skyline2', 'tl-today': 'globe',
   'network': 'link', 'cta': 'contour', 'contact': 'horizon', 'vision': 'facade-light',
   'founder': 'facade',

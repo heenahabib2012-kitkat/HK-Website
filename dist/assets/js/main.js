@@ -36,6 +36,21 @@
   });
   window.addEventListener('pageshow', (e) => { if (e.persisted) root.classList.remove('is-leaving', 'is-arriving', 'is-arrived'); });
 
+  /* ---------- Back link (inner pages) ---------- */
+  const crumb = $('.page-hero__crumb');
+  if (crumb) {
+    const back = document.createElement('a');
+    back.className = 'back-link';
+    back.href = ($('.site-header .brand') && $('.site-header .brand').getAttribute('href')) || 'index.html';
+    back.innerHTML = '<span class="back-link__arrow" aria-hidden="true">←</span><span>Back</span>';
+    back.addEventListener('click', (e) => {
+      let fromSite = false;
+      try { fromSite = document.referrer && new URL(document.referrer).origin === location.origin; } catch (err) { /* ignore */ }
+      if (fromSite && history.length > 1) { e.preventDefault(); e.stopPropagation(); history.back(); }
+    }, true);
+    crumb.parentNode.insertBefore(back, crumb);
+  }
+
   /* ---------- Header ---------- */
   const header = $('[data-header]');
   let lastY = window.scrollY;

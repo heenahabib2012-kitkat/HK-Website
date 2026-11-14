@@ -943,3 +943,9 @@ body.menu-open { overflow: hidden; }
 .credit__title { font-family: var(--serif); font-size: 1.2rem; color: var(--ink) !important; text-decoration: none !important; }
 .credit__by { font-size: .88rem; }
 @media (max-width: 600px) { .credit { grid-template-columns: 1fr; } .credit__use { grid-row: auto; } }
+
+/* Back link */
+.back-link { display: inline-flex; align-items: center; gap: 12px; min-height: 44px; margin-bottom: 18px; font-size: .74rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--on-dark-2); transition: color var(--dur-1); }
+.back-link__arrow { width: 40px; height: 40px; display: grid; place-items: center; border: 1px solid var(--line-gold); border-radius: 50%; color: var(--gold); font-size: 1rem; letter-spacing: 0; transition: background var(--dur-2), color var(--dur-2), transform var(--dur-2) var(--ease-out); }
+.back-link:hover { color: var(--white); }
+.back-link:hover .back-link__arrow { background: var(--gold); color: var(--midnight); transform: translateX(-4px); }
