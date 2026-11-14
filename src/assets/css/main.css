@@ -868,3 +868,9 @@ body.menu-open { overflow: hidden; }
   .statement-line { font-size: 1.45rem; }
   .statement-line .rule-gold { width: 32px; margin-right: 14px; flex-shrink: 0; }
 }
+
+/* Cinematic hero: keep copy legible over the lit city on small screens */
+@media (max-width: 700px) {
+  .hero.is-cinema .hero__veil { background:
+    linear-gradient(180deg, rgba(8, 26, 58, .55) 0%, rgba(8, 26, 58, .35) 22%, rgba(8, 26, 58, .78) 48%, rgba(8, 26, 58, .9) 100%); }
+}

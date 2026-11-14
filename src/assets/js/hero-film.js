@@ -59,7 +59,13 @@
   }
 
   /* ---------------- canvas film ---------------- */
-  const ctx = canvas.getContext('2d');
+  // Prefer the WebGL cinematic city (hero-cinema.js); fall back to the 2D line film.
+  let cinema = null;
+  if (window.HKCinema && window.HKCinema.supported()) {
+    try { cinema = window.HKCinema.create(canvas, { mobile: hero.getBoundingClientRect().width < 700 }); } catch (e) { cinema = null; }
+  }
+  if (cinema) hero.classList.add('is-cinema');
+  const ctx = cinema ? null : canvas.getContext('2d');
   let W = 0, H = 0, dpr = 1, mobile = false;
   let towers = [], arcsCity = [], sphere = [];
   const rand = (() => { let s = 20210521; return () => ((s = Math.imul(s ^ (s >>> 15), 2246822507) + 0x9e3779b9 | 0) >>> 0) / 4294967296; })();
@@ -104,6 +110,7 @@
     mobile = r.width < 700;
     dpr = Math.min(window.devicePixelRatio || 1, mobile ? 1.5 : 1.75);
     W = r.width; H = r.height;
+    if (cinema) { cinema.resize(W, H, Math.min(dpr, mobile ? 1.25 : 1.5)); return; }
     canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     if (!towers.length || towers.mobile !== mobile) { buildCity(); towers.mobile = mobile; buildSphere(); }
@@ -307,6 +314,7 @@
     raf = requestAnimationFrame(frame);
   }
   function render(t) {
+    if (cinema) { cinema.render(t); return; }
     ctx.clearRect(0, 0, W, H);
     const [wc, wg] = weights(t);
     drawCity(t, wc);
@@ -323,7 +331,8 @@
   resize();
   canvas.classList.add('is-running');
   hero.classList.add('has-film');
-  if (reduce) { render(4.2); }
+  const freezeAt = parseFloat(new URLSearchParams(location.search).get('film-t')); // debug: ?film-t=12 freezes a frame
+  if (reduce || Number.isFinite(freezeAt)) { render(Number.isFinite(freezeAt) ? freezeAt : 4.2); }
   else {
     start();
     new IntersectionObserver(([en]) => { visible = en.isIntersecting; visible ? start() : stop(); }, { threshold: 0.02 }).observe(hero);

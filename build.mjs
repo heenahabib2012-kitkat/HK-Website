@@ -47,6 +47,10 @@ const fontFiles = {
   ],
   '@fontsource-variable/manrope': ['manrope-latin-wght-normal.woff2'],
 };
+// three.js (WebGL engine for the cinematic hero), self-hosted
+mkdir(path.join(DIST, 'assets/js/vendor'));
+fs.copyFileSync(path.join(ROOT, 'node_modules/three/build/three.min.js'), path.join(DIST, 'assets/js/vendor/three.min.js'));
+
 mkdir(path.join(DIST, 'assets/fonts'));
 for (const [pkg, files] of Object.entries(fontFiles)) {
   for (const f of files) {
