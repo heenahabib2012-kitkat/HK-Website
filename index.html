@@ -3,151 +3,311 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>HK Business Consultancy — Honest &amp; Keen</title>
-  <meta name="description" content="HK Business Consultancy is a Dubai-headquartered consultancy for franchise development, business setup, operations, brand strategy and startup consulting.">
-  <meta name="theme-color" content="#0b1f4d">
+  <title>HK Business Consultancy</title>
+  <meta name="description" content="HK Business Consultancy — franchise development, business setup, operations, brand strategy and startup consulting. Headquartered in Dubai, UAE.">
+  <meta name="theme-color" content="#173a8c">
   <meta property="og:title" content="HK Business Consultancy">
   <meta property="og:description" content="Building Businesses. Creating Possibilities.">
   <link rel="icon" href="assets/img/hk-seal.png" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap">
-  <link rel="stylesheet" href="css/site.css">
-  <script src="js/site.js" defer></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=Instrument+Sans:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="css/hk.css">
+  <script src="js/hk.js" defer></script>
 </head>
 <body>
 
+<!-- Reusable graphic symbols -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="star" viewBox="0 0 40 40"><path d="M11 11h18v18H11z M20 7.3 32.7 20 20 32.7 7.3 20z"/></symbol>
+    <symbol id="star-solid" viewBox="0 0 40 40"><path d="M11 11h18v18H11z"/><path d="M20 7.3 32.7 20 20 32.7 7.3 20z"/></symbol>
+  </defs>
+</svg>
+
 <header class="header" data-header>
-  <div class="container header__inner">
-    <a class="logo" href="#top" aria-label="HK Business Consultancy — home">
-      <img src="assets/img/hk-seal.png" alt="" width="40" height="40">
-      <span>HK Business Consultancy</span>
+  <div class="wrap header__in">
+    <a class="brand" href="#top" aria-label="HK Business Consultancy — home">
+      <img src="assets/img/hk-seal.png" alt="" width="44" height="44">
+      <span class="brand__name">HK Business<br>Consultancy</span>
     </a>
-    <nav class="nav" aria-label="Main" data-nav>
+    <nav class="nav" data-nav aria-label="Main">
       <a href="#about">About</a>
       <a href="#services">Services</a>
       <a href="#industries">Industries</a>
       <a href="#clients">Clients</a>
-      <a href="#contact" class="nav__cta">Contact</a>
+      <a href="#contact" class="nav__cta">Get in touch</a>
     </nav>
-    <button class="menu" aria-expanded="false" aria-label="Menu" data-menu><span></span><span></span></button>
+    <button class="burger" data-burger aria-expanded="false" aria-label="Menu"><span></span><span></span></button>
   </div>
 </header>
 
 <main id="top">
 
-  <!-- Hero -->
+  <!-- ============ HERO ============ -->
   <section class="hero">
-    <div class="container hero__inner">
-      <p class="kicker">Dubai · United Arab Emirates</p>
-      <h1>Building businesses.<br><em>Creating possibilities.</em></h1>
-      <p class="hero__lede">A trusted growth partner for founders, investors and established brands — bringing franchising, brand strategy, operations and compliance together under one roof.</p>
-      <div class="hero__actions">
-        <a class="btn" href="#contact">Start a conversation</a>
-        <a class="link" href="#services">Our services →</a>
+    <div class="wrap hero__grid">
+      <div class="hero__copy">
+        <p class="eyebrow"><svg class="i-star"><use href="#star-solid"/></svg> Honest &amp; Keen · Since 2015</p>
+        <h1>Building businesses.<br><span>Creating possibilities.</span></h1>
+        <p class="hero__lede">Franchising, business setup, operations and brand strategy — brought together under one roof by a Dubai-headquartered team that grows with you.</p>
+        <div class="hero__cta">
+          <a class="btn" href="#contact">Start a conversation</a>
+          <a class="btn btn--ghost" href="#services">Explore services</a>
+        </div>
+      </div>
+
+      <div class="hero__art" aria-hidden="true">
+        <div class="hero__pattern"></div>
+        <div class="arch">
+          <svg viewBox="0 0 400 520" preserveAspectRatio="xMidYMax slice">
+            <rect width="400" height="520" fill="#1b3f99"/>
+            <circle cx="118" cy="168" r="46" fill="#c9a25a"/>
+            <circle cx="118" cy="168" r="64" fill="none" stroke="#c9a25a" stroke-width="1" opacity=".5"/>
+            <!-- far towers -->
+            <g fill="#2c56b8">
+              <rect x="0" y="300" width="34" height="100"/><rect x="40" y="270" width="26" height="130"/>
+              <rect x="72" y="318" width="40" height="82"/><rect x="118" y="250" width="22" height="150"/>
+              <rect x="146" y="290" width="26" height="110"/><rect x="232" y="270" width="24" height="130"/>
+              <rect x="262" y="306" width="30" height="94"/><rect x="356" y="262" width="44" height="138"/>
+            </g>
+            <!-- Burj Khalifa -->
+            <path fill="#0c2257" d="M178 400V300h7v-68h6v-70h5v-62h3l1-62 1 62h3v62h5v70h6v68h7v100z"/>
+            <!-- Burj Al Arab -->
+            <path fill="#0c2257" d="M300 400V180c34 20 54 60 54 220z"/>
+            <path stroke="#0c2257" stroke-width="4" d="M300 400V150"/>
+            <path stroke="#c9a25a" stroke-width="1.5" fill="none" d="M300 230c18 8 30 22 38 40M300 290c20 8 34 22 44 44"/>
+            <!-- near towers -->
+            <g fill="#0c2257">
+              <rect x="10" y="340" width="44" height="60"/><rect x="60" y="356" width="36" height="44"/>
+              <rect x="226" y="330" width="40" height="70"/><rect x="360" y="344" width="40" height="56"/>
+              <rect x="128" y="350" width="34" height="50"/>
+            </g>
+            <!-- windows -->
+            <g fill="#c9a25a">
+              <rect x="20" y="352" width="4" height="4"/><rect x="34" y="364" width="4" height="4"/><rect x="236" y="342" width="4" height="4"/>
+              <rect x="250" y="360" width="4" height="4"/><rect x="138" y="362" width="4" height="4"/><rect x="372" y="358" width="4" height="4"/>
+            </g>
+            <!-- water -->
+            <rect y="400" width="400" height="120" fill="#0c2257"/>
+            <g stroke="#c9a25a" stroke-width="2" stroke-linecap="round">
+              <path d="M96 418h44M84 432h66M102 446h30M190 424h20M184 438h32M300 420h40M312 434h20"/>
+            </g>
+            <g stroke="#2c56b8" stroke-width="1.5"><path d="M0 460h400M0 482h400M0 504h400"/></g>
+          </svg>
+        </div>
+        <div class="badge">
+          <svg viewBox="0 0 200 200" class="badge__ring">
+            <defs><path id="ring" d="M100 100m-78 0a78 78 0 1 1 156 0a78 78 0 1 1-156 0"/></defs>
+            <text><textPath href="#ring">HONEST &amp; KEEN · BUSINESS CONSULTANCY · DUBAI · </textPath></text>
+          </svg>
+          <img src="assets/img/hk-seal.png" alt="">
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- About -->
-  <section class="section" id="about">
-    <div class="container split">
-      <div>
-        <p class="kicker">About us</p>
-        <h2>From coffee conversations to a global practice.</h2>
+  <!-- ============ TICKER ============ -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker__track">
+      <span>Franchise Development</span><svg><use href="#star-solid"/></svg>
+      <span>Business Setup</span><svg><use href="#star-solid"/></svg>
+      <span>Operational Optimisation</span><svg><use href="#star-solid"/></svg>
+      <span>Brand Strategy</span><svg><use href="#star-solid"/></svg>
+      <span>Startup Consulting</span><svg><use href="#star-solid"/></svg>
+      <span>Franchise Development</span><svg><use href="#star-solid"/></svg>
+      <span>Business Setup</span><svg><use href="#star-solid"/></svg>
+      <span>Operational Optimisation</span><svg><use href="#star-solid"/></svg>
+      <span>Brand Strategy</span><svg><use href="#star-solid"/></svg>
+      <span>Startup Consulting</span><svg><use href="#star-solid"/></svg>
+    </div>
+  </div>
+
+  <!-- ============ ABOUT ============ -->
+  <section class="sec" id="about">
+    <div class="wrap">
+      <div class="sec__head">
+        <p class="label"><span>01</span> About us</p>
+        <h2>From coffee conversations<br>to a <em>trusted practice.</em></h2>
       </div>
-      <div class="prose">
-        <p>HK Business Consultancy was founded by <strong>Habib Koya Marapatta</strong>. What began as informal advice between friends has grown into a Dubai-headquartered firm that brings franchising, brand strategy, operations and compliance together under one roof.</p>
-        <ol class="timeline">
-          <li><span>2015</span><p>As a Commercial Director in Kuwait, Habib began offering business advice to friends. Their success led them to say: <em>“Turn your hobby into a profession.”</em></p></li>
-          <li><span>2017</span><p>The advice became a practice — helping brands take their businesses into new markets and across borders.</p></li>
-          <li><span>2021</span><p>HK established its global headquarters in Dubai.</p></li>
-          <li><span>Today</span><p>From launching start-ups to expanding legacy brands, HK is a trusted partner for businesses at every stage of growth.</p></li>
+      <div class="about">
+        <p class="about__lead">HK Business Consultancy was founded by Habib Koya Marapatta. What began as informal advice between friends has grown into a Dubai-headquartered firm that brings franchising, brand strategy, operations and compliance together under one roof.</p>
+        <ol class="steps">
+          <li><b>2015</b><h3>The spark</h3><p>Friends who took Habib’s business advice saw results — and told him: <i>“Turn your hobby into a profession.”</i></p></li>
+          <li><b>2017</b><h3>The practice</h3><p>Advice became a consultancy, helping brands take their businesses into new markets and across borders.</p></li>
+          <li><b>2021</b><h3>Dubai HQ</h3><p>HK established its global headquarters in Dubai, United Arab Emirates.</p></li>
+          <li><b>Today</b><h3>Growing together</h3><p>From launching start-ups to expanding legacy brands — a partner at every stage of growth.</p></li>
         </ol>
       </div>
     </div>
   </section>
 
-  <!-- Founder -->
-  <section class="section section--tint">
-    <div class="container founder">
-      <img class="founder__photo" src="assets/img/founder.jpg" alt="Habib Koya Marapatta" loading="lazy">
-      <div>
-        <p class="kicker">Founder’s message</p>
-        <blockquote class="founder__quote">“I don’t just help businesses grow. I grow with them.”</blockquote>
-        <div class="prose">
-          <p>What began as simple coffee conversations in Kuwait quickly evolved into something much bigger. I was fortunate to have friends who believed in my ideas more than I did — their encouragement is what sparked HK Business Consultancy.</p>
-          <p>Over the years, I’ve learned that success is never built in isolation. It takes strategy, trust, execution and empathy. Our mission is to walk with you through every challenge, every pivot and every breakthrough.</p>
-          <p>We don’t just give you a plan. We build your future with you.</p>
+  <!-- ============ FOUNDER ============ -->
+  <section class="sec sec--ivory">
+    <div class="wrap founder">
+      <figure class="founder__fig">
+        <div class="founder__frame"><img src="assets/img/founder.jpg" alt="Habib Koya Marapatta, Founder" loading="lazy"></div>
+        <svg class="founder__star"><use href="#star-solid"/></svg>
+      </figure>
+      <div class="founder__copy">
+        <p class="label"><span>02</span> Founder’s message</p>
+        <blockquote>“I don’t just help businesses grow. <em>I grow with them.</em>”</blockquote>
+        <p>What began as simple coffee conversations quickly evolved into something much bigger. I was fortunate to have friends who believed in my ideas more than I did — their encouragement is what sparked HK Business Consultancy.</p>
+        <p>Success is never built in isolation. It takes strategy, trust, execution and empathy. Our mission is to walk with you through every challenge, every pivot and every breakthrough. We don’t just give you a plan — we build your future with you.</p>
+        <p class="sign">Habib Koya Marapatta<small>Founder, HK Business Consultancy</small></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ VISION / MISSION ============ -->
+  <section class="vm">
+    <div class="vm__block vm__block--blue">
+      <svg class="vm__icon" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M32 6 38 26 58 32 38 38 32 58 26 38 6 32 26 26z" fill="currentColor"/></svg>
+      <p class="label label--light">Our vision</p>
+      <p class="vm__text">To be the most trusted growth partner for businesses worldwide — empowering ideas, transforming brands and driving sustainable success through strategic clarity and global insight.</p>
+    </div>
+    <div class="vm__block vm__block--sand">
+      <svg class="vm__icon" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="32" cy="32" r="18" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="32" cy="32" r="6" fill="currentColor"/></svg>
+      <p class="label">Our mission</p>
+      <p class="vm__text">Personalised, end-to-end business solutions combining franchising, brand strategy, operations and compliance — helping entrepreneurs, investors and legacy brands launch, scale and thrive.</p>
+    </div>
+  </section>
+
+  <!-- ============ SERVICES ============ -->
+  <section class="sec" id="services">
+    <div class="wrap">
+      <div class="sec__head sec__head--row">
+        <div>
+          <p class="label"><span>03</span> What we do</p>
+          <h2>Building brands.<br><em>Enabling growth.</em></h2>
         </div>
-        <p class="signature">Habib Koya Marapatta <span>Founder</span></p>
+        <p class="sec__note">Five disciplines, one team — so strategy, setup and execution never get lost between advisers.</p>
+      </div>
+
+      <div class="cards">
+        <article class="card">
+          <svg class="card__art" viewBox="0 0 200 140" aria-hidden="true">
+            <path d="M30 120V60a20 20 0 0 1 40 0v60z" fill="#c19a50"/>
+            <path d="M80 120V60a20 20 0 0 1 40 0v60z" fill="none" stroke="#1b3f99" stroke-width="2.5"/>
+            <path d="M130 120V60a20 20 0 0 1 40 0v60z" fill="none" stroke="#1b3f99" stroke-width="2.5" stroke-dasharray="5 5"/>
+            <path d="M20 120h160" stroke="#0c2257" stroke-width="2.5"/>
+          </svg>
+          <span class="card__no">01</span>
+          <h3>Franchise Development &amp; Expansion</h3>
+          <p>Franchise creation, documentation, brand adaptation and international rollout support.</p>
+        </article>
+        <article class="card">
+          <svg class="card__art" viewBox="0 0 200 140" aria-hidden="true">
+            <rect x="45" y="90" width="110" height="30" fill="#0c2257"/>
+            <rect x="60" y="60" width="80" height="30" fill="#1b3f99"/>
+            <rect x="78" y="30" width="44" height="30" fill="#c19a50"/>
+            <path d="M30 120h140" stroke="#0c2257" stroke-width="2.5"/>
+          </svg>
+          <span class="card__no">02</span>
+          <h3>Business Setup</h3>
+          <p>End-to-end company formation — licensing, documentation, compliance and a strategic launch.</p>
+        </article>
+        <article class="card">
+          <svg class="card__art" viewBox="0 0 200 140" aria-hidden="true">
+            <path d="M38 75h124" stroke="#0c2257" stroke-width="2.5" stroke-dasharray="6 6"/>
+            <circle cx="40" cy="75" r="16" fill="#1b3f99"/>
+            <circle cx="100" cy="75" r="26" fill="#fff" stroke="#0c2257" stroke-width="2.5"/>
+            <circle cx="100" cy="75" r="10" fill="#c19a50"/>
+            <circle cx="160" cy="75" r="16" fill="#1b3f99"/>
+          </svg>
+          <span class="card__no">03</span>
+          <h3>Operational Optimisation</h3>
+          <p>Streamlined systems, SOPs and team training for efficiency and scalability.</p>
+        </article>
+        <article class="card">
+          <svg class="card__art" viewBox="0 0 200 140" aria-hidden="true">
+            <circle cx="100" cy="70" r="52" fill="none" stroke="#1b3f99" stroke-width="2.5"/>
+            <circle cx="100" cy="70" r="42" fill="none" stroke="#1b3f99" stroke-width="1" stroke-dasharray="3 4"/>
+            <use href="#star-solid" x="70" y="40" width="60" height="60" fill="#c19a50"/>
+          </svg>
+          <span class="card__no">04</span>
+          <h3>Brand Strategy &amp; Expansion</h3>
+          <p>A brand that speaks and sells — identity, positioning, storytelling and digital presence.</p>
+        </article>
+        <article class="card">
+          <svg class="card__art" viewBox="0 0 200 140" aria-hidden="true">
+            <path d="M30 120v-22h36V78h36V56h36v64z" fill="#1b3f99"/>
+            <circle cx="160" cy="36" r="14" fill="#c19a50"/>
+            <path d="M20 120h160" stroke="#0c2257" stroke-width="2.5"/>
+          </svg>
+          <span class="card__no">05</span>
+          <h3>Startup Consulting</h3>
+          <p>Even the best products need the right plan. We help you establish your venture the right way.</p>
+        </article>
+        <a class="card card--cta" href="#contact">
+          <span class="card__no">→</span>
+          <h3>Not sure where to start?</h3>
+          <p>Tell us where you are and where you want to go. We’ll map the route.</p>
+          <span class="card__link">Book a conversation</span>
+        </a>
       </div>
     </div>
   </section>
 
-  <!-- Vision & mission -->
-  <section class="section">
-    <div class="container two-col">
-      <div>
-        <p class="kicker">Vision</p>
-        <p class="statement">To be the most trusted growth partner for businesses worldwide — empowering ideas, transforming brands, and driving sustainable success through strategic clarity and global insight.</p>
-      </div>
-      <div>
-        <p class="kicker">Mission</p>
-        <p class="statement statement--small">We deliver personalised, end-to-end business solutions that combine franchising, brand strategy, operations and compliance. Guided by trust, innovation and deep regional understanding, we help entrepreneurs, investors and legacy brands launch, scale and thrive in competitive markets.</p>
-      </div>
+  <!-- ============ NUMBERS ============ -->
+  <section class="numbers" aria-label="HK at a glance">
+    <div class="wrap numbers__row">
+      <div><b>2015</b><span>Founded</span></div>
+      <div><b>2021</b><span>Dubai headquarters</span></div>
+      <div><b>05</b><span>Core services</span></div>
+      <div><b>09</b><span>Industries served</span></div>
+      <div><b>16+</b><span>Brands supported</span></div>
     </div>
   </section>
 
-  <!-- Services -->
-  <section class="section section--tint" id="services">
-    <div class="container">
-      <p class="kicker">Our services</p>
-      <h2>Building brands. Enabling growth.</h2>
-      <ol class="services">
-        <li><span>01</span><h3>Franchise Development &amp; Expansion</h3><p>Franchise creation, documentation, brand adaptation and international rollout support.</p></li>
-        <li><span>02</span><h3>Business Setup</h3><p>End-to-end company formation, including licensing, documentation, compliance and strategic launch.</p></li>
-        <li><span>03</span><h3>Operational Optimisation</h3><p>Streamlined business systems, SOPs and team training for efficiency and scalability.</p></li>
-        <li><span>04</span><h3>Brand Strategy &amp; Expansion</h3><p>A brand that speaks and sells — identity design, market positioning, storytelling and digital presence.</p></li>
-        <li><span>05</span><h3>Startup Consulting</h3><p>Even the best products need the right planning. We help you establish your venture the right way.</p></li>
-      </ol>
-    </div>
-  </section>
-
-  <!-- Industries -->
-  <section class="section" id="industries">
-    <div class="container split">
-      <div>
-        <p class="kicker">Industries</p>
-        <h2>Every sector, one standard of advice.</h2>
+  <!-- ============ INDUSTRIES ============ -->
+  <section class="sec" id="industries">
+    <div class="wrap">
+      <div class="sec__head">
+        <p class="label"><span>04</span> Industries</p>
+        <h2>Many sectors.<br><em>One standard of advice.</em></h2>
       </div>
-      <ul class="tags">
-        <li>F&amp;B &amp; Hospitality</li><li>Trading</li><li>Real Estate</li><li>Retail</li><li>Luxury &amp; Fashion</li>
-        <li>Professional Services</li><li>Technology</li><li>Investment</li><li>Healthcare</li>
+      <ul class="inds">
+        <li><svg viewBox="0 0 24 24"><path d="M5 9h11v5a5 5 0 0 1-5 5h-1a5 5 0 0 1-5-5zM16 11h2a2 2 0 0 1 0 4h-2M8 3v3M12 3v3"/></svg>F&amp;B &amp; Hospitality</li>
+        <li><svg viewBox="0 0 24 24"><path d="M4 8h15l-3-3M20 16H5l3 3"/></svg>Trading</li>
+        <li><svg viewBox="0 0 24 24"><path d="M4 20V9l8-5 8 5v11M9 20v-6h6v6M2 20h20"/></svg>Real Estate</li>
+        <li><svg viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6zM9 8a3 3 0 0 1 6 0"/></svg>Retail</li>
+        <li><svg viewBox="0 0 24 24"><path d="M6 4h12l3 5-9 11L3 9zM3 9h18M9.5 4 8 9l4 11 4-11-1.5-5"/></svg>Luxury &amp; Fashion</li>
+        <li><svg viewBox="0 0 24 24"><path d="M3 8h18v11H3zM9 8V5h6v3M3 13h18"/></svg>Professional Services</li>
+        <li><svg viewBox="0 0 24 24"><path d="M7 7h10v10H7zM10 3v4M14 3v4M10 17v4M14 17v4M3 10h4M3 14h4M17 10h4M17 14h4"/></svg>Technology</li>
+        <li><svg viewBox="0 0 24 24"><path d="M4 20h16M5 16l5-5 3 3 6-7M15 7h4v4"/></svg>Investment</li>
+        <li><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>Healthcare</li>
       </ul>
     </div>
   </section>
 
-  <!-- Associates -->
-  <section class="section section--tint" id="associates">
-    <div class="container">
-      <p class="kicker">Associate companies</p>
-      <h2>The HK network.</h2>
-      <ul class="associates">
-        <li><img src="assets/img/associates/rbs.png" alt="RBS" loading="lazy"></li>
+  <!-- ============ ASSOCIATES ============ -->
+  <section class="sec sec--ivory" id="associates">
+    <div class="wrap">
+      <div class="sec__head sec__head--row">
+        <div>
+          <p class="label"><span>05</span> Associate companies</p>
+          <h2>The HK <em>network.</em></h2>
+        </div>
+        <p class="sec__note">Partners we work alongside to deliver more for our clients.</p>
+      </div>
+      <ul class="assoc">
+        <li><img src="assets/img/associates/rbs.png" alt="RBS — Solutions are Unlimited" loading="lazy"></li>
         <li><img src="assets/img/associates/maplitho.png" alt="Maplitho" loading="lazy"></li>
-        <li class="associates__fill" style="background:#123b8a"><img src="assets/img/associates/valencia-galleria.png" alt="Valencia Galleria" loading="lazy"></li>
-        <li class="associates__fill"><img src="assets/img/associates/wecare.png" alt="WeCare Holdings &amp; Healthcare Berhad" loading="lazy"></li>
+        <li class="assoc__fill" style="background:#123b8a"><img src="assets/img/associates/valencia-galleria.png" alt="Valencia Galleria" loading="lazy"></li>
+        <li class="assoc__fill"><img src="assets/img/associates/wecare.png" alt="WeCare Holdings &amp; Healthcare Berhad" loading="lazy"></li>
       </ul>
     </div>
   </section>
 
-  <!-- Clients -->
-  <section class="section" id="clients">
-    <div class="container">
-      <p class="kicker">Our clients</p>
-      <h2>Trusted by businesses that build.</h2>
-      <div class="clients">
+  <!-- ============ CLIENTS ============ -->
+  <section class="sec" id="clients">
+    <div class="wrap">
+      <div class="sec__head">
+        <p class="label"><span>06</span> Our clients</p>
+        <h2>Trusted by brands<br><em>that build.</em></h2>
+      </div>
+      <div class="logos">
         <img src="assets/img/clients/address.jpg" alt="Address Men’s Apparel" loading="lazy">
         <img src="assets/img/clients/clarus.jpg" alt="Clarus Lifestyle Jewellery" loading="lazy">
         <img src="assets/img/clients/nellara.jpg" alt="Nellara" loading="lazy">
@@ -166,42 +326,57 @@
         <img src="assets/img/clients/bl.jpg" alt="bL" loading="lazy">
       </div>
       <p class="more">&amp; many more.</p>
-      <div class="quotes">
+    </div>
+  </section>
+
+  <!-- ============ TESTIMONIALS ============ -->
+  <section class="words">
+    <div class="wrap">
+      <p class="label label--light">In their words</p>
+      <div class="words__grid">
         <figure>
-          <blockquote>“HK understood our brand from the very first conversation. Their guidance on strategy and expansion has been practical, honest and always focused on what is right for our business.”</blockquote>
-          <figcaption>Mr. Shamsudheen Nellara <span>Chairman &amp; Managing Director, Address Apparel</span></figcaption>
+          <span class="words__mark">“</span>
+          <blockquote>HK understood our brand from the very first conversation. Their guidance on strategy and expansion has been practical, honest and always focused on what is right for our business.</blockquote>
+          <figcaption>Mr. Shamsudheen Nellara<small>Chairman &amp; Managing Director, Address Apparel</small></figcaption>
         </figure>
         <figure>
-          <blockquote>“From concept to launch, HK walked with us at every step. They brought clarity to every decision and genuinely cared about Fish Bae’s success as much as we did.”</blockquote>
-          <figcaption>Mr. Fahim <span>Founder, Fish Bae</span></figcaption>
+          <span class="words__mark">“</span>
+          <blockquote>From concept to launch, HK walked with us at every step. They brought clarity to every decision and genuinely cared about Fish Bae’s success as much as we did.</blockquote>
+          <figcaption>Mr. Fahim<small>Founder, Fish Bae</small></figcaption>
         </figure>
       </div>
     </div>
   </section>
 
-  <!-- Contact -->
-  <section class="section section--dark" id="contact">
-    <div class="container split">
-      <div>
-        <p class="kicker">Contact</p>
-        <h2>Let’s build what’s next.</h2>
-        <p class="contact__lede">Whether you are entering the UAE, expanding an existing business or exploring a new opportunity — let’s start the conversation.</p>
-        <dl class="details">
+  <!-- ============ CONTACT ============ -->
+  <section class="sec contact" id="contact">
+    <div class="wrap contact__grid">
+      <div class="contact__info">
+        <p class="label label--light"><span>07</span> Contact</p>
+        <h2>Let’s build<br><em>what’s next.</em></h2>
+        <p>Entering the UAE, expanding an existing business or exploring something new — start the conversation.</p>
+        <dl>
           <dt>Email</dt><dd><a href="mailto:info@honestandkeen.com">info@honestandkeen.com</a></dd>
-          <dt>UAE</dt><dd><a href="tel:+971585815229">+971 58 581 5229</a> · <a href="tel:+971585822086">+971 58 582 2086</a></dd>
-          <dt>India</dt><dd><a href="tel:+917829500009">+91 78295 00009</a> · <a href="tel:+919544392026">+91 95443 92026</a></dd>
+          <dt>UAE</dt><dd><a href="tel:+971585815229">+971 58 581 5229</a><br><a href="tel:+971585822086">+971 58 582 2086</a></dd>
+          <dt>India</dt><dd><a href="tel:+917829500009">+91 78295 00009</a><br><a href="tel:+919544392026">+91 95443 92026</a></dd>
           <dt>Instagram</dt><dd><a href="https://www.instagram.com/hk.businessconsultancy/">@hk.businessconsultancy</a></dd>
         </dl>
       </div>
-      <!-- Without data-endpoint the form opens the visitor's email app, addressed to info@honestandkeen.com.
-           Add a Formspree (or similar) URL in data-endpoint to receive enquiries directly. -->
+      <!-- Without data-endpoint the form opens the visitor's email app addressed to info@honestandkeen.com.
+           Paste a Formspree (or similar) URL into data-endpoint to receive enquiries directly. -->
       <form class="form" data-form data-endpoint="" novalidate>
-        <label>Name<input name="name" required autocomplete="name"></label>
-        <label>Email<input name="email" type="email" required autocomplete="email"></label>
-        <label><span>Company <small>(optional)</small></span><input name="company" autocomplete="organization"></label>
+        <h3>Send us a message</h3>
+        <div class="form__row">
+          <label>Name<input name="name" required autocomplete="name"></label>
+          <label>Email<input name="email" type="email" required autocomplete="email"></label>
+        </div>
+        <div class="form__row">
+          <label><span>Company <small>(optional)</small></span><input name="company" autocomplete="organization"></label>
+          <label><span>Phone <small>(optional)</small></span><input name="phone" type="tel" autocomplete="tel"></label>
+        </div>
         <label>Service
           <select name="service" required>
-            <option value="" disabled selected>Select…</option>
+            <option value="" disabled selected>Choose a service…</option>
             <option>Franchise Development &amp; Expansion</option>
             <option>Business Setup</option>
             <option>Operational Optimisation</option>
@@ -211,7 +386,7 @@
           </select>
         </label>
         <label>Message<textarea name="message" rows="4" required></textarea></label>
-        <button class="btn btn--light" type="submit">Send message</button>
+        <button class="btn" type="submit">Send message</button>
         <p class="form__status" role="status" data-status></p>
       </form>
     </div>
@@ -220,10 +395,13 @@
 </main>
 
 <footer class="footer">
-  <div class="container footer__inner">
-    <img src="assets/img/hk-seal.png" alt="" width="36" height="36">
-    <p>© <span data-year>2026</span> HK Business Consultancy · Honest &amp; Keen · Dubai, UAE</p>
-    <a href="https://www.hkbusinessconsultancy.com">hkbusinessconsultancy.com</a>
+  <div class="wrap">
+    <p class="footer__big">Honest <em>&amp;</em> Keen.</p>
+    <div class="footer__row">
+      <a class="brand brand--light" href="#top"><img src="assets/img/hk-seal.png" alt="" width="40" height="40"><span class="brand__name">HK Business<br>Consultancy</span></a>
+      <nav aria-label="Footer"><a href="#about">About</a><a href="#services">Services</a><a href="#industries">Industries</a><a href="#clients">Clients</a><a href="#contact">Contact</a></nav>
+      <p>© <span data-year>2026</span> HK Business Consultancy · Dubai, UAE</p>
+    </div>
   </div>
 </footer>
 
