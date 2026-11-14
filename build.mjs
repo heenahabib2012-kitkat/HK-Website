@@ -8,6 +8,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { feature } from 'topojson-client';
 import { plates, slots } from './src/data/plates.mjs';
+import { art } from './src/data/art.mjs';
 
 const ROOT = path.dirname(fileURLToPath(import.meta.url));
 const SRC = path.join(ROOT, 'src');
@@ -160,6 +161,7 @@ function render(tpl, ctx) {
   return tpl
     .replace(/\{\{>\s*([\w-]+)\s*\}\}/g, (_, n) => render(partial(n), ctx))
     .replace(/\{\{media\s+([\w-]+)\s*\}\}/g, (_, s) => media(s))
+    .replace(/\{\{art\s+([\w-]+)\s*\}\}/g, (_, s) => art(s))
     .replace(/\{\{map(?:\s+([\w-]+))?\s*\}\}/g, (_, id) => mapSvg({ id: id || 'world-map' }))
     .replace(/\{\{\s*([\w.-]+)\s*\}\}/g, (m, key) => {
       const v = key.split('.').reduce((o, k) => (o == null ? undefined : o[k]), ctx);
