@@ -342,8 +342,8 @@
     const v = new THREE.Vector3(), look = new THREE.Vector3();
     const SHOTS = [
       { len: 10, cam(u) { v.set(lerp(70, 18, u), lerp(9, 30, u), lerp(470, 250, u)); look.set(lerp(-10, 0, u), lerp(150, 170, u), LANDMARK.z); } },
-      { len: 9, cam(u) { v.set(lerp(-60, 25, u), lerp(150, 185, u), lerp(110, -110, u)); look.set(lerp(-20, 0, u), lerp(190, 250, u), LANDMARK.z); } },
-      { len: 11, cam(u) { const a = lerp(0.95, 0.35, u); const r = lerp(560, 470, u); v.set(Math.sin(a) * r, lerp(240, 320, u), LANDMARK.z + Math.cos(a) * r); look.set(0, lerp(170, 140, u), LANDMARK.z - 60); } },
+      { len: 9, cam(u) { v.set(lerp(-160, 60, u), lerp(70, 95, u), lerp(420, 380, u)); look.set(lerp(-90, 10, u), 175, LANDMARK.z); } },
+      { len: 11, cam(u) { const a = lerp(0.62, 0.22, u); const r = lerp(980, 900, u); v.set(Math.sin(a) * r, lerp(150, 210, u), LANDMARK.z + Math.cos(a) * r); look.set(0, lerp(190, 200, u), LANDMARK.z - 60); } },
     ];
     const LOOP = SHOTS.reduce((s, x) => s + x.len, 0);
     const DIP = 0.85;
@@ -371,6 +371,10 @@
       renderer.setSize(w, h, false);
       camera.aspect = w / h;
       camera.fov = w / h < 1 ? 64 : 42;
+      // On wide screens, frame the city in the right of the picture so the headline
+      // on the left sits over open sky and water rather than over lit towers.
+      if (w / h > 1.15) camera.setViewOffset(w, h, -w * 0.2, 0, w, h);
+      else camera.clearViewOffset();
       camera.updateProjectionMatrix();
       const scale = (h / 900) * dpr;
       traffic.material.uniforms.uScale.value = scale;
