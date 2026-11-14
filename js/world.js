@@ -50,7 +50,7 @@ export const REGIONS = [
   { id: 'gcc', name: 'GCC & Middle East', lon: 47, lat: 26, cities: [
     { name: 'Riyadh', lon: 46.7, lat: 24.7 }, { name: 'Doha', lon: 51.5, lat: 25.3 }, { name: 'Muscat', lon: 58.4, lat: 23.6 } ],
     text: 'The immediate neighbourhood: shared commercial culture, close trade corridors and a growing appetite for regional expansion.' },
-  { id: 'europe', name: 'Europe & UK', lon: 10, lat: 48, cities: [
+  { id: 'europe', name: 'Europe', lon: 10, lat: 48, cities: [
     { name: 'London', lon: -0.1, lat: 51.5 }, { name: 'Istanbul', lon: 29, lat: 41 }, { name: 'Paris', lon: 2.35, lat: 48.86 } ],
     text: 'Established brands and investors looking east, and regional businesses building partnerships in European markets.' },
   { id: 'asia', name: 'Asia', lon: 95, lat: 18, cities: [

@@ -174,7 +174,6 @@ export function initGlobe(canvas, { labelsEl, onRegion } = {}) {
       labelEls.push({ el, p: toXYZ(lon, lat, 1.01), cls });
     };
     add('UAE', HUB.lon, HUB.lat, 'is-hub');
-    REGIONS.forEach((r, ri) => r.cities.forEach((c) => { add(c.name, c.lon, c.lat, 'is-city'); labelEls[labelEls.length - 1].region = ri; }));
   }
 
   const reduced = prefersReducedMotion();

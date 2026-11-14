@@ -12,40 +12,37 @@ const finePointer = window.matchMedia('(pointer: fine)').matches;
 /* ------------------------------------------------------------------ content */
 
 const SERVICES = [
-  { title: 'Business Strategy', summary: 'Market positioning, strategic planning and growth.',
-    points: ['Market and competitive positioning', 'Strategic and business planning', 'Growth priorities and roadmaps'] },
-  { title: 'Market Entry', summary: 'Helping businesses establish and expand in the UAE and international markets.',
-    points: ['Market assessment and route to entry', 'Set-up and structuring considerations', 'Local partnerships and go-to-market'] },
-  { title: 'Corporate & Commercial Advisory', short: 'Corporate Advisory', summary: 'Business structuring, commercial strategy and advisory support.',
-    points: ['Business structuring', 'Commercial strategy and arrangements', 'Ongoing advisory support for leadership'] },
-  { title: 'Franchising', summary: 'Franchise strategy, development and expansion.',
-    points: ['Franchise readiness and model design', 'Franchise development and partner criteria', 'Regional and international expansion'] },
-  { title: 'F&B & Hospitality', short: 'F&B · Hospitality', summary: 'Strategic support for hospitality, food and beverage ventures.',
-    points: ['Concept positioning and strategy', 'Commercial and operational planning', 'Growth and multi-site expansion'] },
-  { title: 'Trading & Investment', short: 'Trading · Investment', summary: 'Business opportunities, partnerships and commercial development.',
-    points: ['Opportunity identification and assessment', 'Partnerships and introductions', 'Commercial development'] },
+  { title: 'Franchise Development & Expansion', short: 'Franchising', summary: 'Franchise creation, documentation, brand adaptation and international rollout support.',
+    points: ['Franchise creation and documentation', 'Brand adaptation for new markets', 'International rollout support'] },
+  { title: 'Business Setup', summary: 'End-to-end company formation support, including licensing, documentation, compliance and strategic launch.',
+    points: ['Company formation and licensing', 'Documentation and compliance', 'Strategic launch'] },
+  { title: 'Operational Optimisation', short: 'Operations', summary: 'Streamline business systems, SOPs and team training for improved efficiency and scalability.',
+    points: ['Business systems and SOPs', 'Team training', 'Efficiency and scalability'] },
+  { title: 'Brand Strategy & Expansion', short: 'Brand Strategy', summary: 'Build a brand that speaks and sells — identity design, market positioning, storytelling and digital presence.',
+    points: ['Identity design', 'Market positioning and storytelling', 'Digital presence'] },
+  { title: 'Startup Consulting', short: 'Startups', summary: 'Without the right planning, even the best products and services won\u2019t conquer the market. Establish your venture the right way with our startup consulting services.',
+    points: ['Planning before launch', 'Positioning for the market', 'Setting the venture up the right way'] },
 ];
 
-// Each discipline is a chess piece: file c (a–h → 0–7), row r from the far side, height in world units.
+// Each service is a chess piece: file c (a–h → 0–7), row r from the far side, height in world units.
 const PIECES = [
-  { type: 'king', c: 3, r: 4, h: 1.56 },   // Business Strategy — the piece everything protects
-  { type: 'knight', c: 5, r: 2, h: 1.1 }, // Market Entry — reaches places others cannot
-  { type: 'rook', c: 1, r: 2, h: 1.02 },   // Corporate & Commercial Advisory — structure
-  { type: 'pawn', c: 2, r: 6, h: 0.87 },    // Franchising — small steps that multiply
-  { type: 'bishop', c: 6, r: 5, h: 1.2 }, // F&B & Hospitality
-  { type: 'queen', c: 5, r: 6, h: 1.38 },  // Trading & Investment — the widest reach
+  { type: 'queen', c: 4, r: 4, h: 1.38 },  // Franchise Development — the widest reach
+  { type: 'king', c: 2, r: 5, h: 1.56 },   // Business Setup — the piece everything is built around
+  { type: 'rook', c: 6, r: 2, h: 1.02 },   // Operational Optimisation — structure
+  { type: 'bishop', c: 1, r: 2, h: 1.2 },  // Brand Strategy — reaches across the board
+  { type: 'pawn', c: 5, r: 6, h: 0.87 },   // Startup Consulting — small steps that grow
 ];
 
 const INDUSTRIES = [
   { name: 'F&B & Hospitality', text: 'Concepts, operators and brands — from positioning to regional expansion.' },
   { name: 'Trading', text: 'Commercial strategy, partnerships and market access for trading businesses.' },
-  { name: 'Education', text: 'Bringing structure, planning and market insight to education ventures.' },
   { name: 'Real Estate', text: 'A commercial perspective on real estate ventures and opportunities.' },
   { name: 'Retail', text: 'Positioning, market entry and expansion for retail concepts.' },
   { name: 'Luxury & Fashion', text: 'Discreet, brand-conscious advice for luxury and fashion businesses.' },
   { name: 'Professional Services', text: 'Growth, structuring and positioning for service-led firms.' },
   { name: 'Technology', text: 'Helping technology businesses establish and scale in the region.' },
   { name: 'Investment', text: 'Evaluating opportunities and building the partnerships to realise them.' },
+  { name: 'Healthcare', text: 'Strategic support for healthcare providers, innovation and investment.' },
 ];
 
 /* ------------------------------------------------------------------ intro + hero */
@@ -223,7 +220,7 @@ if (!reduced) setInterval(() => { if (indVisible && !indTouched) setIndustry((in
 const regionList = $('[data-regions]');
 REGIONS.forEach((r, i) => {
   const li = document.createElement('li');
-  li.innerHTML = `<button data-region="${i}" aria-pressed="false"><span>${r.name}</span><small>${r.cities.map((c) => c.name).join(' · ')}</small></button>`;
+  li.innerHTML = `<button data-region="${i}" aria-pressed="false"><span>${r.name}</span></button>`;
   regionList.appendChild(li);
 });
 const regionText = $('[data-region-text]');
@@ -242,38 +239,6 @@ $$('button', regionList).forEach((b) => {
   b.addEventListener('click', () => globe && globe.focus(i));
   b.addEventListener('pointerenter', () => { if (finePointer && globe) globe.focus(i); });
 });
-
-/* ------------------------------------------------------------------ cases (horizontal) */
-
-const cases = $('[data-cases]');
-const track = $('[data-cases-track]');
-const caseEls = $$('.case', track);
-const caseVisuals = $$('[data-case-visual] svg', track);
-cases.style.setProperty('--panels', caseEls.length);
-$('[data-cases-total]').textContent = String(caseEls.length).padStart(2, '0');
-const casesBar = $('[data-cases-bar]');
-const casesCurrent = $('[data-cases-current]');
-function updateCases() {
-  const r = cases.getBoundingClientRect(), vh = window.innerHeight, vw = window.innerWidth;
-  if (r.bottom < 0 || r.top > vh) return;
-  const p = clamp(-r.top / Math.max(1, r.height - vh), 0, 1);
-  const dist = Math.max(0, track.scrollWidth - vw);
-  track.style.transform = `translate3d(${(-p * dist).toFixed(1)}px,0,0)`;
-  casesBar.style.width = `${(p * 100).toFixed(2)}%`;
-  let best = 0, bestD = Infinity;
-  caseEls.forEach((el, i) => {
-    const b = el.getBoundingClientRect();
-    const off = (b.left + b.width / 2 - vw / 2) / vw;
-    const d = Math.abs(off);
-    if (d < bestD) { bestD = d; best = i; }
-    if (!reduced) {
-      el.style.transform = `scale(${(1 - Math.min(d, 1) * 0.07).toFixed(4)})`;
-      caseVisuals[i].style.setProperty('--px', `${(off * -60).toFixed(1)}px`);
-      caseVisuals[i].style.setProperty('--ps', (1 + Math.min(d, 1) * 0.12).toFixed(3));
-    }
-  });
-  casesCurrent.textContent = String(best + 1).padStart(2, '0');
-}
 
 /* ------------------------------------------------------------------ why HK */
 
@@ -312,7 +277,6 @@ function onScroll() {
   nav.classList.toggle('is-scrolled', y > 40);
   if (y === lastY) return;
   lastY = y;
-  updateCases();
   updateWhy();
   if (!reduced) updateDepth();
 }
@@ -409,9 +373,10 @@ form.addEventListener('submit', async (e) => {
   }
   const endpoint = form.dataset.endpoint;
   if (!endpoint) {
-    status.classList.add('is-error');
-    status.textContent = 'Online enquiries are not yet connected. Please try again shortly.';
-    console.warn('Contact form: set data-endpoint on the form to receive submissions.');
+    const d = Object.fromEntries(new FormData(form));
+    const body = `Name: ${d.name}\nCompany: ${d.company || '-'}\nEmail: ${d.email}\nPhone: ${d.phone || '-'}\nArea of interest: ${d.interest}\n\n${d.message}`;
+    window.location.href = `mailto:info@honestandkeen.com?subject=${encodeURIComponent('Enquiry: ' + d.interest)}&body=${encodeURIComponent(body)}`;
+    status.textContent = 'Your email app is opening with your message — just press send.';
     return;
   }
   const btn = $('button[type="submit"]', form);
