@@ -93,9 +93,11 @@
         } else if (n.nodeType === 1) walk(n);
       });
     };
-    el.setAttribute('aria-label', el.textContent.replace(/\s+/g, ' ').trim());
+    const label = el.textContent.replace(/\s+/g, ' ').trim();
     walk(el);
     $$('.w', el).forEach((w) => w.setAttribute('aria-hidden', 'true'));
+    const sr = document.createElement('span'); sr.className = 'sr-only'; sr.textContent = label;
+    el.prepend(sr);
   });
 
   /* ---------- Reveal on scroll ---------- */

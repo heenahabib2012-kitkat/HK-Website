@@ -27,6 +27,18 @@ mkdir(DIST);
 copyDir(path.join(SRC, 'assets'), path.join(DIST, 'assets'));
 rm(path.join(DIST, 'assets/img/photos/README.md'));
 
+// Minify the stylesheet (comments + whitespace only — safe and dependency-free)
+{
+  const cssPath = path.join(DIST, 'assets/css/main.css');
+  const min = read(cssPath)
+    .replace(/\/\*[\s\S]*?\*\//g, '')
+    .replace(/\s+/g, ' ')
+    .replace(/\s*([{};,>])\s*/g, '$1')
+    .replace(/;}/g, '}')
+    .trim();
+  write(cssPath, min);
+}
+
 // Fonts (self-hosted, latin + latin-ext variable woff2)
 const fontFiles = {
   '@fontsource-variable/cormorant-garamond': [
