@@ -76,8 +76,11 @@ const media = (slot) => {
   const photo = photoFor(slot);
   // url() inside custom properties resolves against the consuming stylesheet,
   // so the image is set directly on the element (relative to the page).
-  const bg = photo ? `url(${photo})` : `url(assets/img/plates/${kind}.svg)`;
-  return `style="background-image:${bg}" data-media="${slot}"${photo ? ' data-photo' : ''}`;
+  const plate = `url(assets/img/plates/${kind}.svg)`;
+  if (!photo) return `style="background-image:${plate}" data-media="${slot}"`;
+  // photos load as they approach the viewport (main.js swaps data-bg in); the hero poster loads at once
+  if (slot === 'hero-poster') return `style="background-image:url(${photo})" data-media="${slot}" data-photo`;
+  return `style="background-color:#0B2149" data-bg="url(${photo})" data-media="${slot}" data-photo`;
 };
 
 /* ---------- world dot map ---------- */
@@ -177,6 +180,11 @@ const heroVideo = vid('hk-brand-film.mp4')
   ? `<video class="hero__video" data-video muted loop playsinline preload="auto"${photoFor('hero-poster') ? ` poster="${photoFor('hero-poster')}"` : ''}${vid('hk-brand-film-mobile.mp4') ? ` data-mobile-src="${vid('hk-brand-film-mobile.mp4')}"` : ''}>${vid('hk-brand-film.webm') ? `<source src="${vid('hk-brand-film.webm')}" type="video/webm">` : ''}<source src="${vid('hk-brand-film.mp4')}" type="video/mp4"></video>`
   : '';
 
+// Photo credits (src/data/photo-credits.json) -> rendered on credits.html
+const esc = (t) => String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+const credits = fs.existsSync(path.join(SRC, 'data/photo-credits.json')) ? JSON.parse(read(path.join(SRC, 'data/photo-credits.json'))) : [];
+const creditsHtml = credits.map((c) => `<li class="credit"><span class="credit__use">${esc(c.use)}</span><a class="credit__title" href="${esc(c.source)}" target="_blank" rel="noopener">${esc(c.title)}</a><span class="credit__by">${esc(c.author)} · ${c.licenseUrl ? `<a href="${esc(c.licenseUrl)}" target="_blank" rel="noopener">${esc(c.license)}</a>` : esc(c.license)}${c.note ? ` · ${esc(c.note)}` : ''}</span></li>`).join('\n');
+
 const sitemap = [];
 for (const file of pages) {
   const raw = read(path.join(pagesDir, file));
@@ -193,6 +201,7 @@ for (const file of pages) {
     scripts: (meta.scripts || []).map((s) => `<script src="assets/js/${s}" defer></script>`).join('\n'),
     preload: meta.preload || '',
     ogImage: `${config.siteUrl}/assets/img/og-image.jpg`,
+    photoCredits: creditsHtml,
   };
   const html = render(partial('layout'), { ...ctx, content: '{{CONTENT}}' }).replace('{{CONTENT}}', render(body, ctx));
   write(path.join(DIST, file), html);

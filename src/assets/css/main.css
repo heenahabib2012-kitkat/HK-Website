@@ -936,3 +936,11 @@ body.menu-open { overflow: hidden; }
 }
 .journey .j-group[data-s="0"] .d { stroke-width: 1.2; }
 .journey .j-group[data-s="0"] .steam { stroke-width: .95; }
+
+/* Photo credits */
+.credits { list-style: none !important; padding: 0 !important; border-top: 1px solid var(--line-dark); margin-top: 32px; }
+.credit { display: grid; grid-template-columns: 180px 1fr; gap: 4px 24px; padding: 16px 0; border-bottom: 1px solid var(--line-dark); margin: 0 !important; }
+.credit__use { grid-row: span 2; font-size: .72rem; letter-spacing: .16em; text-transform: uppercase; color: var(--gold-ink); padding-top: 3px; }
+.credit__title { font-family: var(--serif); font-size: 1.2rem; color: var(--ink) !important; text-decoration: none !important; }
+.credit__by { font-size: .88rem; }
+@media (max-width: 600px) { .credit { grid-template-columns: 1fr; } .credit__use { grid-row: auto; } }

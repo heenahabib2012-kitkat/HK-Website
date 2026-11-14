@@ -100,6 +100,14 @@
     el.prepend(sr);
   });
 
+  /* ---------- Lazy photo backgrounds ---------- */
+  const lazyBg = $$('[data-bg]');
+  const loadBg = (el) => { el.style.backgroundImage = el.dataset.bg; el.removeAttribute('data-bg'); };
+  if ('IntersectionObserver' in window) {
+    const bgIo = new IntersectionObserver((entries) => entries.forEach((en) => { if (en.isIntersecting) { loadBg(en.target); bgIo.unobserve(en.target); } }), { rootMargin: '900px 0px' });
+    lazyBg.forEach((el) => bgIo.observe(el));
+  } else lazyBg.forEach(loadBg);
+
   /* ---------- Reveal on scroll ---------- */
   const revealEls = $$('.reveal, .reveal-words, .mask-reveal, .line-draw, .chapter, .eco, .steps');
   // gentle stagger for siblings revealed together
