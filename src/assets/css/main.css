@@ -949,3 +949,12 @@ body.menu-open { overflow: hidden; }
 .back-link__arrow { width: 40px; height: 40px; display: grid; place-items: center; border: 1px solid var(--line-gold); border-radius: 50%; color: var(--gold); font-size: 1rem; letter-spacing: 0; transition: background var(--dur-2), color var(--dur-2), transform var(--dur-2) var(--ease-out); }
 .back-link:hover { color: var(--white); }
 .back-link:hover .back-link__arrow { background: var(--gold); color: var(--midnight); transform: translateX(-4px); }
+
+/* Large index numbers: full-height (lining) figures so 09 reads as 09 */
+.page-hero__index { font-variant-numeric: lining-nums; font-feature-settings: "lnum" 1; transition: opacity .6s var(--ease-out), transform .8s var(--ease-out); }
+.page-hero__index.is-swapping, .page-hero__index-label.is-swapping { opacity: 0; transform: translateY(10px); }
+.page-hero__index-label { position: absolute; right: var(--gutter); bottom: calc(clamp(72px, 9vw, 130px) - 34px); font-size: .7rem; font-weight: 600; letter-spacing: .24em; text-transform: uppercase; color: var(--gold); transition: opacity .6s var(--ease-out), transform .8s var(--ease-out); }
+@media (max-width: 700px) { .page-hero__index-label { display: none; } }
+/* Industries header: the nine drawings cross-fade */
+.hero-cycle .media { position: absolute; inset: 0; opacity: 0; transition: opacity 1.6s var(--ease-soft); }
+.hero-cycle .media.is-active { opacity: 1; }

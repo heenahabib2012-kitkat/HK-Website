@@ -51,6 +51,25 @@
     crumb.parentNode.insertBefore(back, crumb);
   }
 
+  /* ---------- Industries header: cycle through the nine drawings ---------- */
+  const cycle = $('[data-hero-cycle]');
+  if (cycle) {
+    const layers = $$('.media', cycle);
+    const num = $('[data-cycle-num]'), name = $('[data-cycle-name]');
+    let k = 0, timer = null;
+    const swapText = (el, text) => { el.classList.add('is-swapping'); setTimeout(() => { el.textContent = text; el.classList.remove('is-swapping'); }, 450); };
+    const step = () => {
+      layers[k].classList.remove('is-active');
+      k = (k + 1) % layers.length;
+      layers[k].classList.add('is-active');
+      swapText(num, String(k + 1).padStart(2, '0'));
+      swapText(name, layers[k].dataset.name);
+    };
+    if (!reduce && 'IntersectionObserver' in window) {
+      new IntersectionObserver(([en]) => { clearInterval(timer); if (en.isIntersecting) timer = setInterval(step, 4200); }, { threshold: 0.2 }).observe(cycle.parentElement);
+    }
+  }
+
   /* ---------- Header ---------- */
   const header = $('[data-header]');
   let lastY = window.scrollY;
