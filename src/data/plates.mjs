@@ -462,8 +462,56 @@ function tech() {
   return wrap(boost(s), { glow: [0.5, 0.42] });
 }
 
+function shopfront() {
+  // Retail: a boutique shopfront — awning, sign band, display windows with mannequins
+  let s = '';
+  const L = 250, Rr = 1350, top = 150, ground = 990;
+  // facade and cornice
+  s += `<path d="M${L} ${ground} V${top} H${Rr} V${ground}" stroke-opacity=".9" stroke-width="1.6"/>`;
+  s += line(L - 20, top, Rr + 20, top, 0.9, 1.6) + line(L - 10, top + 24, Rr + 10, top + 24, 0.5, 1);
+  // sign band with suggested lettering
+  s += `<path d="M560 212 H1040 V282 H560 Z" stroke-opacity=".8" stroke-width="1.3"/>`;
+  [[640, 120], [780, 90], [890, 70]].forEach(([x, w]) => { s += line(x, 247, x + w, 247, 0.85, 2.2); });
+  // scalloped, striped awning
+  const at = 320, ab = 420, ax0 = 290, ax1 = 1310, n = 10, sw = (ax1 - ax0) / n;
+  let edge = `M${ax0} ${ab}`;
+  for (let i = 0; i < n; i++) edge += ` Q${f(ax0 + sw * (i + 0.5))} ${ab + 34} ${f(ax0 + sw * (i + 1))} ${ab}`;
+  s += `<path d="M${ax0 + 20} ${at} H${ax1 - 20} L${ax1} ${ab} ${edge.replace(/^M[\d.]+ [\d.]+/, '')} L${ax0} ${ab} Z" stroke-opacity=".95" stroke-width="1.5"/>`;
+  s += `<path d="${edge}" stroke-opacity=".95" stroke-width="1.5"/>`;
+  for (let i = 1; i < n; i++) { const xb = ax0 + sw * i, xt = ax0 + 20 + ((ax1 - ax0 - 40) / n) * i; s += line(xt, at, xb, ab, i % 2 ? 0.55 : 0.3, 1.1); }
+  // display windows and door
+  const wy0 = 470, wy1 = 900;
+  s += `<path d="M320 ${wy0} H700 V${wy1} H320 Z M900 ${wy0} H1280 V${wy1} H900 Z" stroke-opacity=".95" stroke-width="1.5"/>`;
+  s += `<path d="M300 ${wy1} H720 M880 ${wy1} H1300" stroke-opacity=".7" stroke-width="1.3"/>`;
+  s += `<path d="M740 ${ground} V490 H860 V${ground} M756 ${ground} V506 H844 V${ground}" stroke-opacity=".85" stroke-width="1.3"/>`;
+  s += line(834, 700, 834, 770, 0.95, 2.4);
+  // window reflections
+  [[360, 520], [960, 520]].forEach(([x, y]) => { s += line(x, y + 120, x + 120, y, 0.16, 1.2) + line(x + 30, y + 150, x + 150, y + 30, 0.1, 1); });
+  // mannequins on stands
+  const mannequin = (cx, base, sc) => {
+    const y = base - 300 * sc;
+    return `<circle cx="${cx}" cy="${f(y)}" r="${f(18 * sc)}" stroke-opacity=".9"/>`
+      + `<path d="M${cx} ${f(y + 18 * sc)} V${f(y + 30 * sc)} M${f(cx - 40 * sc)} ${f(y + 44 * sc)} Q${cx} ${f(y + 26 * sc)} ${f(cx + 40 * sc)} ${f(y + 44 * sc)} L${f(cx + 22 * sc)} ${f(y + 120 * sc)} L${f(cx + 56 * sc)} ${f(y + 210 * sc)} H${f(cx - 56 * sc)} L${f(cx - 22 * sc)} ${f(y + 120 * sc)} Z" stroke-opacity=".95" stroke-width="1.4"/>`
+      + `<path d="M${f(cx - 22 * sc)} ${f(y + 120 * sc)} Q${cx} ${f(y + 130 * sc)} ${f(cx + 22 * sc)} ${f(y + 120 * sc)}" stroke-opacity=".6"/>`
+      + `<path d="M${cx} ${f(y + 210 * sc)} V${base} M${f(cx - 34 * sc)} ${base} H${f(cx + 34 * sc)}" stroke-opacity=".75" stroke-width="1.2"/>`;
+  };
+  s += mannequin(430, wy1 - 6, 1) + mannequin(585, wy1 - 6, 0.92) + mannequin(1180, wy1 - 6, 1);
+  // handbag on a plinth in the right window
+  s += `<path d="M960 ${wy1} V790 H1080 V${wy1}" stroke-opacity=".75" stroke-width="1.3"/>`;
+  s += `<path d="M980 790 L990 735 H1050 L1060 790 Z M1002 735 Q1020 690 1038 735" stroke-opacity=".95" stroke-width="1.4"/>`;
+  // spotlights in the window heads
+  [420, 600, 1000, 1180].forEach((x) => { s += `<path d="M${x - 12} ${wy0} h24 l-6 14 h-12 Z" stroke-opacity=".7"/>` + line(x, wy0 + 16, x - 40, wy0 + 180, 0.08, 1) + line(x, wy0 + 16, x + 40, wy0 + 180, 0.08, 1); });
+  // planters by the door
+  [[705, 'l'], [895, 'r']].forEach(([x]) => { s += `<path d="M${x - 22} ${ground} L${x - 28} ${ground - 46} H${x + 28} L${x + 22} ${ground} Z" stroke-opacity=".7"/><path d="M${x} ${ground - 46} Q${x - 26} ${ground - 96} ${x - 10} ${ground - 120} M${x} ${ground - 46} Q${x + 24} ${ground - 92} ${x + 12} ${ground - 126} M${x} ${ground - 46} V${ground - 130}" stroke-opacity=".6"/>`; });
+  // pavement
+  s += line(0, ground, W, ground, 0.8, 1.4);
+  for (let i = 1; i < 9; i++) s += line(0, ground + i * i * 2.4, W, ground + i * i * 2.4, 0.06, 1);
+  for (let i = -6; i <= 6; i++) s += line(800 + i * 120, ground, 800 + i * 300, H, 0.05, 1);
+  return wrap(boost(s), { glow: [0.5, 0.45] });
+}
+
 export const plates = {
-  dining, port, boardroom, tech,
+  dining, port, boardroom, tech, shopfront,
   skyline: () => skyline(7), skyline2: () => skyline(19), facade, arches, columns, stairs, containers, diamond,
   circuit, rings, ascent, plan, vitrine, flow, monolith, blueprint, replica, dunes, bridge,
   globe, horizon, contour, link, 'facade-light': facadeLight,
@@ -475,7 +523,7 @@ export const slots = {
   'home-prologue': 'facade',
   'about-hero': 'horizon',
   'svc-franchise': 'replica', 'svc-setup': 'blueprint', 'svc-ops': 'flow', 'svc-brand': 'monolith', 'svc-startup': 'stairs',
-  'ind-fnb': 'dining', 'ind-trading': 'port', 'ind-realestate': 'plan', 'ind-retail': 'vitrine', 'ind-luxury': 'diamond',
+  'ind-fnb': 'dining', 'ind-trading': 'port', 'ind-realestate': 'plan', 'ind-retail': 'shopfront', 'ind-luxury': 'diamond',
   'ind-professional': 'boardroom', 'ind-technology': 'tech', 'ind-investment': 'ascent', 'ind-healthcare': 'rings',
   'tl-2015': 'dunes', 'tl-2017': 'bridge', 'tl-2021': 'skyline2', 'tl-today': 'globe',
   'network': 'link', 'cta': 'contour', 'contact': 'horizon', 'vision': 'facade-light',
