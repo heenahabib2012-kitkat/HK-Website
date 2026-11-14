@@ -73,6 +73,41 @@ function hkbc_resolve( $rel ) {
 	return $full;
 }
 
+/**
+ * Where an old WordPress address should now go, or null to serve the request as is.
+ * Covers the previous site's pages (/about/, /services/, /leadership/, /contact/, /home/)
+ * and any "/page/" or "/page" form of a page that now exists as page.html.
+ */
+function hkbc_legacy_target( $rel ) {
+	$slug = strtolower( trim( preg_replace( '#^index\.php/?#', '', $rel ), '/' ) );
+	if ( '' === $slug || preg_match( '/\.[a-z0-9]+$/', $slug ) || 0 === strpos( $slug, 'assets/' ) ) {
+		return null;
+	}
+	$map = array(
+		'home'              => '',
+		'about'             => 'about.html',
+		'about-us'          => 'about.html',
+		'leadership'        => 'about.html#founder',
+		'our-team'          => 'about.html#founder',
+		'services'          => 'expertise.html',
+		'our-services'      => 'expertise.html',
+		'expertise'         => 'expertise.html',
+		'contact'           => 'contact.html',
+		'contact-us'        => 'contact.html',
+		'industries'        => 'industries.html',
+		'clients'           => 'clients.html',
+		'network'           => 'network.html',
+		'global-reach'      => 'global-reach.html',
+		'privacy-policy'    => 'privacy.html',
+		'terms'             => 'terms.html',
+		'terms-conditions'  => 'terms.html',
+	);
+	if ( isset( $map[ $slug ] ) ) {
+		return $map[ $slug ];
+	}
+	return null;
+}
+
 /** Point a page's asset links straight at the theme folder, so the web server serves them directly. */
 function hkbc_page_html( $file ) {
 	$base = trailingslashit( get_template_directory_uri() ) . 'site/assets/';
@@ -94,6 +129,15 @@ function hkbc_serve() {
 
 	if ( isset( $_SERVER['REQUEST_METHOD'] ) && 'POST' === $_SERVER['REQUEST_METHOD'] && in_array( $rel, array( 'contact.html', 'contact' ), true ) ) {
 		hkbc_handle_enquiry();
+	}
+
+	// Old WordPress page addresses (e.g. /about/, /services/) → the new pages, permanently.
+	$target = hkbc_legacy_target( $rel );
+	if ( null !== $target ) {
+		$query = isset( $_SERVER['QUERY_STRING'] ) && '' !== $_SERVER['QUERY_STRING'] ? '?' . $_SERVER['QUERY_STRING'] : '';
+		$parts = explode( '#', $target, 2 );
+		wp_redirect( home_url( '/' . $parts[0] ) . $query . ( isset( $parts[1] ) ? '#' . $parts[1] : '' ), 301 );
+		exit;
 	}
 
 	$file   = hkbc_resolve( $rel );
