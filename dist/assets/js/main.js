@@ -101,7 +101,7 @@
   });
 
   /* ---------- Reveal on scroll ---------- */
-  const revealEls = $$('.reveal, .reveal-words, .mask-reveal, .line-draw, .chapter, .eco, .steps, .svc .art-frame:not(.mask-reveal)');
+  const revealEls = $$('.reveal, .reveal-words, .mask-reveal, .line-draw, .chapter, .eco, .steps');
   // gentle stagger for siblings revealed together
   $$('.svc-list, .mosaic, .principles__list, .associates__list, .industry-strip__grid, .cols3, .steps').forEach((g) => {
     Array.from(g.children).forEach((c, i) => c.style.setProperty('--d', `${Math.min(i, 8) * 0.08}s`));
@@ -238,40 +238,6 @@
         inView = en.isIntersecting;
         if (inView) { if (cur < 0) show(0); next(); } else clearTimeout(timer);
       }, { threshold: 0.35 }).observe(journey);
-    }
-  }
-
-  /* ---------- Services: list + stage of drawings (home) ---------- */
-  const svcEx = $('[data-svc-explorer]');
-  if (svcEx) {
-    const items = $$('.svc-list__item', svcEx);
-    const artsEls = $$('.svc-stage__art', svcEx);
-    const numEl = $('[data-svc-num]', svcEx), nameEl = $('[data-svc-name]', svcEx), cap = $('.svc-stage__caption', svcEx);
-    let cur = 0, timer = null, inView = false;
-    const pick = (n) => {
-      if (n === cur && artsEls[n].classList.contains('is-play')) return;
-      cur = n;
-      items.forEach((it, i) => it.classList.toggle('is-current', i === n && !finePointer));
-      artsEls.forEach((a, i) => {
-        a.classList.toggle('is-active', i === n);
-        if (i === n) { a.classList.remove('is-play'); void a.offsetWidth; a.classList.add('is-play'); }
-        else setTimeout(() => { if (!a.classList.contains('is-active')) a.classList.remove('is-play'); }, 700);
-      });
-      numEl.textContent = String(n + 1).padStart(2, '0');
-      nameEl.textContent = $('.svc-list__title', items[n]).textContent.replace(/\s*&\s*Expansion$/, '');
-      cap.classList.remove('is-swapping'); void cap.offsetWidth; cap.classList.add('is-swapping');
-    };
-    items.forEach((it, i) => {
-      it.addEventListener('mouseenter', () => pick(i));
-      it.querySelector('a').addEventListener('focus', () => pick(i));
-    });
-    // touch screens: step through the services while the section is on screen
-    if (!finePointer && !reduce && 'IntersectionObserver' in window) {
-      new IntersectionObserver(([en]) => {
-        inView = en.isIntersecting; clearInterval(timer);
-        if (inView) timer = setInterval(() => pick((cur + 1) % items.length), 4200);
-      }, { threshold: 0.3 }).observe(svcEx);
-      items[0].classList.add('is-current');
     }
   }
 

@@ -138,8 +138,7 @@
       </div>
       <p class="lede lede--ink reveal">From the first licence to an international rollout, HK supports every stage of a business — under one roof.</p>
     </header>
-    <div class="svc-explorer" data-svc-explorer>
-    <ol class="svc-list">
+    <ol class="svc-list" data-cursor-gallery>
       <li class="svc-list__item reveal" data-preview="svc-franchise">
         <a href="expertise.html#franchise">
           <span class="svc-list__num">01</span>
@@ -181,16 +180,10 @@
         </a>
       </li>
     </ol>
-    <div class="svc-stage">
-      <div class="svc-stage__frame art-frame">
-          <div class="svc-stage__art is-active is-play" data-art="svc-franchise">{{art svc-franchise}}</div>
-          <div class="svc-stage__art" data-art="svc-setup">{{art svc-setup}}</div>
-          <div class="svc-stage__art" data-art="svc-ops">{{art svc-ops}}</div>
-          <div class="svc-stage__art" data-art="svc-brand">{{art svc-brand}}</div>
-          <div class="svc-stage__art" data-art="svc-startup">{{art svc-startup}}</div>
+    <div class="cursor-gallery" aria-hidden="true">
+      <div class="cursor-gallery__frame">
+        <div class="media" {{media svc-franchise}}></div><div class="media" {{media svc-setup}}></div><div class="media" {{media svc-ops}}></div><div class="media" {{media svc-brand}}></div><div class="media" {{media svc-startup}}></div>
       </div>
-      <p class="svc-stage__caption" aria-hidden="true"><span data-svc-num>01</span><span data-svc-name>Franchise Development</span></p>
-    </div>
     </div>
     <p class="statement-line reveal"><span class="rule-gold" aria-hidden="true"></span>One Partner, From Setup to Scale.</p>
   </div>
