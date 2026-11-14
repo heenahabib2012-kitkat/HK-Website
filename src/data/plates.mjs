@@ -133,18 +133,36 @@ function containers() {
 }
 
 function diamond() {
-  let s = ''; const cx = W / 2, cy = 600;
-  const top = [];
-  const n = 10;
-  for (let i = 0; i < n; i++) { const a = (i / n) * Math.PI * 2; top.push([cx + Math.cos(a) * 340, cy - 150 + Math.sin(a) * 60]); }
-  const tbl = top.map(([x, y]) => [cx + (x - cx) * 0.55, y - 70 + (y - (cy - 150)) * 0.4]);
-  for (let i = 0; i < n; i++) {
-    const a = top[i], b = top[(i + 1) % n], c = tbl[i], d = tbl[(i + 1) % n];
-    s += `<path d="M${f(a[0])} ${f(a[1])}L${f(b[0])} ${f(b[1])}L${cx} ${cy + 330}Z" stroke-opacity=".5" stroke-width="1.2"/>`;
-    s += `<path d="M${f(a[0])} ${f(a[1])}L${f(c[0])} ${f(c[1])}L${f(d[0])} ${f(d[1])}" stroke-opacity=".75" stroke-width="1.2"/>`;
-  }
+  // A brilliant-cut diamond turning on its vertical axis. The crown repeats every
+  // 1/10 of a turn, so animating the facets through 36 degrees loops seamlessly.
+  const cx = W / 2, cy = 600, n = 10, FR = 12, DUR = 6;
+  const frame = (theta) => {
+    const top = [], tbl = [];
+    for (let i = 0; i < n; i++) {
+      const a = (i / n) * Math.PI * 2 + theta;
+      top.push([cx + Math.cos(a) * 340, cy - 150 + Math.sin(a) * 60]);
+      tbl.push([cx + Math.cos(a + Math.PI / n) * 187, cy - 220 + Math.sin(a + Math.PI / n) * 33]);
+    }
+    let pav = '', crown = '', table = '';
+    for (let i = 0; i < n; i++) {
+      const a = top[i], b = top[(i + 1) % n], c = tbl[i];
+      pav += `M${f(a[0])} ${f(a[1])}L${f(b[0])} ${f(b[1])}L${cx} ${cy + 330}Z`;
+      crown += `M${f(a[0])} ${f(a[1])}L${f(c[0])} ${f(c[1])}L${f(b[0])} ${f(b[1])}`;
+      table += `${i ? 'L' : 'M'}${f(c[0])} ${f(c[1])}`;
+    }
+    return [pav, crown, table + 'Z'];
+  };
+  const frames = Array.from({ length: FR + 1 }, (_, k) => frame((k / FR) * ((Math.PI * 2) / n)));
+  const anim = (idx) => `<animate attributeName="d" dur="${DUR}s" repeatCount="indefinite" calcMode="linear" values="${frames.map((fr) => fr[idx]).join(';')}"/>`;
+  let s = '';
+  s += `<path d="${frames[0][0]}" stroke-opacity=".5" stroke-width="1.2">${anim(0)}</path>`;
+  s += `<path d="${frames[0][1]}" stroke-opacity=".8" stroke-width="1.2">${anim(1)}</path>`;
+  s += `<path d="${frames[0][2]}" stroke-opacity=".9" stroke-width="1.4">${anim(2)}</path>`;
+  s += `<ellipse cx="${cx}" cy="${cy - 150}" rx="340" ry="60" stroke-opacity=".35"/>`;
   for (let i = 0; i < 24; i++) { const a = (i / 24) * Math.PI * 2; s += line(cx + Math.cos(a) * 420, cy + Math.sin(a) * 420, cx + Math.cos(a) * 780, cy + Math.sin(a) * 780, 0.08, 1); }
   s += `<circle cx="${cx}" cy="${cy}" r="520" stroke-opacity=".12"/>`;
+  // a small display stand beneath the stone
+  s += `<path d="M${cx - 120} ${cy + 380} H${cx + 120} M${cx - 70} ${cy + 380} L${cx - 40} ${cy + 340} H${cx + 40} L${cx + 70} ${cy + 380}" stroke-opacity=".5"/>`;
   return wrap(s, { glow: [0.5, 0.45] });
 }
 
@@ -417,6 +435,18 @@ function boardroom() {
   const r = rng(8); let sk = 'M260 580';
   for (let x = 260; x < 1340;) { const w = 40 + r() * 70, h = 60 + r() * 200; sk += `V${f(580 - h)}H${f(Math.min(1340, x + w))}`; x += w; }
   s += `<path d="${sk}V580" stroke-opacity=".28"/>`;
+  // presentation screen with a live bar chart, mounted on the window wall
+  s += `<rect x="620" y="200" width="360" height="250" fill="#0B2149" stroke-opacity=".95" stroke-width="1.6"/>`;
+  s += `<rect x="636" y="216" width="328" height="218" stroke-opacity=".35"/>`;
+  s += line(800, 450, 800, 500, 0.5, 1.4) + line(760, 500, 840, 500, 0.5, 1.4);
+  s += line(660, 410, 940, 410, 0.55, 1.1);
+  const bars = [[672, '70;120;95;70'], [722, '110;80;140;110'], [772, '90;150;120;90'], [822, '130;100;165;130'], [872, '100;170;145;100']];
+  bars.forEach(([x, v], k) => {
+    const hs = v.split(';').map(Number), ys = hs.map((h) => 410 - h).join(';');
+    s += `<rect x="${x}" y="${410 - hs[0]}" width="34" height="${hs[0]}" stroke-opacity=".9" stroke-width="1.2"><animate attributeName="height" dur="7s" begin="${k * 0.25}s" repeatCount="indefinite" calcMode="spline" keySplines=".45 0 .55 1;.45 0 .55 1;.45 0 .55 1" values="${v}"/><animate attributeName="y" dur="7s" begin="${k * 0.25}s" repeatCount="indefinite" calcMode="spline" keySplines=".45 0 .55 1;.45 0 .55 1;.45 0 .55 1" values="${ys}"/></rect>`;
+  });
+  s += `<path class="trendline" pathLength="1" d="M676 360 L726 330 L776 300 L826 285 L876 250 L926 236" stroke="#F3E2B5" stroke-opacity=".95" stroke-width="2"/>`;
+  s += `<circle cx="926" cy="236" r="5" fill="#F3E2B5" stroke="none" class="trenddot"/>`;
   // table in perspective
   const bl = 680, br = 920, by = 620, fl = 400, fr = 1200, fy = 1010;
   s += `<path d="M${fl} ${fy} L${bl} ${by} H${br} L${fr} ${fy} Z" stroke-opacity=".95" stroke-width="1.6"/>`;
@@ -555,12 +585,13 @@ const MOTION = {
   },
   diamond: {
     svg: glowDefs + `<clipPath id="gem"><circle cx="800" cy="560" r="380"/></clipPath><g clip-path="url(#gem)">${band('gs', 8)}</g>`
-      + sparkle(980, 470, 1.1, 0) + sparkle(640, 520, 0.8, 1.3) + sparkle(820, 420, 0.9, 2.2) + sparkle(1060, 560, 0.7, 3) + sparkle(760, 760, 0.8, 1.8),
+      + sparkle(1000, 452, 1.1, 0) + sparkle(640, 470, 0.8, 1.3) + sparkle(830, 392, 0.9, 2.2) + sparkle(1080, 470, 0.7, 3) + sparkle(780, 760, 0.8, 1.8),
   },
   boardroom: {
+    css: '.trendline { stroke-dasharray: 1; animation: grow 7s ease-in-out infinite } @keyframes grow { 0% { stroke-dashoffset: 1; opacity: 1 } 50%,85% { stroke-dashoffset: 0; opacity: 1 } 100% { stroke-dashoffset: 0; opacity: 0 } } .trenddot { animation: breathe 3.5s ease-in-out infinite }',
     svg: glowDefs + (() => {
       let s = '';
-      const pts = [[300, 520], [345, 470], [420, 540], [470, 455], [540, 500], [610, 545], [690, 430], [745, 515], [820, 470], [880, 540], [950, 505], [1010, 450], [1080, 530], [1150, 480], [1220, 520], [1290, 470]];
+      const pts = [[300, 520], [345, 470], [420, 540], [470, 455], [540, 500], [590, 545], [1010, 470], [1060, 540], [1110, 505], [1160, 450], [1200, 530], [1250, 480], [1290, 520], [1320, 470]];
       pts.forEach(([x, y], i) => { s += `<rect style="animation: breathe ${4 + (i % 4)}s ease-in-out ${(i * 0.37) % 3}s infinite" x="${x}" y="${y}" width="7" height="7" fill="#E9C77E" stroke="none"/>`; });
       return s + `<clipPath id="win"><rect x="260" y="140" width="1080" height="440"/></clipPath><g clip-path="url(#win)">${band('ws', 11, 2)}</g>`;
     })(),
