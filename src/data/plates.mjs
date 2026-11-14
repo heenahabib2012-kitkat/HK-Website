@@ -435,18 +435,6 @@ function boardroom() {
   const r = rng(8); let sk = 'M260 580';
   for (let x = 260; x < 1340;) { const w = 40 + r() * 70, h = 60 + r() * 200; sk += `V${f(580 - h)}H${f(Math.min(1340, x + w))}`; x += w; }
   s += `<path d="${sk}V580" stroke-opacity=".28"/>`;
-  // presentation screen with a live bar chart, mounted on the window wall
-  s += `<rect x="620" y="200" width="360" height="250" fill="#0B2149" stroke-opacity=".95" stroke-width="1.6"/>`;
-  s += `<rect x="636" y="216" width="328" height="218" stroke-opacity=".35"/>`;
-  s += line(800, 450, 800, 500, 0.5, 1.4) + line(760, 500, 840, 500, 0.5, 1.4);
-  s += line(660, 410, 940, 410, 0.55, 1.1);
-  const bars = [[672, '70;120;95;70'], [722, '110;80;140;110'], [772, '90;150;120;90'], [822, '130;100;165;130'], [872, '100;170;145;100']];
-  bars.forEach(([x, v], k) => {
-    const hs = v.split(';').map(Number), ys = hs.map((h) => 410 - h).join(';');
-    s += `<rect x="${x}" y="${410 - hs[0]}" width="34" height="${hs[0]}" stroke-opacity=".9" stroke-width="1.2"><animate attributeName="height" dur="7s" begin="${k * 0.25}s" repeatCount="indefinite" calcMode="spline" keySplines=".45 0 .55 1;.45 0 .55 1;.45 0 .55 1" values="${v}"/><animate attributeName="y" dur="7s" begin="${k * 0.25}s" repeatCount="indefinite" calcMode="spline" keySplines=".45 0 .55 1;.45 0 .55 1;.45 0 .55 1" values="${ys}"/></rect>`;
-  });
-  s += `<path class="trendline" pathLength="1" d="M676 360 L726 330 L776 300 L826 285 L876 250 L926 236" stroke="#F3E2B5" stroke-opacity=".95" stroke-width="2"/>`;
-  s += `<circle cx="926" cy="236" r="5" fill="#F3E2B5" stroke="none" class="trenddot"/>`;
   // table in perspective
   const bl = 680, br = 920, by = 620, fl = 400, fr = 1200, fy = 1010;
   s += `<path d="M${fl} ${fy} L${bl} ${by} H${br} L${fr} ${fy} Z" stroke-opacity=".95" stroke-width="1.6"/>`;
@@ -467,7 +455,6 @@ function boardroom() {
   s += chair(800, by - 18, 0.6); // head of the table
   // papers and a pen on the table
   s += `<path d="M720 900 L760 820 H850 L830 900 Z M870 930 L900 860 H980 L966 930 Z" stroke-opacity=".75"/>`;
-  s += line(780, 880, 840, 836, 0.9, 1.6);
   for (let i = 1; i < 8; i++) s += line(0, 1050 + i * i * 2, W, 1050 + i * i * 2, 0.05, 1);
   return wrap(boost(s), { glow: [0.5, 0.25] });
 }
@@ -588,12 +575,19 @@ const MOTION = {
       + sparkle(1000, 452, 1.1, 0) + sparkle(640, 470, 0.8, 1.3) + sparkle(830, 392, 0.9, 2.2) + sparkle(1080, 470, 0.7, 3) + sparkle(780, 760, 0.8, 1.8),
   },
   boardroom: {
-    css: '.trendline { stroke-dasharray: 1; animation: grow 7s ease-in-out infinite } @keyframes grow { 0% { stroke-dashoffset: 1; opacity: 1 } 50%,85% { stroke-dashoffset: 0; opacity: 1 } 100% { stroke-dashoffset: 0; opacity: 0 } } .trenddot { animation: breathe 3.5s ease-in-out infinite }',
     svg: glowDefs + (() => {
       let s = '';
-      const pts = [[300, 520], [345, 470], [420, 540], [470, 455], [540, 500], [590, 545], [1010, 470], [1060, 540], [1110, 505], [1160, 450], [1200, 530], [1250, 480], [1290, 520], [1320, 470]];
+      const pts = [[300, 520], [345, 470], [420, 540], [470, 455], [540, 500], [610, 545], [690, 430], [745, 515], [820, 470], [880, 540], [950, 505], [1010, 450], [1080, 530], [1150, 480], [1220, 520], [1290, 470]];
       pts.forEach(([x, y], i) => { s += `<rect style="animation: breathe ${4 + (i % 4)}s ease-in-out ${(i * 0.37) % 3}s infinite" x="${x}" y="${y}" width="7" height="7" fill="#E9C77E" stroke="none"/>`; });
-      return s + `<clipPath id="win"><rect x="260" y="140" width="1080" height="440"/></clipPath><g clip-path="url(#win)">${band('ws', 11, 2)}</g>`;
+      s += `<clipPath id="win"><rect x="260" y="140" width="1080" height="440"/></clipPath><g clip-path="url(#win)">${band('ws', 11, 2)}</g>`;
+      // soft light over the table
+      s += `<ellipse style="animation: breathe 7s ease-in-out infinite" cx="800" cy="850" rx="300" ry="110" fill="url(#lg)" stroke="none" opacity=".14"/>`;
+      // the signature writes itself; the pen follows the line
+      const SIG = 'M884 912 C892 896 900 892 904 904 C906 914 912 916 918 902 C922 892 928 892 930 904 C932 914 940 914 946 900 C950 892 956 894 958 904 L972 898';
+      const T = 'keyTimes="0;.45;.85;1" dur="7s" repeatCount="indefinite"';
+      s += `<path d="${SIG}" pathLength="1" stroke="#F3E2B5" stroke-width="2" stroke-dasharray="1" stroke-dashoffset="1"><animate attributeName="stroke-dashoffset" values="1;0;0;0" ${T}/><animate attributeName="opacity" values="1;1;1;0" ${T}/></path>`;
+      s += `<g><path d="M0 0 L54 -46 M54 -46 L62 -40 L10 6 Z" stroke="#E9C77E" stroke-width="1.6" fill="#0B2149"/><animateMotion path="${SIG}" keyPoints="0;1;1;1" keyTimes="0;.45;.85;1" calcMode="linear" dur="7s" repeatCount="indefinite"/></g>`;
+      return s;
     })(),
   },
   tech: {
