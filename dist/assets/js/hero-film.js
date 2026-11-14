@@ -49,15 +49,47 @@
     setTimeout(() => { chapterEl.textContent = chapters[chapterIdx]; chapterEl.classList.remove('is-swapping'); }, 600);
   };
 
-  /* ---------------- produced video (optional) ---------------- */
-  let usingVideo = false;
+  /* ---------------- produced brand film (preferred) ---------------- */
+  // The video plays when supplied; the code-rendered film (3D, else 2D) only
+  // loads if there is no video or the browser cannot play it.
+  let usingVideo = false, paused = false, filmCtl = null, booted = false;
+  const loadScript = (src) => new Promise((res, rej) => { const el = document.createElement('script'); el.src = src; el.onload = res; el.onerror = rej; document.head.appendChild(el); });
+  const webgl = (() => { try { const c = document.createElement('canvas'); return !!(c.getContext('webgl2') || c.getContext('webgl')); } catch (e) { return false; } })();
+  async function bootCanvasFilm() {
+    if (booted) return; booted = true;
+    if (webgl && !window.HKCinema) {
+      try { await loadScript('assets/js/vendor/three.min.js'); await loadScript('assets/js/hero-cinema.js'); } catch (e) { /* 2D film */ }
+    }
+    runCanvasFilm();
+  }
   if (video && !reduce) {
     const mobileSrc = video.dataset.mobileSrc;
     if (mobileSrc && window.matchMedia('(max-width: 700px)').matches) video.src = mobileSrc;
-    video.addEventListener('playing', () => { usingVideo = true; video.classList.add('is-playing'); hero.classList.add('has-film'); stop(); canvas.classList.remove('is-running'); }, { once: true });
-    video.play().catch(() => { /* autoplay blocked: canvas film continues */ });
+    video.muted = true;
+    const fallback = setTimeout(() => { if (!usingVideo) bootCanvasFilm(); }, 6000);
+    video.addEventListener('playing', () => {
+      clearTimeout(fallback);
+      usingVideo = true; video.classList.add('is-playing'); hero.classList.add('has-film', 'has-video');
+      if (filmCtl) { filmCtl.stop(); canvas.classList.remove('is-running'); }
+      if (!chapterTimer) chapterTimer = setInterval(nextChapter, 7000);
+    }, { once: true });
+    video.addEventListener('error', () => { clearTimeout(fallback); bootCanvasFilm(); }, { once: true });
+    video.play().catch(() => { clearTimeout(fallback); bootCanvasFilm(); });
+    new IntersectionObserver(([en]) => { if (!usingVideo || paused) return; en.isIntersecting ? video.play().catch(() => {}) : video.pause(); }, { threshold: 0.02 }).observe(hero);
+  } else if (!(video && reduce)) {
+    bootCanvasFilm();
   }
 
+  toggle?.addEventListener('click', () => {
+    paused = !paused;
+    toggle.setAttribute('aria-pressed', String(paused));
+    toggle.querySelector('.film-toggle__label').textContent = paused ? 'Play film' : 'Pause film';
+    if (usingVideo) { paused ? video.pause() : video.play(); return; }
+    if (filmCtl) paused ? filmCtl.stop() : filmCtl.start();
+  });
+  if (reduce && toggle) toggle.hidden = true;
+
+  function runCanvasFilm() {
   /* ---------------- canvas film ---------------- */
   // Prefer the WebGL cinematic city (hero-cinema.js); fall back to the 2D line film.
   let cinema = null;
@@ -306,7 +338,7 @@
     return [city, 1 - city];
   };
 
-  let running = false, raf = null, last = 0, clock = 0, paused = false, visible = true;
+  let running = false, raf = null, last = 0, clock = 0, visible = true;
   function frame(now) {
     const dt = Math.min(0.05, (now - last) / 1000 || 0); last = now;
     clock += dt;
@@ -341,12 +373,6 @@
   let rt = null;
   window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { resize(); if (!running) render(clock || 4.2); }, 120); });
 
-  toggle?.addEventListener('click', () => {
-    paused = !paused;
-    toggle.setAttribute('aria-pressed', String(paused));
-    toggle.querySelector('.film-toggle__label').textContent = paused ? 'Play film' : 'Pause film';
-    if (usingVideo) { paused ? video.pause() : video.play(); return; }
-    paused ? stop() : start();
-  });
-  if (reduce && toggle) toggle.hidden = true;
+  filmCtl = { start, stop };
+  }
 })();
