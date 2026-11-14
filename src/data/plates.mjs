@@ -529,6 +529,99 @@ function shopfront() {
   return wrap(boost(s), { glow: [0.5, 0.45] });
 }
 
+/* ---------- landmarks for the About timeline ---------- */
+const sphere = (cx, cy, r, op = 0.95) => {
+  let s = `<circle cx="${cx}" cy="${cy}" r="${r}" stroke-opacity="${op}" stroke-width="1.6"/>`;
+  for (let k = -2; k <= 2; k++) { const y = cy + (k / 3) * r, rx = Math.sqrt(r * r - (y - cy) ** 2); s += `<ellipse cx="${cx}" cy="${f(y)}" rx="${f(rx)}" ry="${f(rx * 0.16)}" stroke-opacity=".35"/>`; }
+  for (let k = 1; k < 4; k++) s += `<ellipse cx="${cx}" cy="${cy}" rx="${f(r * Math.cos((k / 4) * Math.PI / 2))}" ry="${r}" stroke-opacity=".22"/>`;
+  // the towers' sequin-like discs
+  const rr = rng(Math.round(cx + cy));
+  for (let i = 0; i < Math.round(r * 0.5); i++) {
+    const a = rr() * Math.PI * 2, d = Math.sqrt(rr()) * r * 0.86;
+    s += `<circle cx="${f(cx + Math.cos(a) * d)}" cy="${f(cy + Math.sin(a) * d)}" r="${f(r * 0.045)}" stroke-opacity=".45" stroke-width=".9"/>`;
+  }
+  return s;
+};
+
+function kuwait() {
+  // Kuwait Towers on the Gulf shore: main tower (two spheres), second tower (one), slim third needle
+  let s = ''; const base = 900;
+  s += line(0, base, W, base, 0.75, 1.4);
+  for (let i = 1; i < 11; i++) s += line(80 + (i % 3) * 50, base + i * i * 2.4, W - 80 - (i % 2) * 90, base + i * i * 2.4, 0.06 + 0.01 * (i % 3), 1);
+  // main tower
+  s += `<path d="M786 ${base} L792 520 M814 ${base} L808 520" stroke-opacity=".95" stroke-width="1.6"/>`;
+  s += sphere(800, 455, 112);
+  s += `<path d="M793 343 L795 318 M807 343 L805 318" stroke-opacity=".9" stroke-width="1.4"/>`;
+  s += sphere(800, 278, 42);
+  s += `<path d="M800 236 L800 96" stroke-opacity=".95" stroke-width="1.6"/><path d="M796 236 L800 150 L804 236" stroke-opacity=".6"/>`;
+  // second tower
+  s += `<path d="M1032 ${base} L1036 620 M1052 ${base} L1048 620" stroke-opacity=".9" stroke-width="1.5"/>`;
+  s += sphere(1042, 556, 72);
+  s += `<path d="M1042 484 L1042 330 M1037 484 L1042 380 L1047 484" stroke-opacity=".8" stroke-width="1.3"/>`;
+  // third, slender needle
+  s += `<path d="M606 ${base} L616 430 L626 ${base}" stroke-opacity=".85" stroke-width="1.4"/>`;
+  for (let y = 840; y > 470; y -= 46) s += line(612 + (y - 430) / 470 * -6, y, 620 - (y - 430) / 470 * -6, y, 0.3, 1);
+  // shoreline promenade and a low sun
+  s += `<path d="M380 ${base} Q600 ${base - 18} 820 ${base} T1240 ${base}" stroke-opacity=".35"/>`;
+  s += `<circle cx="1260" cy="300" r="70" stroke-opacity=".5"/><circle cx="1260" cy="300" r="110" stroke-opacity=".15"/>`;
+  return wrap(boost(s), { glow: [0.55, 0.35] });
+}
+
+function burj() {
+  // Burj Khalifa: a slender tower whose setbacks alternate side to side, rising to a long spire
+  let s = ''; const base = 960, cx = 800;
+  const hw = [80, 72, 65, 58, 52, 46, 40, 35, 30, 25, 21, 17, 13, 10];
+  const th = [92, 84, 78, 72, 68, 62, 58, 54, 50, 46, 42, 38, 34, 30];
+  let y = base; const L = [], Rr = [];
+  hw.forEach((w, i) => {
+    const wl = w, wr = i > 0 ? hw[i - 1] * 0.92 : w;   // the right side steps back one tier later
+    L.push([cx - wl, y], [cx - wl, y - th[i]]);
+    Rr.push([cx + wr, y], [cx + wr, y - th[i]]);
+    s += line(cx - wl + 4, y - th[i], cx + wr - 4, y - th[i], 0.3, 1);
+    s += line(cx - wl * 0.35, y - 4, cx - wl * 0.35, y - th[i] + 4, 0.16, 0.9) + line(cx + wr * 0.35, y - 4, cx + wr * 0.35, y - th[i] + 4, 0.16, 0.9);
+    y -= th[i];
+  });
+  const spireTop = 40;
+  const d = 'M' + L.map((pt) => `${f(pt[0])} ${f(pt[1])}`).join(' L') + ` L${cx - 4} ${f(y - 60)} L${cx} ${spireTop} L${cx + 4} ${f(y - 60)} L` + Rr.reverse().map((pt) => `${f(pt[0])} ${f(pt[1])}`).join(' L');
+  s += `<path d="${d}" stroke-opacity=".95" stroke-width="1.6"/>`;
+  s += line(cx, y, cx, spireTop + 20, 0.5, 1);
+  // the low city around its base
+  const r = rng(21); let sk = `M0 ${base}`;
+  for (let x = 0; x < W;) { const w = 40 + r() * 80, h = 30 + r() * (Math.abs(x - cx) < 300 ? 60 : 170); if (Math.abs(x + w / 2 - cx) < 110) { sk += `H${f(x + w)}`; x += w; continue; } sk += `V${f(base - h)}H${f(Math.min(W, x + w))}V${base}`; x += w; }
+  s += `<path d="${sk}" stroke-opacity=".3"/>`;
+  s += line(0, base, W, base, 0.7, 1.4);
+  for (let i = 1; i < 8; i++) s += line(0, base + i * i * 3, W, base + i * i * 3, 0.05, 1);
+  return wrap(boost(s), { glow: [0.5, 0.18] });
+}
+
+function dubaiframe() {
+  // The Dubai Frame, with connections reaching out through it to the world
+  let s = ''; const base = 980;
+  const L0 = 520, L1 = 620, R0 = 980, R1 = 1080, top = 220, bridge = 310;
+  s += `<path d="M${L0} ${base} V${top} H${R1} V${base} M${L1} ${base} V${bridge} H${R0} V${base}" stroke-opacity=".95" stroke-width="1.7"/>`;
+  s += `<path d="M${L0} ${base} H${L1} M${R0} ${base} H${R1}" stroke-opacity=".7"/>`;
+  // ornamental facade lattice on the frame
+  for (let y = top + 40; y < base - 20; y += 52) {
+    s += `<path d="M${L0} ${y} L${(L0 + L1) / 2} ${y - 26} L${L1} ${y} M${R0} ${y} L${(R0 + R1) / 2} ${y - 26} L${R1} ${y}" stroke-opacity=".28"/>`;
+  }
+  for (let x = L1 + 40; x < R0 - 20; x += 52) s += `<path d="M${x} ${top} L${x - 26} ${(top + bridge) / 2} L${x} ${bridge}" stroke-opacity=".28"/>`;
+  // the view through the frame: a low skyline and the horizon
+  const r = rng(4); let sk = `M${L1} 860`;
+  for (let x = L1; x < R0;) { const w = 24 + r() * 40, h = 30 + r() * 140; sk += `V${f(860 - h)}H${f(Math.min(R0, x + w))}V860`; x += w; }
+  s += `<path d="${sk}" stroke-opacity=".32"/>` + line(0, 860, W, 860, 0.45, 1.2);
+  // corridors reaching out through the frame
+  const o = [800, 700];
+  [[60, 300], [180, 140], [1420, 140], [1540, 300], [80, 560], [1520, 560]].forEach(([x, y]) => {
+    const mx = (o[0] + x) / 2, my = Math.min(o[1], y) - 160;
+    s += `<path d="M${o[0]} ${o[1]} Q${mx} ${my} ${x} ${y}" stroke-opacity=".55" stroke-width="1.2" stroke-dasharray="3 9"/>`;
+    s += `<circle cx="${x}" cy="${y}" r="5" stroke-opacity=".8"/>`;
+  });
+  s += `<circle cx="${o[0]}" cy="${o[1]}" r="7" fill="${G}" stroke="none"/>`;
+  s += line(0, base, W, base, 0.7, 1.4);
+  for (let i = 1; i < 7; i++) s += line(0, base + i * i * 3.4, W, base + i * i * 3.4, 0.05, 1);
+  return wrap(boost(s), { glow: [0.5, 0.5] });
+}
+
 /* ---------- discreet motion for the industry scenes ----------
    Each scene gets a short looping animation inside its own SVG (CSS + SMIL),
    so it plays even though the drawing is used as a background image. */
@@ -547,6 +640,24 @@ const glowDefs = `<defs><radialGradient id="lg"><stop offset="0" stop-color="#E9
 const band = (cls, dur, delay = 0) => `<rect class="${cls}" style="animation: sweep ${dur}s ease-in-out ${delay}s infinite" x="0" y="-200" width="260" height="1600" fill="url(#sw)" stroke="none" transform="skewX(-22)"/>`;
 
 const MOTION = {
+  kuwait: {
+    css: '.wave { stroke-dasharray: 30 70; animation: drift 6s linear infinite } @keyframes drift { to { stroke-dashoffset: -200 } }',
+    svg: glowDefs + `<clipPath id="sph"><circle cx="800" cy="455" r="112"/><circle cx="800" cy="278" r="42"/><circle cx="1042" cy="556" r="72"/></clipPath><g clip-path="url(#sph)">${band('ks', 7)}</g>`
+      + sparkle(760, 410, 0.9, 0) + sparkle(842, 492, 0.7, 1.5) + sparkle(812, 262, 0.6, 2.6) + sparkle(1018, 530, 0.7, 3.4)
+      + [[0, 922, 0.32], [120, 950, 0.22], [0, 990, 0.16]].map(([x, y, o]) => `<path class="wave" d="M${x} ${y} H1600" stroke-opacity="${o}" stroke-width="1.4"/>`).join(''),
+  },
+  burj: {
+    svg: glowDefs + `<circle style="animation: breathe 2.4s ease-in-out infinite" cx="800" cy="40" r="26" fill="url(#lg)" stroke="none"/><circle style="animation: blink 2.4s steps(1) infinite" cx="800" cy="40" r="4" fill="#F3E2B5" stroke="none"/>`
+      + `<clipPath id="tw"><rect x="700" y="40" width="200" height="920"/></clipPath><g clip-path="url(#tw)">${band('bs', 8, 1)}</g>`
+      + sparkle(770, 560, 0.7, 0.6) + sparkle(812, 300, 0.6, 2) + sparkle(800, 800, 0.7, 3.2),
+  },
+  dubaiframe: {
+    svg: glowDefs + `<circle class="pl" style="animation: pulse 4s ease-out infinite" cx="800" cy="700" r="12" stroke-width="1.4"/>`
+      + [[60, 300], [180, 140], [1420, 140], [1540, 300], [80, 560], [1520, 560]].map(([x, y], i) => {
+        const mx = (800 + x) / 2, my = Math.min(700, y) - 160;
+        return `<circle r="4.5" fill="#F3E2B5" stroke="none"><animateMotion dur="4.2s" begin="${(i * 0.7).toFixed(1)}s" repeatCount="indefinite" path="M800 700 Q${mx} ${my} ${x} ${y}"/></circle>`;
+      }).join(''),
+  },
   dining: {
     svg: glowDefs + [[520, 372, 0], [800, 422, 1.6], [1080, 372, 3.1]].map(([x, y, d]) =>
       `<ellipse style="animation: breathe 6.5s ease-in-out ${d}s infinite" cx="${x}" cy="${y + 120}" rx="150" ry="170" fill="url(#lg)" stroke="none" opacity=".26"/>`
@@ -617,13 +728,13 @@ function withMotion(svg, kind) {
 }
 
 export const plates = {
-  dining, port, boardroom, tech, shopfront,
+  dining, port, boardroom, tech, shopfront, kuwait, burj, dubaiframe,
   skyline: () => skyline(7), skyline2: () => skyline(19), facade, arches, columns, stairs, containers, diamond,
   circuit, rings, ascent, plan, vitrine, flow, monolith, blueprint, replica, dunes, bridge,
   globe, horizon, contour, link, 'facade-light': facadeLight,
 };
 
-for (const k of ['dining', 'port', 'plan', 'shopfront', 'diamond', 'boardroom', 'tech', 'ascent', 'rings']) {
+for (const k of ['dining', 'port', 'plan', 'shopfront', 'diamond', 'boardroom', 'tech', 'ascent', 'rings', 'kuwait', 'burj', 'dubaiframe']) {
   const base = plates[k];
   plates[k] = () => withMotion(base(), k);
 }
@@ -636,7 +747,7 @@ export const slots = {
   'svc-franchise': 'replica', 'svc-setup': 'blueprint', 'svc-ops': 'flow', 'svc-brand': 'monolith', 'svc-startup': 'stairs',
   'ind-fnb': 'dining', 'ind-trading': 'port', 'ind-realestate': 'plan', 'ind-retail': 'shopfront', 'ind-luxury': 'diamond',
   'ind-professional': 'boardroom', 'ind-technology': 'tech', 'ind-investment': 'ascent', 'ind-healthcare': 'rings',
-  'tl-2015': 'dunes', 'tl-2017': 'bridge', 'tl-2021': 'skyline2', 'tl-today': 'globe',
+  'tl-2015': 'kuwait', 'tl-2017': 'bridge', 'tl-2021': 'burj', 'tl-today': 'dubaiframe',
   'network': 'link', 'cta': 'contour', 'contact': 'horizon', 'vision': 'facade-light',
   'founder': 'facade',
 };
