@@ -142,8 +142,9 @@
     lazyBg.forEach((el) => bgIo.observe(el));
   } else lazyBg.forEach(loadBg);
 
+  $$('.client-wall__grid li').forEach((li, i) => li.style.setProperty('--i', i));
   /* ---------- Reveal on scroll ---------- */
-  const revealEls = $$('.reveal, .reveal-words, .mask-reveal, .line-draw, .chapter, .eco, .steps');
+  const revealEls = $$('.reveal, .reveal-words, .mask-reveal, .line-draw, .chapter, .eco, .steps, .client-wall__grid');
   // gentle stagger for siblings revealed together
   $$('.svc-list, .mosaic, .principles__list, .associates__list, .industry-strip__grid, .cols3, .steps').forEach((g) => {
     Array.from(g.children).forEach((c, i) => c.style.setProperty('--d', `${Math.min(i, 8) * 0.08}s`));

@@ -989,3 +989,23 @@ body.menu-open { overflow: hidden; }
 
 /* Brand film waiting to play (or autoplay blocked): show its still frame */
 .hero.has-video-still .hero__poster { opacity: 1; transform: none; }
+
+/* ---------- Client logo wall ---------- */
+.client-wall { background: var(--white); }
+.client-wall__grid { grid-template-columns: repeat(4, 1fr); gap: 10px; border: 0; margin-top: clamp(36px, 5vw, 60px); }
+.client-wall__grid li { aspect-ratio: 3 / 2; padding: 0; border: 0; overflow: hidden; outline: 1px solid var(--line-dark); outline-offset: -1px; background: var(--white); transition: transform .7s var(--ease-out), box-shadow .7s var(--ease-out); }
+.client-wall__grid li img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 1s var(--ease-out); }
+.client-wall__grid li:hover { transform: translateY(-4px); box-shadow: 0 24px 50px -26px rgba(8, 26, 58, .4); outline-color: var(--gold); }
+.client-wall__grid li:hover img { transform: scale(1.04); }
+.js .client-wall__grid li { opacity: 0; transform: translateY(18px); }
+.js .client-wall__grid.is-in li { opacity: 1; transform: none; transition: opacity .9s var(--ease-out), transform 1s var(--ease-out), box-shadow .7s var(--ease-out); transition-delay: calc(var(--i, 0) * 50ms); }
+.js .client-wall__grid.is-in li:hover { transform: translateY(-4px); transition-delay: 0s; }
+.client-wall__more { display: flex; align-items: center; gap: 28px; margin-top: clamp(40px, 5vw, 64px); font-family: var(--serif); font-size: clamp(1.8rem, 3vw, 2.6rem); color: var(--royal); }
+.client-wall__more em { color: var(--gold-ink); white-space: nowrap; }
+.client-wall__more span { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--line-gold), transparent); }
+@media (max-width: 900px) { .client-wall__grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 600px) { .client-wall__grid { grid-template-columns: repeat(2, 1fr); gap: 8px; } }
+@media (prefers-reduced-motion: reduce) { .js .client-wall__grid li { opacity: 1 !important; transform: none !important; } }
+/* testimonial logo cards */
+.client-mark.has-logo { padding: 0; aspect-ratio: 3 / 2; overflow: hidden; }
+.client-mark.has-logo img { width: 100%; height: 100%; max-width: none; max-height: none; object-fit: cover; }
