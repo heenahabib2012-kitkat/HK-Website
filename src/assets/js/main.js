@@ -107,7 +107,7 @@
       else if (!e.shiftKey && i === f.length - 1) { e.preventDefault(); f[0].focus(); }
     }
   });
-  window.matchMedia('(min-width: 1181px)').addEventListener('change', (m) => { if (m.matches) setMenu(false); });
+  window.matchMedia('(min-width: 1001px)').addEventListener('change', (m) => { if (m.matches) setMenu(false); });
 
   /* ---------- Split words for typographic reveals ---------- */
   $$('.reveal-words').forEach((el) => {
